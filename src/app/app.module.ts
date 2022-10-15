@@ -8,6 +8,8 @@ import { AdminComponent } from './modules/admin/admin.component';
 import { ManagerComponent } from './modules/manager/manager.component';
 import { AuthComponent } from './modules/auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    PanelMenuModule,
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

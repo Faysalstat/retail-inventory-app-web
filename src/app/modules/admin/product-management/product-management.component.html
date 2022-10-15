@@ -1,0 +1,36 @@
+<mat-card>
+    <app-add-product></app-add-product>
+    <hr>
+    <div class=" row mt-5">
+        <h1>Products:</h1>
+        <div class="col-md-12">
+            <table class="table" >
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Product Name</th>
+                        <th>Quantity</th>
+                        <th>Buying Price</th>
+                        <th>Selliing Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of productList; index as i">
+                        <th scope="row">{{i+offset+1}}</th>
+                        <th>{{product?.productName}}</th>
+                        <th>{{product?.quantity||0}} {{product?.unitType}}</th>
+                        <th>{{product?.buyingPrice || 0}} BDT</th>
+                        <th>{{product?.sellingPrice || 0}} BDT</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12">
+            <div style="float:right ;font-size: 16px;">
+                <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChange($event)" aria-label="Select page">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</mat-card>
