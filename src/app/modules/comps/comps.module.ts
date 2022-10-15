@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddProductComponent } from './add-product/add-product.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/material.module';
 import { MatIconModule } from '@angular/material/icon';
-import { SaleInvoiceComponent } from './sale-invoice/sale-invoice.component';
 import { AddPersonComponent } from './add-person/add-person.component';
 
-const components = [AddProductComponent,SaleInvoiceComponent,AddPersonComponent]
+const components = [AddProductComponent,AddPersonComponent]
 
 @NgModule({
   declarations: components,
@@ -15,7 +14,8 @@ const components = [AddProductComponent,SaleInvoiceComponent,AddPersonComponent]
     CommonModule,
     ReactiveFormsModule,
     MaterialModule,
-    MatIconModule
+    MatIconModule,
+    FormsModule
   ],
   exports: components
 })

@@ -7,3 +7,8 @@ export const ProductUrls = {
   FETCH_PRODUCT_BY_ID: BASE_URL + '/product/getproductbyid',
   FETCH_PRODUCT_BY_NAME: BASE_URL + '/product/getproductbyname'
 };
+
+export const ClientUrls = {
+    ADD_CLIENT : BASE_URL + "/client/addclient",
+    FETCH_CLIENT_BY_CONTACT_NO : BASE_URL + "/client/getclientbycontact"
+}
