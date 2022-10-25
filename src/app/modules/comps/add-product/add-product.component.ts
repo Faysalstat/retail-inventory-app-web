@@ -11,7 +11,9 @@ import { ProductService } from '../../services/product-service.service';
 export class AddProductComponent implements OnInit {
   productAddingForm!: FormGroup;
   categories!: any[];
+  packagingCategories!: any[];
   units!: any[];
+  showLoader:boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private productService: ProductService,
@@ -23,10 +25,12 @@ export class AddProductComponent implements OnInit {
       { label: 'BAG', value: 'BAG' },
       { label: 'Meter', value: 'METER' },
     ];
+
   }
 
   ngOnInit(): void {
     this.prepareForm();
+    this.fetchPackagingCategory();
   }
   prepareForm() {
     this.productAddingForm = this.formBuilder.group({
@@ -34,17 +38,40 @@ export class AddProductComponent implements OnInit {
       productCategory: [''],
       unitType: ['',[Validators.required]],
       quantity: [0],
+      brandName:[''],
       costPricePerUnit: [0],
       sellingPricePerUnit: [0],
+      packagingCategory:[''],
+      unitPerPackage:[0]
     });
   }
   fetchProductCategories() {
     this.categories = [{ label: 'select category', value: null }];
   }
+  fetchPackagingCategory(){
+    this.packagingCategories = [{ label: 'Select category', value: null }];
+    this.productService.fetchAllPackagingCategory().subscribe({
+      next:(res)=>{
+        let categories = res.body;
+        if(res.body){
+          categories.map((elem:any)=>{
+            let category = { label: elem.categoryName, value: elem.categoryName }
+            this.packagingCategories.push(category);
+        })
+        }
+       
+      },
+      error:(err)=>{
+        this.notificationService.showMessage("FAILED!","Category Fetching Failed","OK",1000);
+      }
+    })
+  }
   addProduct() {
+    
     if (this.productAddingForm.invalid) {
       return;
     }
+    this.showLoader = true;
     let productModel = this.productAddingForm.value;
     const params:Map<string,any> = new Map();
     params.set("product",productModel);
@@ -56,6 +83,9 @@ export class AddProductComponent implements OnInit {
       },
       error:(err)=>{
         this.notificationService.showMessage("FAILED!","Product Add Failed","OK",1000);
+      },
+      complete:()=>{
+        this.showLoader = false;
       }
     })
   }

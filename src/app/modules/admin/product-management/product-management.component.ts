@@ -28,7 +28,7 @@ export class ProductManagementComponent implements OnInit {
     this.offset = this.offset;
     params.set('offset', this.offset);
     params.set('limit', this.pageSize);
-    this.productService.fetchAllInvoice(params).subscribe({
+    this.productService.fetchAllProduct(params).subscribe({
       next: (res) => {
         if (res) {
           this.productList = res.body;

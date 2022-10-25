@@ -12,10 +12,17 @@ export class ProductService {
   public addProduct(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(ProductUrls.ADD_PRODUCT, queryParams.get('product'));
   }
-  public fetchAllInvoice(queryParams: Map<string, any>): Observable<any> {
+  public fetchAllProduct(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
-    // params = params.append('offset',queryParams.get('offset'));
-    // params = params.append('limit',queryParams.get('limit').limit);
+    params = params.append('offset',queryParams.get('offset'));
+    params = params.append('limit',queryParams.get('limit'));
     return this.http.get(ProductUrls.FETCH_ALL_PRODUCT,{params:params});
+  }
+
+  public fetchAllProductForDropDown(): Observable<any> {
+    return this.http.get(ProductUrls.FETCH_ALL_PRODUCT_FOR_DROPDOWN);
+  }
+  public fetchAllPackagingCategory(): Observable<any> {
+    return this.http.get(ProductUrls.FETCH_ALL_PACKAGING_CATEGORY);
   }
 }

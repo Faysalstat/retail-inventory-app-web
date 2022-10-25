@@ -1,40 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
 import { map, Observable, startWith } from 'rxjs';
-import {
-  Customer,
-  OrderIssueDomain,
-  OrderItem,
-  Person,
-  Product,
-} from '../../model/models';
+import { OrderItem, Person, Product, Supplyer, SupplyIssueDomain } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 import { ProductService } from '../../services/product-service.service';
+
 @Component({
-  selector: 'app-sale-point',
-  templateUrl: './sale-point.component.html',
-  styleUrls: ['./sale-point.component.css'],
+  selector: 'app-add-stock',
+  templateUrl: './add-stock.component.html',
+  styleUrls: ['./add-stock.component.css'],
 })
-export class SalePointComponent implements OnInit {
-  saleInvoiceIssueForm!: FormGroup;
+export class AddStockComponent implements OnInit {
+  supplyInvoiceIssueForm!: FormGroup;
   productFindForm!: FormGroup;
   isEdit: boolean = false;
-  isCustomerExist: boolean = false;
-  customer!: Customer;
+  isSupplyerExist: boolean = false;
+  supplyer!: Supplyer;
+  person: Person = new Person();
+  personId!: number;
   productName = new FormControl('');
   selectedProduct = new Product();
   orderItem!: OrderItem;
+  selectedOrderItem!: OrderItem;
   orderList!: any[];
   productList: any[] = [];
   filteredOptions!: Observable<Product[]>;
   unitType: string = 'UNIT';
+  showLoader: boolean = false;
+  errMsg: string = '';
   constructor(
     private formBuilder: FormBuilder,
     private clientService: ClientService,
@@ -42,8 +37,8 @@ export class SalePointComponent implements OnInit {
     private inventoryService: InventoryService,
     private notificationService: NotificationService
   ) {
-    this.customer = new Customer();
-    this.customer.person = new Person();
+    this.supplyer = new Supplyer();
+    this.person = new Person();
     this.orderItem = new OrderItem();
     this.orderList = [];
     this.prepareInvoiceIssueForm(null);
@@ -52,24 +47,15 @@ export class SalePointComponent implements OnInit {
   ngOnInit(): void {
     this.fetchProducts();
   }
-
-  initOptions() {
-    this.filteredOptions = this.productName.valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filter(name as string) : this.productList.slice();
-      })
-    );
-  }
   prepareInvoiceIssueForm(formData: any) {
     if (!formData) {
-      formData = new OrderIssueDomain();
+      formData = new SupplyIssueDomain();
     }
-    this.saleInvoiceIssueForm = this.formBuilder.group({
+    this.supplyInvoiceIssueForm = this.formBuilder.group({
       id: [formData.id],
-      customerId: [formData.customerId, [Validators.required]],
+      supplyerId: [formData.supplyerId],
       orders: [formData.orders, [Validators.required]],
+      schedules: [formData.schedules],
       productName: [new FormControl('')],
       totalPrice: [formData.totalPrice, [Validators.required]],
       amountPaid: [formData.amountPaid],
@@ -79,43 +65,56 @@ export class SalePointComponent implements OnInit {
       comment: [formData.comment],
     });
   }
-  searchCustomer() {
+  searchSupllyer() {
     this.clientService
-      .getClientByContactNo(this.customer.person.contactNo)
+      .getClientByContactNo(this.person.contactNo)
       .subscribe({
         next: (res) => {
           if (res.body) {
-            console.log(res.body);
-            this.customer = res.body;
-            this.saleInvoiceIssueForm
-              .get('customerId')
-              ?.setValue(this.customer.id);
-            this.isCustomerExist = true;
-            this.notificationService.showMessage(
-              'SUCCESS!',
-              'Customer Exists',
-              'OK',
-              1000
-            );
+            this.notificationService.showMessage("SUCCESS!","Person Found","OK",2000);
+            this.person = res.body;
+            // this.supplyer.person = this.person;
+            if(res.body.supplyer){
+              this.supplyer = res.body.supplyer;
+              this.isSupplyerExist = true;
+            }else{
+              this.errMsg = "** This person is not a Customer, Please Add as a Customer"
+              this.isSupplyerExist = false;
+            }
+          } else {
+            this.person.personAddress = '';
+            this.person.personName = '';
+            this.person.id = 0;
+            this.isSupplyerExist = false;
+            return;
           }
         },
+        error:(err)=>{
+          this.isSupplyerExist = false;
+          console.log(err.message);
+          this.notificationService.showMessage("ERROR!","Customer Found Failed" + err.message,"OK",2000);
+        },
+        complete: () => {},
       });
   }
-  addCustomer() {
+  addSupplyer() {
     const params: Map<string, any> = new Map();
-    let customerModel = {
-      clientType: 'CUSTOMER',
-      personName: this.customer.person.personName,
-      contactNo: this.customer.person.contactNo,
-      personAddress: this.customer.person.personAddress,
-      shopName: this.customer.shopName,
+    let supplyerModel = {
+      personId: this.person.id,
+      clientType: 'SUPPLYER',
+      personName: this.person.personName,
+      contactNo: this.person.contactNo,
+      personAddress: this.person.personAddress,
+      shopName: this.supplyer.shopName,
+      regNo: this.supplyer.regNo
     };
-    params.set('client', customerModel);
+    params.set('client', supplyerModel);
 
     this.clientService.addClient(params).subscribe({
       next: (res) => {
         if (res.body) {
-          this.saleInvoiceIssueForm.get('customerId')?.setValue(res.body.id);
+          this.isSupplyerExist = true;
+          this.supplyInvoiceIssueForm.get('supplyerId')?.setValue(res.body.id);
           console.log(res.body);
         }
         this.notificationService.showMessage(
@@ -128,6 +127,7 @@ export class SalePointComponent implements OnInit {
     });
   }
   fetchProducts() {
+    this.showLoader = true;
     const params: Map<string, any> = new Map();
     this.productService.fetchAllProductForDropDown().subscribe({
       next: (res) => {
@@ -143,16 +143,29 @@ export class SalePointComponent implements OnInit {
           1000
         );
       },
+      complete: () => {
+        this.showLoader = false;
+      },
     });
   }
-  displayFn(product: Product): string {
-    return product && product.productName ? product.productName : '';
+  initOptions() {
+    this.filteredOptions = this.productName.valueChanges.pipe(
+      startWith(''),
+      map((value) => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? this._filter(name as string) : this.productList.slice();
+      })
+    );
   }
   private _filter(name: string): any[] {
     const filterValue = name.toLowerCase();
     return this.productList.filter((product) =>
       product.productName.toLowerCase().includes(filterValue)
     );
+  }
+
+  displayFn(product: Product): string {
+    return product && product.productName ? product.productName : '';
   }
   productSelected(product: any) {
     this.selectedProduct = product;
@@ -161,23 +174,13 @@ export class SalePointComponent implements OnInit {
     this.orderItem.unitType = product.unitType;
     this.orderItem.sellingPricePerUnit = product.sellingPricePerUnit;
     this.unitType = product.unitType;
-
     console.log(this.selectedProduct);
   }
   calculateOrder() {
     this.orderItem.totalOrderPrice =
       this.orderItem.quantityOrdered * this.orderItem.sellingPricePerUnit;
   }
-  calculateSummary() {
-    this.saleInvoiceIssueForm
-      .get('duePayment')
-      ?.setValue(
-        this.saleInvoiceIssueForm.get('totalPrice')?.value -
-          this.saleInvoiceIssueForm.get('amountPaid')?.value -
-          this.saleInvoiceIssueForm.get('rebate')?.value
-      );
-  }
-  addOrder() {
+  addSupplyOrder() {
     if (
       !this.orderItem.productId ||
       !this.orderItem.quantityOrdered ||
@@ -193,18 +196,28 @@ export class SalePointComponent implements OnInit {
     this.orderList.map((elem) => {
       totalPrice += elem.totalOrderPrice;
     });
-    this.saleInvoiceIssueForm.get('orders')?.setValue(this.orderList);
-    this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+    this.supplyInvoiceIssueForm.get('orders')?.setValue(this.orderList);
+    this.supplyInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+    this.calculateSummary();
   }
-  calculateTotalPrice() {
-    let totalPrice = 0;
-    this.orderList.forEach((element) => {
-      totalPrice = +element.totalOrderPrice;
-    });
-    this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+  onOrderSelect(event: any) {
+    console.log(event);
+  }
+  calculateSummary() {
+    this.supplyInvoiceIssueForm
+      .get('duePayment')
+      ?.setValue(
+        this.supplyInvoiceIssueForm.get('totalPrice')?.value -
+          this.supplyInvoiceIssueForm.get('amountPaid')?.value -
+          this.supplyInvoiceIssueForm.get('rebate')?.value
+      );
   }
   submitOrder() {
-    if (!this.saleInvoiceIssueForm.valid) {
+    if(!this.isSupplyerExist){
+      this.notificationService.showMessage("WARNING!","Please Add Supplyer","OK",10000);
+      return;
+    } 
+    if (!this.supplyInvoiceIssueForm.valid) {
       this.notificationService.showMessage(
         'INVALID FORM!',
         'Please Input all fields',
@@ -213,13 +226,18 @@ export class SalePointComponent implements OnInit {
       );
       return;
     }
-    let orderIssueModel = this.saleInvoiceIssueForm.value;
+    let orderIssueModel = this.supplyInvoiceIssueForm.value;
+    orderIssueModel.supplyerId = this.supplyer.id;
     console.log(orderIssueModel);
     const params: Map<string, any> = new Map();
-    params.set('order',orderIssueModel);
-    this.inventoryService.issueSalesOrder(params).subscribe({
-
-    })
-
+    params.set('order', orderIssueModel);
+    this.inventoryService.issueBuyOrder(params).subscribe({
+      next:(res)=>{
+        console.log(res.body);
+      },
+      error:(err)=>{
+        console.log(err);
+      }
+    });
   }
 }
