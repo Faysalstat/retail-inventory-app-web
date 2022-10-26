@@ -13,10 +13,17 @@ export class Customer {
 export class Supplyer {
   id!: number;
   person!: Person;
+  account!:Account
   shopName!: string;
   regNo!:string;
 }
-
+export class Account {
+  id!: number;
+  balance!: number;
+  due!: number;
+  amountToPay!: number;
+  accountType!: number;
+}
 export class Product {
   id!: number;
   productName!: string;
@@ -31,18 +38,18 @@ export class OrderItem {
   productName!: string;
   unitType!: string;
   quantityOrdered!: number;
-  sellingPricePerUnit!: number;
+  pricePerUnit!: number;
   totalOrderPrice!: number;
   deliveredQuantity!:number;
   deliverySchedules!:ScehduleDelivery[];
 }
 export class ScehduleDelivery{
   id!:number;
-  deliverableQuantity!: number;
-  
-  orderId!:number;
+  deliverableQuantity!:number;
   scheduledDate!: string;
-  status!:string;
+  deliveryStatus!: string;
+  state!: string;
+  orderId!:number;
 }
 
 export class OrderIssueDomain {

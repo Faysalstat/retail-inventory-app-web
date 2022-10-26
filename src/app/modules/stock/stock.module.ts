@@ -8,11 +8,13 @@ import { MaterialModule } from 'src/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompsModule } from '../comps/comps.module';
 import { SupplyInvoiceListComponent } from './supply-invoice-list/supply-invoice-list.component';
+import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
 @NgModule({
   declarations: [
     StockComponent,
     AddStockComponent,
-    SupplyInvoiceListComponent
+    SupplyInvoiceListComponent,
+    EditInvoiceComponent
   ],
   imports: [
     CommonModule,

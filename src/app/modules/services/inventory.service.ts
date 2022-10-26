@@ -16,6 +16,9 @@ export class InventoryService {
   public issueBuyOrder(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(InventoryUrls.ISSUE_SUPPLY_ORDER, queryParams.get('order'));
   }
+  public issueSupplyOrderDelievery(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(InventoryUrls.DO_SUPPLY_ORDER_DELIVERY, queryParams.get('delivery'));
+  }
   public fetchAllSupplyInvoice(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
     params = params.append('offset',queryParams.get('query').offset);
@@ -29,4 +32,10 @@ export class InventoryService {
     // params = params.append('deliveryStatus',queryParams.get('query').deliveryStatus);
     return this.http.get(InventoryUrls.FETCH_SUPPLY_ORDER_LIST,{params:params});
   }
+  public fetchSupplyInvoiceById(invoiceId:any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('invoiceId',invoiceId);
+    return this.http.get(InventoryUrls.FETCH_SUPPLY_ORDER_BY_ID,{params:params});
+  }
 }
+

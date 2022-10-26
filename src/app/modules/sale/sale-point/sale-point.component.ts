@@ -159,14 +159,14 @@ export class SalePointComponent implements OnInit {
     this.orderItem.productId = product.id;
     this.orderItem.productName = product.productName;
     this.orderItem.unitType = product.unitType;
-    this.orderItem.sellingPricePerUnit = product.sellingPricePerUnit;
+    this.orderItem.pricePerUnit = product.sellingPricePerUnit;
     this.unitType = product.unitType;
 
     console.log(this.selectedProduct);
   }
   calculateOrder() {
     this.orderItem.totalOrderPrice =
-      this.orderItem.quantityOrdered * this.orderItem.sellingPricePerUnit;
+      this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
   }
   calculateSummary() {
     this.saleInvoiceIssueForm
@@ -181,7 +181,7 @@ export class SalePointComponent implements OnInit {
     if (
       !this.orderItem.productId ||
       !this.orderItem.quantityOrdered ||
-      !this.orderItem.sellingPricePerUnit
+      !this.orderItem.pricePerUnit
     ) {
       return;
     }

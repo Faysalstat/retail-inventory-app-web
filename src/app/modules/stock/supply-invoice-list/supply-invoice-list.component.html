@@ -25,7 +25,7 @@
                             No Due Payment Pending!!
                         </td>
                     </tr>
-                    <tr *ngFor="let invoice of supplyInvoiceList; index as i">
+                    <tr class="row-hover" *ngFor="let invoice of supplyInvoiceList; index as i" (click)="viewInvoice(invoice)">
                         <td scope="row">{{i+1}}</td>
                         <td>{{invoice.supplyer.person.personName}}</td>
                         <td>{{invoice.supplyer.person.contactNo}}</td>

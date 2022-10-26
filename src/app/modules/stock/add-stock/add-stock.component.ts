@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { OrderItem, Person, Product, Supplyer, SupplyIssueDomain } from '../../model/models';
 import { ClientService } from '../../services/client.service';
@@ -31,6 +32,7 @@ export class AddStockComponent implements OnInit {
   showLoader: boolean = false;
   errMsg: string = '';
   constructor(
+    private route: Router,
     private formBuilder: FormBuilder,
     private clientService: ClientService,
     private productService: ProductService,
@@ -172,19 +174,19 @@ export class AddStockComponent implements OnInit {
     this.orderItem.productId = product.id;
     this.orderItem.productName = product.productName;
     this.orderItem.unitType = product.unitType;
-    this.orderItem.sellingPricePerUnit = product.sellingPricePerUnit;
+    this.orderItem.pricePerUnit = product.pricePerUnit;
     this.unitType = product.unitType;
     console.log(this.selectedProduct);
   }
   calculateOrder() {
     this.orderItem.totalOrderPrice =
-      this.orderItem.quantityOrdered * this.orderItem.sellingPricePerUnit;
+      this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
   }
   addSupplyOrder() {
     if (
       !this.orderItem.productId ||
       !this.orderItem.quantityOrdered ||
-      !this.orderItem.sellingPricePerUnit
+      !this.orderItem.pricePerUnit
     ) {
       return;
     }
@@ -234,9 +236,12 @@ export class AddStockComponent implements OnInit {
     this.inventoryService.issueBuyOrder(params).subscribe({
       next:(res)=>{
         console.log(res.body);
+        this.notificationService.showMessage("SUCCESS!","Invoice Created","OK",500);
+        this.route.navigate(["/stock/supply-invoice-list"]);
       },
       error:(err)=>{
         console.log(err);
+        this.notificationService.showMessage("ERROR!","Invoice Not Created","OK",500);
       }
     });
   }

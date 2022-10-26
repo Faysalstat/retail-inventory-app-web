@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 
@@ -16,6 +17,7 @@ export class SupplyInvoiceListComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100,500,1000];
   queryBody:any;
   constructor(
+    private route: Router,
     private inventoryService: InventoryService,
     private notificationService: NotificationService 
   ) { 
@@ -54,6 +56,9 @@ export class SupplyInvoiceListComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.offset = this.pageSize * event.pageIndex;
     this.fetchSupplyList();
+  }
+  viewInvoice(invoice:any){
+    this.route.navigate(["/stock/edit-supply-invoice",invoice.id]);
   }
 
 }
