@@ -5,6 +5,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import {
   Customer,
@@ -35,7 +36,12 @@ export class SalePointComponent implements OnInit {
   productList: any[] = [];
   filteredOptions!: Observable<Product[]>;
   unitType: string = 'UNIT';
+  person: Person = new Person();
+  personId!: number;
+  showLoader: boolean = false;
+  errMsg: string = '';
   constructor(
+    private route: Router,
     private formBuilder: FormBuilder,
     private clientService: ClientService,
     private productService: ProductService,
@@ -79,42 +85,66 @@ export class SalePointComponent implements OnInit {
       comment: [formData.comment],
     });
   }
-  searchCustomer() {
-    this.clientService
-      .getClientByContactNo(this.customer.person.contactNo)
-      .subscribe({
-        next: (res) => {
-          if (res.body) {
-            console.log(res.body);
-            this.customer = res.body;
+  searchSupllyer() {
+    this.clientService.getClientByContactNo(this.person.contactNo).subscribe({
+      next: (res) => {
+        if (res.body) {
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            'Person Found',
+            'OK',
+            2000
+          );
+          this.person = res.body;
+          if (res.body.customer) {
+            this.customer = res.body.customer;
             this.saleInvoiceIssueForm
               .get('customerId')
               ?.setValue(this.customer.id);
             this.isCustomerExist = true;
-            this.notificationService.showMessage(
-              'SUCCESS!',
-              'Customer Exists',
-              'OK',
-              1000
-            );
+          } else {
+            this.errMsg =
+              '** This person is not a Customer, Please Add as a Customer';
+            this.isCustomerExist = false;
           }
-        },
-      });
+        } else {
+          this.person.personAddress = '';
+          this.person.personName = '';
+          this.person.id = 0;
+          this.isCustomerExist = false;
+          return;
+        }
+      },
+      error: (err) => {
+        this.isCustomerExist = false;
+        console.log(err.message);
+        this.notificationService.showMessage(
+          'ERROR!',
+          'Customer Found Failed' + err.message,
+          'OK',
+          2000
+        );
+      },
+      complete: () => {},
+    });
   }
   addCustomer() {
     const params: Map<string, any> = new Map();
-    let customerModel = {
+    let supplyerModel = {
+      personId: this.person.id,
       clientType: 'CUSTOMER',
-      personName: this.customer.person.personName,
-      contactNo: this.customer.person.contactNo,
-      personAddress: this.customer.person.personAddress,
+      personName: this.person.personName,
+      contactNo: this.person.contactNo,
+      personAddress: this.person.personAddress,
       shopName: this.customer.shopName,
+      // regNo: this.customer.regNo
     };
-    params.set('client', customerModel);
+    params.set('client', supplyerModel);
 
     this.clientService.addClient(params).subscribe({
       next: (res) => {
         if (res.body) {
+          this.isCustomerExist = true;
           this.saleInvoiceIssueForm.get('customerId')?.setValue(res.body.id);
           console.log(res.body);
         }
@@ -154,17 +184,27 @@ export class SalePointComponent implements OnInit {
       product.productName.toLowerCase().includes(filterValue)
     );
   }
-  productSelected(product: any) {
-    this.selectedProduct = product;
-    this.orderItem.productId = product.id;
-    this.orderItem.productName = product.productName;
-    this.orderItem.unitType = product.unitType;
-    this.orderItem.pricePerUnit = product.sellingPricePerUnit;
-    this.unitType = product.unitType;
+  productSelected(event: any) {
+    this.selectedProduct = event.option.value;
+    this.orderItem.productId = this.selectedProduct.id;
+    this.orderItem.productName = this.selectedProduct.productName;
+    this.orderItem.unitType = this.selectedProduct.unitType;
+    this.orderItem.packagingCategory = this.selectedProduct.packagingCategory;
+    this.orderItem.unitPerPackage = this.selectedProduct.unitPerPackage;
+    this.orderItem.pricePerUnit = this.selectedProduct.sellingPricePerUnit;
+    this.unitType = this.selectedProduct.unitType;
 
     console.log(this.selectedProduct);
   }
   calculateOrder() {
+    this.orderItem.totalOrderPrice =
+      this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
+    this.orderItem.quantityOrdered =
+      this.orderItem.quantityOrdered / this.orderItem.unitPerPackage;
+  }
+  calculateQuantity() {
+    this.orderItem.quantityOrdered =
+      this.orderItem.unitPerPackage * this.orderItem.packageQuantity;
     this.orderItem.totalOrderPrice =
       this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
   }
@@ -176,6 +216,10 @@ export class SalePointComponent implements OnInit {
           this.saleInvoiceIssueForm.get('amountPaid')?.value -
           this.saleInvoiceIssueForm.get('rebate')?.value
       );
+  }
+  // testing
+  onChangeProduc() {
+    console.log(this.selectedProduct);
   }
   addOrder() {
     if (
@@ -216,10 +260,27 @@ export class SalePointComponent implements OnInit {
     let orderIssueModel = this.saleInvoiceIssueForm.value;
     console.log(orderIssueModel);
     const params: Map<string, any> = new Map();
-    params.set('order',orderIssueModel);
+    params.set('invoice', orderIssueModel);
     this.inventoryService.issueSalesOrder(params).subscribe({
-
-    })
-
+      next: (res) => {
+        console.log(res.body);
+        this.notificationService.showMessage(
+          'SUCCESS!',
+          'Invoice Created',
+          'OK',
+          500
+        );
+        this.route.navigate(['/sale/sale-invoice-list']);
+      },
+      error: (err) => {
+        console.log(err);
+        this.notificationService.showMessage(
+          'ERROR!',
+          'Invoice Not Created',
+          'OK',
+          500
+        );
+      },
+    });
   }
 }

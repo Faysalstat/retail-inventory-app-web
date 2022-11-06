@@ -1,5 +1,6 @@
 export class Person {
   id!: number;
+  customer!:Customer;
   personName!: string;
   contactNo!: string;
   personAddress!: string;
@@ -7,13 +8,17 @@ export class Person {
 export class Customer {
   id!: number;
   person!: Person;
+  account!:Account;
   shopName!: string;
 }
 
 export class Supplyer {
   id!: number;
   person!: Person;
-  account!:Account
+  account!:Account;
+  code!:string;
+  companyName!: string;
+  brand!: string;
   shopName!: string;
   regNo!:string;
 }
@@ -31,13 +36,19 @@ export class Product {
   quantity!: number;
   costPricePerUnit!: number;
   sellingPricePerUnit!: number;
+  packagingCategory!: string;
+  unitPerPackage!: number;
 }
 export class OrderItem {
   id!: number;
   productId!: number;
   productName!: string;
   unitType!: string;
-  quantityOrdered!: number;
+  packagingCategory!: string;
+  unitPerPackage!: number;
+  packageQuantity: number = 0;
+  looseQuantity: number = 0;
+  quantityOrdered: number = 0;
   pricePerUnit!: number;
   totalOrderPrice!: number;
   deliveredQuantity!:number;
@@ -70,6 +81,7 @@ export class SupplyIssueDomain {
   productName:string ='';
   orders!: OrderItem[];
   schedules!:ScehduleDelivery[];
+  
   totalPrice!: number;
   amountPaid!: number;
   duePayment!: number;

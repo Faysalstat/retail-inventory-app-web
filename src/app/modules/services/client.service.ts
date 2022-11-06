@@ -17,4 +17,9 @@ export class ClientService {
     params = params.append('contactNo', contactNo);
     return this.http.get(ClientUrls.FETCH_CLIENT_BY_CONTACT_NO, { params: params });
   }
+  public getSupplyerByCode(code: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('code', code);
+    return this.http.get(ClientUrls.FETCH_SUPPLYER_BY_CODE, { params: params });
+  }
 }

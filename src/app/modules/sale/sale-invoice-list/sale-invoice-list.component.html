@@ -1,0 +1,50 @@
+<mat-card>
+    <h1>Sale Invoice List:</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Filters</h3>
+        </div>
+        <div class="md-col-12" style="overflow-x:auto;">
+            <table class="table  table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">SN</th>
+                        <!-- <th scope="col">Invoice No</th> -->
+                        <th scope="col">Customer</th>
+                        <th scope="col">Contact No</th>
+                        <th scope="col">Shop Name</th>
+                        <th scope="col">Total Bill</th>
+                        <th scope="col">Paid</th>
+                        <th scope="col">Due</th>
+                        <th scope="col">Delivery Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!isListExist">
+                        <td colspan="9" style="font-weight:bold ; ">
+                            No Due Payment Pending!!
+                        </td>
+                    </tr>
+                    <tr class="row-hover" *ngFor="let invoice of saleInvoiceList; index as i" (click)="viewInvoice(invoice)">
+                        <td scope="row">{{i+1}}</td>
+                        <td>{{invoice.customer.person.personName}}</td>
+                        <td>{{invoice.customer.person.contactNo}}</td>
+                        <td>{{invoice.customer.shopName}}</td>
+                        <td>{{invoice.totalPrice}}</td>
+                        <td>{{invoice.totalPaid}}</td>
+                        <td>{{invoice.duePayment}}</td>
+                        <td>{{invoice.deliveryStatus}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <div style="float:right ;font-size: 16px;">
+                <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChange($event)" aria-label="Select page">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</mat-card>

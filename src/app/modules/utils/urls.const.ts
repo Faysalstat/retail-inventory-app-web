@@ -1,5 +1,6 @@
 // const BASE_URL = 'https://btbbricks.xyz/api';
 const BASE_URL = "http://localhost:3000/api";
+
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
   DELETE_PRODUCT: BASE_URL + '/product/delete-product',
@@ -12,7 +13,9 @@ export const ProductUrls = {
 
 export const ClientUrls = {
     ADD_CLIENT : BASE_URL + "/client/addclient",
-    FETCH_CLIENT_BY_CONTACT_NO : BASE_URL + "/client/getclientbycontact"
+    FETCH_CLIENT_BY_CONTACT_NO : BASE_URL + "/client/getclientbycontact",
+    FETCH_SUPPLYER_BY_CODE : BASE_URL + "/client/getsupplyerbycode"
+    
 }
 
 export const InventoryUrls = {
@@ -20,5 +23,9 @@ export const InventoryUrls = {
   ISSUE_SUPPLY_ORDER : BASE_URL + "/supply/issuesupplyorder",
   DO_SUPPLY_ORDER_DELIVERY : BASE_URL + "/supply/dodelievery",
   FETCH_SUPPLY_ORDER_LIST : BASE_URL + "/supply/getallinvoice",
+  FETCH_SALE_ORDER_LIST : BASE_URL + "/sales/getallinvoice",
   FETCH_SUPPLY_ORDER_BY_ID : BASE_URL + "/supply/getinvoicebyid",
+  FETCH_SALE_ORDER_BY_ID : BASE_URL + "/sales/getinvoicebyid",
+  ISSUE_DO_PAYMENT : BASE_URL + "/sales/dopayment",
+
 }

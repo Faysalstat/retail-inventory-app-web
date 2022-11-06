@@ -1,8 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators} from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
-import { OrderItem, Person, Product, Supplyer, SupplyIssueDomain } from '../../model/models';
+import {
+  OrderItem,
+  Person,
+  Product,
+  Supplyer,
+  SupplyIssueDomain,
+} from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
@@ -31,6 +42,7 @@ export class AddStockComponent implements OnInit {
   unitType: string = 'UNIT';
   showLoader: boolean = false;
   errMsg: string = '';
+  isApprovalNeeded : boolean = false;
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -59,6 +71,9 @@ export class AddStockComponent implements OnInit {
       orders: [formData.orders, [Validators.required]],
       schedules: [formData.schedules],
       productName: [new FormControl('')],
+      packageQuantity: [formData.packageQuantity],
+      looseQuantity: [formData.looseQuantity],
+      totalQuantity: [formData.totalQuantity],
       totalPrice: [formData.totalPrice, [Validators.required]],
       amountPaid: [formData.amountPaid],
       duePayment: [formData.duePayment],
@@ -68,36 +83,46 @@ export class AddStockComponent implements OnInit {
     });
   }
   searchSupllyer() {
-    this.clientService
-      .getClientByContactNo(this.person.contactNo)
-      .subscribe({
-        next: (res) => {
+    this.clientService.getSupplyerByCode(this.supplyer.code).subscribe({
+      next: (res) => {
+        if (res.body) {
+          console.log(res.body);
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            res.message,
+            'OK',
+            2000
+          );
+          this.supplyer = res.body;
+          // this.supplyer.person = this.person;
           if (res.body) {
-            this.notificationService.showMessage("SUCCESS!","Person Found","OK",2000);
-            this.person = res.body;
-            // this.supplyer.person = this.person;
-            if(res.body.supplyer){
-              this.supplyer = res.body.supplyer;
-              this.isSupplyerExist = true;
-            }else{
-              this.errMsg = "** This person is not a Customer, Please Add as a Customer"
-              this.isSupplyerExist = false;
-            }
+            this.supplyer = res.body;
+            this.person = this.supplyer.person;
+            this.isSupplyerExist = true;
           } else {
-            this.person.personAddress = '';
-            this.person.personName = '';
-            this.person.id = 0;
+            this.errMsg = '** Supplyer Not Found, Add One';
             this.isSupplyerExist = false;
-            return;
           }
-        },
-        error:(err)=>{
+        } else {
+          this.person.personAddress = '';
+          this.person.personName = '';
+          this.person.id = 0;
           this.isSupplyerExist = false;
-          console.log(err.message);
-          this.notificationService.showMessage("ERROR!","Customer Found Failed" + err.message,"OK",2000);
-        },
-        complete: () => {},
-      });
+          return;
+        }
+      },
+      error: (err) => {
+        this.isSupplyerExist = false;
+        console.log(err.message);
+        this.notificationService.showMessage(
+          'ERROR!',
+          'Customer Found Failed' + err.message,
+          'OK',
+          2000
+        );
+      },
+      complete: () => {},
+    });
   }
   addSupplyer() {
     const params: Map<string, any> = new Map();
@@ -108,7 +133,7 @@ export class AddStockComponent implements OnInit {
       contactNo: this.person.contactNo,
       personAddress: this.person.personAddress,
       shopName: this.supplyer.shopName,
-      regNo: this.supplyer.regNo
+      regNo: this.supplyer.regNo,
     };
     params.set('client', supplyerModel);
 
@@ -119,11 +144,21 @@ export class AddStockComponent implements OnInit {
           this.supplyInvoiceIssueForm.get('supplyerId')?.setValue(res.body.id);
           console.log(res.body);
         }
+        this.errMsg = '';
         this.notificationService.showMessage(
           'SUCCESS!',
           'Client Add Successful',
           'OK',
           1000
+        );
+      },
+      error: (err) => {
+        console.log(err);
+        this.notificationService.showMessage(
+          'SUCCESS!',
+          'Client Add Failed',
+          'OK',
+          500
         );
       },
     });
@@ -169,13 +204,14 @@ export class AddStockComponent implements OnInit {
   displayFn(product: Product): string {
     return product && product.productName ? product.productName : '';
   }
-  productSelected(product: any) {
-    this.selectedProduct = product;
-    this.orderItem.productId = product.id;
-    this.orderItem.productName = product.productName;
-    this.orderItem.unitType = product.unitType;
-    this.orderItem.pricePerUnit = product.pricePerUnit;
-    this.unitType = product.unitType;
+  productSelected(event: any) {
+    this.selectedProduct = event.option.value;
+    this.orderItem.productId = this.selectedProduct.id;
+    this.orderItem.productName = this.selectedProduct.productName;
+    this.orderItem.unitType = this.selectedProduct.unitType;
+    this.orderItem.pricePerUnit = this.selectedProduct.costPricePerUnit;
+    this.orderItem.unitPerPackage = this.selectedProduct.unitPerPackage;
+    this.unitType = this.selectedProduct.unitType;
     console.log(this.selectedProduct);
   }
   calculateOrder() {
@@ -215,10 +251,15 @@ export class AddStockComponent implements OnInit {
       );
   }
   submitOrder() {
-    if(!this.isSupplyerExist){
-      this.notificationService.showMessage("WARNING!","Please Add Supplyer","OK",10000);
+    if (!this.isSupplyerExist) {
+      this.notificationService.showMessage(
+        'WARNING!',
+        'Please Add Supplyer',
+        'OK',
+        10000
+      );
       return;
-    } 
+    }
     if (!this.supplyInvoiceIssueForm.valid) {
       this.notificationService.showMessage(
         'INVALID FORM!',
@@ -231,18 +272,42 @@ export class AddStockComponent implements OnInit {
     let orderIssueModel = this.supplyInvoiceIssueForm.value;
     orderIssueModel.supplyerId = this.supplyer.id;
     console.log(orderIssueModel);
-    const params: Map<string, any> = new Map();
-    params.set('order', orderIssueModel);
-    this.inventoryService.issueBuyOrder(params).subscribe({
-      next:(res)=>{
-        console.log(res.body);
-        this.notificationService.showMessage("SUCCESS!","Invoice Created","OK",500);
-        this.route.navigate(["/stock/supply-invoice-list"]);
-      },
-      error:(err)=>{
-        console.log(err);
-        this.notificationService.showMessage("ERROR!","Invoice Not Created","OK",500);
-      }
-    });
+    if(this.isApprovalNeeded){
+      let approvalModel = {
+
+      };
+      const params: Map<string, any> = new Map();
+      params.set('approval', approvalModel);
+
+    }else{
+      const params: Map<string, any> = new Map();
+      params.set('order', orderIssueModel);
+      this.inventoryService.issueBuyOrder(params).subscribe({
+        next: (res) => {
+          console.log(res.body);
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            'Invoice Created',
+            'OK',
+            500
+          );
+          this.route.navigate(['/stock/supply-invoice-list']);
+        },
+        error: (err) => {
+          console.log(err);
+          this.notificationService.showMessage(
+            'ERROR!',
+            'Invoice Not Created',
+            'OK',
+            500
+          );
+        },
+      });
+    }
+    
+  }
+  calculateQuantity() {
+    this.orderItem.quantityOrdered = (this.orderItem.packageQuantity * this.orderItem.unitPerPackage) + this.orderItem.looseQuantity;
+    this.calculateOrder();
   }
 }

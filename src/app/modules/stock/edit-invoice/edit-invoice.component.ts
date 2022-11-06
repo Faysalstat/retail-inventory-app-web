@@ -16,10 +16,26 @@ export class EditInvoiceComponent implements OnInit {
   supplyInvoice:any;
   selectedOrderItem:any;
   delieverySchedule:ScehduleDelivery = new ScehduleDelivery();
+  isPending: boolean = false;
+  isDelivered: boolean = false;
+  errMsg:string ="";
+  isDue: boolean = false;
+  payment:any;
+  totalPaid:number = 0;
+  duePayment: number =0;
+  rebate:number = 0;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
-    private notificationService: NotificationService ) { }
+    private notificationService: NotificationService ) { 
+      this.payment = {
+        invoiceId:0,
+        newPayment:0,
+        newRebate:0,
+        newDueAmount:0
+      }
+    }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((parameter) => {
@@ -33,7 +49,21 @@ export class EditInvoiceComponent implements OnInit {
         console.log(res.body);
         this.supplyer = res.body.supplyer;
         this.supplyOrders = res.body.supplyOrders;
+        this.isPending = false;
         this.supplyInvoice = res.body;
+        this.totalPaid = res.body.totalPaid;
+        this.duePayment = res.body.duePayment;
+        this.rebate = res.body.rebate;
+        if(this.supplyInvoice.duePayment > 0){
+          this.isDue = true;
+        }
+        for(let i =0; i< this.supplyOrders.length; i++){
+          if(this.supplyOrders[i].deliveryStatus == "PENDING"){
+            this.isPending = true;
+            break;
+          }
+        }
+        
       },
       error:(err)=>{
         this.notificationService.showMessage("ERROR",err.message,"OK",1000);
@@ -62,6 +92,30 @@ export class EditInvoiceComponent implements OnInit {
         this.notificationService.showMessage("ERROR","DELIVERY ADD FAILED","OK",500);
       }
     })
+  }
+  onSelectOrder(){
+    
+    if(this.selectedOrderItem.deliveryStatus == "DELIVERED"){
+      this.isDelivered = true ;
+      this.errMsg = "*This Product delivery is completed!";
+    }else{
+      this.isDelivered = false;
+    }
+  }
+
+  onChangeDelievredQuantity(){
+    let remainingPendingQuantity = this.selectedOrderItem.quantityOrdered- this.selectedOrderItem.quantityDelivered;
+    if(this.delieverySchedule.deliverableQuantity>remainingPendingQuantity){
+      this.errMsg = "*Delivered Quantity is Greater Than Remaining Order Quantity";
+      return;
+    }else{
+      this.errMsg = "";
+    }
+  }
+  calculateNewSummary(){
+    this.supplyInvoice.totalPaid = this.totalPaid + this.payment.newPayment;
+    this.supplyInvoice.rebate = this.rebate + this.payment.newRebate;
+    this.supplyInvoice.duePayment = this.supplyInvoice.totalPrice - this.supplyInvoice.totalPaid - this.supplyInvoice.rebate;
   }
 
 }

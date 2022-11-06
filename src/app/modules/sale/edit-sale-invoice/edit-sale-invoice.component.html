@@ -5,20 +5,20 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Supplyer :</th>
-                        <td>{{supplyer?.person?.personName}}</td>
+                        <th>Customer :</th>
+                        <td>{{customer?.person?.personName}}</td>
                     </tr>
                     <tr>
                         <th>Contact :</th>
-                        <td>{{supplyer?.person?.contactNo}}</td>
+                        <td>{{customer?.person?.contactNo}}</td>
                     </tr>
                     <tr>
                         <th>Shop :</th>
-                        <td>{{supplyer?.shopName}}(REG: {{supplyer?.regNo}})</td>
+                        <td>{{customer?.shopName}}</td>
                     </tr>
                     <tr>
                         <th>Balance :</th>
-                        <td>{{supplyer?.account?.balance}} BDT</td>
+                        <td>{{customer?.account?.balance}} BDT</td>
                     </tr>
                 </thead>
 
@@ -29,36 +29,52 @@
                 <thead>
                     <tr>
                         <th>Total Bill:</th>
-                        <td>{{supplyInvoice?.totalPrice || 0}} BDT</td>
+                        <td>{{saleInvoice?.totalPrice || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th>Total Paid:</th>
-                        <td>{{supplyInvoice?.totalPaid || 0}} BDT</td>
+                        <td>{{saleInvoice?.totalPaid || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th>Payment Due:</th>
-                        <td>{{supplyInvoice?.duePayment || 0}} BDT</td>
+                        <td>{{saleInvoice?.duePayment || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th>Rebate:</th>
-                        <td>{{supplyInvoice?.rebate || 0}} BDT</td>
+                        <td>{{saleInvoice?.rebate || 0}} BDT</td>
                     </tr>
                 </thead>
             </table>
         </div>
-        <div *ngIf="isDue" class="col-md-3">
+        </div>
+        <div *ngIf="isDue"  class="row">
+        <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>New Payment</mat-label>
                 <input type="number" (keyup)="calculateNewSummary()" pInputText [ngModelOptions]="{standalone:true}"
-                    [(ngModel)]="payment.newPayment" placeholder="New Payment" matInput>
+                [(ngModel)]="payment.newPayment" placeholder="New Payment"
+                    matInput>
             </mat-form-field>
         </div>
-        <div *ngIf="isDue" class="col-md-3">
+        <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>New Rebate</mat-label>
                 <input type="number" pInputText (keyup)="calculateNewSummary()" [ngModelOptions]="{standalone:true}"
-                    [(ngModel)]="payment.newRebate" placeholder="New Rebate" matInput>
+                [(ngModel)]="payment.newRebate" placeholder="New Rebate"
+                    matInput>
             </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Remarks</mat-label>
+                    <textarea type="text" rows="1" pInputText [ngModelOptions]="{standalone:true}"
+                    [(ngModel)]="payment.remarks" matInput>
+                    </textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <button (click)="submitPayment()" mat-raised-button color="warn">Do
+                Payment</button>
         </div>
     </div>
     <div class="row">
@@ -78,7 +94,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let order of supplyOrders; index as i">
+                    <tr *ngFor="let order of saleOrders; index as i">
                         <td scope="row">{{i+1}}</td>
                         <td>{{order?.orderNo}}</td>
                         <td>{{order?.product?.productName}}</td>
@@ -91,14 +107,13 @@
             </table>
         </div>
     </div>
-    <div *ngIf="isPending" class="row">
+    <!-- <div *ngIf="isPending" class="row">
         <h2>Receive Product Delivery:</h2>
         <div class="col-md-4">
             <mat-form-field appearance="outline" class="input-field">
                 <mat-label>Product</mat-label>
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedOrderItem">
-                    <mat-option *ngFor="let order of supplyOrders" (onSelectionChange)="onSelectOrder()"
-                        [value]="order">{{order?.product?.productName}}
+                    <mat-option *ngFor="let order of saleOrders" (onSelectionChange)="onSelectOrder()" [value]="order">{{order?.product?.productName}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -106,9 +121,9 @@
         <div class="col-md-4">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Deliverable Quantity</mat-label>
-                <input type="number" pInputText [ngModelOptions]="{standalone:true}"
-                    (change)="onChangeDelievredQuantity()" [(ngModel)]="delieverySchedule.deliverableQuantity"
-                    [disabled]="isDelivered" placeholder="Quantity" matInput>
+                <input type="number" pInputText [ngModelOptions]="{standalone:true}" (change)="onChangeDelievredQuantity()"
+                    [(ngModel)]="delieverySchedule.deliverableQuantity" [disabled]="isDelivered" placeholder="Quantity"
+                    matInput>
             </mat-form-field>
         </div>
         <div class="col-md-4">
@@ -125,10 +140,10 @@
             <button (click)="addDelievrySchedule()" [disabled]="isDelivered" mat-raised-button color="warn">Add
                 Delivery</button>
         </div>
-    </div>
-    <div *ngIf="isPending" class="row">
+    </div> -->
+    <div *ngIf="isDue" class="row">
         <hr>
-        <h2>Receive Product Delivery:</h2>
+        <h2>Receive Payment:</h2>
 
 
     </div>

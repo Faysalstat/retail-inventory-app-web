@@ -4,18 +4,19 @@
         <h2 style="font-weight:bold;">
             <mat-icon>face</mat-icon> CUSTOMER
         </h2>
+        <app-page-loader *ngIf="showLoader"></app-page-loader>
         <div class="col-md-4">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Mobile No:</mat-label>
-                <input (change)="searchCustomer()" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
-                    [(ngModel)]="customer.person.contactNo" placeholder="Contact No" matInput>
+                <input (change)="searchSupllyer()" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
+                    [(ngModel)]="person.contactNo" placeholder="Contact No" matInput>
             </mat-form-field>
         </div>
         <div class="col-md-4">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Customer Name:</mat-label>
-                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="customer.person.personName"
-                    [disabled]="isCustomerExist" placeholder="Customer Name" matInput>
+                <mat-label>Supplyer Name:</mat-label>
+                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="person.personName"
+                    [disabled]="isCustomerExist" placeholder="Supplyer Name" matInput>
             </mat-form-field>
         </div>
         <div class="col-md-4">
@@ -25,17 +26,19 @@
                     placeholder="Shop Name" matInput>
             </mat-form-field>
         </div>
+        
         <div class="col-md-12">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Address:</mat-label>
                 <textarea pInputText [ngModelOptions]="{standalone:true}" [disabled]="isCustomerExist"
-                    [(ngModel)]="customer.person.personAddress" matInput></textarea>
+                    [(ngModel)]="person.personAddress" matInput></textarea>
             </mat-form-field>
         </div>
         <div class="col-md-12">
             <button *ngIf="!isCustomerExist" (click)="addCustomer()" mat-raised-button color="warn">Add
-                Customer</button>
+                Supplyer</button>
         </div>
+        <p style="color:red;font-weight:bolder">{{errMsg}}</p>
     </div>
     <hr>
     <form [formGroup]="saleInvoiceIssueForm" (keydown.enter)="$event.preventDefault()">
@@ -44,18 +47,15 @@
                 <mat-icon>shopping_cart</mat-icon> ORDER
             </h2>
             <div class="col-md-12">
-                <!-- <form> -->
                     <mat-form-field class="input-field" appearance="outline">
-                        <mat-label>Product</mat-label>
-                        <input type="text" matInput [formControl]="productName" [matAutocomplete]="auto">
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                            <mat-option *ngFor="let product of filteredOptions | async" [value]="product"
-                                (onSelectionChange)="productSelected(product)">
+                        <mat-label>Select Product</mat-label>
+                        <input type="text" matInput [formControl]="productName" [(ngModel)]="selectedProduct" [matAutocomplete]="auto">
+                        <mat-autocomplete (optionSelected)="productSelected($event)" #auto="matAutocomplete" [displayWith]="displayFn">
+                            <mat-option *ngFor="let product of filteredOptions | async" [value]="product">
                                 {{product.productName}}
                             </mat-option>
                         </mat-autocomplete>
                     </mat-form-field>
-                <!-- </form> -->
             </div>
             <div class="col-md-4">
                 <mat-form-field class="input-field" appearance="outline">
@@ -64,6 +64,31 @@
                         [(ngModel)]="orderItem.pricePerUnit" placeholder="Selling Price" matInput>
                 </mat-form-field>
             </div>
+            <div class="col-md-2">
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Packaging</mat-label>
+                    <input type="text" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
+                        [(ngModel)]="orderItem.packagingCategory" placeholder="Packaging"
+                        matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Quantity per Package</mat-label>
+                    <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
+                    [(ngModel)]="orderItem.unitPerPackage" placeholder="Quantity per Package"
+                        matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Number Of Package</mat-label>
+                    <input type="number" pInputText [ngModelOptions]="{standalone:true}"
+                        (change)="calculateQuantity()" [(ngModel)]="orderItem.quantityOrdered" placeholder="Quantity per Package"
+                        matInput>
+                </mat-form-field>
+            </div>
+            
             <div class="col-md-4">
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-label>Quantity</mat-label>
@@ -96,6 +121,7 @@
                             <th>SN</th>
                             <th>Product Name</th>
                             <th>Rate</th>
+                            <th>Quantity</th>
                             <th>Price</th>
                             <!-- <th>Action</th> -->
                         </tr>
@@ -104,7 +130,8 @@
                         <tr *ngFor="let order of orderList; index as i">
                             <th scope="row">{{i+1}}</th>
                             <th>{{order.productName}}</th>
-                            <th>{{order.sellingPricePerUnit}}</th>
+                            <th>{{order.pricePerUnit}}</th>
+                            <th>{{order.quantityOrdered}} {{order.unitType}}</th>
                             <th>{{order.totalOrderPrice}}</th>
                             <!-- <th>{{order.totalPrice}}</th> -->
                         </tr>
@@ -132,6 +159,7 @@
                         [disabled]="isEdit" placeholder="Paid Amount" matInput>
                 </mat-form-field>
             </div>
+            <!--   -->
             <div class="col-md-3">
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-label>Due:</mat-label>
@@ -156,7 +184,9 @@
             <div class="col-md-12">
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-label>Comment:</mat-label>
-                    <textarea type="text" pInputText formControlName="comment" matInput></textarea>
+                    <textarea type="text" pInputText formControlName="comment" matInput>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    </textarea>
                 </mat-form-field>
             </div>
             <div class="col-md-12">
