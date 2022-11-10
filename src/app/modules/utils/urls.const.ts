@@ -22,6 +22,7 @@ export const InventoryUrls = {
   ISSUE_SALES_ORDER : BASE_URL + "/sales/issueorder",
   ISSUE_SUPPLY_ORDER : BASE_URL + "/supply/issuesupplyorder",
   DO_SUPPLY_ORDER_DELIVERY : BASE_URL + "/supply/dodelievery",
+  UPDATE_INVOICE : BASE_URL + "/supply/updateinvoice",
   FETCH_SUPPLY_ORDER_LIST : BASE_URL + "/supply/getallinvoice",
   FETCH_SALE_ORDER_LIST : BASE_URL + "/sales/getallinvoice",
   FETCH_SUPPLY_ORDER_BY_ID : BASE_URL + "/supply/getinvoicebyid",

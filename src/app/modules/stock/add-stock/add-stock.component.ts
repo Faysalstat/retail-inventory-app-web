@@ -43,6 +43,8 @@ export class AddStockComponent implements OnInit {
   showLoader: boolean = false;
   errMsg: string = '';
   isApprovalNeeded : boolean = false;
+  totalPrice:number = 0;
+  comment!:string;
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -71,18 +73,19 @@ export class AddStockComponent implements OnInit {
       orders: [formData.orders, [Validators.required]],
       schedules: [formData.schedules],
       productName: [new FormControl('')],
-      packageQuantity: [formData.packageQuantity],
-      looseQuantity: [formData.looseQuantity],
-      totalQuantity: [formData.totalQuantity],
+      // packageQuantity: [formData.packageQuantity],
+      // looseQuantity: [formData.looseQuantity],
+      // totalQuantity: [formData.totalQuantity],
       totalPrice: [formData.totalPrice, [Validators.required]],
-      amountPaid: [formData.amountPaid],
-      duePayment: [formData.duePayment],
+      // amountPaid: [formData.amountPaid],
+      // duePayment: [formData.duePayment],
       rebate: [formData.rebate],
-      newPayment: [formData.newPayment],
+      // newPayment: [formData.newPayment],
       comment: [formData.comment],
     });
   }
   searchSupllyer() {
+    let code = 
     this.clientService.getSupplyerByCode(this.supplyer.code).subscribe({
       next: (res) => {
         if (res.body) {
@@ -230,12 +233,12 @@ export class AddStockComponent implements OnInit {
     this.orderItem = new OrderItem();
     this.productName = new FormControl('');
     this.initOptions();
-    let totalPrice = 0;
+    this.totalPrice = 0;
     this.orderList.map((elem) => {
-      totalPrice += elem.totalOrderPrice;
+      this.totalPrice += elem.totalOrderPrice;
     });
     this.supplyInvoiceIssueForm.get('orders')?.setValue(this.orderList);
-    this.supplyInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+    this.supplyInvoiceIssueForm.get('totalPrice')?.setValue(this.totalPrice);
     this.calculateSummary();
   }
   onOrderSelect(event: any) {
@@ -271,6 +274,7 @@ export class AddStockComponent implements OnInit {
     }
     let orderIssueModel = this.supplyInvoiceIssueForm.value;
     orderIssueModel.supplyerId = this.supplyer.id;
+    orderIssueModel.comment = this.comment;
     console.log(orderIssueModel);
     if(this.isApprovalNeeded){
       let approvalModel = {

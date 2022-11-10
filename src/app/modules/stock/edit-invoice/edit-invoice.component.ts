@@ -24,6 +24,7 @@ export class EditInvoiceComponent implements OnInit {
   totalPaid:number = 0;
   duePayment: number =0;
   rebate:number = 0;
+  comment!:string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -54,6 +55,7 @@ export class EditInvoiceComponent implements OnInit {
         this.totalPaid = res.body.totalPaid;
         this.duePayment = res.body.duePayment;
         this.rebate = res.body.rebate;
+        this.comment = res.body.remarks;
         if(this.supplyInvoice.duePayment > 0){
           this.isDue = true;
         }
@@ -71,27 +73,38 @@ export class EditInvoiceComponent implements OnInit {
     })
   }
  
-  addDelievrySchedule(){
-    let deliveryModel={
-      orderId: this.selectedOrderItem.id,
-      deliverableQuantity:this.delieverySchedule.deliverableQuantity,
-      scheduledDate:this.delieverySchedule.scheduledDate,
-      deliveryStatus: "DELIVERED",
-      state:"OPEN"
+  addDelievrySchedule(order:any){
+    let deliveryModel={};
+    if(order !=null){
+      deliveryModel={
+        orderId: order.id,
+        deliverableQuantity:order.quantityOrdered - order.quantityDelivered,
+        scheduledDate:new Date(),
+        deliveryStatus: "DELIVERED",
+        state:"OPEN"
+      }
+    }else{
+      deliveryModel={
+        orderId: this.selectedOrderItem.id,
+        deliverableQuantity:this.delieverySchedule.deliverableQuantity,
+        scheduledDate:this.delieverySchedule.scheduledDate,
+        deliveryStatus: "DELIVERED",
+        state:"OPEN"
+      }
     }
     console.log(deliveryModel);
-    const params: Map<string, any> = new Map();
-    params.set('delivery', deliveryModel);
-    this.inventoryService.issueSupplyOrderDelievery(params).subscribe({
-      next:(res)=>{
-        console.log(res.body);
-        this.delieverySchedule = new ScehduleDelivery();
-        this.fetchInvoiceDetailsByID();
-      },
-      error:(err)=>{
-        this.notificationService.showMessage("ERROR","DELIVERY ADD FAILED","OK",500);
-      }
-    })
+      const params: Map<string, any> = new Map();
+      params.set('delivery', deliveryModel);
+      this.inventoryService.issueSupplyOrderDelievery(params).subscribe({
+        next:(res)=>{
+          console.log(res.body);
+          this.delieverySchedule = new ScehduleDelivery();
+          this.fetchInvoiceDetailsByID();
+        },
+        error:(err)=>{
+          this.notificationService.showMessage("ERROR","DELIVERY ADD FAILED","OK",500);
+        }
+      })
   }
   onSelectOrder(){
     
@@ -116,6 +129,20 @@ export class EditInvoiceComponent implements OnInit {
     this.supplyInvoice.totalPaid = this.totalPaid + this.payment.newPayment;
     this.supplyInvoice.rebate = this.rebate + this.payment.newRebate;
     this.supplyInvoice.duePayment = this.supplyInvoice.totalPrice - this.supplyInvoice.totalPaid - this.supplyInvoice.rebate;
+  }
+  updateComment(){
+    let inviceModel = {
+      comment : this.comment,
+      invoiceId: this.supplyInvoice.id
+    }
+    const params: Map<string, any> = new Map();
+    params.set('invoice', inviceModel);
+    this.inventoryService.updateSupplyInvoice(params).subscribe({
+      next:(res)=>{
+        console.log(res.body);
+        this.notificationService.showMessage("SUCCESS","Invoice Updated","OK",500);
+      }
+    })
   }
 
 }

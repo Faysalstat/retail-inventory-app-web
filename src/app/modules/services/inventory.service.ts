@@ -23,6 +23,9 @@ export class InventoryService {
   public issueSupplyOrderDelievery(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(InventoryUrls.DO_SUPPLY_ORDER_DELIVERY, queryParams.get('delivery'));
   }
+  public updateSupplyInvoice(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(InventoryUrls.UPDATE_INVOICE, queryParams.get('invoice'));
+  }
   public fetchAllSupplyInvoice(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
     params = params.append('offset',queryParams.get('query').offset);

@@ -16,10 +16,7 @@
                         <th>Shop :</th>
                         <td>{{supplyer?.shopName}}(REG: {{supplyer?.regNo}})</td>
                     </tr>
-                    <tr>
-                        <th>Balance :</th>
-                        <td>{{supplyer?.account?.balance}} BDT</td>
-                    </tr>
+                    
                 </thead>
 
             </table>
@@ -28,19 +25,15 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>Balance :</th>
+                        <td>{{supplyer?.account?.balance}} BDT</td>
+                    </tr>
+                    <tr>
                         <th>Total Bill:</th>
                         <td>{{supplyInvoice?.totalPrice || 0}} BDT</td>
                     </tr>
                     <tr>
-                        <th>Total Paid:</th>
-                        <td>{{supplyInvoice?.totalPaid || 0}} BDT</td>
-                    </tr>
-                    <tr>
-                        <th>Payment Due:</th>
-                        <td>{{supplyInvoice?.duePayment || 0}} BDT</td>
-                    </tr>
-                    <tr>
-                        <th>Rebate:</th>
+                        <th>Total Rebate:</th>
                         <td>{{supplyInvoice?.rebate || 0}} BDT</td>
                     </tr>
                 </thead>
@@ -75,6 +68,7 @@
                         <th>Total Quantity</th>
                         <th>Quantity Delivered</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,6 +80,11 @@
                         <td>{{order?.quantityOrdered}}</td>
                         <td>{{order?.quantityDelivered}}</td>
                         <td>{{order?.deliveryStatus}}</td>
+                        <td>
+                            <button [disabled]="order.deliveryStatus=='DELIVERED'" mat-mini-fab (click)="addDelievrySchedule(order)" color="primary">
+                                <mat-icon>trolley</mat-icon>
+                              </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -93,7 +92,7 @@
     </div>
     <div *ngIf="isPending" class="row">
         <h2>Receive Product Delivery:</h2>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <mat-form-field appearance="outline" class="input-field">
                 <mat-label>Product</mat-label>
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedOrderItem">
@@ -103,7 +102,7 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Deliverable Quantity</mat-label>
                 <input type="number" pInputText [ngModelOptions]="{standalone:true}"
@@ -111,7 +110,7 @@
                     [disabled]="isDelivered" placeholder="Quantity" matInput>
             </mat-form-field>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <mat-form-field appearance="outline">
                 <mat-label>Date:</mat-label>
                 <input matInput [matDatepicker]="picker" [disabled]="isDelivered" [ngModelOptions]="{standalone:true}"
@@ -120,16 +119,24 @@
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
         </div>
-        <p style="color:red;font-weight: bold;">{{errMsg}}</p>
-        <div class="col-md-12">
-            <button (click)="addDelievrySchedule()" [disabled]="isDelivered" mat-raised-button color="warn">Add
+        <div class="col-md-3" style="margin-top:10px ;">
+            <button (click)="addDelievrySchedule(null)" [disabled]="isDelivered" mat-raised-button color="warn">Add
                 Delivery</button>
         </div>
+        <p style="color:red;font-weight: bold;">{{errMsg}}</p>
+        <div class="col-md-10">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Comment:</mat-label>
+                <textarea type="text" pInputText
+                
+                [ngModelOptions]="{standalone:true}"
+                [(ngModel)]="comment" matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <button style="margin-top: 10px;"  mat-mini-fab (click)="updateComment()" color="primary">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
     </div>
-    <div *ngIf="isPending" class="row">
-        <hr>
-        <h2>Receive Product Delivery:</h2>
-
-
-    </div>
-</mat-card>
+</mat-card> 

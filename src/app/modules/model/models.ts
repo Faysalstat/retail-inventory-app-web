@@ -57,7 +57,7 @@ export class OrderItem {
 export class ScehduleDelivery{
   id!:number;
   deliverableQuantity!:number;
-  scheduledDate!: string;
+  scheduledDate: Date = new Date();
   deliveryStatus!: string;
   state!: string;
   orderId!:number;
