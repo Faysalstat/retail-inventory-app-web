@@ -7,12 +7,18 @@ import {PanelMenuModule} from 'primeng/panelmenu';
 import { CompsModule } from '../comps/comps.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MaterialModule } from 'src/material.module';
+import { TaskListComponent } from './task-list/task-list.component';
+import { ApprovalDetailsComponent } from './approval-details/approval-details.component';
+import { ConfigurationSettingComponent } from './configuration-setting/configuration-setting.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    ProductManagementComponent
+    ProductManagementComponent,
+    TaskListComponent,
+    ApprovalDetailsComponent,
+    ConfigurationSettingComponent
   ],
   imports: [
     CommonModule,

@@ -7,8 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { AddPersonComponent } from './add-person/add-person.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { AddStockComponent } from './add-stock/add-stock.component';
+import { AddCustomerComponent } from './add-customer/add-customer.component';
+import { CashComponent } from './cash/cash.component';
 
-const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,AddStockComponent]
+const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,AddStockComponent,
+  AddCustomerComponent,CashComponent
+]
 
 @NgModule({
   declarations: components,

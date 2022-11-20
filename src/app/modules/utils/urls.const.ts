@@ -14,6 +14,7 @@ export const ProductUrls = {
 export const ClientUrls = {
     ADD_CLIENT : BASE_URL + "/client/addclient",
     FETCH_CLIENT_BY_CONTACT_NO : BASE_URL + "/client/getclientbycontact",
+    FETCH_CLIENT_BY_CLIENT_TYPE: BASE_URL + "/client/getclientbytype",
     FETCH_SUPPLYER_BY_CODE : BASE_URL + "/client/getsupplyerbycode"
     
 }
@@ -29,4 +30,19 @@ export const InventoryUrls = {
   FETCH_SALE_ORDER_BY_ID : BASE_URL + "/sales/getinvoicebyid",
   ISSUE_DO_PAYMENT : BASE_URL + "/sales/dopayment",
 
+}
+
+export const ReportUrls = {
+  TRANSACTION_REPORT : BASE_URL + "/transaction/gettransactionreport"
+}
+export const ConfigUrls = {
+  ADD_CONFIG : BASE_URL + "/config/addconfig",
+  GET_CONFIG : BASE_URL + "/config/getconfig"
+}
+
+export const ApprovalUrls = {
+  SEND_TO_APPROVAL : BASE_URL + "/approval/add",
+  GET_TASK_LIST : BASE_URL + "/approval/getall",
+  GET_TASK_BY_ID : BASE_URL + "/approval/getbyid",
+  APPROVE_TASK: BASE_URL + "/approval/approve",
 }

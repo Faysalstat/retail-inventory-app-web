@@ -24,8 +24,8 @@ export class Supplyer {
 }
 export class Account {
   id!: number;
-  balance!: number;
-  due!: number;
+  balance: number = 0;
+  due: number=0;
   amountToPay!: number;
   accountType!: number;
 }
@@ -65,14 +65,17 @@ export class ScehduleDelivery{
 
 export class OrderIssueDomain {
   id!: number;
+  doNo!: string;
+  invoiceNo!:string;
   customerId!: number;
+  accountId!: number;
   productName:string ='';
   orders!: OrderItem[];
   totalPrice!: number;
-  amountPaid!: number;
+  previousBalance!:number;
+  totalPayableAmount!: number;
+  totalPaidAmount!: number;
   duePayment!: number;
-  rebate!: number;
-  newPayment!: number;
   comment!: string;
 }
 export class SupplyIssueDomain {
@@ -88,4 +91,12 @@ export class SupplyIssueDomain {
   rebate!: number;
   newPayment!: number;
   comment!: string;
+}
+
+export enum Tasks{
+  CREATE_INVOICE="CREATE_INVOICE",
+  UPDATE_INVOICE= "UPDATE_INVOICE",
+  CREATE_SUPPLY= "CREATE_SUPPLY",
+  UPDATE_SUPPLY= "UPDATE_SUPPLY",
+  CASH_HANDOVER = "CASH_HANDOVER"
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Customer } from '../../model/models';
+import { Customer, ScehduleDelivery } from '../../model/models';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
+import { PdfMakeService } from '../../services/pdf-make.service';
 
 @Component({
   selector: 'app-edit-sale-invoice',
@@ -15,7 +16,7 @@ export class EditSaleInvoiceComponent implements OnInit {
   saleOrders:any[] = [];
   saleInvoice:any;
   selectedOrderItem:any;
-  // delieverySchedule:ScehduleDelivery = new ScehduleDelivery();
+  delieverySchedule:ScehduleDelivery = new ScehduleDelivery();
   isDue: boolean = false;
   isDelivered: boolean = false;
   errMsg:string ="";
@@ -26,7 +27,8 @@ export class EditSaleInvoiceComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
-    private notificationService: NotificationService ) { 
+    private notificationService: NotificationService,
+    private pdfMakeService: PdfMakeService ) { 
       this.payment = {
         invoiceId:0,
         newPayment:0,
@@ -93,28 +95,47 @@ export class EditSaleInvoiceComponent implements OnInit {
       }
     })
   }
-  // addDelievrySchedule(){
-  //   let deliveryModel={
-  //     orderId: this.selectedOrderItem.id,
-  //     deliverableQuantity:this.delieverySchedule.deliverableQuantity,
-  //     scheduledDate:this.delieverySchedule.scheduledDate,
-  //     deliveryStatus: "DELIVERED",
-  //     state:"OPEN"
-  //   }
-  //   console.log(deliveryModel);
-  //   const params: Map<string, any> = new Map();
-  //   params.set('delivery', deliveryModel);
-  //   this.inventoryService.issueSupplyOrderDelievery(params).subscribe({
-  //     next:(res)=>{
-  //       console.log(res.body);
-  //       this.delieverySchedule = new ScehduleDelivery();
-  //       this.fetchInvoiceDetailsByID();
-  //     },
-  //     error:(err)=>{
-  //       this.notificationService.showMessage("ERROR","DELIVERY ADD FAILED","OK",500);
-  //     }
-  //   })
-  // }
+  applyFilter(date: any) {
+    let newDate = new Date(date);
+    return (
+      (newDate.getDate()) +"/"+(newDate.getMonth()+1) + '/' + newDate.getFullYear()
+    );
+  }
+  addDelievrySchedule(order:any){
+    let deliveryModel={};
+    if(order !=null){
+      deliveryModel={
+        orderId: order.id,
+        deliverableQuantity:order.quantityOrdered - order.quantityDelivered,
+        scheduledDate:new Date(),
+        deliveryStatus: "DELIVERED",
+        isSupply:false,
+        state:"OPEN"
+      }
+    }else{
+      deliveryModel={
+        orderId: this.selectedOrderItem.id,
+        deliverableQuantity:this.delieverySchedule.deliverableQuantity,
+        scheduledDate:this.delieverySchedule.scheduledDate,
+        deliveryStatus: "DELIVERED",
+        isSupply:false,
+        state:"OPEN"
+      }
+    }
+    console.log(deliveryModel);
+      const params: Map<string, any> = new Map();
+      params.set('delivery', deliveryModel);
+      this.inventoryService.issueSupplyOrderDelievery(params).subscribe({
+        next:(res)=>{
+          console.log(res.body);
+          this.delieverySchedule = new ScehduleDelivery();
+          this.fetchInvoiceDetailsByID();
+        },
+        error:(err)=>{
+          this.notificationService.showMessage("ERROR","DELIVERY ADD FAILED","OK",500);
+        }
+      })
+  }
   // onSelectOrder(){
     
   //   if(this.selectedOrderItem.deliveryStatus == "DELIVERED"){
@@ -134,4 +155,33 @@ export class EditSaleInvoiceComponent implements OnInit {
   //     this.errMsg = "";
   //   }
   // }
+
+  downloadInvoice(){
+    let orders:any[] = [];
+    let index = 1;
+    this.saleOrders.forEach((elem:any)=>{
+      let orderRow=[];
+      orderRow.push(index);
+      orderRow.push(elem.product.productName);
+      orderRow.push(elem.product.sellingPricePerUnit);
+      orderRow.push(elem.quantityOrdered+" "+ elem.product.unitType);
+      orderRow.push(elem.totalPrice);
+      index++;
+      orders.push(orderRow);
+    })
+    let invoiceModel=  {
+      doNo:"5853",
+      invoiceId:"INV#0001",
+      customer:this.customer,
+      tnxDate: this.applyFilter(new Date()),
+      customerName: this.customer.person.personName,
+      customerAddress: this.customer.person.personAddress,
+      totalPrice: this.saleInvoice.totalPrice,
+      previousBalance:this.saleInvoice.previousBalance,
+      totalPayableAmount:this.saleInvoice.totalPayableAmount,
+      totalPaid: this.saleInvoice.totalPaidAmount,
+      orders:orders
+    }
+      this.pdfMakeService.downloadInvoice(invoiceModel)
+  }
 }

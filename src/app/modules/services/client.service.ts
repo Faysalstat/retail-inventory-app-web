@@ -17,9 +17,17 @@ export class ClientService {
     params = params.append('contactNo', contactNo);
     return this.http.get(ClientUrls.FETCH_CLIENT_BY_CONTACT_NO, { params: params });
   }
-  public getSupplyerByCode(code: string): Observable<any> {
+  public getAllClient(clientType: string): Observable<any> {
     let params = new HttpParams();
-    params = params.append('code', code);
+    params = params.append('clientType', clientType);
+    return this.http.get(ClientUrls.FETCH_CLIENT_BY_CLIENT_TYPE, { params: params });
+  }
+  public getSupplyerByCode(queryParams: Map<string, any>): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('code', queryParams.get("code"));
+    params = params.append('id', queryParams.get("id"));
     return this.http.get(ClientUrls.FETCH_SUPPLYER_BY_CODE, { params: params });
   }
+
+  
 }

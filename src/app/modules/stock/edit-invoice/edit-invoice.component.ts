@@ -81,14 +81,17 @@ export class EditInvoiceComponent implements OnInit {
         deliverableQuantity:order.quantityOrdered - order.quantityDelivered,
         scheduledDate:new Date(),
         deliveryStatus: "DELIVERED",
+        isSupply:true,
         state:"OPEN"
       }
     }else{
       deliveryModel={
         orderId: this.selectedOrderItem.id,
+        invoiceId: this.supplyInvoice.id,
         deliverableQuantity:this.delieverySchedule.deliverableQuantity,
         scheduledDate:this.delieverySchedule.scheduledDate,
         deliveryStatus: "DELIVERED",
+        isSupply:true,
         state:"OPEN"
       }
     }

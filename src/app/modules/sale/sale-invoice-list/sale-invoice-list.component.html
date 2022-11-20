@@ -31,8 +31,8 @@
                         <td>{{invoice.customer.person.contactNo}}</td>
                         <td>{{invoice.customer.shopName}}</td>
                         <td>{{invoice.totalPrice}}</td>
-                        <td>{{invoice.totalPaid}}</td>
-                        <td>{{invoice.duePayment}}</td>
+                        <td>{{invoice.totalPaidAmount}}</td>
+                        <td>{{invoice.totalPrice - invoice.totalPaidAmount}}</td>
                         <td>{{invoice.deliveryStatus}}</td>
                     </tr>
                 </tbody>

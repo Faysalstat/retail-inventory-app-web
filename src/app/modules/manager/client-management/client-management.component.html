@@ -1,0 +1,29 @@
+<app-add-customer></app-add-customer>
+<mat-card>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped" style="text-align:center ;">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Customer Name</th>
+                    <th>Contact No</th>
+                    <th>Shop Name</th>
+                    <th>Address</th>
+                    <th>Balance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let client of clientList; index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{client.person.personName}}</td>
+                        <td>{{client.person.contact}}</td>
+                        <td>{{client.shopName}}</td>
+                        <td>{{client.person.personAddress}}</td>
+                        <td>{{client.account.balance}}</td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</mat-card>

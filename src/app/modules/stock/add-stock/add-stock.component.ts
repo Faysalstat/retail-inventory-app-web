@@ -13,6 +13,7 @@ import {
   Product,
   Supplyer,
   SupplyIssueDomain,
+  Tasks,
 } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
@@ -45,6 +46,7 @@ export class AddStockComponent implements OnInit {
   isApprovalNeeded : boolean = false;
   totalPrice:number = 0;
   comment!:string;
+  userName:string = "Manager"
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -62,6 +64,19 @@ export class AddStockComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchProducts();
+    this.getConfig("isApprovalNeeded");
+  }
+
+  getConfig(configname:any){
+    this.inventoryService.getConfigByName(configname).subscribe({
+      next:(res)=>{
+        if(res.body && res.body.value==1){
+          this.isApprovalNeeded = true;
+        }else{
+          this.isApprovalNeeded = false;
+        }
+      }
+    })
   }
   prepareInvoiceIssueForm(formData: any) {
     if (!formData) {
@@ -73,20 +88,16 @@ export class AddStockComponent implements OnInit {
       orders: [formData.orders, [Validators.required]],
       schedules: [formData.schedules],
       productName: [new FormControl('')],
-      // packageQuantity: [formData.packageQuantity],
-      // looseQuantity: [formData.looseQuantity],
-      // totalQuantity: [formData.totalQuantity],
       totalPrice: [formData.totalPrice, [Validators.required]],
-      // amountPaid: [formData.amountPaid],
-      // duePayment: [formData.duePayment],
       rebate: [formData.rebate],
-      // newPayment: [formData.newPayment],
       comment: [formData.comment],
     });
   }
   searchSupllyer() {
-    let code = 
-    this.clientService.getSupplyerByCode(this.supplyer.code).subscribe({
+    const params: Map<string, any> = new Map();
+    params.set("id","");
+    params.set("code",this.supplyer.code);
+    this.clientService.getSupplyerByCode(params).subscribe({
       next: (res) => {
         if (res.body) {
           console.log(res.body);
@@ -97,7 +108,6 @@ export class AddStockComponent implements OnInit {
             2000
           );
           this.supplyer = res.body;
-          // this.supplyer.person = this.person;
           if (res.body) {
             this.supplyer = res.body;
             this.person = this.supplyer.person;
@@ -127,45 +137,45 @@ export class AddStockComponent implements OnInit {
       complete: () => {},
     });
   }
-  addSupplyer() {
-    const params: Map<string, any> = new Map();
-    let supplyerModel = {
-      personId: this.person.id,
-      clientType: 'SUPPLYER',
-      personName: this.person.personName,
-      contactNo: this.person.contactNo,
-      personAddress: this.person.personAddress,
-      shopName: this.supplyer.shopName,
-      regNo: this.supplyer.regNo,
-    };
-    params.set('client', supplyerModel);
+  // addSupplyer() {
+  //   const params: Map<string, any> = new Map();
+  //   let supplyerModel = {
+  //     personId: this.person.id,
+  //     clientType: 'SUPPLYER',
+  //     personName: this.person.personName,
+  //     contactNo: this.person.contactNo,
+  //     personAddress: this.person.personAddress,
+  //     shopName: this.supplyer.shopName,
+  //     regNo: this.supplyer.regNo,
+  //   };
+  //   params.set('client', supplyerModel);
 
-    this.clientService.addClient(params).subscribe({
-      next: (res) => {
-        if (res.body) {
-          this.isSupplyerExist = true;
-          this.supplyInvoiceIssueForm.get('supplyerId')?.setValue(res.body.id);
-          console.log(res.body);
-        }
-        this.errMsg = '';
-        this.notificationService.showMessage(
-          'SUCCESS!',
-          'Client Add Successful',
-          'OK',
-          1000
-        );
-      },
-      error: (err) => {
-        console.log(err);
-        this.notificationService.showMessage(
-          'SUCCESS!',
-          'Client Add Failed',
-          'OK',
-          500
-        );
-      },
-    });
-  }
+  //   this.clientService.addClient(params).subscribe({
+  //     next: (res) => {
+  //       if (res.body) {
+  //         this.isSupplyerExist = true;
+  //         this.supplyInvoiceIssueForm.get('supplyerId')?.setValue(res.body.id);
+  //         console.log(res.body);
+  //       }
+  //       this.errMsg = '';
+  //       this.notificationService.showMessage(
+  //         'SUCCESS!',
+  //         'Client Add Successful',
+  //         'OK',
+  //         1000
+  //       );
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //       this.notificationService.showMessage(
+  //         'SUCCESS!',
+  //         'Client Add Failed',
+  //         'OK',
+  //         500
+  //       );
+  //     },
+  //   });
+  // }
   fetchProducts() {
     this.showLoader = true;
     const params: Map<string, any> = new Map();
@@ -278,11 +288,30 @@ export class AddStockComponent implements OnInit {
     console.log(orderIssueModel);
     if(this.isApprovalNeeded){
       let approvalModel = {
-
+        payload:JSON.stringify(orderIssueModel),
+        createdBy: this.userName,
+        taskType: Tasks.CREATE_SUPPLY,
       };
       const params: Map<string, any> = new Map();
       params.set('approval', approvalModel);
-
+      this.inventoryService.sendToApproval(params).subscribe({
+        next:(res)=>{
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            'Approval Sent',
+            'OK',
+            500
+          );
+        },
+        error:(err)=>{
+          this.notificationService.showMessage(
+            'Failed!',
+            'Approval Sending Failed. '+ err.message,
+            'OK',
+            500
+          );
+        }
+      })
     }else{
       const params: Map<string, any> = new Map();
       params.set('order', orderIssueModel);

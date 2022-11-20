@@ -31,52 +31,19 @@
                         <th>Total Bill:</th>
                         <td>{{saleInvoice?.totalPrice || 0}} BDT</td>
                     </tr>
+                    
+                    <tr>
+                        <th>Total Payable Amount:</th>
+                        <td>{{saleInvoice?.totalPayableAmount || 0}} BDT</td>
+                    </tr>
                     <tr>
                         <th>Total Paid:</th>
-                        <td>{{saleInvoice?.totalPaid || 0}} BDT</td>
-                    </tr>
-                    <tr>
-                        <th>Payment Due:</th>
-                        <td>{{saleInvoice?.duePayment || 0}} BDT</td>
-                    </tr>
-                    <tr>
-                        <th>Rebate:</th>
-                        <td>{{saleInvoice?.rebate || 0}} BDT</td>
+                        <td>{{saleInvoice?.totalPaidAmount || 0}} BDT</td>
                     </tr>
                 </thead>
             </table>
         </div>
         </div>
-        <div *ngIf="isDue"  class="row">
-        <div class="col-md-3">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>New Payment</mat-label>
-                <input type="number" (keyup)="calculateNewSummary()" pInputText [ngModelOptions]="{standalone:true}"
-                [(ngModel)]="payment.newPayment" placeholder="New Payment"
-                    matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-3">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>New Rebate</mat-label>
-                <input type="number" pInputText (keyup)="calculateNewSummary()" [ngModelOptions]="{standalone:true}"
-                [(ngModel)]="payment.newRebate" placeholder="New Rebate"
-                    matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Remarks</mat-label>
-                    <textarea type="text" rows="1" pInputText [ngModelOptions]="{standalone:true}"
-                    [(ngModel)]="payment.remarks" matInput>
-                    </textarea>
-            </mat-form-field>
-        </div>
-        <div class="col-md-2">
-            <button (click)="submitPayment()" mat-raised-button color="warn">Do
-                Payment</button>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-12 mt-3">
             <h2>Orders</h2>
@@ -91,6 +58,7 @@
                         <th>Total Quantity</th>
                         <th>Quantity Delivered</th>
                         <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,49 +70,42 @@
                         <td>{{order?.quantityOrdered}}</td>
                         <td>{{order?.quantityDelivered}}</td>
                         <td>{{order?.deliveryStatus}}</td>
+                        <td>
+                            <button [disabled]="order.deliveryStatus=='DELIVERED'" mat-mini-fab (click)="addDelievrySchedule(order)" color="primary">
+                                <mat-icon>trolley</mat-icon>
+                              </button>
+                        </td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5" rowspan="4"></th>
+                        <th>Total Price:</th>
+                        <th>{{saleInvoice?.totalPrice}} BDT</th>
+                    </tr>
+                    <tr>
+                        <th>Previous Due:</th>
+                        <th>{{saleInvoice?.previousDue || 0}} BDT</th>
+                    </tr>
+                    <tr>
+                        <th>Total Payable Amount:</th>
+                        <th>{{saleInvoice?.totalPayableAmount}} BDT</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2">
+                            <div class="row">
+                                <div class="col-md-12" >
+                                <button style="float:right;" (click)="downloadInvoice()" mat-raised-button
+                                            color="accent">Download Invoice</button>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </tfoot>
             </table>
         </div>
-    </div>
-    <!-- <div *ngIf="isPending" class="row">
-        <h2>Receive Product Delivery:</h2>
-        <div class="col-md-4">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Product</mat-label>
-                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedOrderItem">
-                    <mat-option *ngFor="let order of saleOrders" (onSelectionChange)="onSelectOrder()" [value]="order">{{order?.product?.productName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Deliverable Quantity</mat-label>
-                <input type="number" pInputText [ngModelOptions]="{standalone:true}" (change)="onChangeDelievredQuantity()"
-                    [(ngModel)]="delieverySchedule.deliverableQuantity" [disabled]="isDelivered" placeholder="Quantity"
-                    matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field appearance="outline">
-                <mat-label>Date:</mat-label>
-                <input matInput [matDatepicker]="picker" [disabled]="isDelivered" [ngModelOptions]="{standalone:true}"
-                    [(ngModel)]="delieverySchedule.scheduledDate">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-        </div>
-        <p style="color:red;font-weight: bold;">{{errMsg}}</p>
         <div class="col-md-12">
-            <button (click)="addDelievrySchedule()" [disabled]="isDelivered" mat-raised-button color="warn">Add
-                Delivery</button>
+
         </div>
-    </div> -->
-    <div *ngIf="isDue" class="row">
-        <hr>
-        <h2>Receive Payment:</h2>
-
-
     </div>
 </mat-card>

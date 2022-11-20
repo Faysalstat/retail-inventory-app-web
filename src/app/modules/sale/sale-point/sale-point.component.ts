@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import {
+  Account,
   Customer,
   OrderIssueDomain,
   OrderItem,
@@ -17,7 +18,9 @@ import {
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
+import { PdfMakeService } from '../../services/pdf-make.service';
 import { ProductService } from '../../services/product-service.service';
+
 @Component({
   selector: 'app-sale-point',
   templateUrl: './sale-point.component.html',
@@ -29,6 +32,7 @@ export class SalePointComponent implements OnInit {
   isEdit: boolean = false;
   isCustomerExist: boolean = false;
   customer!: Customer;
+  account:Account = new Account();
   productName = new FormControl('');
   selectedProduct = new Product();
   orderItem!: OrderItem;
@@ -40,13 +44,19 @@ export class SalePointComponent implements OnInit {
   personId!: number;
   showLoader: boolean = false;
   errMsg: string = '';
+  totalPrice: number = 0;
+  previousBalance: number = 0;
+  totalPayableAmount:number = 0;
+  balanceTitle: string = "Balance";
+  comment: string='';
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
     private clientService: ClientService,
     private productService: ProductService,
     private inventoryService: InventoryService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private pdfMakeService: PdfMakeService,
   ) {
     this.customer = new Customer();
     this.customer.person = new Person();
@@ -74,18 +84,21 @@ export class SalePointComponent implements OnInit {
     }
     this.saleInvoiceIssueForm = this.formBuilder.group({
       id: [formData.id],
+      doNo: [formData.doNo],
+      invoiceNo:[formData.invoiceNo],
       customerId: [formData.customerId, [Validators.required]],
+      // accountId:[formData.accountId,[Validators.required]],
       orders: [formData.orders, [Validators.required]],
       productName: [new FormControl('')],
       totalPrice: [formData.totalPrice, [Validators.required]],
-      amountPaid: [formData.amountPaid],
+      previousBalance: [formData.previousBalance],
+      totalPayableAmount: [formData.totalPayableAmount],
+      totalPaidAmount:[formData.totalPaidAmount],
       duePayment: [formData.duePayment],
-      rebate: [formData.rebate],
-      newPayment: [formData.newPayment],
-      comment: [formData.comment],
+      comment: [formData.comment]
     });
   }
-  searchSupllyer() {
+  searchCustomer() {
     this.clientService.getClientByContactNo(this.person.contactNo).subscribe({
       next: (res) => {
         if (res.body) {
@@ -96,8 +109,16 @@ export class SalePointComponent implements OnInit {
             2000
           );
           this.person = res.body;
+          console.log(res.body);
           if (res.body.customer) {
             this.customer = res.body.customer;
+            this.account = this.customer.account;
+            this.previousBalance = this.account.balance;
+            if(this.account.balance<0){
+              this.balanceTitle = "Due"
+            }else{
+              this.balanceTitle = "Balance"
+            }
             this.saleInvoiceIssueForm
               .get('customerId')
               ?.setValue(this.customer.id);
@@ -199,14 +220,10 @@ export class SalePointComponent implements OnInit {
   calculateOrder() {
     this.orderItem.totalOrderPrice =
       this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
-    this.orderItem.quantityOrdered =
-      this.orderItem.quantityOrdered / this.orderItem.unitPerPackage;
   }
   calculateQuantity() {
-    this.orderItem.quantityOrdered =
-      this.orderItem.unitPerPackage * this.orderItem.packageQuantity;
-    this.orderItem.totalOrderPrice =
-      this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
+    this.orderItem.quantityOrdered = (this.orderItem.packageQuantity * this.orderItem.unitPerPackage) + this.orderItem.looseQuantity;
+   this.calculateOrder();
   }
   calculateSummary() {
     this.saleInvoiceIssueForm
@@ -239,6 +256,8 @@ export class SalePointComponent implements OnInit {
     });
     this.saleInvoiceIssueForm.get('orders')?.setValue(this.orderList);
     this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+    this.totalPrice = totalPrice;
+    this.totalPayableAmount = this.totalPrice + this.previousBalance;
   }
   calculateTotalPrice() {
     let totalPrice = 0;
@@ -258,6 +277,10 @@ export class SalePointComponent implements OnInit {
       return;
     }
     let orderIssueModel = this.saleInvoiceIssueForm.value;
+    orderIssueModel.accountId = this.account.id;
+    orderIssueModel.comment = this.comment;
+    orderIssueModel.totalPayableAmount = this.totalPayableAmount;
+    orderIssueModel.previousBalance = this.account.balance;
     console.log(orderIssueModel);
     const params: Map<string, any> = new Map();
     params.set('invoice', orderIssueModel);
@@ -283,4 +306,31 @@ export class SalePointComponent implements OnInit {
       },
     });
   }
+  downloadInvoice(){
+    let orders:any[] = [];
+    let index = 1;
+    this.orderList.forEach((elem)=>{
+      let orderRow=[];
+      orderRow.push(index);
+      orderRow.push(elem.productName);
+      orderRow.push(elem.pricePerUnit);
+      orderRow.push(elem.quantityOrdered+" "+ elem.unitType);
+      orderRow.push(elem.totalOrderPrice);
+      index++;
+      orders.push(orderRow);
+    })
+    let invoiceModel=  {
+      doNo:"5853",
+      invoiceId:"INV#0001",
+      customerName: this.person.personName,
+      customerAddress: this.person.personAddress,
+      totalPrice: this.totalPrice,
+      previousBalance:this.previousBalance,
+      totalPayableAmount:this.totalPayableAmount,
+      totalPaid: this.saleInvoiceIssueForm.get("totalPaidAmount")?.value,
+      orders:orders
+    }
+      this.pdfMakeService.downloadInvoice(invoiceModel)
+  }
+  
 }

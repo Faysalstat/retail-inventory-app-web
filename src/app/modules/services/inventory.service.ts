@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ClientUrls, InventoryUrls } from '../utils/urls.const';
+import { ApprovalUrls, ClientUrls, ConfigUrls, InventoryUrls } from '../utils/urls.const';
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +63,28 @@ export class InventoryService {
     let params = new HttpParams();
     params = params.append('invoiceId',invoiceId);
     return this.http.get(InventoryUrls.FETCH_SALE_ORDER_BY_ID,{params:params});
+  }
+
+// config service 
+  public getConfigByName(configName:any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('configName',configName);
+    return this.http.get(ConfigUrls.GET_CONFIG,{params:params});
+  }
+
+
+  public sendToApproval(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(ApprovalUrls.SEND_TO_APPROVAL, queryParams.get('approval'));
+  }
+
+  public fetchTaskList(queryParams: Map<string, any>): Observable<any> {
+    let params = new HttpParams();
+    return this.http.get(ApprovalUrls.GET_TASK_LIST,{params:params});
+  }
+  public fetchTaskById(id:any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append("taskId",id);
+    return this.http.get(ApprovalUrls.GET_TASK_BY_ID,{params:params});
   }
 }
 
