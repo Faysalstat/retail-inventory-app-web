@@ -10,6 +10,7 @@ import { MaterialModule } from 'src/material.module';
 import { TaskListComponent } from './task-list/task-list.component';
 import { ApprovalDetailsComponent } from './approval-details/approval-details.component';
 import { ConfigurationSettingComponent } from './configuration-setting/configuration-setting.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,7 +28,9 @@ import { ConfigurationSettingComponent } from './configuration-setting/configura
     AdminRoutingModule,
     CompsModule,
     MaterialModule,
-    MatIconModule
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class AdminModule { }

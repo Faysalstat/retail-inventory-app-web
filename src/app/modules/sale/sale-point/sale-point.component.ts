@@ -14,6 +14,7 @@ import {
   OrderItem,
   Person,
   Product,
+  Tasks,
 } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
@@ -32,7 +33,7 @@ export class SalePointComponent implements OnInit {
   isEdit: boolean = false;
   isCustomerExist: boolean = false;
   customer!: Customer;
-  account:Account = new Account();
+  account: Account = new Account();
   productName = new FormControl('');
   selectedProduct = new Product();
   orderItem!: OrderItem;
@@ -46,9 +47,11 @@ export class SalePointComponent implements OnInit {
   errMsg: string = '';
   totalPrice: number = 0;
   previousBalance: number = 0;
-  totalPayableAmount:number = 0;
-  balanceTitle: string = "Balance";
-  comment: string='';
+  totalPayableAmount: number = 0;
+  balanceTitle: string = 'Balance';
+  comment: string = '';
+  isApprovalNeeded: boolean = true;
+  userName: string = 'MANAGER';
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -56,7 +59,7 @@ export class SalePointComponent implements OnInit {
     private productService: ProductService,
     private inventoryService: InventoryService,
     private notificationService: NotificationService,
-    private pdfMakeService: PdfMakeService,
+    private pdfMakeService: PdfMakeService
   ) {
     this.customer = new Customer();
     this.customer.person = new Person();
@@ -67,6 +70,18 @@ export class SalePointComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchProducts();
+  }
+
+  getConfig(configname: any) {
+    this.inventoryService.getConfigByName(configname).subscribe({
+      next: (res) => {
+        if (res.body && res.body.value == 1) {
+          this.isApprovalNeeded = true;
+        } else {
+          this.isApprovalNeeded = false;
+        }
+      },
+    });
   }
 
   initOptions() {
@@ -85,7 +100,7 @@ export class SalePointComponent implements OnInit {
     this.saleInvoiceIssueForm = this.formBuilder.group({
       id: [formData.id],
       doNo: [formData.doNo],
-      invoiceNo:[formData.invoiceNo],
+      invoiceNo: [formData.invoiceNo],
       customerId: [formData.customerId, [Validators.required]],
       // accountId:[formData.accountId,[Validators.required]],
       orders: [formData.orders, [Validators.required]],
@@ -93,9 +108,9 @@ export class SalePointComponent implements OnInit {
       totalPrice: [formData.totalPrice, [Validators.required]],
       previousBalance: [formData.previousBalance],
       totalPayableAmount: [formData.totalPayableAmount],
-      totalPaidAmount:[formData.totalPaidAmount],
+      totalPaidAmount: [formData.totalPaidAmount],
       duePayment: [formData.duePayment],
-      comment: [formData.comment]
+      comment: [formData.comment],
     });
   }
   searchCustomer() {
@@ -114,10 +129,10 @@ export class SalePointComponent implements OnInit {
             this.customer = res.body.customer;
             this.account = this.customer.account;
             this.previousBalance = this.account.balance;
-            if(this.account.balance<0){
-              this.balanceTitle = "Due"
-            }else{
-              this.balanceTitle = "Balance"
+            if (this.account.balance < 0) {
+              this.balanceTitle = 'Due';
+            } else {
+              this.balanceTitle = 'Balance';
             }
             this.saleInvoiceIssueForm
               .get('customerId')
@@ -213,6 +228,7 @@ export class SalePointComponent implements OnInit {
     this.orderItem.packagingCategory = this.selectedProduct.packagingCategory;
     this.orderItem.unitPerPackage = this.selectedProduct.unitPerPackage;
     this.orderItem.pricePerUnit = this.selectedProduct.sellingPricePerUnit;
+    this.orderItem.quantity = this.selectedProduct.quantity;
     this.unitType = this.selectedProduct.unitType;
 
     console.log(this.selectedProduct);
@@ -222,8 +238,10 @@ export class SalePointComponent implements OnInit {
       this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
   }
   calculateQuantity() {
-    this.orderItem.quantityOrdered = (this.orderItem.packageQuantity * this.orderItem.unitPerPackage) + this.orderItem.looseQuantity;
-   this.calculateOrder();
+    this.orderItem.quantityOrdered =
+      this.orderItem.packageQuantity * this.orderItem.unitPerPackage +
+      this.orderItem.looseQuantity;
+    this.calculateOrder();
   }
   calculateSummary() {
     this.saleInvoiceIssueForm
@@ -257,7 +275,7 @@ export class SalePointComponent implements OnInit {
     this.saleInvoiceIssueForm.get('orders')?.setValue(this.orderList);
     this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
     this.totalPrice = totalPrice;
-    this.totalPayableAmount = this.totalPrice + this.previousBalance;
+    this.totalPayableAmount = this.totalPrice - this.previousBalance;
   }
   calculateTotalPrice() {
     let totalPrice = 0;
@@ -283,54 +301,82 @@ export class SalePointComponent implements OnInit {
     orderIssueModel.previousBalance = this.account.balance;
     console.log(orderIssueModel);
     const params: Map<string, any> = new Map();
-    params.set('invoice', orderIssueModel);
-    this.inventoryService.issueSalesOrder(params).subscribe({
-      next: (res) => {
-        console.log(res.body);
-        this.notificationService.showMessage(
-          'SUCCESS!',
-          'Invoice Created',
-          'OK',
-          500
-        );
-        this.route.navigate(['/sale/sale-invoice-list']);
-      },
-      error: (err) => {
-        console.log(err);
-        this.notificationService.showMessage(
-          'ERROR!',
-          'Invoice Not Created',
-          'OK',
-          500
-        );
-      },
-    });
+
+    if (this.isApprovalNeeded) {
+      let approvalModel = {
+        payload: JSON.stringify(orderIssueModel),
+        createdBy: this.userName,
+        taskType: Tasks.CREATE_INVOICE,
+      };
+      const params: Map<string, any> = new Map();
+      params.set('approval', approvalModel);
+      this.inventoryService.sendToApproval(params).subscribe({
+        next: (res) => {
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            'Approval Sent',
+            'OK',
+            500
+          );
+        },
+        error: (err) => {
+          this.notificationService.showMessage(
+            'Failed!',
+            'Approval Sending Failed. ' + err.message,
+            'OK',
+            500
+          );
+        },
+      });
+    } else {
+      params.set('invoice', orderIssueModel);
+      this.inventoryService.issueSalesOrder(params).subscribe({
+        next: (res) => {
+          console.log(res.body);
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            'Invoice Created',
+            'OK',
+            500
+          );
+          this.route.navigate(['/sale/sale-invoice-list']);
+        },
+        error: (err) => {
+          console.log(err);
+          this.notificationService.showMessage(
+            'ERROR!',
+            'Invoice Not Created',
+            'OK',
+            500
+          );
+        },
+      });
+    }
   }
-  downloadInvoice(){
-    let orders:any[] = [];
+  downloadInvoice() {
+    let orders: any[] = [];
     let index = 1;
-    this.orderList.forEach((elem)=>{
-      let orderRow=[];
+    this.orderList.forEach((elem) => {
+      let orderRow = [];
       orderRow.push(index);
       orderRow.push(elem.productName);
       orderRow.push(elem.pricePerUnit);
-      orderRow.push(elem.quantityOrdered+" "+ elem.unitType);
+      orderRow.push(elem.quantityOrdered + ' ' + elem.unitType);
       orderRow.push(elem.totalOrderPrice);
       index++;
       orders.push(orderRow);
-    })
-    let invoiceModel=  {
-      doNo:"5853",
-      invoiceId:"INV#0001",
+    });
+    let invoiceModel = {
+      doNo: '5853',
+      invoiceId: 'INV#0001',
       customerName: this.person.personName,
       customerAddress: this.person.personAddress,
       totalPrice: this.totalPrice,
-      previousBalance:this.previousBalance,
-      totalPayableAmount:this.totalPayableAmount,
-      totalPaid: this.saleInvoiceIssueForm.get("totalPaidAmount")?.value,
-      orders:orders
-    }
-      this.pdfMakeService.downloadInvoice(invoiceModel)
+      previousBalance: this.previousBalance,
+      totalPayableAmount: this.totalPayableAmount,
+      totalPaid: this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
+      orders: orders,
+    };
+    this.pdfMakeService.downloadInvoice(invoiceModel);
   }
-  
 }

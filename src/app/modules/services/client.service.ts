@@ -28,6 +28,11 @@ export class ClientService {
     params = params.append('id', queryParams.get("id"));
     return this.http.get(ClientUrls.FETCH_SUPPLYER_BY_CODE, { params: params });
   }
+  public getCustomerById(id:any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('id', id);
+    return this.http.get(ClientUrls.FETCH_CUSTOMER_BY_ID, { params: params });
+  }
 
   
 }

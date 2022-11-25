@@ -6,13 +6,15 @@ import { ClientManagementComponent } from './client-management/client-management
 import { CompsModule } from '../comps/comps.module';
 import { MaterialModule } from 'src/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CashTransactionComponent } from './cash-transaction/cash-transaction.component';
 
 
 
 @NgModule({
   declarations: [
     ManagerSalePointComponent,
-    ClientManagementComponent
+    ClientManagementComponent,
+    CashTransactionComponent
   ],
   imports: [
     CommonModule,

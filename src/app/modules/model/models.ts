@@ -45,14 +45,15 @@ export class OrderItem {
   productName!: string;
   unitType!: string;
   packagingCategory!: string;
-  unitPerPackage!: number;
+  unitPerPackage: number = 0;
   packageQuantity: number = 0;
   looseQuantity: number = 0;
   quantityOrdered: number = 0;
-  pricePerUnit!: number;
+  pricePerUnit: number = 0;
   totalOrderPrice!: number;
   deliveredQuantity!:number;
   deliverySchedules!:ScehduleDelivery[];
+  quantity:number = 0;
 }
 export class ScehduleDelivery{
   id!:number;
@@ -99,4 +100,10 @@ export enum Tasks{
   CREATE_SUPPLY= "CREATE_SUPPLY",
   UPDATE_SUPPLY= "UPDATE_SUPPLY",
   CASH_HANDOVER = "CASH_HANDOVER"
+}
+
+
+export enum COFIGS{
+  STOCK_APPROVAL_NEEDED = "STOCK_APPROVAL_NEEDED",
+  SALE_APPROVAL_NEEDED = "SALE_APPROVAL_NEEDED"
 }

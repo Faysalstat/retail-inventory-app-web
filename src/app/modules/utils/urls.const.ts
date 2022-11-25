@@ -15,7 +15,8 @@ export const ClientUrls = {
     ADD_CLIENT : BASE_URL + "/client/addclient",
     FETCH_CLIENT_BY_CONTACT_NO : BASE_URL + "/client/getclientbycontact",
     FETCH_CLIENT_BY_CLIENT_TYPE: BASE_URL + "/client/getclientbytype",
-    FETCH_SUPPLYER_BY_CODE : BASE_URL + "/client/getsupplyerbycode"
+    FETCH_SUPPLYER_BY_CODE : BASE_URL + "/client/getsupplyerbycode",
+    FETCH_CUSTOMER_BY_ID : BASE_URL + "/client/getcustomerbyid"
     
 }
 

@@ -8,13 +8,13 @@ import {
 import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import {
+  COFIGS,
   OrderItem,
   Person,
   Product,
   Supplyer,
   SupplyIssueDomain,
-  Tasks,
-} from '../../model/models';
+  Tasks} from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
@@ -64,7 +64,7 @@ export class AddStockComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchProducts();
-    this.getConfig("isApprovalNeeded");
+    this.getConfig(COFIGS.STOCK_APPROVAL_NEEDED);
   }
 
   getConfig(configname:any){

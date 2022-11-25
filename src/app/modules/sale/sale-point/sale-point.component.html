@@ -35,12 +35,9 @@
             </mat-form-field>
         </div>
         <div class="col-md-12">
-            <h2 style="font-weight:bold ;">Balance: {{account.balance}}</h2>
+            <h2 style="font-weight:bold ;color:red">Balance: <span style="color:black">{{account.balance}} TAKA</span>
+            </h2>
         </div>
-        <!-- <div class="col-md-12 mt-2">
-            <button *ngIf="!isCustomerExist" (click)="addCustomer()" mat-raised-button color="warn">Add
-                Supplyer</button>
-        </div> -->
         <p style="color:red;font-weight:bolder">{{errMsg}}</p>
     </div>
     <hr>
@@ -63,21 +60,47 @@
                     </mat-form-field>
                 </form>
             </div>
-            <div class="col-md-2">
-                <mat-form-field class="input-field" appearance="outline">
-                    <mat-label>Buying Price Rate</mat-label>
-                    <input pInputText [ngModelOptions]="{standalone:true}" (change)="calculateOrder()"
-                        [(ngModel)]="orderItem.pricePerUnit" placeholder="Selling Price" matInput>
-                </mat-form-field>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>{{orderItem.productName}}</th>
+                                </tr>
+                                <tr>
+                                    <th>Unit Type</th>
+                                    <th>{{orderItem.unitType}}</th>
+                                </tr>
+                                <tr>
+                                    <th>Stock</th>
+                                    <th>{{orderItem.quantity}}</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Price Rate</th>
+                                    <th>{{orderItem.pricePerUnit}} Taka</th>
+                                </tr>
+                                <tr>
+                                    <th>Packaging Category</th>
+                                    <th>{{orderItem.packagingCategory}}</th>
+                                </tr>
+                                <tr>
+                                    <th>Unit Per Package</th>
+                                    <th>{{orderItem.unitPerPackage}} {{orderItem.unitType}}</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-2">
-                <mat-form-field class="input-field" appearance="outline">
-                    <mat-label>Unit Per Package</mat-label>
-                    <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
-                        [(ngModel)]="orderItem.unitPerPackage" placeholder="Quantity/Pakage" matInput>
-                </mat-form-field>
-            </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-label>Package Quantity</mat-label>
                     <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
@@ -85,7 +108,7 @@
                         matInput>
                 </mat-form-field>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-label>Loose Quantity</mat-label>
                     <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
@@ -93,18 +116,15 @@
                         matInput>
                 </mat-form-field>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-label>Total Quantity</mat-label>
-                    <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
+                    <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
                         (change)="calculateOrder()" [(ngModel)]="orderItem.quantityOrdered" placeholder="Quantity"
                         matInput>
                 </mat-form-field>
             </div>
-            <!-- <div class="col-md-1">
-                        <h3 style="font-weight:bold;margin-top:8px;">{{unitType}}</h3>
-                    </div> -->
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-label>Total Price (BDT)</mat-label>
                     <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
@@ -139,7 +159,7 @@
                             <th>{{order.productName}}</th>
                             <th>{{order.pricePerUnit}}</th>
                             <th>{{order.quantityOrdered}} {{order.unitType}}</th>
-                            <th>{{order.totalOrderPrice}}</th>
+                            <th>{{order.totalOrderPrice}} BDT</th>
                             <!-- <th>{{order.totalPrice}}</th> -->
                         </tr>
                     </tbody>
@@ -160,7 +180,7 @@
                         <tr>
                             <th style="text-align:left;">Paid:</th>
                             <th>
-                                <mat-form-field class="input-field" appearance="fill">
+                                <mat-form-field class="input-field" appearance="outline">
                                     <input type="number" pInputText formControlName="totalPaidAmount"
                                         placeholder="Amount" matInput>
                                 </mat-form-field>
