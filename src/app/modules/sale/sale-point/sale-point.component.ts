@@ -52,6 +52,8 @@ export class SalePointComponent implements OnInit {
   comment: string = '';
   isApprovalNeeded: boolean = true;
   userName: string = 'MANAGER';
+  rebate: number = 0;
+  paymentMethods : any [] = [];
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -66,6 +68,12 @@ export class SalePointComponent implements OnInit {
     this.orderItem = new OrderItem();
     this.orderList = [];
     this.prepareInvoiceIssueForm(null);
+    this.paymentMethods = [
+      {label:"Select Payment Method", value:null},
+      {label:"BANK", value:"BANK"},
+      {label:"BKASH", value:"BKASH"},
+      {label:"CASH", value:"CASH"},
+    ]
   }
 
   ngOnInit(): void {
@@ -110,6 +118,8 @@ export class SalePointComponent implements OnInit {
       totalPayableAmount: [formData.totalPayableAmount],
       totalPaidAmount: [formData.totalPaidAmount],
       duePayment: [formData.duePayment],
+      rebate: [formData.rebate],
+      paymentMethod : [formData.paymentMethod],
       comment: [formData.comment],
     });
   }
@@ -244,13 +254,8 @@ export class SalePointComponent implements OnInit {
     this.calculateOrder();
   }
   calculateSummary() {
-    this.saleInvoiceIssueForm
-      .get('duePayment')
-      ?.setValue(
-        this.saleInvoiceIssueForm.get('totalPrice')?.value -
-          this.saleInvoiceIssueForm.get('amountPaid')?.value -
-          this.saleInvoiceIssueForm.get('rebate')?.value
-      );
+    this.totalPayableAmount = 
+    this.totalPrice - this.previousBalance - this.saleInvoiceIssueForm.get('rebate')?.value;
   }
   // testing
   onChangeProduc() {

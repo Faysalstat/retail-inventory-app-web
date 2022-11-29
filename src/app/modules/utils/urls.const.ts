@@ -1,5 +1,5 @@
-// const BASE_URL = 'https://btbbricks.xyz/api';
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = 'https://demo.vatasolution.me/api';
+// const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',

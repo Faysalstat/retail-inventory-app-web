@@ -165,18 +165,28 @@
                     </tbody>
                     <tfoot style="font-weight:bolder;">
                         <tr>
-                            <th colspan="3" rowspan="5"></th>
+                            <th colspan="3" rowspan="7"></th>
                             <th style="text-align:left;">Total:</th>
-                            <th>{{this.totalPrice}} BDT</th>
+                            <th>{{totalPrice}} BDT</th>
                         </tr>
                         <tr>
                             <th style="text-align:left;">Previous {{balanceTitle}}:</th>
-                            <th>{{this.previousBalance}} BDT</th>
+                            <th>{{previousBalance}} BDT</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:left;">rebate:</th>
+                            <th>
+                                <mat-form-field class="input-field" appearance="outline">
+                                    <input type="number" pInputText formControlName="rebate"
+                                        (change)="calculateSummary()" placeholder="Amount" matInput>
+                                </mat-form-field>
+                            </th>
                         </tr>
                         <tr>
                             <th style="text-align:left;">Total:</th>
-                            <th>{{this.totalPayableAmount}} BDT</th>
+                            <th>{{totalPayableAmount}} BDT</th>
                         </tr>
+                        
                         <tr>
                             <th style="text-align:left;">Paid:</th>
                             <th>
@@ -186,16 +196,17 @@
                                 </mat-form-field>
                             </th>
                         </tr>
-                        <!-- <tr>
-                            <th colspan="2">
-                                <mat-form-field class="input-field" appearance="outline">
-                                    <mat-label>Comment:</mat-label>
-                                    <textarea type="text" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="comment" matInput>
-                                        
-                                    </textarea>
+                        <tr>
+                            <th style="text-align:left;">Payment Method:</th>
+                            <th>
+                                <mat-form-field appearance="outline" class="input-field">
+                                    <mat-select formControlName="paymentMethod">
+                                        <mat-option *ngFor="let method of paymentMethods" [value]="method.value">{{method?.label}}
+                                        </mat-option>
+                                    </mat-select>
                                 </mat-form-field>
                             </th>
-                        </tr> -->
+                        </tr>
                         <tr>
                             <!-- <th style="text-align:left;">Comment:</th> -->
                             <th colspan="3">
@@ -207,11 +218,9 @@
                                     </textarea>
                                 </mat-form-field>
                                 <div class="row">
-                                    <div class="col-md-12" style="float:right ;">
-                                        <button style="margin-right:20px ;" (click)="submitOrder()" mat-raised-button
+                                    <div class="col-md-12">
+                                        <button (click)="submitOrder()" mat-raised-button
                                             color="warn">Submit</button>
-                                        <!-- <button (click)="downloadInvoice()" mat-raised-button
-                                            color="accent">Download</button> -->
                                     </div>
                                 </div>
                             </th>

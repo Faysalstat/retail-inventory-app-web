@@ -77,6 +77,8 @@ export class OrderIssueDomain {
   totalPayableAmount!: number;
   totalPaidAmount!: number;
   duePayment!: number;
+  rebate!:number;
+  paymentMethod!:string;
   comment!: string;
 }
 export class SupplyIssueDomain {

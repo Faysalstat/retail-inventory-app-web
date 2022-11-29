@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-4">
+        <mat-form-field class="input-field" appearance="outline">
+            <mat-label>Mobile No:</mat-label>
+            <input (change)="searchCustomer()" pInputText [ngModelOptions]="{standalone:true}"
+                [(ngModel)]="person.contactNo" placeholder="Contact No" matInput>
+        </mat-form-field>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name:</th>
+                    <td>{{person?.personName}}</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name:</th>
+                    <td>{{person?.personName}}</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
