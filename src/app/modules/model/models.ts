@@ -7,8 +7,8 @@ export class Person {
 }
 export class Customer {
   id!: number;
-  person!: Person;
-  account!:Account;
+  person: Person=new Person();
+  account:Account =new Account();
   shopName!: string;
 }
 

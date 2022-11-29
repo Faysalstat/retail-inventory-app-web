@@ -81,8 +81,8 @@ export class AddCustomerComponent implements OnInit {
       return;
     }
     const params: Map<string, any> = new Map();
-    let supplyerModel = this.clientForm.value;
-    params.set('client', supplyerModel);
+    let clientModel = this.clientForm.value;
+    params.set('client', clientModel);
     this.clientService.addClient(params).subscribe({
       next: (res) => {
         if (res.body) {

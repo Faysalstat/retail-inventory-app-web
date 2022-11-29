@@ -11,13 +11,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { HttpClientModule } from '@angular/common/http';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     SaleComponent,
     AdminComponent,
     ManagerComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     BrowserModule,

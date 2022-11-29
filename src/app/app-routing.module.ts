@@ -9,7 +9,9 @@ const routes: Routes = [
   { path: 'stock', loadChildren: () => import('./modules/stock/stock.module').then(m => m.StockModule) },
   { path: 'admin', loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule) },
   { path: 'manager', loadChildren: () => import('./modules/manager/manager.module').then(m => m.ManagerModule) },
-  { path: 'reports', loadChildren: () => import('./modules/report/report.module').then(m => m.ReportModule) }
+  { path: 'reports', loadChildren: () => import('./modules/report/report.module').then(m => m.ReportModule) },
+  //test route
+  
 
 
 ];

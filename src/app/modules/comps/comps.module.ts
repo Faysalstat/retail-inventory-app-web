@@ -9,9 +9,10 @@ import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { AddStockComponent } from './add-stock/add-stock.component';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { CashComponent } from './cash/cash.component';
+import { AddSupplyerComponent } from './add-supplyer/add-supplyer.component';
 
 const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,AddStockComponent,
-  AddCustomerComponent,CashComponent
+  AddCustomerComponent,CashComponent,AddSupplyerComponent
 ]
 
 @NgModule({

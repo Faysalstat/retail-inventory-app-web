@@ -10,6 +10,7 @@ import { MaterialModule } from 'src/material.module';
 import { TaskListComponent } from './task-list/task-list.component';
 import { ApprovalDetailsComponent } from './approval-details/approval-details.component';
 import { ConfigurationSettingComponent } from './configuration-setting/configuration-setting.component';
+import { SupplyerManagementComponent } from './supplyer-management/supplyer-management.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ConfigurationSettingComponent } from './configuration-setting/configura
     ProductManagementComponent,
     TaskListComponent,
     ApprovalDetailsComponent,
-    ConfigurationSettingComponent
+    ConfigurationSettingComponent,
+    SupplyerManagementComponent
   ],
   imports: [
     CommonModule,
