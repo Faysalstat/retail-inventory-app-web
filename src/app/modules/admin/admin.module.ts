@@ -11,6 +11,7 @@ import { TaskListComponent } from './task-list/task-list.component';
 import { ApprovalDetailsComponent } from './approval-details/approval-details.component';
 import { ConfigurationSettingComponent } from './configuration-setting/configuration-setting.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdminComponent } from './admin.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductManagementComponent,
     TaskListComponent,
     ApprovalDetailsComponent,
-    ConfigurationSettingComponent
+    ConfigurationSettingComponent,
+    AdminComponent
   ],
   imports: [
     CommonModule,

@@ -4,12 +4,14 @@ export class Person {
   personName!: string;
   contactNo!: string;
   personAddress!: string;
+  email!: string;
 }
 export class Customer {
   id!: number;
   person!: Person;
   account!:Account;
   shopName!: string;
+  shopAddress!:string;
 }
 
 export class Supplyer {
@@ -95,7 +97,20 @@ export class SupplyIssueDomain {
   newPayment!: number;
   comment!: string;
 }
+ 
+export class ClientIssueModel {
+  companyName!: string;
+  shopName!: string;
+  code!: string;
+  regNo!: string;
+  brandName!: string;
+  contactNo!: string;
+  website!: string;
+  personName!:string;
+  personAddress!:string;
+  email!:string;
 
+}
 export enum Tasks{
   CREATE_INVOICE="CREATE_INVOICE",
   UPDATE_INVOICE= "UPDATE_INVOICE",

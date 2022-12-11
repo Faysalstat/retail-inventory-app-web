@@ -1,8 +1,24 @@
-<app-add-customer></app-add-customer>
+<!-- <app-add-customer></app-add-customer> -->
 <mat-card>
     <div class="row">
+      <div class="col-md-4">
+        <mat-form-field appearance="outline" class="input-field">
+          <mat-label>Client Type</mat-label>
+          <mat-select (selectionChange)="onTypeChange()" [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedType">
+            <mat-option *ngFor="let client of clientTypes" [value]="client.value">{{client?.label}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <hr>
+    
+    <div *ngIf="showSupplyerList" class="row">
+          <app-add-supplyer></app-add-supplyer>
+    </div>
+    <div  class="row">
         <div class="col-md-12">
-            <table class="table table-striped" style="text-align:center ;">
+            <table *ngIf="showCustomerList" class="table table-striped" style="text-align:center ;">
                 <thead>
                   <tr>
                     <th>ID</th>
@@ -17,13 +33,37 @@
                   <tr *ngFor="let client of clientList; index as i">
                         <td>{{i+1}}</td>
                         <td>{{client.person.personName}}</td>
-                        <td>{{client.person.contact}}</td>
+                        <td>{{client.person.contactNo}}</td>
                         <td>{{client.shopName}}</td>
                         <td>{{client.person.personAddress}}</td>
                         <td>{{client.account.balance}}</td>
                   </tr>
                 </tbody>
             </table>
+            <table *ngIf="showSupplyerList" class="table table-striped" style="text-align:center ;">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Code</th>
+                  <th>Supplyer Name</th>
+                  <th>Contact No</th>
+                  <th>Company Name</th>
+                  <th>Band Name</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let client of clientList; index as i">
+                      <td>{{i+1}}</td>
+                      <td>{{client.code}}</td>
+                      <td>{{client.person.personName}}</td>
+                      <td>{{client.person.contactNo}}</td>
+                      <td>{{client.shopName}}</td>
+                      <td>{{client.brand}}</td>
+                      <td>{{client.account.balance}}</td>
+                </tr>
+              </tbody>
+          </table>
         </div>
     </div>
 </mat-card>

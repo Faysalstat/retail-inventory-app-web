@@ -69,6 +69,7 @@ export class ApprovalDetailsComponent implements OnInit {
     }
   }
   submitOrder(){
+      this.invoiceDetails.taskId = this.taskId;
       const params: Map<string, any> = new Map();
       if(this.isStock){
         params.set('order', this.invoiceDetails);
@@ -98,6 +99,7 @@ export class ApprovalDetailsComponent implements OnInit {
         this.inventoryService.issueSalesOrder(params).subscribe({
           next:(res)=>{
             this.notificationService.showMessage("SUCCESS","Order Placed Successfully","OK",300);
+            this.router.navigate(['/admin/task-list']);
           },
           error:(err)=>{
             this.notificationService.showMessage("ERROR","Order Placed Failed","OK",300);

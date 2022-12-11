@@ -12,27 +12,27 @@ export class HomeComponent implements OnInit {
       {
         imgUrl:"icon-admin.png",
         title: "ADMIN",
-        route: "admin"
+        route: "/admin"
       },
       {
         imgUrl:"icon-posh.png",
         title: "POS",
-        route: "pos"
+        route: "/sale"
       },
       {
         imgUrl:"icon-client.png",
         title: "CLIENT",
-        route: "client"
+        route: "/client"
       },
       {
         imgUrl:"icon-cash.png",
         title: "CASH",
-        route: "cash"
+        route: "/cash"
       },
       {
         imgUrl:"icon-stock.png",
         title: "STOCK",
-        route: "stock"
+        route: "/stock"
       },
     ]
   }

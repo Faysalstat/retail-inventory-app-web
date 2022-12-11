@@ -302,6 +302,7 @@ export class AddStockComponent implements OnInit {
             'OK',
             500
           );
+          this.route.navigate(['/stock/supply-invoice-list']);
         },
         error:(err)=>{
           this.notificationService.showMessage(

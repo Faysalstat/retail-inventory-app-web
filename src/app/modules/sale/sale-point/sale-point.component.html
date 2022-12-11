@@ -35,6 +35,10 @@
             </mat-form-field>
         </div>
         <div class="col-md-12">
+            <button (click)="addCustomer()" mat-raised-button [disabled]="isCustomerExist"
+                color="warn">Add Customer</button>
+        </div>
+        <div class="col-md-12">
             <h2 style="font-weight:bold ;color:red">Balance: <span style="color:black">{{account.balance}} TAKA</span>
             </h2>
         </div>

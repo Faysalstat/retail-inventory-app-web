@@ -176,7 +176,7 @@ export class SalePointComponent implements OnInit {
   }
   addCustomer() {
     const params: Map<string, any> = new Map();
-    let supplyerModel = {
+    let customerModel = {
       personId: this.person.id,
       clientType: 'CUSTOMER',
       personName: this.person.personName,
@@ -185,7 +185,7 @@ export class SalePointComponent implements OnInit {
       shopName: this.customer.shopName,
       // regNo: this.customer.regNo
     };
-    params.set('client', supplyerModel);
+    params.set('client', customerModel);
 
     this.clientService.addClient(params).subscribe({
       next: (res) => {
@@ -194,6 +194,7 @@ export class SalePointComponent implements OnInit {
           this.saleInvoiceIssueForm.get('customerId')?.setValue(res.body.id);
           console.log(res.body);
         }
+        this.errMsg ="";
         this.notificationService.showMessage(
           'SUCCESS!',
           'Client Add Successful',
@@ -323,6 +324,7 @@ export class SalePointComponent implements OnInit {
             'OK',
             500
           );
+        this.route.navigate(["/sale/sale-invoice-list"]);
         },
         error: (err) => {
           this.notificationService.showMessage(

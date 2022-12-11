@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompsModule } from '../comps/comps.module';
 import { SaleInvoiceListComponent } from './sale-invoice-list/sale-invoice-list.component';
 import { EditSaleInvoiceComponent } from './edit-sale-invoice/edit-sale-invoice.component';
+import { SaleComponent } from './sale.component';
 
 
 
@@ -14,7 +15,8 @@ import { EditSaleInvoiceComponent } from './edit-sale-invoice/edit-sale-invoice.
   declarations: [
     SalePointComponent,
     SaleInvoiceListComponent,
-    EditSaleInvoiceComponent
+    EditSaleInvoiceComponent,
+    SaleComponent
   ],
   imports: [
     CommonModule,

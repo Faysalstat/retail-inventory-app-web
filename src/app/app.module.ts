@@ -10,14 +10,13 @@ import { AuthComponent } from './modules/auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { HttpClientModule } from '@angular/common/http';
+import { CashComponent } from './modules/cash/cash.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SaleComponent,
-    AdminComponent,
     ManagerComponent,
-    AuthComponent
+    AuthComponent,
   ],
   imports: [
     BrowserModule,

@@ -16,7 +16,9 @@ export const ClientUrls = {
     FETCH_CLIENT_BY_CONTACT_NO : BASE_URL + "/client/getclientbycontact",
     FETCH_CLIENT_BY_CLIENT_TYPE: BASE_URL + "/client/getclientbytype",
     FETCH_SUPPLYER_BY_CODE : BASE_URL + "/client/getsupplyerbycode",
-    FETCH_CUSTOMER_BY_ID : BASE_URL + "/client/getcustomerbyid"
+    FETCH_CUSTOMER_BY_ID : BASE_URL + "/client/getcustomerbyid",
+    FETCH_PERSON_BY_ID : BASE_URL + "/client/getpersonbyid",
+    FETCH_CLIENT_LIST_BY_TYPE : BASE_URL + "/client/getallclient"
     
 }
 
@@ -46,4 +48,7 @@ export const ApprovalUrls = {
   GET_TASK_LIST : BASE_URL + "/approval/getall",
   GET_TASK_BY_ID : BASE_URL + "/approval/getbyid",
   APPROVE_TASK: BASE_URL + "/approval/approve",
+}
+export const TransactionUrls = {
+  DO_PAYMENT_TRANSACTION : BASE_URL + "/transaction/dotransaction"
 }

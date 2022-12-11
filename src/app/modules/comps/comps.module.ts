@@ -8,11 +8,12 @@ import { AddPersonComponent } from './add-person/add-person.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { AddStockComponent } from './add-stock/add-stock.component';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
-import { CashComponent } from './cash/cash.component';
 import { CashReceiveComponent } from './cash-receive/cash-receive.component';
+import { AddSupplyerComponent } from './add-supplyer/add-supplyer.component';
+import { MenuBarComponent } from './menu-bar/menu-bar.component';
 
 const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,AddStockComponent,
-  AddCustomerComponent,CashComponent,CashReceiveComponent
+  AddCustomerComponent,CashReceiveComponent,AddSupplyerComponent,MenuBarComponent
 ]
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApprovalUrls, ClientUrls, ConfigUrls, InventoryUrls } from '../utils/urls.const';
+import { ApprovalUrls, ClientUrls, ConfigUrls, InventoryUrls, TransactionUrls } from '../utils/urls.const';
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +85,12 @@ export class InventoryService {
     let params = new HttpParams();
     params = params.append("taskId",id);
     return this.http.get(ApprovalUrls.GET_TASK_BY_ID,{params:params});
+  }
+
+
+  // Transactions 
+  public doPaymentTransaction(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(TransactionUrls.DO_PAYMENT_TRANSACTION, queryParams.get('payment'));
   }
 }
 
