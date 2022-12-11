@@ -36,7 +36,7 @@ export class CashTransactionComponent implements OnInit {
       { value: 'RECEIVE', label: 'Receive' },
     ];
     this.paymentMethods = [
-      {label:"Select Payment Method", value:null},
+      // {label:"Select Payment Method", value:null},
       {label:"BANK", value:"BANK"},
       {label:"BKASH", value:"BKASH"},
       {label:"CASH", value:"CASH"},
@@ -52,7 +52,7 @@ export class CashTransactionComponent implements OnInit {
       clientType: [''],
       accountId: [''],
       cashAmount: [''],
-      paymentMethod: ['']
+      paymentMethod: ["BANK"]
     });
   }
   onClientTypeChange() {
@@ -127,7 +127,11 @@ export class CashTransactionComponent implements OnInit {
     params.set("payment",transactionModel);
     this.inventoryService.doPaymentTransaction(params).subscribe({
       next:(res)=>{
-        this.notificationService.showMessage("SUCCESS!","Payment Successful","OK",200);
+        this.notificationService.showMessage("SUCCESS!","Payment Successful","OK",400);
+        this.cashTransactionForm.reset();
+        this.isSupplier = false;
+        this.isCustomer = false;
+        this.isClientFound = false;
       },
       error:(err)=>{
         this.notificationService.showMessage("ERROR!","Payment FAILED","OK",200);
