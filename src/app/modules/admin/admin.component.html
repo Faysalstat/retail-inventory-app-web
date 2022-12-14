@@ -1,19 +1,95 @@
-<div class="container-fluid">
-    <mat-card>
-        <div class="row">
-            <div class="col-md-3">
-                <div class="list-group side-nav mt-3">
-                    <a routerLink="/admin" class="list-group-item list-group-item-action">Dashboard</a>
-                    <a routerLink="task-list" class="list-group-item list-group-item-action">Task List</a>
-                    <a routerLink="product" class="list-group-item list-group-item-action">Add Product</a>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="rounded">
-                    <router-outlet></router-outlet>
-                </div>
-            </div>
-        </div>
-    </mat-card>
-</div>
+<div class="row">
+    <div class="col-md-3">
+        <nav class="main-menu bg-dark">
+            <ul>
+                <li>
+                    <a routerLink="/home">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-text">
+                            Home
+                        </span>
+                    </a>
+        
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="task-list">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            My Task
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="add-product">
+                        <i class="fa fa-plus-square"></i>
+                        <span class="nav-text">
+                            Add Product
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a routerLink="product-list">
+                        <i class="fa fa-table"></i>
+                        <span class="nav-text">
+                            Product Stock
+                        </span>
+                    </a>
+                </li>
+                
+                <!-- <li class="has-subnav">
+                    <a href="#">
+                        <i class="fa fa-folder-open"></i>
+                        <span class="nav-text">
+                            Pages
+                        </span>
+                    </a>
+        
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-bar-chart-o"></i>
+                        <span class="nav-text">
+                            Graphs and Statistics
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-font"></i>
+                        <span class="nav-text">
+                            Quotes
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-table  "></i>
+                        <span class="nav-text">
+                            Tables
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-map-marker  "></i>
+                        <span class="nav-text">
+                            Maps
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-info  "></i>
+                        <span class="nav-text">
+                            Documentation
+                        </span>
+                    </a>
+                </li> -->
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-9">
+        <router-outlet></router-outlet>
+    </div>
 
+</div>

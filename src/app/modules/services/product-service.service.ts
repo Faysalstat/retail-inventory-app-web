@@ -22,6 +22,12 @@ export class ProductService {
   public fetchAllProductForDropDown(): Observable<any> {
     return this.http.get(ProductUrls.FETCH_ALL_PRODUCT_FOR_DROPDOWN);
   }
+
+  public fetchProductById(productId:any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('id',productId);
+    return this.http.get(ProductUrls.FETCH_PRODUCT_BY_ID,{params:params});
+  }
   public fetchAllPackagingCategory(): Observable<any> {
     return this.http.get(ProductUrls.FETCH_ALL_PACKAGING_CATEGORY);
   }

@@ -12,6 +12,8 @@ import { ApprovalDetailsComponent } from './approval-details/approval-details.co
 import { ConfigurationSettingComponent } from './configuration-setting/configuration-setting.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductConfigComponent } from './product-config/product-config.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { AdminComponent } from './admin.component';
     TaskListComponent,
     ApprovalDetailsComponent,
     ConfigurationSettingComponent,
-    AdminComponent
+    AdminComponent,
+    ProductListComponent,
+    ProductConfigComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NotificationService } from '../../services/notification-service.service';
 import { ProductService } from '../../services/product-service.service';
 
@@ -16,7 +17,8 @@ export class ProductManagementComponent implements OnInit {
   productList!: any[];
   constructor(
     private productService: ProductService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private route : Router
   ) {}
 
   ngOnInit(): void {
@@ -40,5 +42,8 @@ export class ProductManagementComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.offset = this.pageSize * event.pageIndex;
     this.fetchAllProducts();
+  }
+  onselectProduct(product:any){
+    this.route.navigate(["/admin/product-detail",product.id]);
   }
 }

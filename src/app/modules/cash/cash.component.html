@@ -1,4 +1,43 @@
-<div class="container-fluid">
+<div class="row">
+    <div class="col-md-3">
+        <nav class="main-menu bg-dark">
+            <ul>
+                <li>
+                    <a routerLink="/home">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-text">
+                            Home
+                        </span>
+                    </a>
+        
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="cash-transaction">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Cash
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="add-expense">
+                        <i class="fa fa-plus-square"></i>
+                        <span class="nav-text">
+                            Expense
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-9">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+
+
+<!-- <div class="container-fluid">
     <mat-card style="height:800px; overflow:scroll">
         <div class="row">
             <div class="col-md-3">
@@ -6,7 +45,7 @@
                     <a routerLink="/cash" class="list-group-item list-group-item-action">Cash Dashboard</a>
                     <a routerLink="cash-transaction" class="list-group-item list-group-item-action">Cash</a>
                     <a routerLink="add-expense" class="list-group-item list-group-item-action">Expense</a>
-                    <!-- <a routerLink="add-supplyer" class="list-group-item list-group-item-action">Expense</a> -->
+                    <a routerLink="add-supplyer" class="list-group-item list-group-item-action">Expense</a>
                 </div>
             </div>
             <div class="col-md-9">
@@ -16,5 +55,5 @@
             </div>
         </div>
     </mat-card>
-</div>
+</div> -->
 

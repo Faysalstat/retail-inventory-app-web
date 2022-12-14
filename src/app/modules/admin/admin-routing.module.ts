@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { ApprovalDetailsComponent } from './approval-details/approval-details.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProductConfigComponent } from './product-config/product-config.component';
 import { ProductManagementComponent } from './product-management/product-management.component';
 import { TaskListComponent } from './task-list/task-list.component';
 
@@ -10,10 +10,11 @@ const routes: Routes = [{
     // path: '', component: AdminComponent,canActivate:[AppAuthGuard],canActivateChild:[AppAuthGuard],
     path: '', component: AdminComponent,
     children: [
-        {path: '', component: DashboardComponent},
-        {path: 'product', component: ProductManagementComponent},
+        {path: 'add-product', component: ProductConfigComponent},
         {path: 'task-list', component: TaskListComponent},
-        {path: 'task-details/:id', component: ApprovalDetailsComponent}
+        {path: 'product-list', component: ProductManagementComponent},
+        {path: 'task-details/:id', component: ApprovalDetailsComponent},
+        {path: 'product-detail/:id', component: ProductConfigComponent}
       ]
 }];
 
