@@ -7,6 +7,7 @@ import { CashComponent } from './cash.component';
 const routes: Routes = [{
     path: '', component: CashComponent,
     children: [
+        {path: '', component: CashTransactionComponent},
         {path: 'cash-transaction', component: CashTransactionComponent},
         {path: 'cash-receive', component: CashReceiveComponent},
         ]}

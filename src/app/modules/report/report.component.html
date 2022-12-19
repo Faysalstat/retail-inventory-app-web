@@ -1,26 +1,53 @@
-<div class="mt-4 p-5 rounded">
-
-    <mat-card>
-        <h1>Reports</h1>
-        <div class="row">
-            <div class="col-md-6">  
-                <div class="list-group">
-                    <a routerLink="transaction-report" class="list-group-item list-group-item-action" aria-current="true">
-                        Income Expense
+<div class="row">
+    <div class="col-md-3">
+        <nav class="main-menu bg-dark">
+            <ul>
+                <li>
+                    <a routerLink="/home">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-text">
+                            Home
+                        </span>
                     </a>
-                    <a routerLink="production-report" class="list-group-item list-group-item-action">Production Report</a>
-                    <a routerLink="cash-handover-report" class="list-group-item list-group-item-action">Cash Handover Transaction History</a>
-                    <a routerLink="sordar-report" class="list-group-item list-group-item-action">Sordar Production Records</a>
-                    <a routerLink="sales-report" class="list-group-item list-group-item-action">Sales Report</a>
-                    <a routerLink="delivery-report" class="list-group-item list-group-item-action">Delivery Report</a>
-                    <a routerLink="supply-report" class="list-group-item list-group-item-action">Supply Report</a>
-                    <a routerLink="escavate-report" class="list-group-item list-group-item-action">Escavate Registry Report</a>
-                    <!-- <a href="#" class="list-group-item list-group-item-action">A fourth link item</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled" tabindex="-1" aria-disabled="true">A disabled link item</a> -->
-                  </div>
-            </div>
-        </div>
-      </mat-card>
-      <hr>
-    <router-outlet></router-outlet>
+        
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="transaction-report">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Transaction Report
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="sales-report">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Sales Report
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="supply-report">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Supply Report
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="stock-report">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Stock Report
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-9">
+        <router-outlet></router-outlet>
+    </div>
 </div>
+

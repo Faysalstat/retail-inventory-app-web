@@ -1,23 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Account, Customer, Person, Supplyer } from '../../model/models';
+import { Account, Person, Supplyer } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 
 @Component({
-  selector: 'app-client-details',
-  templateUrl: './client-details.component.html',
-  styleUrls: ['./client-details.component.css']
+  selector: 'app-supplyer-details',
+  templateUrl: './supplyer-details.component.html',
+  styleUrls: ['./supplyer-details.component.css']
 })
-export class ClientDetailsComponent implements OnInit {
+export class SupplyerDetailsComponent implements OnInit {
   client!:any;
   person:Person = new Person();
-  customerAccount:Account = new Account();
-  supplyerAccount:Account = new Account();
-  customerAccountistory: any[] = [];
-  supplyerAccountistory: any[] = [];
-  customer: Customer = new Customer();
+  account:Account = new Account();
+  accountHistory: any[] = [];
   supplyer:Supplyer = new Supplyer();
-  isCustomer: boolean = true;
   showAccountHistory:boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -27,6 +23,7 @@ export class ClientDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((parameter) => {
       let id = parameter['id'];
+      console.log(id)
       this.fetchAccountDetailsById(id);
     })
   }
@@ -36,18 +33,11 @@ export class ClientDetailsComponent implements OnInit {
     this.clientService.getPersonById(id).subscribe({
       next:(res)=>{
         this.person = res.body;
-        
         console.log(res.body);
-        if(res.body.customer){
-          this.isCustomer = true;
-          this.customer = res.body.customer;
-          this.customerAccount = res.body.customer.account;
-          this.customerAccountistory = res.body.customer.account.accountHistories;
-        }else if(res.body.supplyer){
-          this.isCustomer = false;
+        if(res.body.supplyer){
           this.supplyer = res.body.supplyer;
-          this.supplyerAccount = res.body.supplyer.account;
-          this.supplyerAccountistory = res.body.supplyer.accountHistories;
+          this.account = res.body.supplyer.account;
+          this.accountHistory = res.body.supplyer.account.accountHistories;
         }
       }
     })
@@ -62,3 +52,4 @@ export class ClientDetailsComponent implements OnInit {
   }
 
 }
+

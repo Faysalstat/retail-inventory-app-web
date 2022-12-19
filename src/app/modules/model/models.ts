@@ -30,6 +30,7 @@ export class Account {
   due: number=0;
   amountToPay!: number;
   accountType!: number;
+  accountHistory:any[]=[];
 }
 export class Product {
   id!: number;
@@ -52,6 +53,7 @@ export class OrderItem {
   looseQuantity: number = 0;
   quantityOrdered: number = 0;
   pricePerUnit: number = 0;
+  buyingPricePerUnit: number = 0;
   totalOrderPrice!: number;
   deliveredQuantity!:number;
   deliverySchedules!:ScehduleDelivery[];

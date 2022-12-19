@@ -1,22 +1,37 @@
-<div class="container-fluid">
-    <!-- <app-menu-bar [items]="menuItems"></app-menu-bar> -->
-    <mat-card style="height:800px; overflow:scroll">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="list-group side-nav mt-3" style="position:sticky;">
-                    <a routerLink="/client" class="list-group-item list-group-item-action">Client Dashboard</a>
-                    <a routerLink="client-list" class="list-group-item list-group-item-action">Client List</a>
-                    <a routerLink="add-supplyer" class="list-group-item list-group-item-action">Add Supplyer</a>
-                    <!-- <a routerLink="customer" class="list-group-item list-group-item-action">Customer</a>
-                    <a routerLink="employee" class="list-group-item list-group-item-action">Employee</a> -->
-                </div>
-            </div>
-            <div class="col-md-9">
-                <div class="rounded">
-                    <router-outlet></router-outlet>
-                </div>
-            </div>
-        </div>
-    </mat-card>
-</div>
 
+<div class="row">
+    <div class="col-md-3">
+        <nav class="main-menu bg-dark">
+            <ul>
+                <li>
+                    <a routerLink="/home">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-text">
+                            Home
+                        </span>
+                    </a>
+        
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="client-list">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Client List
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="add-supplyer">
+                        <i class="fa fa-plus-square"></i>
+                        <span class="nav-text">
+                            Add Supplyer
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-9">
+        <router-outlet></router-outlet>
+    </div>
+</div>

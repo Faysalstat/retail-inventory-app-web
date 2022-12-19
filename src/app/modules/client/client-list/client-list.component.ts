@@ -55,7 +55,12 @@ export class ClientListComponent implements OnInit {
     })
   }
   viewClient(id:any){
-    this.route.navigate(["client/client-details",id]);
+    if(this.showCustomerList){
+      this.route.navigate(["client/customer-details",id]);
+    }else{
+      this.route.navigate(["client/supplyer-details",id]);
+    }
+    
   }
 }
 

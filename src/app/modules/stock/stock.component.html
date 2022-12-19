@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
     <mat-card>
         <div class="row">
             <div class="col-md-3">
@@ -17,4 +17,43 @@
             </div>
         </div>
     </mat-card>
+</div> -->
+
+<div class="row">
+    <div class="col-md-3">
+        <nav class="main-menu bg-dark">
+            <ul>
+                <li>
+                    <a routerLink="/home">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-text">
+                            Home
+                        </span>
+                    </a>
+        
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="/stock">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Add Stock
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="supply-invoice-list">
+                        <i class="fa fa-plus-square"></i>
+                        <span class="nav-text">
+                            Invoice List
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-9">
+        <router-outlet></router-outlet>
+    </div>
 </div>
+
+

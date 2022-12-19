@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../services/notification-service.service';
 import { ProductService } from '../../services/product-service.service';
 
@@ -22,6 +22,7 @@ export class ProductConfigComponent implements OnInit {
     private formBuilder: FormBuilder,
     private productService: ProductService,
     private notificationService: NotificationService,
+    private route : Router
     ) {
     this.units = [
       { label: 'KG', value: 'KG' },
@@ -118,7 +119,7 @@ export class ProductConfigComponent implements OnInit {
           this.notificationService.showMessage("SUCCESS!","Product Updated Successfuly","OK",1000);
           this.product = res.body
         }
-        
+        this.route.navigate(["/admin/product-list"]);
       },
       error:(err)=>{
         this.notificationService.showMessage("FAILED!","Product Add Failed","OK",1000);

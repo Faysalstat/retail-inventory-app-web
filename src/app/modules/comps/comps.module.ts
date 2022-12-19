@@ -11,10 +11,10 @@ import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { CashReceiveComponent } from './cash-receive/cash-receive.component';
 import { AddSupplyerComponent } from './add-supplyer/add-supplyer.component';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
+import { PointOfSaleComponent } from './point-of-sale/point-of-sale.component';
 
 const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,AddStockComponent,
-  AddCustomerComponent,CashReceiveComponent,AddSupplyerComponent,MenuBarComponent
-]
+  AddCustomerComponent,CashReceiveComponent,AddSupplyerComponent,MenuBarComponent,PointOfSaleComponent]
 
 @NgModule({
   declarations: components,

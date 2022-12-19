@@ -7,12 +7,20 @@ import { TreansactionReportComponent } from './treansaction-report/treansaction-
 import { CompsModule } from '../comps/comps.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/material.module';
+import { SalesReportComponent } from './sales-report/sales-report.component';
+import { StockReportComponent } from './stock-report/stock-report.component';
+import { SupplyReportComponent } from './supply-report/supply-report.component';
+import { ProductReportComponent } from './product-report/product-report.component';
 
 
 @NgModule({
   declarations: [
     ReportComponent,
-    TreansactionReportComponent
+    TreansactionReportComponent,
+    SalesReportComponent,
+    StockReportComponent,
+    SupplyReportComponent,
+    ProductReportComponent
   ],
   imports: [
     CommonModule,

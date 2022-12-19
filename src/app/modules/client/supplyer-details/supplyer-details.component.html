@@ -33,47 +33,6 @@
             </table>
         </div>
     </div>
-
-    <div class="row">
-        <h3>Customer Details</h3>
-        <div class="col-md-12">
-            <hr class="mt-2">
-        </div>
-        <div class="col-md-6">
-            <table class="table ">
-                <tbody>
-                    <tr>
-                        <th>Shop Name</th>
-                        <td>{{customer?.shopName}}</td>
-                    </tr>
-                    <tr>
-                        <th>Address</th>
-                        <td>{{customer?.shopAddress}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col-md-6">
-            <table class="table ">
-                <tbody>
-                    <tr>
-                        <th>Balance</th>
-                        <td>{{customerAccount?.balance}}</td>
-                    </tr>
-                    <tr>
-                        <th>Address</th>
-                        <td>{{person?.personAddress}}</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button mat-raised-button (click)="showHistory(true)" color="warn">Show Account History</button>
-                        </td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
     <div class="row">
         <h3>Supplyer Details</h3>
         <div class="col-md-12">
@@ -99,7 +58,7 @@
                 <tbody>
                     <tr>
                         <th>Balance</th>
-                        <td>{{customerAccount?.balance}}</td>
+                        <td>{{account?.balance}}</td>
                     </tr>
                     <tr>
                         <th>Address</th>
@@ -132,7 +91,7 @@
                    </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let history of customerAccountistory; index as i">
+                    <tr *ngFor="let history of accountHistory; index as i">
                         <td>{{i+1}}</td>
                         <td>{{history?.tnxType}}</td>
                         <td>{{history?.tnxDate}}</td>
