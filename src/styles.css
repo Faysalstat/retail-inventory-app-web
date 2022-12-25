@@ -109,18 +109,19 @@ body {
   position: fixed;
   z-index: 1;
   overflow-x: hidden;
-  padding: 20px;
-  /* z-index: 1000; */
+  width: 17%;
+  
 }
 
 .main-menu>ul {
   margin: 50px 0;
+  font-size: 12px;
 }
 
 .main-menu li {
   position: relative;
   display: block;
-  width: 250px;
+  width: 100%;
 }
 
 .main-menu li>a {
@@ -130,12 +131,12 @@ body {
   border-spacing: 0;
   color: rgb(243, 243, 243);
   font-family: arial;
-  font-size: 20px;
+  font-size: 18px;
   text-decoration: none;
   -webkit-transform: translateZ(0) scale(1, 1);
   -webkit-transition: all .1s linear;
   transition: all .1s linear;
-
+  width: 100%;
 }
 
 .main-menu .nav-icon {
@@ -152,7 +153,7 @@ body {
   position: relative;
   display: table-cell;
   vertical-align: middle;
-  width: 190px;
+  width: auto;
   font-family: 'Titillium Web', sans-serif;
 }
 

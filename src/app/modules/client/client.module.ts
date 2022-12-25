@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClientComponent } from './client.component';
 import { ClientRoutingModule } from './client-routing.module';
-import { AddSupplyerComponent } from './add-supplyer/add-supplyer.component';
 import { MaterialModule } from 'src/material.module';
 import { CompsModule } from '../comps/comps.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -20,7 +19,6 @@ import { SupplyerDetailsComponent } from './supplyer-details/supplyer-details.co
 @NgModule({
   declarations: [
     ClientComponent,
-    AddSupplyerComponent,
     ClientListComponent,
     SupplyerComponent,
     CustomerComponent,

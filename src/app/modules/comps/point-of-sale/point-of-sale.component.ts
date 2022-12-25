@@ -41,6 +41,7 @@ export class PointOfSaleComponent implements OnInit {
     userName: string = 'MANAGER';
     rebate: number = 0;
     paymentMethods : any [] = [];
+    availableStock:number = 0;
     constructor(
       private route: Router,
       private formBuilder: FormBuilder,
@@ -229,6 +230,7 @@ export class PointOfSaleComponent implements OnInit {
       this.orderItem.buyingPricePerUnit = this.selectedProduct.costPricePerUnit;
       this.orderItem.quantity = this.selectedProduct.quantity;
       this.unitType = this.selectedProduct.unitType;
+      this.availableStock = this.selectedProduct.quantity;
   
       console.log(this.selectedProduct);
     }

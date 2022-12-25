@@ -13,9 +13,9 @@ import { NotificationService } from '../../services/notification-service.service
 export class CashTransactionComponent implements OnInit {
   types: any[] = [];
   cashTransactionForm!: FormGroup;
-  isSupplier: boolean = false;
+  isSupplier: boolean = true;
   isCustomer: boolean = false;
-  selectedType: string = 'PAYMENT';
+  selectedType: string = 'SUPPLIER';
   contactNo: string = "";
   code:string = '';
   person:Person = new Person();
@@ -25,6 +25,7 @@ export class CashTransactionComponent implements OnInit {
   isClientFound: boolean = false;
   comment: string = "";
   paymentMethods: any [];
+  isTnxDone:boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
@@ -48,8 +49,8 @@ export class CashTransactionComponent implements OnInit {
   }
   prepareForm() {
     this.cashTransactionForm = this.formBuilder.group({
-      transactionType: [''],
-      clientType: [''],
+      transactionType: ['PAYMENT'],
+      clientType: ['SUPPLIER'],
       accountId: [''],
       cashAmount: [''],
       paymentMethod: ["BANK"]
@@ -59,10 +60,12 @@ export class CashTransactionComponent implements OnInit {
     if (this.selectedType == 'CUSTOMER') {
       this.isCustomer = true;
       this.isSupplier = false;
+      this.cashTransactionForm.get("transactionType")?.setValue("RECEIVE");
       
     } else if (this.selectedType == 'SUPPLIER') {
       this.isCustomer = false;
       this.isSupplier = true;
+      this.cashTransactionForm.get("transactionType")?.setValue("PAYMENT");
     }
     this.cashTransactionForm.get('clientType')?.setValue(this.selectedType);
   }
@@ -127,14 +130,15 @@ export class CashTransactionComponent implements OnInit {
     params.set("payment",transactionModel);
     this.inventoryService.doPaymentTransaction(params).subscribe({
       next:(res)=>{
+        console.log(res.body);
         this.notificationService.showMessage("SUCCESS!","Payment Successful","OK",400);
         this.cashTransactionForm.reset();
-        this.isSupplier = false;
-        this.isCustomer = false;
-        this.isClientFound = false;
+        this.comment ='';
+        this.account = res.body
       },
       error:(err)=>{
         this.notificationService.showMessage("ERROR!","Payment FAILED","OK",200);
+        this.isTnxDone = false;
       }
     })
   }

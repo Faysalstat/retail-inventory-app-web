@@ -49,7 +49,7 @@
                         <th>Company Name</th>
                         <td>{{supplyer?.companyName}}</td>
                     </tr>
-                    
+
                 </tbody>
             </table>
         </div>
@@ -64,33 +64,42 @@
                         <th>Address</th>
                         <td>{{person?.personAddress}}</td>
                     </tr>
-                    <tr>
-                        <td>
-                            <button mat-raised-button (click)="showHistory(true)" color="warn">Show Account History</button>
-                        </td>
-                        <td></td>
-                    </tr>
                 </tbody>
             </table>
         </div>
+        <div class="col-md-12">
+            <button mat-raised-button (click)="showHistory(true)" color="warn">Show Account History</button>
+        </div>
     </div>
-    <div *ngIf="showAccountHistory" class="row">
-        <h3>Account History</h3>
+</mat-card>
+<mat-card *ngIf="showAccountHistory" class="mt-2">
+    <div class="row">
+        <div class="col-md-11">
+            <h3>Account History</h3>
+        </div>
+        <div class="col-md-1 float-right">
+
+            <button mat-raised-button (click)="showHistory(false)" color="warn">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
         <div class="col-md-12">
             <hr class="mt-2">
-            <button mat-raised-button (click)="showHistory(false)" color="warn">Close</button>
             <table class="table">
                 <thead>
-                   <tr>
-                    <th>Sn</th>
-                    <th>Tnx Type</th>
-                    <th>Tnx Date</th>
-                    <th>Tnx Amount</th>
-                    <th>Method</th>
-                    <th>Comment</th>
-                   </tr>
+                    <tr>
+                        <th>Sn</th>
+                        <th>Tnx Type</th>
+                        <th>Tnx Date</th>
+                        <th>Tnx Amount</th>
+                        <th>Method</th>
+                        <th>Comment</th>
+                    </tr>
                 </thead>
                 <tbody>
+                    <tr *ngIf="accountHistory.length==0">
+                        <th style="text-align: center;" colspan="6">No Transaction</th>
+                    </tr>
                     <tr *ngFor="let history of accountHistory; index as i">
                         <td>{{i+1}}</td>
                         <td>{{history?.tnxType}}</td>

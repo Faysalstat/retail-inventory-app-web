@@ -1,1 +1,115 @@
-<p>customer-details works!</p>
+<mat-card>
+    <div class="row">
+        <h3>Person Details</h3>
+        <div class="col-md-12">
+            <hr class="mt-2">
+        </div>
+        <div class="col-md-6">
+            <table class="table ">
+                <tbody>
+                    <tr>
+                        <th>Client Name</th>
+                        <td>{{person?.personName}}</td>
+                    </tr>
+                    <tr>
+                        <th>Contact No</th>
+                        <td>{{person?.contactNo}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table ">
+                <tbody>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{person?.email}}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{person?.personAddress}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <h3>Customer Details</h3>
+        <div class="col-md-12">
+            <hr class="mt-2">
+        </div>
+        <div class="col-md-6">
+            <table class="table ">
+                <tbody>
+                    <tr>
+                        <th>Shop Name</th>
+                        <td>{{customer?.shopName}}</td>
+                    </tr>
+                    <tr>
+                        <th>Shop Address</th>
+                        <td>{{customer?.shopAddress}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table ">
+                <tbody>
+                    <tr>
+                        <th>Balance</th>
+                        <td>{{account?.balance}}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{person?.personAddress}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12">
+            <button mat-raised-button (click)="showHistory(true)" color="warn">Show Account History</button>
+        </div>
+    </div>
+</mat-card>
+<mat-card *ngIf="showAccountHistory" class="mt-2">
+    <div class="row">
+        <div class="col-md-11">
+            <h3>Account History</h3>
+        </div>
+        <div class="col-md-1 float-right">
+
+            <button mat-raised-button (click)="showHistory(false)" color="warn">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div class="col-md-12">
+            <hr class="mt-2">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sn</th>
+                        <th>Tnx Type</th>
+                        <th>Tnx Date</th>
+                        <th>Tnx Amount</th>
+                        <th>Method</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="accountHistory.length==0">
+                        <th style="text-align: center;" colspan="6">No Transaction</th>
+                    </tr>
+                    <tr *ngFor="let history of accountHistory; index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{history?.tnxType}}</td>
+                        <td>{{history?.tnxDate}}</td>
+                        <td>{{history?.tnxAmount}}</td>
+                        <td>{{history?.paymentMethod}}</td>
+                        <td>{{history?.remark}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</mat-card>

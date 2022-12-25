@@ -2,7 +2,7 @@
     <h2>Cash Transactions</h2>
     <form [formGroup]="cashTransactionForm">
         <div class="row">
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <mat-form-field appearance="outline" class="input-field">
                     <mat-label>Transaction Type</mat-label>
                     <mat-select formControlName="transactionType">
@@ -10,7 +10,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
+            </div> -->
             <div class="col-md-4">
                 <mat-form-field appearance="outline" class="input-field">
                     <mat-label>Client Type</mat-label>
@@ -29,7 +29,7 @@
             <div *ngIf="isSupplier" class="col-md-4">
                 <mat-form-field class="input-field" appearance="outline" >
                     <mat-label>Code:</mat-label>
-                    <input   (change)="searchCustomer()" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="code" placeholder="Contact No." matInput>
+                    <input   (change)="searchCustomer()" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="code" placeholder="Code" matInput>
                 </mat-form-field>
             </div>
             <div *ngIf="isClientFound" class="col-md-6">
@@ -122,4 +122,9 @@
 
         </div>
     </form>
+</mat-card>
+<mat-card *ngIf="isTnxDone" class="mt-3">
+    <table class="table">
+
+    </table>
 </mat-card>

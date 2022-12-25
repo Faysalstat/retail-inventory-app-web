@@ -1,84 +1,13 @@
-<mat-card class="mt-4">
-    <!-- <div class="row">
-        <h2>Factory Transaction Report</h2>
-        <div class="col-md-3 col-sm-3">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Transaction Type</mat-label>
-                <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="onChnageGLType()"
-                    [(ngModel)]="selectedGlType">
-                    <mat-option *ngFor="let type of glTypes" [value]="type.value">
-                        {{type?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-3">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Transaction Type</mat-label>
-                <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="onChnageType()"
-                    [(ngModel)]="selectedType">
-                    <mat-option *ngFor="let type of transactionTypes" [value]="type.value">
-                        {{type?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div *ngIf="isExpense" class="col-md-3 col-sm-3">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Transaction Category</mat-label>
-                <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="onChnageCategory()"
-                    [(ngModel)]="selectedCategory">
-                    <mat-option *ngFor="let category of expenseCatgories" [value]="category.value">
-                        {{category?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div *ngIf="isExpense" class="col-md-3 col-sm-3">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Transaction Reasons</mat-label>
-                <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="onChnageReason()"
-                    [(ngModel)]="selectedReason">
-                    <mat-option *ngFor="let reason of expenseReasons" [value]="reason?.value">
-                        {{reason?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
-                <mat-label>From Date</mat-label>
-                <input matInput [matDatepicker]="fromDatePicker" (dateInput)="onDateChange()"
-                    [ngModelOptions]="{standalone:true}" [(ngModel)]="fromDate">
-                <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #fromDatePicker></mat-datepicker>
-            </mat-form-field>
-        </div>
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
-                <mat-label>To Date</mat-label>
-                <input matInput [matDatepicker]="toDatePicker" (dateInput)="onDateChange()"
-                    [ngModelOptions]="{standalone:true}" [(ngModel)]="toDate">
-                <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #toDatePicker></mat-datepicker>
-            </mat-form-field>
-        </div>
-        <div class="col-md-12">
-            <button mat-raised-button (click)="export()" color="warn">
-                <mat-icon>output</mat-icon>Export
-            </button>
-        </div>
-        <hr class="mt-2">
-    </div> -->
-
-    <div class="col-md-12 overflow-auto mt-3" style="max-height:450px;">
+<mat-card>
+    <div class="col-md-12 overflow-auto mt-3">
+        <h2>Transaction Report</h2>
         <table class="table table-stripe mt-4 ">
             <thead>
                 <th style="width:5%;">SN</th>
                 <th style="width:10%;">Tnx Type</th>
                 <th style="width:20%;">Tnx Reason</th>
-                <th style="width:10%;">Income</th>
-                <th style="width:10%;">Expense</th>
+                <th style="width:10%;">Credit</th>
+                <th style="width:10%;">Debit</th>
                 <th style="width:10%;">Tnx Date</th>
                 <th style="width:40%;">Refferense</th>
             </thead>
@@ -101,28 +30,5 @@
                 </tr>
             </tbody>
         </table>
-
     </div>
-    <!-- <div class="col-md-6">
-        <table class="table mt-4">
-            <tbody>
-                <tr>
-                    <td colspan="2">Summary</td>
-                </tr>
-                <tr>
-                    <th>Total Income</th>
-                    <th>{{totalIncomeAmount}} BDT</th>
-                </tr>
-                <tr>
-                    <th>Total Expense</th>
-                    <th>{{totalExpenseAmount}} BDT</th>
-                </tr>
-                <tr>
-                    <th>Total Reveesed</th>
-                    <th>{{totalReversedAmount}} BDT</th>
-                </tr>
-            </tbody>
-        </table>
-    </div> -->
-
 </mat-card>

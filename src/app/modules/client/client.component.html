@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
         <nav class="main-menu bg-dark">
             <ul>
                 <li>
@@ -13,10 +13,18 @@
         
                 </li>
                 <li class="has-subnav">
-                    <a routerLink="client-list">
+                    <a routerLink="customer-list">
                         <i class="fa fa-list"></i>
                         <span class="nav-text">
-                            Client List
+                            Customer List
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="supplyer-list">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Supplyer List
                         </span>
                     </a>
                 </li>
@@ -28,10 +36,18 @@
                         </span>
                     </a>
                 </li>
+                <li class="has-subnav">
+                    <a routerLink="add-customer">
+                        <i class="fa fa-plus-square"></i>
+                        <span class="nav-text">
+                            Add Customer
+                        </span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-10">
         <router-outlet></router-outlet>
     </div>
 </div>

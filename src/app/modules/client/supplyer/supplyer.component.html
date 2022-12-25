@@ -1,1 +1,31 @@
-<p>supplyer works!</p>
+<mat-card>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped" style="text-align:center ;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Code</th>
+                        <th>Supplyer Name</th>
+                        <th>Contact No</th>
+                        <th>Company Name</th>
+                        <th>Band Name</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row-hover" *ngFor="let client of clientList; index as i"
+                        (click)="viewClient(client.person.id)">
+                        <td>{{i+1}}</td>
+                        <td>{{client.code}}</td>
+                        <td  style="text-align: left;">{{client.person.personName}}</td>
+                        <td>{{client.person.contactNo}}</td>
+                        <td  style="text-align: left;">{{client.shopName}}</td>
+                        <td>{{client.brand}}</td>
+                        <td  style="text-align: right;">{{client.account.balance}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</mat-card>

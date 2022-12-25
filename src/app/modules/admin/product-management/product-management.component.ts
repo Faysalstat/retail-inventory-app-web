@@ -33,6 +33,7 @@ export class ProductManagementComponent implements OnInit {
     this.productService.fetchAllProduct(params).subscribe({
       next: (res) => {
         if (res) {
+          console.log(res.body)
           this.productList = res.body;
         }
       },

@@ -19,8 +19,8 @@
                         <th scope="row">{{i+offset+1}}</th>
                         <th>{{product?.productName}}</th>
                         <th>{{product?.quantity||0}} {{product?.unitType}}</th>
-                        <th>{{product?.buyingPrice || 0}} BDT</th>
-                        <th>{{product?.sellingPrice || 0}} BDT</th>
+                        <th>{{product?.costPricePerUnit || 0}} BDT</th>
+                        <th>{{product?.sellingPricePerUnit || 0}} BDT</th>
                     </tr>
                 </tbody>
             </table>
