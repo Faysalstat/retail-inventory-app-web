@@ -54,6 +54,7 @@ export class SalePointComponent implements OnInit {
   userName: string = 'MANAGER';
   rebate: number = 0;
   paymentMethods : any [] = [];
+  availableStock:number = 0;
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -69,7 +70,7 @@ export class SalePointComponent implements OnInit {
     this.orderList = [];
     this.prepareInvoiceIssueForm(null);
     this.paymentMethods = [
-      {label:"Select Payment Method", value:null},
+      {label:"Select Payment Method", value:''},
       {label:"BANK", value:"BANK"},
       {label:"BKASH", value:"BKASH"},
       {label:"CASH", value:"CASH"},
@@ -119,7 +120,7 @@ export class SalePointComponent implements OnInit {
       totalPaidAmount: [formData.totalPaidAmount],
       duePayment: [formData.duePayment],
       rebate: [formData.rebate],
-      paymentMethod : [formData.paymentMethod],
+      paymentMethod : [formData.paymentMethod || ''],
       comment: [formData.comment],
     });
   }
@@ -239,8 +240,10 @@ export class SalePointComponent implements OnInit {
     this.orderItem.packagingCategory = this.selectedProduct.packagingCategory;
     this.orderItem.unitPerPackage = this.selectedProduct.unitPerPackage;
     this.orderItem.pricePerUnit = this.selectedProduct.sellingPricePerUnit;
+    this.orderItem.buyingPricePerUnit = this.selectedProduct.costPricePerUnit;
     this.orderItem.quantity = this.selectedProduct.quantity;
     this.unitType = this.selectedProduct.unitType;
+    this.availableStock = this.selectedProduct.quantity;
 
     console.log(this.selectedProduct);
   }

@@ -10,8 +10,8 @@ import { SaleComponent } from './sale.component';
 const routes: Routes = [{
     path: '', component: SaleComponent,
     children: [
-        {path: '', component: PointOfSaleComponent},
-        {path: 'test', component: SalePointComponent},
+        {path: '', component: SalePointComponent},
+        {path: 'sale-point', component: SalePointComponent},
         {path: 'sale-invoice-list', component: SaleInvoiceListComponent},
         {path: 'edit-sale-invoice/:id', component: EditSaleInvoiceComponent},
         ]}

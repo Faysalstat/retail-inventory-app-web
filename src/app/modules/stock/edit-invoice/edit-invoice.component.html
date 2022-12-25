@@ -61,6 +61,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        
                         <th>SN</th>
                         <th>OrderNo</th>
                         <th>Product Name</th>
@@ -68,7 +69,13 @@
                         <th>Total Quantity</th>
                         <th>Quantity Delivered</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th>
+                            <span style="margin-right: 5px;">Check All</span>
+                            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                            </mat-checkbox>
+                            
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -80,13 +87,24 @@
                         <td>{{order?.quantityOrdered}}</td>
                         <td>{{order?.quantityDelivered}}</td>
                         <td>{{order?.deliveryStatus}}</td>
-                        <td>
+                        <td  style="text-align: center;">
+                            <mat-checkbox *ngIf="order.deliveryStatus!='DELIVERED'"  (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(order) : null"
+                                [checked]="selection.isSelected(order)">
+                            </mat-checkbox>
+                        </td>
+                        <!-- <td>
                             <button [disabled]="order.deliveryStatus=='DELIVERED'" mat-mini-fab (click)="addDelievrySchedule(order)" color="primary">
                                 <mat-icon>trolley</mat-icon>
                               </button>
-                        </td>
+                        </td> -->
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7"></td>
+                        <td><button mat-raised-button color="warn" (click)="deliverAll()">Deliver All</button></td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
@@ -96,7 +114,7 @@
             <mat-form-field appearance="outline" class="input-field">
                 <mat-label>Product</mat-label>
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedOrderItem">
-                    <mat-option *ngFor="let order of supplyOrders" (onSelectionChange)="onSelectOrder()"
+                    <mat-option *ngFor="let order of supplyOrders" (onSelectionChange)="onSelectOrder($event)"
                         [value]="order">{{order?.product?.productName}}
                     </mat-option>
                 </mat-select>
@@ -119,7 +137,7 @@
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
         </div>
-        <div class="col-md-3" style="margin-top:10px ;">
+        <div class="col-md-3" style="text-align: right;">
             <button (click)="addDelievrySchedule(null)" [disabled]="isDelivered" mat-raised-button color="warn">Add
                 Delivery</button>
         </div>

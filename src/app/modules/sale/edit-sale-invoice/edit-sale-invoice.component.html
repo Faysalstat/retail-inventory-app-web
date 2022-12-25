@@ -1,6 +1,12 @@
 <mat-card>
-    <h1>Invoice Details:</h1>
     <div class="row">
+        <div class="col-md-6">
+            <h1>Invoice Details:</h1>
+        </div>
+        <div class="col-md-6">
+            <button style="float:right;" (click)="downloadInvoice()" mat-raised-button
+                color="accent">Download Invoice</button>
+        </div>
         <div class="col-md-6">
             <table class="table table-striped">
                 <thead>
@@ -31,7 +37,7 @@
                         <th>Total Bill:</th>
                         <td>{{saleInvoice?.totalPrice || 0}} BDT</td>
                     </tr>
-                    
+
                     <tr>
                         <th>Total Payable Amount:</th>
                         <td>{{saleInvoice?.totalPayableAmount || 0}} BDT</td>
@@ -43,7 +49,7 @@
                 </thead>
             </table>
         </div>
-        </div>
+    </div>
     <div class="row">
         <div class="col-md-12 mt-3">
             <h2>Orders</h2>
@@ -58,7 +64,13 @@
                         <th>Total Quantity</th>
                         <th>Quantity Delivered</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th style="text-align: center;">
+                            <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()">
+                            </mat-checkbox>
+
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,11 +82,16 @@
                         <td>{{order?.quantityOrdered}}</td>
                         <td>{{order?.quantityDelivered}}</td>
                         <td>{{order?.deliveryStatus}}</td>
-                        <td>
-                            <button [disabled]="order.deliveryStatus=='DELIVERED'" mat-mini-fab (click)="addDelievrySchedule(order)" color="primary">
-                                <mat-icon>trolley</mat-icon>
-                              </button>
+                        <td style="text-align: center;">
+                            <mat-checkbox *ngIf="order.deliveryStatus!='DELIVERED'" (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(order) : null"
+                                [checked]="selection.isSelected(order)">
+                            </mat-checkbox>
                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="7"></td>
+                        <td><button mat-raised-button color="warn" (click)="deliverAll()">Deliver All</button></td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -91,21 +108,58 @@
                         <th>Total Payable Amount:</th>
                         <th>{{saleInvoice?.totalPayableAmount}} BDT</th>
                     </tr>
-                    <tr>
-                        <th colspan="2">
-                            <div class="row">
-                                <div class="col-md-12" >
-                                <button style="float:right;" (click)="downloadInvoice()" mat-raised-button
-                                            color="accent">Download Invoice</button>
-                                </div>
-                            </div>
-                        </th>
-                    </tr>
                 </tfoot>
             </table>
         </div>
         <div class="col-md-12">
 
+        </div>
+    </div>
+    <div *ngIf="isPending" class="row">
+        <h2>Receive Product Delivery:</h2>
+        <div class="col-md-3">
+            <mat-form-field appearance="outline" class="input-field">
+                <mat-label>Product</mat-label>
+                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedOrderItem">
+                    <mat-option *ngFor="let order of saleOrdersForSchedule;index as i"  (onSelectionChange)="onSelectOrder($event)"
+                        [value]="order">{{order?.product?.productName}} ({{order?.deliveryStatus}})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Deliverable Quantity</mat-label>
+                <input type="number" pInputText [ngModelOptions]="{standalone:true}"
+                    (change)="onChangeDelievredQuantity()" [(ngModel)]="delieverySchedule.deliverableQuantity"
+                    [disabled]="isDelivered" placeholder="Quantity" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Date:</mat-label>
+                <input matInput [matDatepicker]="picker" [disabled]="isDelivered" [ngModelOptions]="{standalone:true}"
+                    [(ngModel)]="delieverySchedule.scheduledDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3" style="text-align: right;">
+            <button (click)="addDelievrySchedule(null)" [disabled]="isDelivered" mat-raised-button color="warn">Add
+                Delivery</button>
+        </div>
+        <p style="color:red;font-weight: bold;">{{errMsg}}</p>
+        <div class="col-md-10">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Comment:</mat-label>
+                <textarea type="text" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="comment"
+                    matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <button style="margin-top: 10px;" mat-mini-fab (click)="updateComment()" color="primary">
+                <mat-icon>refresh</mat-icon>
+            </button>
         </div>
     </div>
 </mat-card>
