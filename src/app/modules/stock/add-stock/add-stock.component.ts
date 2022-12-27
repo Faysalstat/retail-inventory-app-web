@@ -45,6 +45,7 @@ export class AddStockComponent implements OnInit {
   errMsg: string = '';
   isApprovalNeeded : boolean = false;
   totalPrice:number = 0;
+  subTotalPrice:number = 0;
   comment!:string;
   userName:string = "Manager"
   constructor(
@@ -255,13 +256,8 @@ export class AddStockComponent implements OnInit {
     console.log(event);
   }
   calculateSummary() {
-    this.supplyInvoiceIssueForm
-      .get('duePayment')
-      ?.setValue(
-        this.supplyInvoiceIssueForm.get('totalPrice')?.value -
-          this.supplyInvoiceIssueForm.get('amountPaid')?.value -
-          this.supplyInvoiceIssueForm.get('rebate')?.value
-      );
+    this.subTotalPrice = this.totalPrice - this.supplyInvoiceIssueForm.get('rebate')?.value;
+    this.supplyInvoiceIssueForm.get('totalPrice')?.setValue(this.subTotalPrice);
   }
   submitOrder() {
     if (!this.isSupplyerExist) {

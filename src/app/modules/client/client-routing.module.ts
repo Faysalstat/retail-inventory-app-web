@@ -12,7 +12,7 @@ import { SupplyerComponent } from './supplyer/supplyer.component';
 const routes: Routes = [{
     path: '', component: ClientComponent,
     children: [
-        {path: '', component: ClientListComponent},
+        {path: '', component: CustomerComponent},
         {path: 'customer-list', component: CustomerComponent},
         {path: 'supplyer-list', component: SupplyerComponent},
         {path: 'add-supplyer', component: AddSupplyerComponent},

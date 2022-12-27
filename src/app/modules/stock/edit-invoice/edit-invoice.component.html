@@ -33,7 +33,7 @@
                         <td>{{supplyInvoice?.totalPrice || 0}} BDT</td>
                     </tr>
                     <tr>
-                        <th>Total Rebate:</th>
+                        <th>Discount:</th>
                         <td>{{supplyInvoice?.rebate || 0}} BDT</td>
                     </tr>
                 </thead>
@@ -69,8 +69,7 @@
                         <th>Total Quantity</th>
                         <th>Quantity Delivered</th>
                         <th>Status</th>
-                        <th>
-                            <span style="margin-right: 5px;">Check All</span>
+                        <th style="text-align: center;">
                             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
                                 [indeterminate]="selection.hasValue() && !isAllSelected()">
                             </mat-checkbox>

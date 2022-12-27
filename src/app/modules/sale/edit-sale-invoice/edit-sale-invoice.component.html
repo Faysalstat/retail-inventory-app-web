@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <th>Balance :</th>
-                        <td>{{customer?.account?.balance}} BDT</td>
+                        <th>{{customer?.account?.balance}} BDT</th>
                     </tr>
                 </thead>
 
@@ -45,6 +45,10 @@
                     <tr>
                         <th>Total Paid:</th>
                         <td>{{saleInvoice?.totalPaidAmount || 0}} BDT</td>
+                    </tr>
+                    <tr>
+                        <th>Discount Amount:</th>
+                        <th>{{saleInvoice?.rebate || 0}} BDT</th>
                     </tr>
                 </thead>
             </table>
@@ -108,6 +112,7 @@
                         <th>Total Payable Amount:</th>
                         <th>{{saleInvoice?.totalPayableAmount}} BDT</th>
                     </tr>
+                   
                 </tfoot>
             </table>
         </div>

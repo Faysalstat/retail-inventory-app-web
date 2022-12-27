@@ -1,5 +1,5 @@
-// const BASE_URL = 'https://demo.vatasolution.me/api';
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = 'https://demo.vatasolution.me/api';
+// const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
@@ -37,7 +37,9 @@ export const InventoryUrls = {
 }
 
 export const ReportUrls = {
-  TRANSACTION_REPORT : BASE_URL + "/transaction/gettransactionreport"
+  TRANSACTION_REPORT : BASE_URL + "/transaction/gettransactionreport",
+  ACCOUNT_HISTORY_REPORT : BASE_URL + "/report/getaccounthistoryrecord",
+  
 }
 export const ConfigUrls = {
   ADD_CONFIG : BASE_URL + "/config/addconfig",
