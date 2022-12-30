@@ -13,6 +13,8 @@ import { ConfigurationSettingComponent } from './configuration-setting/configura
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
 import { ProductConfigComponent } from './product-config/product-config.component';
+import { AddUserComponent } from './add-user/add-user.component';
+import { AdminAuthGuard } from './admin-auth.guard';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { ProductConfigComponent } from './product-config/product-config.componen
     ApprovalDetailsComponent,
     ConfigurationSettingComponent,
     AdminComponent,
-    ProductConfigComponent
+    ProductConfigComponent,
+    AddUserComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +39,9 @@ import { ProductConfigComponent } from './product-config/product-config.componen
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+  ],
+  providers: [
+    AdminAuthGuard
   ]
 })
 export class AdminModule { }

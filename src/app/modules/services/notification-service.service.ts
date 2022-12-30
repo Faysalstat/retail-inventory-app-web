@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class NotificationService {
-
+   
   constructor() { }
   public showMessage(title:string,msg:string,close:string,timer:number){
     return Swal.fire({
@@ -14,5 +14,14 @@ export class NotificationService {
       confirmButtonText: close,
       timer: timer
     });
+  }
+  public showErrorMessage(title:string,msg:string,close:string,timer:number){
+      return Swal.fire({
+        title: title,
+        text: msg,
+        confirmButtonText: close,
+        icon: "error",
+        timer: timer
+      });
 }
 }

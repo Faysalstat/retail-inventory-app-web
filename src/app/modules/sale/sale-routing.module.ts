@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppAuthGuard } from 'src/app/app-auth.guard';
-import { PointOfSaleComponent } from '../comps/point-of-sale/point-of-sale.component';
+import { AppAuthGuard } from '../app-auth.guard';
 import { EditSaleInvoiceComponent } from './edit-sale-invoice/edit-sale-invoice.component';
 import { SaleInvoiceListComponent } from './sale-invoice-list/sale-invoice-list.component';
 import { SalePointComponent } from './sale-point/sale-point.component';
 import { SaleComponent } from './sale.component';
 
 const routes: Routes = [{
-    path: '', component: SaleComponent,
+    path: '', component: SaleComponent,canActivate:[AppAuthGuard],
     children: [
         {path: '', component: SalePointComponent},
         {path: 'sale-point', component: SalePointComponent},

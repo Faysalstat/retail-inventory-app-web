@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import {MenuItem} from 'primeng/api';
 @Component({
   selector: 'app-admin',
@@ -7,7 +8,9 @@ import {MenuItem} from 'primeng/api';
 })
 export class AdminComponent implements OnInit {
   items!: MenuItem[];
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.items = [
@@ -86,5 +89,9 @@ export class AdminComponent implements OnInit {
       }
   ];
 }
+logout(){
+    localStorage.removeItem("token");
+    this.router.navigate(['auth']);
+  }
   }
 

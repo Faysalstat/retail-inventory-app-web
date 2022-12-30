@@ -113,6 +113,29 @@ export class ClientIssueModel {
   email!:string;
 
 }
+
+export class User{
+  userName:string='';
+  password:string = '';
+  userRole:string ='';
+}
+export class UserModel{
+  id!:number;
+  personId!:number;
+  personName!: string;
+  contactNo!: string;
+  personAddress!: string;
+  email!: string;
+  userName!:string;
+  password!:string;
+  userRole!:string;
+}
+export enum Roles{
+  ADMIN = 'ADMIN',
+  MANAGER = 'MANAGER',
+  SALER = 'SALER',
+  DEVELOPER = 'DEVELOPER'
+}
 export enum Tasks{
   CREATE_INVOICE="CREATE_INVOICE",
   UPDATE_INVOICE= "UPDATE_INVOICE",

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
   menuItems:any [] = [];
-  constructor() {
+  userProfile!:any;
+  constructor(
+    private router:Router
+  ) {
     this.menuItems = [
       {
         imgUrl:"icon-admin.png",
@@ -43,6 +47,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userProfile = localStorage.getItem('username');
+  }
+  logout(){
+    console.log("You are logged out");
+    localStorage.removeItem("token");
+    this.router.navigate(['auth']);
   }
 
 }
