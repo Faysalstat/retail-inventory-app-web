@@ -191,7 +191,7 @@
                         </tr>
                         <tr>
                             <th style="text-align:left;">Previous {{balanceTitle}}:</th>
-                            <th style="text-align:right;">{{previousBalance}} BDT</th>
+                            <th style="text-align:right;">{{showPositive(previousBalance)}} BDT</th>
                         </tr>
                         <tr>
                             <th style="text-align:left;">Discount:</th>
@@ -203,8 +203,8 @@
                             </th>
                         </tr>
                         <tr>
-                            <th style="text-align:left;">Total:</th>
-                            <th style="text-align:right;">{{totalPayableAmount}} BDT</th>
+                            <th style="text-align:left;">Total {{balanceType}}:</th>
+                            <th style="text-align:right;">{{showPositive(totalPayableAmount)}} BDT</th>
                         </tr>
 
                         <tr>

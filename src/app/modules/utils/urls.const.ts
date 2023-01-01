@@ -1,5 +1,5 @@
-const BASE_URL = 'https://demo.vatasolution.me/api';
-// const BASE_URL = "http://localhost:3000/api";
+// const BASE_URL = 'https://demo.vatasolution.me/api';
+const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
@@ -52,6 +52,7 @@ export const ApprovalUrls = {
   GET_TASK_LIST : BASE_URL + "/approval/getall",
   GET_TASK_BY_ID : BASE_URL + "/approval/getbyid",
   APPROVE_TASK: BASE_URL + "/approval/approve",
+  DECLINE_APPROVE_TASK: BASE_URL + "/approval/decline",
 }
 export const TransactionUrls = {
   DO_PAYMENT_TRANSACTION : BASE_URL + "/transaction/dotransaction"

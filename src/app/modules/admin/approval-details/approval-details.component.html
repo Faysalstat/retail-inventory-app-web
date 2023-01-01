@@ -8,45 +8,45 @@
                 <thead *ngIf="isStock">
                     <tr>
                         <th>Code:</th>
-                        <th> {{supplyer?.code}} </th>
+                        <td> {{supplyer?.code}} </td>
                     </tr>
                     <tr>
                         <th>Company Name:</th>
-                        <th> {{supplyer?.companyName}} </th>
+                        <td> {{supplyer?.companyName}} </td>
                     </tr>
                     <tr>
                         <th>Band Name:</th>
-                        <th> {{supplyer?.band}}</th>
+                        <td> {{supplyer?.band}}</td>
                     </tr>
                     <tr>
                         <th>Supplyer Name:</th>
-                        <th> {{supplyer?.person?.personName}} </th>
+                        <td> {{supplyer?.person?.personName}} </td>
                     </tr>
                     <tr>
                         <th>Contact No:</th>
-                        <th> {{supplyer?.person?.contactNo}} </th>
+                        <td> {{supplyer?.person?.contactNo}} </td>
                     </tr>
                 </thead>
                 <thead *ngIf="!isStock">
                     <tr>
                         <th>Customer Name:</th>
-                        <th> {{customer?.person?.personName}} </th>
+                        <td> {{customer?.person?.personName}} </td>
                     </tr>
                     <tr>
                         <th>Shop Name:</th>
-                        <th> {{customer?.shopName}}</th>
+                        <td> {{customer?.shopName}}</td>
                     </tr>
                     <tr>
                         <th>Address:</th>
-                        <th> {{customer?.person?.personAddress}} </th>
+                        <td> {{customer?.person?.personAddress}} </td>
                     </tr>
                     <tr>
                         <th>Contact No:</th>
-                        <th> {{customer?.person?.contactNo}} </th>
+                        <td> {{customer?.person?.contactNo}} </td>
                     </tr>
                     <tr>
                         <th>Email:</th>
-                        <th> {{customer?.person?.email}} </th>
+                        <td> {{customer?.person?.email}} </td>
                     </tr>
                 </thead>
             </table>
@@ -56,11 +56,11 @@
                 <thead>
                     <tr>
                         <th>Total Bill:</th>
-                        <th style="text-align:right;"> {{invoiceDetails?.totalPrice}} BDT</th>
+                        <td style="text-align:right;"> {{invoiceDetails?.totalPrice || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th>Balance:</th>
-                        <th style="text-align:right;">{{supplyer?.account?.balance}} BDT</th>
+                        <td style="text-align:right;">{{supplyer?.account?.balance || 0}} BDT</td>
                     </tr>
                 </thead>
             </table>
@@ -70,23 +70,23 @@
                 <thead>
                     <tr>
                         <th style="text-align:left;">Total Bill:</th>
-                        <th style="text-align:right;">{{invoiceDetails?.totalPrice}} BDT</th>
+                        <td style="text-align:right;">{{invoiceDetails?.totalPrice || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th style="text-align:left;">Previous Balance:</th>
-                        <th style="text-align:right;"> {{invoiceDetails?.previousBalance}} BDT</th>
+                        <td style="text-align:right;"> {{invoiceDetails?.previousBalance || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th style="text-align:left;">Discount:</th>
-                        <th style="text-align:right;"> {{invoiceDetails?.rebate}} BDT</th>
+                        <td style="text-align:right;"> {{invoiceDetails?.rebate || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th style="text-align:left;">Total Payable Bill:</th>
-                        <th style="text-align:right;"> {{invoiceDetails?.totalPayableAmount}} BDT</th>
+                        <td style="text-align:right;"> {{invoiceDetails?.totalPayableAmount || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th style="text-align:left;">Total Paid:</th>
-                        <th style="text-align:right;"> {{invoiceDetails?.totalPaidAmount}} BDT</th>
+                        <td style="text-align:right;"> {{invoiceDetails?.totalPaidAmount || 0}} BDT</td>
                     </tr>
                 </thead>
             </table>
@@ -116,14 +116,14 @@
                         <th>{{order.packageQuantity}}</th>
                         <th>{{order.looseQuantity}}</th>
                         <th>{{order.quantityOrdered}}</th>
-                        <th>{{order.totalOrderPrice}} BDT</th>
+                        <th>{{order.totalOrderPrice || 0}} BDT</th>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
                         <th colspan="5"></th>
                         <th>Total</th>
-                        <th>{{invoiceDetails?.totalPrice}} BDT</th>
+                        <th>{{invoiceDetails?.totalPrice || 0}} BDT</th>
                     </tr>
                 </tfoot>
             </table>
@@ -136,7 +136,10 @@
             </mat-form-field>
         </div>
         <div class="col-md-12">
-            <button style="float:right ;" (click)="submitOrder()" mat-raised-button color="warn">Submit</button>
+            
+            <button style="float:right ; margin-left: 10px;" (click)="declineApproval()" mat-raised-button color="warn">Decline</button>
+            <!-- <button style="float:right ; margin-left: 10px;" (click)="declineApproval()" mat-raised-button color="warn">Decline</button> -->
+            <button style="float:right ;" (click)="submitOrder()" mat-raised-button color="primary">Submit</button>
         </div>
     </div>
 </mat-card>

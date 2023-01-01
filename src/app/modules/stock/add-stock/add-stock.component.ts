@@ -287,6 +287,7 @@ export class AddStockComponent implements OnInit {
         payload:JSON.stringify(orderIssueModel),
         createdBy: this.userName,
         taskType: Tasks.CREATE_SUPPLY,
+        status: "OPEN"
       };
       const params: Map<string, any> = new Map();
       params.set('approval', approvalModel);

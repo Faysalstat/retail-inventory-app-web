@@ -33,7 +33,6 @@ export class ApprovalDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe((parameter) => {
       let id = parameter['id'];
       this.taskId = id;
-      console.log(parameter);
       this.inventoryService.fetchTaskById(this.taskId).subscribe({
         next: (res) => {
           this.taskDetail = res.body;
@@ -53,7 +52,6 @@ export class ApprovalDetailsComponent implements OnInit {
       this.clientService.getSupplyerByCode(params).subscribe({
         next: (res) => {
           if (res.body) {
-            console.log(res.body);
             this.supplyer = res.body;
           }
         },
@@ -75,7 +73,6 @@ export class ApprovalDetailsComponent implements OnInit {
         params.set('order', this.invoiceDetails);
         this.inventoryService.issueBuyOrder(params).subscribe({
           next: (res) => {
-            console.log(res.body);
             this.notificationService.showMessage(
               'SUCCESS!',
               'Invoice Created',
@@ -107,5 +104,21 @@ export class ApprovalDetailsComponent implements OnInit {
         })
       }
       
+  }
+
+  declineApproval(){
+    const params: Map<string, any> = new Map();
+    let task = {
+      taskId: this.taskId
+    }
+    params.set("task",task)
+    this.inventoryService.declineApproval(params).subscribe({
+      next:(res)=>{
+        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500)
+      },
+      error:(err)=>{
+        this.notificationService.showErrorMessage("Warning","Deletion Failed","Ok",500);
+      }
+    })
   }
 }

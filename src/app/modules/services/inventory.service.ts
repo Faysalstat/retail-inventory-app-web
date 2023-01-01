@@ -80,7 +80,9 @@ export class InventoryService {
   public sendToApproval(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(ApprovalUrls.SEND_TO_APPROVAL, queryParams.get('approval'));
   }
-
+  public declineApproval(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(ApprovalUrls.DECLINE_APPROVE_TASK, queryParams.get('task'));
+  }
   public fetchTaskList(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
     return this.http.get(ApprovalUrls.GET_TASK_LIST,{params:params});

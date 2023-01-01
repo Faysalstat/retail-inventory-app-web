@@ -9,13 +9,12 @@
                 <thead>
                     <tr>
                         <th scope="col">SN</th>
-                        <!-- <th scope="col">Invoice No</th> -->
+                        <th scope="col">Invoice No</th>
                         <th scope="col">Customer</th>
                         <th scope="col">Contact No</th>
                         <th scope="col">Shop Name</th>
                         <th scope="col">Total Bill</th>
                         <th scope="col">Paid</th>
-                        <th scope="col">Due</th>
                         <th scope="col">Delivery Status</th>
                     </tr>
                 </thead>
@@ -26,13 +25,13 @@
                         </td>
                     </tr>
                     <tr class="row-hover" *ngFor="let invoice of saleInvoiceList; index as i" (click)="viewInvoice(invoice)">
-                        <td scope="row">{{i+1}}</td>
+                        <th scope="row">{{i+offset+1}}</th>
+                        <td>{{invoice.invoiceNo}}</td>
                         <td>{{invoice.customer.person.personName}}</td>
                         <td>{{invoice.customer.person.contactNo}}</td>
                         <td>{{invoice.customer.shopName}}</td>
                         <td>{{invoice.totalPrice}}</td>
                         <td>{{invoice.totalPaidAmount}}</td>
-                        <td>{{invoice.totalPrice - invoice.totalPaidAmount}}</td>
                         <td>{{invoice.deliveryStatus}}</td>
                     </tr>
                 </tbody>

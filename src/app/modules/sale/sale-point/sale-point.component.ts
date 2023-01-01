@@ -55,6 +55,7 @@ export class SalePointComponent implements OnInit {
   rebate: number = 0;
   paymentMethods : any [] = [];
   availableStock:number = 0;
+  balanceType: string = "Payable"
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -285,6 +286,11 @@ export class SalePointComponent implements OnInit {
     this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
     this.totalPrice = totalPrice;
     this.totalPayableAmount = this.totalPrice - this.previousBalance;
+    if(this.totalPayableAmount<0){
+      this.balanceType = "Return";
+    }else{
+      this.balanceType = "Payable"
+    }
   }
   calculateTotalPrice() {
     let totalPrice = 0;
@@ -316,6 +322,7 @@ export class SalePointComponent implements OnInit {
         payload: JSON.stringify(orderIssueModel),
         createdBy: this.userName,
         taskType: Tasks.CREATE_INVOICE,
+        status:"OPEN"
       };
       const params: Map<string, any> = new Map();
       params.set('approval', approvalModel);
@@ -388,5 +395,10 @@ export class SalePointComponent implements OnInit {
       orders: orders,
     };
     this.pdfMakeService.downloadInvoice(invoiceModel);
+  }
+
+  showPositive(number:any){
+    return Math.abs(Number(number));
+
   }
 }
