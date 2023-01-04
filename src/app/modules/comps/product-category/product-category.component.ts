@@ -9,12 +9,14 @@ import { ProductService } from '../../services/product-service.service';
 })
 export class ProductCategoryComponent implements OnInit {
   category!:string;
+  categories!:any[];
   constructor(
     private productService: ProductService,
     private notificationService : NotificationService
   ) { }
 
   ngOnInit(): void {
+    this.fetchProductCategory();
   }
 
   addcategory(){
@@ -27,7 +29,21 @@ export class ProductCategoryComponent implements OnInit {
     this.productService.addProductCategory(params).subscribe({
       next:(res)=>{
         if(res.body){
+          this.category = '';
           this.notificationService.showMessage("SUCCESS",res.message,"OK",500);
+          this.fetchProductCategory();
+        }
+      }
+    })
+  }
+
+  fetchProductCategory(){
+    this.productService.fetchAllProductCategory().subscribe({
+      next:(res)=>{
+        if(res.body){
+          this.categories = res.body;
+        }else{
+          this.notificationService.showErrorMessage("ERROR","No Product Category Found","OK",500);
         }
       }
     })

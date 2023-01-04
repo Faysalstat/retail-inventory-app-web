@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="mt-3">
     <div class="row">
         <h2>Add Unit Type</h2>
         <div class="col-md-6">
@@ -12,6 +12,25 @@
             <div class="input-field">
                 <button mat-raised-button color="warn" (click)="addunitType()">Add</button>
             </div>
+        </div>
+        <div class="col-md-12">
+            <hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Key</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let unit of unitTypes;index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{unit.key}}</td>
+                        <td>{{unit.value}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </mat-card>

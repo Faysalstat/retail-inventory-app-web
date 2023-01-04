@@ -9,12 +9,14 @@ import { ProductService } from '../../services/product-service.service';
 })
 export class UnitTypeComponent implements OnInit {
   unitType!:string;
+  unitTypes!:any[];
   constructor(
     private productService: ProductService,
     private notificationService : NotificationService
   ) { }
 
   ngOnInit(): void {
+    this.fetchUnitType();
   }
 
   addunitType(){
@@ -24,10 +26,24 @@ export class UnitTypeComponent implements OnInit {
       value: this.unitType.toUpperCase()
     }
     params.set("model",model);
-    this.productService.addProductCategory(params).subscribe({
+    this.productService.addUnitType(params).subscribe({
       next:(res)=>{
         if(res.body){
+          this.unitType = '';
           this.notificationService.showMessage("SUCCESS",res.message,"OK",500);
+          this.fetchUnitType();
+        }
+      }
+    })
+  }
+  fetchUnitType(){
+    this.productService.fetchAllUnitType().subscribe({
+      next:(res)=>{
+        if(res.body){
+          this.unitTypes = res.body;
+          
+        }else{
+          this.notificationService.showErrorMessage("ERROR","No Unit Type Found","OK",500);
         }
       }
     })

@@ -9,12 +9,14 @@ import { TransactionService } from '../../services/transaction.service';
 })
 export class AddTnxReasonComponent implements OnInit {
   tnxReason!:string;
+  reasons!:any[];
   constructor(
     private tnxService: TransactionService,
     private notificationService : NotificationService
   ) { }
 
   ngOnInit(): void {
+    this.fetchTransactionReasons();
   }
 
   addTnxReason(){
@@ -27,10 +29,20 @@ export class AddTnxReasonComponent implements OnInit {
     this.tnxService.addTransactionReason(params).subscribe({
       next:(res)=>{
         if(res.body){
+          this.tnxReason = '';
           this.notificationService.showMessage("SUCCESS",res.message,"OK",500);
+          this.fetchTransactionReasons();
         }
       }
     })
   }
-
+  fetchTransactionReasons(){
+    this.tnxService.fetchAllTransactionReason().subscribe({
+      next:(res)=>{
+        if(res.body){
+          this.reasons = res.body;
+        }
+      }
+    })
+  }
 }

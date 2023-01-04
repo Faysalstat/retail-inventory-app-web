@@ -13,5 +13,24 @@
                 <button mat-raised-button color="warn" (click)="addTnxReason()">Add</button>
             </div>
         </div>
+        <div class="col-md-12">
+            <hr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Key</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let reason of reasons;index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{reason.key}}</td>
+                        <td>{{reason.value}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </mat-card>
