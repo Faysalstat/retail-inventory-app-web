@@ -4,6 +4,7 @@ import { AddUserComponent } from './add-user/add-user.component';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { AdminComponent } from './admin.component';
 import { ApprovalDetailsComponent } from './approval-details/approval-details.component';
+import { ConfigurationSettingComponent } from './configuration-setting/configuration-setting.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductConfigComponent } from './product-config/product-config.component';
 import { ProductManagementComponent } from './product-management/product-management.component';
@@ -14,8 +15,11 @@ const routes: Routes = [{
     children: [
         {path: '', component: DashboardComponent},
         {path: 'add-product', component: ProductConfigComponent},
+        {path: 'add-config', component: ConfigurationSettingComponent},
         {path: 'add-user', component: AddUserComponent},
         {path: 'task-list', component: TaskListComponent},
+        {path: 'product-list', component: ProductManagementComponent},
+        {path: 'product-detail/:id', component: ProductConfigComponent},
         {path: 'task-details/:id', component: ApprovalDetailsComponent},
       ]
 }];

@@ -17,6 +17,7 @@ export class ProductConfigComponent implements OnInit {
   showLoader:boolean = false;
   isEdit:boolean = false;
   product!:any;
+  errMsg:string ='';
   constructor(
     private activatedRoute:ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -24,14 +25,7 @@ export class ProductConfigComponent implements OnInit {
     private notificationService: NotificationService,
     private route : Router
     ) {
-    this.units = [
-      { label: 'KG', value: 'KG' },
-      { label: 'Litre', value: 'LITRE' },
-      { label: 'BAG', value: 'BAG' },
-      { label: 'Meter', value: 'METER' },
-    ];
-
-  }
+     }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((parameter) => {
@@ -49,6 +43,8 @@ export class ProductConfigComponent implements OnInit {
     });
     this.prepareForm();
     this.fetchPackagingCategory();
+    this.fetchProductCategory();
+    this.fetchUnitType();
   }
   fetchProductById(id:any){
     this.productService.fetchProductById(id).subscribe({
@@ -58,6 +54,7 @@ export class ProductConfigComponent implements OnInit {
           this.product = res.body;
           this.notificationService.showMessage("SUCCESS","Product Found","OK",300);
           this.setFormValue();
+          this.productAddingForm.get('productCode')?.disable();
         }
       },
       error:(err)=>{
@@ -67,6 +64,7 @@ export class ProductConfigComponent implements OnInit {
   }
   prepareForm() {
     this.productAddingForm = this.formBuilder.group({
+      productCode: ['',[Validators.required]],
       productName: ['',[Validators.required]],
       productCategory: [''],
       unitType: ['',[Validators.required]],
@@ -78,11 +76,9 @@ export class ProductConfigComponent implements OnInit {
       unitPerPackage:[0]
     });
   }
-  fetchProductCategories() {
-    this.categories = [{ label: 'select category', value: null }];
-  }
+  
   fetchPackagingCategory(){
-    this.packagingCategories = [{ label: 'Select category', value: null }];
+    this.packagingCategories = [{ label: 'Select category', value: '' }];
     this.productService.fetchAllPackagingCategory().subscribe({
       next:(res)=>{
         let categories = res.body;
@@ -92,7 +88,6 @@ export class ProductConfigComponent implements OnInit {
             this.packagingCategories.push(category);
         })
         }
-       
       },
       error:(err)=>{
         this.notificationService.showMessage("FAILED!","Category Fetching Failed","OK",1000);
@@ -116,6 +111,7 @@ export class ProductConfigComponent implements OnInit {
           this.productAddingForm.reset();
           this.notificationService.showMessage("SUCCESS!","Product Added Successfuly","OK",1000);
         }else{
+          this.productAddingForm.reset();
           this.notificationService.showMessage("SUCCESS!","Product Updated Successfuly","OK",1000);
           this.product = res.body
         }
@@ -132,6 +128,7 @@ export class ProductConfigComponent implements OnInit {
   setFormValue(){
     this.productAddingForm = this.formBuilder.group({
       id: this.product.id,
+      productCode: this.product.productCode || "",
       productName: this.product.productName || "",
       productCategory: this.product.productCategory || "",
       unitType: this.product.unitType || "",
@@ -142,6 +139,74 @@ export class ProductConfigComponent implements OnInit {
       packagingCategory:this.product.packagingCategory|| "",
       unitPerPackage:this.product.unitPerPackage|| "",
     });
+  }
+
+  fetchProductCategory(){
+    this.categories = [{ label: 'Select Category', value: '' }];
+    this.productService.fetchAllProductCategory().subscribe({
+      next:(res)=>{
+        if(res.body){
+          let categoryList = res.body;
+          categoryList.map((elem:any)=>{
+            let option = {label:elem.key,value: elem.value};
+            this.categories.push(option);
+          })
+        }else{
+          this.notificationService.showErrorMessage("ERROR","No Product Category Found","OK",500);
+        }
+      }
+    })
+  }
+
+  fetchUnitType(){
+    this.units = [{ label: 'Select Unit Type', value: '' }];
+    this.productService.fetchAllUnitType().subscribe({
+      next:(res)=>{
+        if(res.body){
+          let unitList = res.body;
+          unitList.map((elem:any)=>{
+            let option = {label:elem.key,value: elem.value};
+            this.units.push(option);
+          })
+        }else{
+          this.notificationService.showErrorMessage("ERROR","No Unit Type Found","OK",500);
+        }
+      }
+    })
+  }
+  checkDuplicateProduct(){
+    const params: Map<string, any> = new Map();
+    params.set("code",this.productAddingForm.get('productCode')?.value);
+    params.set("name",'');
+    if(!this.isEdit){
+      this.productService.fetchProductByCode(params).subscribe({
+        next:(res)=>{
+          if(res.isExist){
+            this.productAddingForm.get('productName')?.disable();
+            this.productAddingForm.get('productCategory')?.disable();
+            this.productAddingForm.get('unitType')?.disable();
+            this.productAddingForm.get('quantity')?.disable();
+            this.productAddingForm.get('brandName')?.disable();
+            this.productAddingForm.get('costPricePerUnit')?.disable();
+            this.productAddingForm.get('sellingPricePerUnit')?.disable();
+            this.productAddingForm.get('packagingCategory')?.disable();
+            this.productAddingForm.get('unitPerPackage')?.disable();
+            this.errMsg = "**This Product Already Exits"
+          }else{
+            this.productAddingForm.get('productName')?.enable();
+            this.productAddingForm.get('productCategory')?.enable();
+            this.productAddingForm.get('unitType')?.enable();
+            this.productAddingForm.get('quantity')?.enable();
+            this.productAddingForm.get('brandName')?.enable();
+            this.productAddingForm.get('costPricePerUnit')?.enable();
+            this.productAddingForm.get('sellingPricePerUnit')?.enable();
+            this.productAddingForm.get('packagingCategory')?.enable();
+            this.productAddingForm.get('unitPerPackage')?.enable();
+            this.errMsg = ""
+          }
+        }
+      })
+    }
   }
 }
 

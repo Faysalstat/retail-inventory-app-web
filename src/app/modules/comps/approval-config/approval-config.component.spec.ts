@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CashManagementComponent } from './cash-management.component';
+import { ApprovalConfigComponent } from './approval-config.component';
 
-describe('CashManagementComponent', () => {
-  let component: CashManagementComponent;
-  let fixture: ComponentFixture<CashManagementComponent>;
+describe('ApprovalConfigComponent', () => {
+  let component: ApprovalConfigComponent;
+  let fixture: ComponentFixture<ApprovalConfigComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CashManagementComponent ]
+      declarations: [ ApprovalConfigComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CashManagementComponent);
+    fixture = TestBed.createComponent(ApprovalConfigComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

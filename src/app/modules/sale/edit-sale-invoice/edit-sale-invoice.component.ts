@@ -232,7 +232,7 @@ export class EditSaleInvoiceComponent implements OnInit {
       this.selectedOrderItem.quantityDelivered;
     if (this.delieverySchedule.deliverableQuantity > remainingPendingQuantity) {
       this.errMsg =
-        '*Delivered Quantity is Greater Than Remaining Order Quantity';
+        '*Deliverable Quantity is Greater Than Remaining Order Quantity';
       return;
     } else {
       this.errMsg = '';

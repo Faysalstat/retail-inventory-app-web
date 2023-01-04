@@ -4,6 +4,7 @@ import { Account, Customer, Person, Supplyer } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-cash-transaction',
@@ -25,12 +26,14 @@ export class CashTransactionComponent implements OnInit {
   isClientFound: boolean = false;
   comment: string = "";
   paymentMethods: any [];
+  transactionReasons!: any [];
   isTnxDone:boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
     private clientService: ClientService,
-    private inventoryService: InventoryService
+    private inventoryService: InventoryService,
+    private transactionService: TransactionService
   ) {
     this.types = [
       { value: 'PAYMENT', label: 'Payment' },
@@ -46,10 +49,12 @@ export class CashTransactionComponent implements OnInit {
 
   ngOnInit(): void {
     this.prepareForm();
+    this.fetchTransactionReasons();
   }
   prepareForm() {
     this.cashTransactionForm = this.formBuilder.group({
       transactionType: ['PAYMENT'],
+      transactionReason: [''],
       clientType: ['SUPPLIER'],
       accountId: [''],
       cashAmount: [''],
@@ -139,6 +144,21 @@ export class CashTransactionComponent implements OnInit {
       error:(err)=>{
         this.notificationService.showMessage("ERROR!","Payment FAILED","OK",200);
         this.isTnxDone = false;
+      }
+    })
+  }
+
+  fetchTransactionReasons(){
+    this.transactionReasons = [{ label: 'Select Transaction Reasons', value: '' }];
+    this.transactionService.fetchAllTransactionReason().subscribe({
+      next:(res)=>{
+        if(res.body){
+          let reasons = res.body;
+          reasons.map((elem:any)=>{
+            let option = {label:elem.key,value: elem.value};
+            this.transactionReasons.push(option);
+          })
+        }
       }
     })
   }

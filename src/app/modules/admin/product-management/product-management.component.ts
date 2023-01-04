@@ -45,6 +45,6 @@ export class ProductManagementComponent implements OnInit {
     this.fetchAllProducts();
   }
   onselectProduct(product:any){
-    this.route.navigate(["/admin/product-detail",product.id]);
+    this.route.navigate(["/stock/product-detail",product.id]);
   }
 }

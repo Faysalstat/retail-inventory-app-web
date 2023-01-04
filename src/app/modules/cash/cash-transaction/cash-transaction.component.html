@@ -93,13 +93,22 @@
             </div>
         </div>
         <div *ngIf="isClientFound" class="row">            
-            <div  class="col-md-6">
+            <div  class="col-md-4">
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-label>Amount:</mat-label>
                     <input formControlName="cashAmount" placeholder="Put Amount" matInput>
                 </mat-form-field>
             </div>
-            <div  class="col-md-6">
+            <div  class="col-md-4">
+                <mat-form-field appearance="outline" class="input-field">
+                    <mat-label>Tnx Reason:</mat-label>
+                    <mat-select formControlName="transactionReason">
+                        <mat-option *ngFor="let reason of transactionReasons" [value]="reason.value">{{reason?.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div  class="col-md-4">
                 <mat-form-field appearance="outline" class="input-field">
                     <mat-label>Payment By:</mat-label>
                     <mat-select formControlName="paymentMethod">

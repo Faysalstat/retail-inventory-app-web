@@ -3,7 +3,13 @@
 <h1>Add Products:</h1>
 <form [formGroup]="productAddingForm">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-3">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Product Code</mat-label>
+                <input formControlName="productCode" (change)="checkDuplicateProduct()" placeholder="Product Code" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-9">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Product Name</mat-label>
                 <input formControlName="productName" placeholder="Product Name" matInput>
@@ -61,6 +67,9 @@
                 <input type="number" type="number" formControlName="sellingPricePerUnit" placeholder="Selling Price"
                     matInput>
             </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <p style="color: red;font-weight: bold;">{{errMsg}}</p>
         </div>
         <div class="col-md-12">
             <button (click)="addProduct()" mat-raised-button color="warn">{{isEdit?"Update Product":"Add Product"}}</button>

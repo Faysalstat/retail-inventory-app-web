@@ -1,0 +1,17 @@
+<mat-card>
+    <div class="row">
+        <h2>Add Transaction Reason</h2>
+        <div class="col-md-6">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Tnx Reason</mat-label>
+                <input [ngModelOptions]="{standalone: true}" [(ngModel)]="tnxReason" placeholder="Transaction Reason"
+                    matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <div class="input-field">
+                <button mat-raised-button color="warn" (click)="addTnxReason()">Add</button>
+            </div>
+        </div>
+    </div>
+</mat-card>
