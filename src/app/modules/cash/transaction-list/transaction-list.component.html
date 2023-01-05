@@ -1,0 +1,48 @@
+<mat-card>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field class="input-field" appearance="outline">
+              <mat-label>Tnx Type</mat-label>
+              <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchTransactionRecord()" [(ngModel)]="query.tnxType">
+                <mat-option *ngFor="let type of tnxTypes" [value]="type.value">{{type?.label}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12 overflow-auto mt-3">
+            <h2>Transaction Report</h2>
+            <table class="table table-stripe mt-4 ">
+                <thead>
+                    <th style="width:5%;">SN</th>
+                    <th style="width:10%;">Tnx Type</th>
+                    <th style="width:20%;">Tnx Reason</th>
+                    <th style="width:10%;">Credit</th>
+                    <th style="width:10%;">Debit</th>
+                    <th style="width:10%;">Tnx Date</th>
+                    <th style="width:40%;">Refferense</th>
+                </thead>
+                <tbody>
+                    <tr *ngIf="transactionList.length==0">
+                        <td style="font-weight:bold ; ">
+                            No Transaction Found!!
+                        </td>
+                    </tr>
+                    <tr *ngFor="let tnx of transactionList; index as i">
+                        <td>{{i+offset+1}}</td>
+                        <td>{{tnx.transactionType}}</td>
+                        <td>{{tnx.transactionReason}}</td>
+                        <td>{{tnx.income}}</td>
+                        <td>{{tnx.expense}}</td>
+                        <!-- <td *ngIf="tnx.transactionType=='INCOME' || tnx.transactionType=='DEPOSIT'">{{tnx.income}}</td>
+                        <td *ngIf="tnx.transactionType=='EXPENSE'">{{tnx.expense}}</td> -->
+                        <td>{{tnx.transactionDate}}</td>
+                        <td>{{tnx.refference}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</mat-card>

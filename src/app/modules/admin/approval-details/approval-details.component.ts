@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Tasks } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
@@ -17,6 +18,8 @@ export class ApprovalDetailsComponent implements OnInit {
   customer!:any;
   comment:string= "";
   isStock:boolean = false;
+  taskType:string = '';
+  showLoader: boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
@@ -30,13 +33,17 @@ export class ApprovalDetailsComponent implements OnInit {
   }
 
   fetchPayloadByTaskId() {
+    this.showLoader  = true;
     this.activatedRoute.params.subscribe((parameter) => {
       let id = parameter['id'];
       this.taskId = id;
+      
       this.inventoryService.fetchTaskById(this.taskId).subscribe({
         next: (res) => {
+          this.showLoader  = false;
           this.taskDetail = res.body;
           this.invoiceDetails = res.body.payload;
+          this.taskType = res.body.taskType;
           this.fetchClientById(res.body);
         },
       });
@@ -67,12 +74,14 @@ export class ApprovalDetailsComponent implements OnInit {
     }
   }
   submitOrder(){
+    this.showLoader  = true;
       this.invoiceDetails.taskId = this.taskId;
       const params: Map<string, any> = new Map();
       if(this.isStock){
         params.set('order', this.invoiceDetails);
         this.inventoryService.issueBuyOrder(params).subscribe({
           next: (res) => {
+            this.showLoader  = false;
             this.notificationService.showMessage(
               'SUCCESS!',
               'Invoice Created',
@@ -82,6 +91,7 @@ export class ApprovalDetailsComponent implements OnInit {
             this.router.navigate(['/admin/task-list']);
           },
           error: (err) => {
+            this.showLoader  = false;
             console.log(err);
             this.notificationService.showMessage(
               'ERROR!',
@@ -95,10 +105,12 @@ export class ApprovalDetailsComponent implements OnInit {
         params.set('invoice', this.invoiceDetails);
         this.inventoryService.issueSalesOrder(params).subscribe({
           next:(res)=>{
+            this.showLoader  = false;
             this.notificationService.showMessage("SUCCESS","Order Placed Successfully","OK",300);
             this.router.navigate(['/admin/task-list']);
           },
           error:(err)=>{
+            this.showLoader  = false;
             this.notificationService.showMessage("ERROR","Order Placed Failed","OK",300);
           }
         })
@@ -107,6 +119,7 @@ export class ApprovalDetailsComponent implements OnInit {
   }
 
   declineApproval(){
+    this.showLoader  = true;
     const params: Map<string, any> = new Map();
     let task = {
       taskId: this.taskId
@@ -114,9 +127,12 @@ export class ApprovalDetailsComponent implements OnInit {
     params.set("task",task)
     this.inventoryService.declineApproval(params).subscribe({
       next:(res)=>{
-        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500)
+        this.showLoader  = false;
+        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500);
+        this.router.navigate(['/admin/task-list']);
       },
       error:(err)=>{
+        this.showLoader  = false;
         this.notificationService.showErrorMessage("Warning","Deletion Failed","Ok",500);
       }
     })

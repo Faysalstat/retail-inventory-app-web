@@ -14,10 +14,11 @@ import { PointOfSaleComponent } from './point-of-sale/point-of-sale.component';
 import { AddTnxReasonComponent } from './add-tnx-reason/add-tnx-reason.component';
 import { ProductCategoryComponent } from './product-category/product-category.component';
 import { UnitTypeComponent } from './unit-type/unit-type.component';
+import { AddPackagingCategoryComponent } from './add-packaging-category/add-packaging-category.component';
 
 const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,
   AddCustomerComponent,CashReceiveComponent,AddSupplyerComponent,MenuBarComponent,PointOfSaleComponent,
-  AddTnxReasonComponent,ProductCategoryComponent,UnitTypeComponent]
+  AddTnxReasonComponent,ProductCategoryComponent,UnitTypeComponent,AddPackagingCategoryComponent]
 
 @NgModule({
   declarations: components,

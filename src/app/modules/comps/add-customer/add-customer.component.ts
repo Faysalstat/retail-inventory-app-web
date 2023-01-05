@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Account, Customer } from '../../model/models';
+import { Account, Customer, Person } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { NotificationService } from '../../services/notification-service.service';
 
@@ -12,11 +12,14 @@ import { NotificationService } from '../../services/notification-service.service
 export class AddCustomerComponent implements OnInit {
   @Output() customerAddedEvent = new EventEmitter<string>();
   clientForm!: FormGroup;
-  
+  person : Person = new Person();
   customer: Customer = new Customer();
   account: Account = new Account();
   errMsg: string = '';
   isCustomerExist: boolean = false;
+  showLoader: boolean = false;
+  isEdit: boolean = false;
+  balanceTitle: string = "Balance"
   constructor(
     private formBuilder:FormBuilder,
     private clientService: ClientService,
@@ -37,9 +40,10 @@ export class AddCustomerComponent implements OnInit {
     });
   }
   searchCustomer() {
-    let contactNo = this.clientForm.get('contactNo')?.value;
-    this.clientService.getClientByContactNo(contactNo).subscribe({
+    this.showLoader  = true;
+    this.clientService.getClientByContactNo(this.person.contactNo).subscribe({
       next: (res) => {
+        this.showLoader  = false;
         if (res.body) {
           this.notificationService.showMessage(
             'SUCCESS!',
@@ -47,8 +51,15 @@ export class AddCustomerComponent implements OnInit {
             'OK',
             2000
           );
+          this.person = res.body;
           if (res.body.customer) {
             this.customer = res.body.customer;
+            this.account = this.customer.account;
+            if (this.account.balance < 0) {
+              this.balanceTitle = 'Due';
+            } else {
+              this.balanceTitle = 'Balance';
+            }
             this.isCustomerExist = true;
           } else {
             this.errMsg =
@@ -56,16 +67,15 @@ export class AddCustomerComponent implements OnInit {
             this.isCustomerExist = false;
           }
         } else {
-          this.customer.person.personAddress = '';
-          this.customer.person.personName = '';
-          this.customer.person.id = 0;
+          this.person.personAddress = '';
+          this.person.personName = '';
+          this.person.id = 0;
           this.isCustomerExist = false;
           return;
         }
       },
       error: (err) => {
         this.isCustomerExist = false;
-        console.log(err.message);
         this.notificationService.showMessage(
           'ERROR!',
           'Customer Found Failed' + err.message,
@@ -76,20 +86,27 @@ export class AddCustomerComponent implements OnInit {
       complete: () => {},
     });
   }
-  addClient() {
-    if(this.clientForm.invalid){
-      return;
-    }
+  addCustomer() {
+    this.showLoader = true;
     const params: Map<string, any> = new Map();
-    let supplyerModel = this.clientForm.value;
-    params.set('client', supplyerModel);
+    let customerModel = {
+      personId: this.person.id,
+      clientType: 'CUSTOMER',
+      personName: this.person.personName,
+      contactNo: this.person.contactNo,
+      personAddress: this.person.personAddress,
+      shopName: this.customer.shopName,
+      // regNo: this.customer.regNo
+    };
+    params.set('client', customerModel);
+
     this.clientService.addClient(params).subscribe({
       next: (res) => {
         if (res.body) {
+          this.showLoader = false;
           this.isCustomerExist = true;
-          this.clientForm.get('id')?.setValue(res.body.id);
-          console.log(res.body);
         }
+        this.errMsg ="";
         this.notificationService.showMessage(
           'SUCCESS!',
           'Client Add Successful',

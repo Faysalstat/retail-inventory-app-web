@@ -47,6 +47,9 @@ export class ProductService {
   public addProductCategory(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(ProductUrls.ADD_PRODUCT_CATEGORY, queryParams.get('model'));
   }
+  public addPackagingCategory(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(ProductUrls.ADD_PACKAGING_CATEGORY, queryParams.get('model'));
+  }
   public addUnitType(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(ProductUrls.ADD_UNIT_TYPE, queryParams.get('model'));
   }

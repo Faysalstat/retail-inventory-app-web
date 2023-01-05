@@ -84,7 +84,7 @@ export class ProductConfigComponent implements OnInit {
         let categories = res.body;
         if(res.body){
           categories.map((elem:any)=>{
-            let category = { label: elem.categoryName, value: elem.categoryName }
+            let category = { label: elem.key, value: elem.value }
             this.packagingCategories.push(category);
         })
         }

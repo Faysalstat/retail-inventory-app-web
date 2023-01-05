@@ -1,0 +1,64 @@
+<mat-card>
+    <h1>Transaction Details:</h1>
+    <hr>
+    <app-page-loader *ngIf="showLoader"></app-page-loader>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Transaction Type</th>
+                        <td>{{taskDetail?.transactionType}}</td>
+                    </tr>
+                    <tr>
+                        <th>{{taskDetail?.transactionType=='RECEIVE'?"Receive From":"Pay To"}}</th>
+                        <td>{{taskDetail?.person?.personName}}</td>
+                    </tr>
+                    <tr>
+                        <th>Client Type</th>
+                        <td>{{taskDetail?.clientType}}</td>
+                    </tr>
+                    <tr>
+                        <th>Issued By</th>
+                        <td>{{taskDetail?.issuedBy}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Present Balance</th>
+                        <th>{{taskDetail?.account?.balance}} BDT</th>
+                    </tr>
+                    <tr>
+                        <th>Tnx Amount</th>
+                        <th>{{taskDetail?.cashAmount}} BDT</th>
+                    </tr>
+                    <tr>
+                        <th>Transaction Reason</th>
+                        <td>{{taskDetail?.transactionReason}}</td>
+                    </tr>
+                    <tr>
+                        <th>Pament Method</th>
+                        <td>{{taskDetail?.paymentMethod}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-12">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Comment:</mat-label>
+                <textarea type="text" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="taskDetail.comment"
+                    matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <button style="float:right ; margin-left: 10px;" (click)="declineApproval()" mat-raised-button color="warn">Decline</button>
+            <!-- <button style="float:right ; margin-left: 10px;" (click)="declineApproval()" mat-raised-button color="warn">Decline</button> -->
+            <button style="float:right ;" (click)="approveTransaction()" mat-raised-button color="primary">Submit</button>
+        </div>
+    </div>
+</mat-card>

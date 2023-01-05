@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppAuthGuard } from '../app-auth.guard';
 import { CashAuthGuard } from '../cash/cash-auth.guard';
+import { AddCustomerComponent } from '../comps/add-customer/add-customer.component';
 import { AddSupplyerComponent } from '../comps/add-supplyer/add-supplyer.component';
 import { ClientAuthGuard } from './client-auth.guard';
 import { ClientDetailsComponent } from './client-details/client-details.component';
@@ -19,6 +20,7 @@ const routes: Routes = [{
         {path: 'customer-list', component: CustomerComponent},
         {path: 'supplyer-list', component: SupplyerComponent},
         {path: 'add-supplyer', component: AddSupplyerComponent},
+        {path: 'add-customer', component: AddCustomerComponent},
         {path: 'client-details/:id', component: ClientDetailsComponent},
         {path: 'supplyer-details/:id', component: SupplyerDetailsComponent},
         {path: 'customer-details/:id', component: CustomerDetailsComponent},

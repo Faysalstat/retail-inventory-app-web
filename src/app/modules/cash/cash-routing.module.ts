@@ -12,6 +12,7 @@ const routes: Routes = [{
         {path: '', component: CashTransactionComponent},
         {path: 'cash-transaction', component: CashTransactionComponent},
         {path: 'cash-receive', component: CashReceiveComponent},
+        {path: 'transaction-list', component: CashReceiveComponent},
         ]}
       ]
 

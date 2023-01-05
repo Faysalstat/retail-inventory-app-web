@@ -2,7 +2,7 @@
     <div class="row">
         <h2>Supplyer List:</h2>
         <div class="col-md-12">
-            <table class="table table-striped" style="text-align:center ;">
+            <table class="table table-striped" style="text-align:left ;">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -11,7 +11,7 @@
                         <th>Contact No</th>
                         <th>Company Name</th>
                         <th>Band Name</th>
-                        <th>Balance</th>
+                        <th style="text-align: right;">Balance</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -19,11 +19,11 @@
                         (click)="viewClient(client.person.id)">
                         <td>{{i+1}}</td>
                         <td>{{client.code}}</td>
-                        <td  style="text-align: left;">{{client.person.personName}}</td>
+                        <td>{{client.person.personName}}</td>
                         <td>{{client.person.contactNo}}</td>
-                        <td  style="text-align: left;">{{client.shopName}}</td>
+                        <td>{{client.shopName}}</td>
                         <td>{{client.brand}}</td>
-                        <td  style="text-align: right;">{{client.account.balance}}</td>
+                        <td  style="text-align: right;">{{client.account.balance}} BDT</td>
                     </tr>
                 </tbody>
             </table>

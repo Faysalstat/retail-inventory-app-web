@@ -11,6 +11,7 @@
                         <th scope="col">SN</th>
                         <!-- <th scope="col">Invoice No</th> -->
                         <th scope="col">Supplyer</th>
+                        <th scope="col">Supplyer Code</th>
                         <th scope="col">Contact No</th>
                         <th scope="col">Shop Name</th>
                         <th scope="col">Total Bill</th>
@@ -27,13 +28,14 @@
                     </tr>
                     <tr class="row-hover" *ngFor="let invoice of supplyInvoiceList; index as i" (click)="viewInvoice(invoice)">
                         <td scope="row">{{i+1}}</td>
-                        <td>{{invoice.supplyer.person.personName}}</td>
-                        <td>{{invoice.supplyer.person.contactNo}}</td>
-                        <td>{{invoice.supplyer.shopName}}</td>
-                        <td>{{invoice.totalPrice}}</td>
-                        <td>{{invoice.totalPaid}}</td>
-                        <td>{{invoice.duePayment}}</td>
-                        <td>{{invoice.deliveryStatus}}</td>
+                        <td>{{invoice?.supplyer?.person?.personName}}</td>
+                        <td>{{invoice?.supplyer?.code}}</td>
+                        <td>{{invoice?.supplyer?.person?.contactNo}}</td>
+                        <td>{{invoice?.supplyer?.shopName}}</td>
+                        <td>{{invoice?.totalPrice}}</td>
+                        <td>{{invoice?.totalPaid}}</td>
+                        <td>{{invoice?.duePayment}}</td>
+                        <td>{{invoice?.deliveryStatus}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -1,4 +1,5 @@
 <mat-card>
+    <app-page-loader *ngIf="showLoader"></app-page-loader>
     <div class="row">
         <h2 *ngIf="isStock">Supply Order Details</h2>
         <h2 *ngIf="!isStock">Sale Order Details</h2>

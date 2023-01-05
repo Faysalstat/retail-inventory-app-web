@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CashComponent } from './cash.component';
 import { CashRoutingModule } from './cash-routing.module';
 import { CashTransactionComponent } from './cash-transaction/cash-transaction.component';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 
 
@@ -17,7 +18,8 @@ import { CashTransactionComponent } from './cash-transaction/cash-transaction.co
     CashComponent,
     CashPaymentComponent,
     CashReceiveComponent,
-    CashTransactionComponent
+    CashTransactionComponent,
+    TransactionListComponent
   ],
   imports: [
     CommonModule,

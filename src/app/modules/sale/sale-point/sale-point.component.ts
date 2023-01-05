@@ -34,12 +34,11 @@ export class SalePointComponent implements OnInit {
   isCustomerExist: boolean = false;
   customer!: Customer;
   account: Account = new Account();
-  productName = new FormControl('');
   selectedProduct = new Product();
   orderItem!: OrderItem;
   orderList!: any[];
   productList: any[] = [];
-  filteredOptions!: Observable<Product[]>;
+  filteredOptions!: any;
   unitType: string = 'UNIT';
   person: Person = new Person();
   personId!: number;
@@ -94,15 +93,13 @@ export class SalePointComponent implements OnInit {
     });
   }
 
-  initOptions() {
-    this.filteredOptions = this.productName.valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filter(name as string) : this.productList.slice();
-      })
-    );
-  }
+  onProductNameInput(event:any) {
+    if(event.target.value==''){
+      this.filteredOptions = this.productList
+    }else{
+      this.filteredOptions = this._filter(event.target.value);
+    }
+      }
   prepareInvoiceIssueForm(formData: any) {
     if (!formData) {
       formData = new OrderIssueDomain();
@@ -114,7 +111,7 @@ export class SalePointComponent implements OnInit {
       customerId: [formData.customerId, [Validators.required]],
       // accountId:[formData.accountId,[Validators.required]],
       orders: [formData.orders, [Validators.required]],
-      productName: [new FormControl('')],
+      productName: [''],
       totalPrice: [formData.totalPrice, [Validators.required]],
       previousBalance: [formData.previousBalance],
       totalPayableAmount: [formData.totalPayableAmount],
@@ -210,8 +207,8 @@ export class SalePointComponent implements OnInit {
     const params: Map<string, any> = new Map();
     this.productService.fetchAllProductForDropDown().subscribe({
       next: (res) => {
-        this.productList = res.body;
-        this.initOptions();
+        this.filteredOptions= res.body;
+        this.productList = res.body
         // this.notificationService.showMessage("SUCCESS!","Product gets Successfully","OK",1000);
       },
       error: (err) => {
@@ -227,10 +224,11 @@ export class SalePointComponent implements OnInit {
   displayFn(product: Product): string {
     return product && product.productName ? product.productName : '';
   }
-  private _filter(name: string): any[] {
+  private _filter(name: string): string[] {
+    console.log("value--->",name)
     const filterValue = name.toLowerCase();
-    return this.productList.filter((product) =>
-      product.productName.toLowerCase().includes(filterValue)
+    return this.productList.filter(product=>
+        product.productName.toLowerCase().includes(filterValue)
     );
   }
   productSelected(event: any) {
@@ -276,8 +274,6 @@ export class SalePointComponent implements OnInit {
     }
     this.orderList.push(this.orderItem);
     this.orderItem = new OrderItem();
-    this.productName = new FormControl('');
-    this.initOptions();
     let totalPrice = 0;
     this.orderList.map((elem) => {
       totalPrice += elem.totalOrderPrice;

@@ -1,3 +1,4 @@
+
 <mat-card>
     <h2>Cash Transactions</h2>
     <form [formGroup]="cashTransactionForm">
@@ -99,7 +100,17 @@
                     <input formControlName="cashAmount" placeholder="Put Amount" matInput>
                 </mat-form-field>
             </div>
-            <div  class="col-md-4">
+            <div  class="col-md-2">
+                <mat-slide-toggle color="primary" formControlName="isReturn" (change)="onChangeIsReturn($event)">
+                    <ng-container *ngIf="isReturn; else doreturn">
+                        Return
+                    </ng-container>
+                    <ng-template #doreturn>
+                        Payment
+                    </ng-template>
+                </mat-slide-toggle>
+            </div>
+            <div  class="col-md-3">
                 <mat-form-field appearance="outline" class="input-field">
                     <mat-label>Tnx Reason:</mat-label>
                     <mat-select formControlName="transactionReason">
@@ -108,7 +119,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <div  class="col-md-4">
+            <div  class="col-md-3">
                 <mat-form-field appearance="outline" class="input-field">
                     <mat-label>Payment By:</mat-label>
                     <mat-select formControlName="paymentMethod">
@@ -131,9 +142,4 @@
 
         </div>
     </form>
-</mat-card>
-<mat-card *ngIf="isTnxDone" class="mt-3">
-    <table class="table">
-
-    </table>
 </mat-card>

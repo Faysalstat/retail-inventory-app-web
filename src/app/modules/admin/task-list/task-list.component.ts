@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Tasks } from '../../model/models';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 
@@ -10,6 +11,7 @@ import { NotificationService } from '../../services/notification-service.service
 })
 export class TaskListComponent implements OnInit {
   taskList:any[] = [];
+  taskType!:string;
   constructor(
     private inventoryService: InventoryService,
     private notificationService: NotificationService,
@@ -24,6 +26,7 @@ export class TaskListComponent implements OnInit {
     this.inventoryService.fetchTaskList(params).subscribe({
       next:(res)=>{
         this.taskList = res.body.data;
+        
       },
       error:(err)=>{
         this.notificationService.showMessage("ERROR","Task List Fetch Failed. Error: "+ err.message,"OK",500);
@@ -31,7 +34,14 @@ export class TaskListComponent implements OnInit {
     })
   }
   openTask(task:any){
-    console.log(task);
-    this.router.navigate(["/admin/task-details",task.id]);
+    if(task.taskType == Tasks.CREATE_INVOICE ||
+      task.taskType == Tasks.CREATE_SUPPLY ||
+      task.taskType == Tasks.UPDATE_INVOICE ||
+      task.taskType == Tasks.UPDATE_SUPPLY){
+        this.router.navigate(["/admin/task-details",task.id]);
+      }else if(task.taskType == Tasks.TRANSACTION){
+          this.router.navigate(["/admin/tnx-task-details",task.id]);
+        }
+    
   }
 }

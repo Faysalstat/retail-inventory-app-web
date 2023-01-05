@@ -15,6 +15,7 @@ export const ProductUrls = {
   FETCH_PRODUCT_BY_NAME: BASE_URL + '/product/getproductbyname',
   FETCH_PRODUCT_BY_CODE: BASE_URL + '/product/getproductbycode',
   ADD_PRODUCT_CATEGORY: BASE_URL + '/product/addproductcategory',
+  ADD_PACKAGING_CATEGORY: BASE_URL + '/product/addpackagingcategory',
   ADD_UNIT_TYPE: BASE_URL + '/product/addunittype',
 
 };
