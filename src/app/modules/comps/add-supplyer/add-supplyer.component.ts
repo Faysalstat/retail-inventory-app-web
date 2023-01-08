@@ -99,6 +99,7 @@ addSupplyer(){
 
     next:(res)=>{
       this.supplyerAddingForm.reset();
+      this.person  = new Person();
       this.notificationService.showMessage("SUCCESS!","Supplyer Add Successful","OK",1000);
     },
     error:(err)=>{

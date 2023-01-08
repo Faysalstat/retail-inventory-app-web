@@ -17,4 +17,7 @@ export class TransactionService {
   public addTransactionReason(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(TransactionUrls.ADD_TNX_REASON, queryParams.get('model'));
   }
+  public deleteTransactionReason(id:any): Observable<any> {
+    return this.http.post(TransactionUrls.DELETE_TNX_REASON,{id:id});
+  }
 }

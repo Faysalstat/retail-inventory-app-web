@@ -39,6 +39,8 @@ export class ClientService {
     params = params.append('id', id);
     return this.http.get(ClientUrls.FETCH_PERSON_BY_ID, { params: params });
   }
-
+  public updateClient(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(ClientUrls.UPDATE_CLIENT, queryParams.get('client'));
+  }
   
 }

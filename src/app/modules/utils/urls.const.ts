@@ -1,6 +1,6 @@
 // const BASE_URL = 'https://demo.vatasolution.me/api';
-// const BASE_URL = 'https://shopongroup.com/api';
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = 'https://shopongroup.com/api';
+// const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
@@ -17,11 +17,16 @@ export const ProductUrls = {
   ADD_PRODUCT_CATEGORY: BASE_URL + '/product/addproductcategory',
   ADD_PACKAGING_CATEGORY: BASE_URL + '/product/addpackagingcategory',
   ADD_UNIT_TYPE: BASE_URL + '/product/addunittype',
+  // Delete 
+  DELETE_UNIT_TYPE: BASE_URL + '/product/delete-unit-type',
+  DELETE_PRODUCT_CATEGORY: BASE_URL + '/product/delete-product-category',
+  DELETE_PACKAGING_CATEGORY: BASE_URL + '/product/delete-packaging-category',
 
 };
 
 export const ClientUrls = {
     ADD_CLIENT : BASE_URL + "/client/addclient",
+    UPDATE_CLIENT : BASE_URL + "/client/updateclient",
     FETCH_CLIENT_BY_CONTACT_NO : BASE_URL + "/client/getclientbycontact",
     FETCH_CLIENT_BY_CLIENT_TYPE: BASE_URL + "/client/getclientbytype",
     FETCH_SUPPLYER_BY_CODE : BASE_URL + "/client/getsupplyerbycode",
@@ -48,6 +53,8 @@ export const InventoryUrls = {
 export const ReportUrls = {
   TRANSACTION_REPORT : BASE_URL + "/transaction/gettransactionreport",
   ACCOUNT_HISTORY_REPORT : BASE_URL + "/report/getaccounthistoryrecord",
+  SALE_ORDER_REPORT : BASE_URL + "/report/get-sale-order-report",  
+  SUPPLY_ORDER_REPORT : BASE_URL + "/report/get-supply-order-report",  
   
 }
 export const ConfigUrls = {
@@ -66,6 +73,7 @@ export const ApprovalUrls = {
 export const TransactionUrls = {
   DO_PAYMENT_TRANSACTION : BASE_URL + "/transaction/dotransaction",
   ADD_TNX_REASON : BASE_URL + "/transaction/addreason",
+  DELETE_TNX_REASON : BASE_URL + "/transaction/deletereason",
   FETCH_TRANSACTION_REASONS : BASE_URL + "/transaction/fetchtransactionreason",
 }
 

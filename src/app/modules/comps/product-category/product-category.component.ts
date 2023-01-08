@@ -48,6 +48,20 @@ export class ProductCategoryComponent implements OnInit {
       }
     })
   }
-
+  deleteItem(id:any){
+    this.productService.deleteProductCategory(id).subscribe({
+      next:(res)=>{
+        if(res.isSuccess){
+          console.log("Successfully Deleted");
+          this.notificationService.showErrorMessage("SUCCESS","Deleted Item","Ok",500);
+          this.fetchProductCategory();
+        }else{
+          
+          this.notificationService.showErrorMessage("ERROR","Deletion Failed","Ok",500);
+        }
+      }
+    })
+    
+  }
 }
 

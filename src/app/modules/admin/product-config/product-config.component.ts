@@ -66,13 +66,13 @@ export class ProductConfigComponent implements OnInit {
     this.productAddingForm = this.formBuilder.group({
       productCode: ['',[Validators.required]],
       productName: ['',[Validators.required]],
-      productCategory: [''],
+      productCategory: ['',[Validators.required]],
       unitType: ['',[Validators.required]],
       quantity: [0],
       brandName:[''],
       costPricePerUnit: [0],
       sellingPricePerUnit: [0],
-      packagingCategory:[''],
+      packagingCategory:['',[Validators.required]],
       unitPerPackage:[0]
     });
   }
@@ -90,13 +90,13 @@ export class ProductConfigComponent implements OnInit {
         }
       },
       error:(err)=>{
-        this.notificationService.showMessage("FAILED!","Category Fetching Failed","OK",1000);
+        this.notificationService.showMessage("FAILED!","Packaging Category Fetching Failed","OK",1000);
       }
     })
   }
   addProduct() {
-    
     if (this.productAddingForm.invalid) {
+      this.notificationService.showErrorMessage("INVALID FORM","Please Input Required Fields","OK",600);
       return;
     }
     this.showLoader = true;

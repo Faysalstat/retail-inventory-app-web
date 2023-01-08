@@ -48,5 +48,19 @@ export class UnitTypeComponent implements OnInit {
       }
     })
   }
-
+  deleteItem(id:any){
+    this.productService.deleteUnitType(id).subscribe({
+      next:(res)=>{
+        if(res.isSuccess){
+          console.log("Successfully Deleted");
+          this.notificationService.showErrorMessage("SUCCESS","Deleted Item","Ok",500);
+          this.fetchUnitType();
+        }else{
+          
+          this.notificationService.showErrorMessage("ERROR","Deletion Failed","Ok",500);
+        }
+      }
+    })
+    
+  }
 }

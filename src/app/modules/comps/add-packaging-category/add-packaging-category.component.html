@@ -23,6 +23,7 @@
                         <th>SN</th>
                         <th>Key</th>
                         <th>Value</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -30,6 +31,11 @@
                         <td>{{i+1}}</td>
                         <td>{{category.key}}</td>
                         <td>{{category.value}}</td>
+                        <td>
+                            <button mat-mini-fab (click)="deleteItem(category.id)" color="warn">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

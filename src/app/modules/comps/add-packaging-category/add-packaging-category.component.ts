@@ -49,7 +49,21 @@ export class AddPackagingCategoryComponent implements OnInit {
       }
     })
   }
-
+  deleteItem(id:any){
+    this.productService.deletePackagingCategory(id).subscribe({
+      next:(res)=>{
+        if(res.isSuccess){
+          console.log("Successfully Deleted");
+          this.notificationService.showErrorMessage("SUCCESS","Deleted Item","Ok",500);
+          this.fetchPackagingCategory();
+        }else{
+          
+          this.notificationService.showErrorMessage("ERROR","Deletion Failed","Ok",500);
+        }
+      }
+    })
+    
+  }
 }
 
 

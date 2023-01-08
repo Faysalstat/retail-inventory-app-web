@@ -9,7 +9,12 @@
                 <tbody>
                     <tr>
                         <th>Client Name</th>
-                        <td>{{person?.personName}}</td>
+                        <td>
+                            <mat-form-field class="input-field" appearance="outline">
+                                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="person.personName" placeholder="Customer Name"
+                                    matInput>
+                            </mat-form-field>
+                        </td>
                     </tr>
                     <tr>
                         <th>Contact No</th>

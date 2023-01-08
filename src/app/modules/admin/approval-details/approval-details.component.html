@@ -16,8 +16,8 @@
                         <td> {{supplyer?.companyName}} </td>
                     </tr>
                     <tr>
-                        <th>Band Name:</th>
-                        <td> {{supplyer?.band}}</td>
+                        <th>Brand Name:</th>
+                        <td> {{supplyer?.brand}}</td>
                     </tr>
                     <tr>
                         <th>Supplyer Name:</th>
@@ -58,6 +58,10 @@
                     <tr>
                         <th>Total Bill:</th>
                         <td style="text-align:right;"> {{invoiceDetails?.totalPrice || 0}} BDT</td>
+                    </tr>
+                    <tr>
+                        <th>Discount:</th>
+                        <td style="text-align:right;"> {{invoiceDetails?.rebate || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th>Balance:</th>

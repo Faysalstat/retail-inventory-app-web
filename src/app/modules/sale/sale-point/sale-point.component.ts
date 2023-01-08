@@ -39,6 +39,7 @@ export class SalePointComponent implements OnInit {
   orderList!: any[];
   productList: any[] = [];
   filteredOptions!: any;
+  filteredCodeOptions!: any;
   unitType: string = 'UNIT';
   person: Person = new Person();
   personId!: number;
@@ -52,9 +53,10 @@ export class SalePointComponent implements OnInit {
   isApprovalNeeded: boolean = true;
   userName: string = 'MANAGER';
   rebate: number = 0;
-  paymentMethods : any [] = [];
-  availableStock:number = 0;
-  balanceType: string = "Payable"
+  paymentMethods: any[] = [];
+  availableStock: number = 0;
+  balanceType: string = 'Payable';
+  productCode: string = '';
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -70,11 +72,11 @@ export class SalePointComponent implements OnInit {
     this.orderList = [];
     this.prepareInvoiceIssueForm(null);
     this.paymentMethods = [
-      {label:"Select Payment Method", value:''},
-      {label:"BANK", value:"BANK"},
-      {label:"BKASH", value:"BKASH"},
-      {label:"CASH", value:"CASH"},
-    ]
+      { label: 'Select Payment Method', value: '' },
+      { label: 'BANK', value: 'BANK' },
+      { label: 'BKASH', value: 'BKASH' },
+      { label: 'CASH', value: 'CASH' },
+    ];
   }
 
   ngOnInit(): void {
@@ -93,13 +95,21 @@ export class SalePointComponent implements OnInit {
     });
   }
 
-  onProductNameInput(event:any) {
-    if(event.target.value==''){
-      this.filteredOptions = this.productList
-    }else{
+  onProductNameInput(event: any) {
+    if (event.target.value == '') {
+      this.filteredOptions = this.productList;
+    } else {
       this.filteredOptions = this._filter(event.target.value);
     }
-      }
+  }
+
+  onProductCodeInput(event: any) {
+    if (event.target.value == '') {
+      this.filteredCodeOptions = this.productList;
+    } else {
+      this.filteredCodeOptions = this._filterCode(event.target.value);
+    }
+  }
   prepareInvoiceIssueForm(formData: any) {
     if (!formData) {
       formData = new OrderIssueDomain();
@@ -111,14 +121,15 @@ export class SalePointComponent implements OnInit {
       customerId: [formData.customerId, [Validators.required]],
       // accountId:[formData.accountId,[Validators.required]],
       orders: [formData.orders, [Validators.required]],
-      productName: [''],
+      productName: [formData.productName],
+      productCode: [formData.productCode],
       totalPrice: [formData.totalPrice, [Validators.required]],
       previousBalance: [formData.previousBalance],
       totalPayableAmount: [formData.totalPayableAmount],
       totalPaidAmount: [formData.totalPaidAmount],
       duePayment: [formData.duePayment],
       rebate: [formData.rebate],
-      paymentMethod : [formData.paymentMethod || ''],
+      paymentMethod: [formData.paymentMethod || ''],
       comment: [formData.comment],
     });
   }
@@ -193,7 +204,7 @@ export class SalePointComponent implements OnInit {
           this.saleInvoiceIssueForm.get('customerId')?.setValue(res.body.id);
           console.log(res.body);
         }
-        this.errMsg ="";
+        this.errMsg = '';
         this.notificationService.showMessage(
           'SUCCESS!',
           'Client Add Successful',
@@ -207,8 +218,9 @@ export class SalePointComponent implements OnInit {
     const params: Map<string, any> = new Map();
     this.productService.fetchAllProductForDropDown().subscribe({
       next: (res) => {
-        this.filteredOptions= res.body;
-        this.productList = res.body
+        this.filteredOptions = res.body;
+        this.filteredCodeOptions = res.body;
+        this.productList = res.body;
         // this.notificationService.showMessage("SUCCESS!","Product gets Successfully","OK",1000);
       },
       error: (err) => {
@@ -225,15 +237,26 @@ export class SalePointComponent implements OnInit {
     return product && product.productName ? product.productName : '';
   }
   private _filter(name: string): string[] {
-    console.log("value--->",name)
+    console.log('value--->', name);
     const filterValue = name.toLowerCase();
-    return this.productList.filter(product=>
-        product.productName.toLowerCase().includes(filterValue)
+    return this.productList.filter((product) =>
+      product.productName.toLowerCase().includes(filterValue)
+    );
+  }
+
+  private _filterCode(code: string): string[] {
+    console.log('value--->', code);
+    const filterValue = code.toLowerCase();
+    return this.productList.filter((product) =>
+      product.productCode.toLowerCase().includes(filterValue)
     );
   }
   productSelected(event: any) {
     this.selectedProduct = event.option.value;
+    this.saleInvoiceIssueForm.get('productCode')?.setValue(this.selectedProduct.productCode);
+    this.saleInvoiceIssueForm.get('productName')?.setValue(this.selectedProduct.productName);
     this.orderItem.productId = this.selectedProduct.id;
+    this.orderItem.productCode = this.selectedProduct.productCode;
     this.orderItem.productName = this.selectedProduct.productName;
     this.orderItem.unitType = this.selectedProduct.unitType;
     this.orderItem.packagingCategory = this.selectedProduct.packagingCategory;
@@ -257,8 +280,10 @@ export class SalePointComponent implements OnInit {
     this.calculateOrder();
   }
   calculateSummary() {
-    this.totalPayableAmount = 
-    this.totalPrice - this.previousBalance - this.saleInvoiceIssueForm.get('rebate')?.value;
+    this.totalPayableAmount =
+      this.totalPrice -
+      this.previousBalance -
+      this.saleInvoiceIssueForm.get('rebate')?.value;
   }
   // testing
   onChangeProduc() {
@@ -280,12 +305,14 @@ export class SalePointComponent implements OnInit {
     });
     this.saleInvoiceIssueForm.get('orders')?.setValue(this.orderList);
     this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+    this.saleInvoiceIssueForm.get('productName')?.setValue('');
+    this.saleInvoiceIssueForm.get('productCode')?.setValue('');
     this.totalPrice = totalPrice;
     this.totalPayableAmount = this.totalPrice - this.previousBalance;
-    if(this.totalPayableAmount<0){
-      this.balanceType = "Return";
-    }else{
-      this.balanceType = "Payable"
+    if (this.totalPayableAmount < 0) {
+      this.balanceType = 'Return';
+    } else {
+      this.balanceType = 'Payable';
     }
   }
   calculateTotalPrice() {
@@ -318,7 +345,7 @@ export class SalePointComponent implements OnInit {
         payload: JSON.stringify(orderIssueModel),
         createdBy: this.userName,
         taskType: Tasks.CREATE_INVOICE,
-        status:"OPEN"
+        status: 'OPEN',
       };
       const params: Map<string, any> = new Map();
       params.set('approval', approvalModel);
@@ -330,7 +357,7 @@ export class SalePointComponent implements OnInit {
             'OK',
             500
           );
-        this.route.navigate(["/sale/sale-invoice-list"]);
+          this.route.navigate(['/sale/sale-invoice-list']);
         },
         error: (err) => {
           this.notificationService.showMessage(
@@ -393,8 +420,7 @@ export class SalePointComponent implements OnInit {
     this.pdfMakeService.downloadInvoice(invoiceModel);
   }
 
-  showPositive(number:any){
+  showPositive(number: any) {
     return Math.abs(Number(number));
-
   }
 }

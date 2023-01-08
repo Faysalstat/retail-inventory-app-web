@@ -53,4 +53,14 @@ export class ProductService {
   public addUnitType(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(ProductUrls.ADD_UNIT_TYPE, queryParams.get('model'));
   }
+// Delete 
+  public deleteUnitType(unitId:any): Observable<any> {
+    return this.http.post(ProductUrls.DELETE_UNIT_TYPE, {unitId:unitId});
+  }
+  public deleteProductCategory(categoryId:any): Observable<any> {
+    return this.http.post(ProductUrls.DELETE_PRODUCT_CATEGORY, {categoryId:categoryId});
+  }
+  public deletePackagingCategory(categoryId:any): Observable<any> {
+    return this.http.post(ProductUrls.DELETE_PACKAGING_CATEGORY, {categoryId:categoryId});
+  }
 }

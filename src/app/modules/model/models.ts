@@ -35,6 +35,7 @@ export class Account {
 export class Product {
   id!: number;
   productName!: string;
+  productCode!: string;
   unitType!: string;
   quantity!: number;
   costPricePerUnit!: number;
@@ -46,6 +47,7 @@ export class OrderItem {
   id!: number;
   productId!: number;
   productName!: string;
+  productCode!: string;
   unitType!: string;
   packagingCategory!: string;
   unitPerPackage: number = 0;
@@ -74,7 +76,8 @@ export class OrderIssueDomain {
   invoiceNo!:string;
   customerId!: number;
   accountId!: number;
-  productName:string ='';
+  productName!:string;
+  productCode!:string;
   orders!: OrderItem[];
   totalPrice!: number;
   previousBalance!:number;
@@ -88,10 +91,10 @@ export class OrderIssueDomain {
 export class SupplyIssueDomain {
   id!: number;
   supplyerId!: number;
-  productName:string ='';
+  productName!:string;
+  productCode!:string;
   orders!: OrderItem[];
   schedules!:ScehduleDelivery[];
-  
   totalPrice!: number;
   amountPaid!: number;
   duePayment!: number;

@@ -33,13 +33,13 @@ export class AddStockComponent implements OnInit {
   supplyer!: Supplyer;
   person: Person = new Person();
   personId!: number;
-  productName = new FormControl('');
+  productName ='';
   selectedProduct = new Product();
   orderItem!: OrderItem;
   selectedOrderItem!: OrderItem;
   orderList!: any[];
   productList: any[] = [];
-  filteredOptions!: Observable<Product[]>;
+  filteredOptions!: any;
   unitType: string = 'UNIT';
   showLoader: boolean = false;
   errMsg: string = '';
@@ -88,7 +88,8 @@ export class AddStockComponent implements OnInit {
       supplyerId: [formData.supplyerId],
       orders: [formData.orders, [Validators.required]],
       schedules: [formData.schedules],
-      productName: [new FormControl('')],
+      productName: [formData.productName],
+      productCode: [formData.productCode],
       totalPrice: [formData.totalPrice, [Validators.required]],
       rebate: [formData.rebate],
       comment: [formData.comment],
@@ -183,8 +184,7 @@ export class AddStockComponent implements OnInit {
     this.productService.fetchAllProductForDropDown().subscribe({
       next: (res) => {
         this.productList = res.body;
-        this.initOptions();
-        // this.notificationService.showMessage("SUCCESS!","Product gets Successfully","OK",1000);
+        this.filteredOptions = res.body;
       },
       error: (err) => {
         this.notificationService.showMessage(
@@ -199,29 +199,28 @@ export class AddStockComponent implements OnInit {
       },
     });
   }
-  initOptions() {
-    this.filteredOptions = this.productName.valueChanges.pipe(
-      startWith(''),
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
-        return name ? this._filter(name as string) : this.productList.slice();
-      })
-    );
-  }
-  private _filter(name: string): any[] {
+  private _filter(name: string): string[] {
+    console.log('value--->', name);
     const filterValue = name.toLowerCase();
     return this.productList.filter((product) =>
       product.productName.toLowerCase().includes(filterValue)
     );
   }
 
-  displayFn(product: Product): string {
-    return product && product.productName ? product.productName : '';
+  private _filterCode(code: string): string[] {
+    console.log('value--->', code);
+    const filterValue = code.toLowerCase();
+    return this.productList.filter((product) =>
+      product.productCode.toLowerCase().includes(filterValue)
+    );
   }
   productSelected(event: any) {
     this.selectedProduct = event.option.value;
+    this.supplyInvoiceIssueForm.get("productName")?.setValue(this.selectedProduct.productName);
+    this.supplyInvoiceIssueForm.get("productCode")?.setValue(this.selectedProduct.productCode);
     this.orderItem.productId = this.selectedProduct.id;
     this.orderItem.productName = this.selectedProduct.productName;
+    this.orderItem.productCode = this.selectedProduct.productCode;
     this.orderItem.unitType = this.selectedProduct.unitType;
     this.orderItem.pricePerUnit = this.selectedProduct.costPricePerUnit;
     this.orderItem.unitPerPackage = this.selectedProduct.unitPerPackage;
@@ -242,14 +241,15 @@ export class AddStockComponent implements OnInit {
     }
     this.orderList.push(this.orderItem);
     this.orderItem = new OrderItem();
-    this.productName = new FormControl('');
-    this.initOptions();
+    this.productName = '';
     this.totalPrice = 0;
     this.orderList.map((elem) => {
       this.totalPrice += elem.totalOrderPrice;
     });
     this.supplyInvoiceIssueForm.get('orders')?.setValue(this.orderList);
     this.supplyInvoiceIssueForm.get('totalPrice')?.setValue(this.totalPrice);
+    this.supplyInvoiceIssueForm.get("productName")?.setValue('');
+    this.supplyInvoiceIssueForm.get("productCode")?.setValue('');
     this.calculateSummary();
   }
   onOrderSelect(event: any) {
@@ -340,5 +340,21 @@ export class AddStockComponent implements OnInit {
   calculateQuantity() {
     this.orderItem.quantityOrdered = (this.orderItem.packageQuantity * this.orderItem.unitPerPackage) + this.orderItem.looseQuantity;
     this.calculateOrder();
+  }
+
+  onProductNameInput(event: any) {
+    if (event.target.value == '') {
+      this.filteredOptions = this.productList;
+    } else {
+      this.filteredOptions = this._filter(event.target.value);
+    }
+  }
+
+  onProductCodeInput(event: any) {
+    if (event.target.value == '') {
+      this.filteredOptions = this.productList;
+    } else {
+      this.filteredOptions = this._filterCode(event.target.value);
+    }
   }
 }
