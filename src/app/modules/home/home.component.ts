@@ -35,8 +35,8 @@ export class HomeComponent implements OnInit {
       },
       {
         imgUrl:"icon-stock.png",
-        title: "STOCK",
-        route: "/stock"
+        title: "SUPPLY",
+        route: "/supply"
       },
       {
         imgUrl:"icon-report.png",

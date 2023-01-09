@@ -58,7 +58,7 @@ export class SupplyInvoiceListComponent implements OnInit {
     this.fetchSupplyList();
   }
   viewInvoice(invoice:any){
-    this.route.navigate(["/stock/edit-supply-invoice",invoice.id]);
+    this.route.navigate(["/supply/edit-supply-invoice",invoice.id]);
   }
 
 }

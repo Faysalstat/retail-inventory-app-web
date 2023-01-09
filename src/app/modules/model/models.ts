@@ -23,6 +23,7 @@ export class Supplyer {
   brand!: string;
   shopName!: string;
   regNo!:string;
+  website!:string;
 }
 export class Account {
   id!: number;

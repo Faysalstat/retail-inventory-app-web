@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Account, Person, Supplyer } from '../../model/models';
 import { ClientService } from '../../services/client.service';
+import { NotificationService } from '../../services/notification-service.service';
 
 @Component({
   selector: 'app-supplyer-details',
@@ -13,11 +14,12 @@ export class SupplyerDetailsComponent implements OnInit {
   person:Person = new Person();
   account:Account = new Account();
   accountHistory: any[] = [];
-  supplyer:Supplyer = new Supplyer();
+  supplyer:any = {};
   showAccountHistory:boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
-    private clientService:ClientService
+    private clientService:ClientService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +52,36 @@ export class SupplyerDetailsComponent implements OnInit {
     }
 
   }
-
+  updateSupplyer(){
+    const params: Map<string, any> = new Map();
+    let supplyerModel = {
+      clientType : "SUPPLYER",
+      personName: this.person.personName,
+      personAddress: this.person.personAddress,
+      personId: this.person.id,
+      supplyerId: this.supplyer.id,
+      email: this.person.email,
+      companyName: this.supplyer.companyName,
+      shopName:this.supplyer.shopName,
+      shopAddress:this.supplyer.shopAddress,
+      brand: this.supplyer.brand,
+      regNo:this.supplyer.regNo,
+      website:this.supplyer.website
+    }
+    params.set("client",supplyerModel);
+    this.clientService.updateClient(params).subscribe({
+      next:(res)=>{
+        if(res.isSuccess){
+          this.notificationService.showMessage("SUCCESS",res.message,"OK",300);
+        }else{
+          this.notificationService.showErrorMessage("ERROR",res.message,"OK",300);
+        }
+      },
+      error:(err)=>{
+        this.notificationService.showErrorMessage("ERROR",err.message,"OK",300);
+      }
+    })
+    
+  }
 }
 
