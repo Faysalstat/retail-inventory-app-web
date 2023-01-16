@@ -1,6 +1,6 @@
 // const BASE_URL = 'https://demo.vatasolution.me/api';
-const BASE_URL = 'https://shopongroup.com/api';
-// const BASE_URL = "http://localhost:3000/api";
+// const BASE_URL = 'https://shopongroup.com/api';
+const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
@@ -9,7 +9,6 @@ export const ProductUrls = {
   FETCH_ALL_PACKAGING_CATEGORY: BASE_URL + '/product/getallpackagingcategory',
   FETCH_ALL_PRODUCT_CATEGORY: BASE_URL + '/product/getallproductcategory',
   FETCH_ALL_UNIT_TYPE: BASE_URL + '/product/getallunittype',
-  
   FETCH_ALL_PRODUCT_FOR_DROPDOWN: BASE_URL + '/product/getallproductfordropdown',
   FETCH_PRODUCT_BY_ID: BASE_URL + '/product/getproductbyid',
   FETCH_PRODUCT_BY_NAME: BASE_URL + '/product/getproductbyname',
@@ -32,8 +31,8 @@ export const ClientUrls = {
     FETCH_SUPPLYER_BY_CODE : BASE_URL + "/client/getsupplyerbycode",
     FETCH_CUSTOMER_BY_ID : BASE_URL + "/client/getcustomerbyid",
     FETCH_PERSON_BY_ID : BASE_URL + "/client/getpersonbyid",
-    FETCH_CLIENT_LIST_BY_TYPE : BASE_URL + "/client/getallclient"
-    
+    FETCH_CLIENT_LIST_BY_TYPE : BASE_URL + "/client/getallclient",
+    FETCH_ACCOUNT_HISTORY_LIST : BASE_URL + "/client/getaccounthistorybyid"
 }
 
 export const InventoryUrls = {
@@ -75,6 +74,7 @@ export const TransactionUrls = {
   ADD_TNX_REASON : BASE_URL + "/transaction/addreason",
   DELETE_TNX_REASON : BASE_URL + "/transaction/deletereason",
   FETCH_TRANSACTION_REASONS : BASE_URL + "/transaction/fetchtransactionreason",
+  DO_EXPENSE_TRANSACTION : BASE_URL + "/transaction/doexpense",
 }
 
 export const AuthenticationUrls = {

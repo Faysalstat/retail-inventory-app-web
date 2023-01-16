@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  glBalance:number = 0;
+  totalSell:number = 0;
+  totalBuy:number = 0;
+  dailySummary:any = {};
   constructor() { }
 
   ngOnInit(): void {

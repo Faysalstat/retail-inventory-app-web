@@ -8,7 +8,9 @@
                 <thead>
                     <tr>
                         <th>SN</th>
+                        <th>Code</th>
                         <th>Product Name</th>
+                        <th>Package Qnt</th>
                         <th>Quantity</th>
                         <th>Buying Price</th>
                         <th>Selliing Price</th>
@@ -17,7 +19,9 @@
                 <tbody>
                     <tr class="row-hover" *ngFor="let product of productList; index as i" (click)="onselectProduct(product)">
                         <th scope="row">{{i+offset+1}}</th>
+                        <th>{{product?.productCode}}</th>
                         <th>{{product?.productName}}</th>
+                        <th>{{packProduct(product)}}</th>
                         <th>{{product?.quantity||0}} {{product?.unitType}}</th>
                         <th>{{product?.costPricePerUnit || 0}} BDT</th>
                         <th>{{product?.sellingPricePerUnit || 0}} BDT</th>

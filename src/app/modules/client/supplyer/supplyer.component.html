@@ -16,7 +16,7 @@
                 </thead>
                 <tbody>
                     <tr class="row-hover" *ngFor="let client of clientList; index as i"
-                        (click)="viewClient(client.person.id)">
+                        (click)="viewClient(client.id)">
                         <td>{{i+1}}</td>
                         <td>{{client.code}}</td>
                         <td>{{client.person.personName}}</td>

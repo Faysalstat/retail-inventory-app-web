@@ -25,6 +25,11 @@
                         <th>Shop :</th>
                         <td>{{customer?.shopName}}</td>
                     </tr>
+                    
+                    <tr>
+                        <th>Shop Address :</th>
+                        <td>{{customer?.shopAddress}}</td>
+                    </tr>
                     <tr>
                         <th>Balance :</th>
                         <th>{{customer?.account?.balance}} BDT</th>
@@ -38,20 +43,29 @@
                 <thead>
                     <tr>
                         <th>Total Bill:</th>
-                        <td>{{saleInvoice?.totalPrice || 0}} BDT</td>
+                        <th>{{saleInvoice?.totalPrice || 0}} BDT</th>
                     </tr>
 
                     <tr>
                         <th>Total Payable Amount:</th>
-                        <td>{{saleInvoice?.totalPayableAmount || 0}} BDT</td>
+                        <th>{{saleInvoice?.totalPayableAmount || 0}} BDT</th>
                     </tr>
                     <tr>
                         <th>Total Paid:</th>
-                        <td>{{saleInvoice?.totalPaidAmount || 0}} BDT</td>
+                        <th>{{saleInvoice?.totalPaidAmount || 0}} BDT</th>
                     </tr>
                     <tr>
                         <th>Discount Amount:</th>
                         <th>{{saleInvoice?.rebate || 0}} BDT</th>
+                    </tr>
+                    
+                    <tr>
+                        <th>Extra Charge:</th>
+                        <th>{{saleInvoice?.extraCharge || 0}} BDT</th>
+                    </tr>
+                    <tr>
+                        <th>Extra Charge Reason:</th>
+                        <th>{{saleInvoice?.chargeReason}}</th>
                     </tr>
                 </thead>
             </table>
@@ -70,6 +84,7 @@
                         <th>Price Rate</th>
                         <th>Total Quantity</th>
                         <th>Quantity Delivered</th>
+                        <th>Delivery Pending</th>
                         <th>Status</th>
                         <th style="text-align: center;">
                             <mat-checkbox (change)="$event ? masterToggle() : null"
@@ -88,6 +103,7 @@
                         <td>{{order?.pricePerUnit}}</td>
                         <td>{{order?.quantityOrdered}}</td>
                         <td>{{order?.quantityDelivered}}</td>
+                        <td>{{order?.qunatityDeliveryPending}}</td>
                         <td>{{order?.deliveryStatus}}</td>
                         <td style="text-align: center;">
                             <mat-checkbox *ngIf="order.deliveryStatus!='DELIVERED'" (click)="$event.stopPropagation()"
@@ -97,13 +113,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="7"></td>
+                        <td colspan="8"></td>
                         <td><button mat-raised-button color="warn" (click)="deliverAll()">Deliver All</button></td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="6" rowspan="4"></th>
+                        <th colspan="7" rowspan="4"></th>
                         <th>Total Price:</th>
                         <th>{{saleInvoice?.totalPrice}} BDT</th>
                     </tr>
@@ -153,7 +169,7 @@
             </mat-form-field>
         </div>
         <div class="col-md-3" style="text-align: right;">
-            <button (click)="addDelievrySchedule(null)" [disabled]="isDelivered" mat-raised-button color="warn">Add
+            <button (click)="addDelievrySchedule(null)" [disabled]="isDelivered || deliveryDisable" mat-raised-button color="warn">Add
                 Delivery</button>
         </div>
         <p style="color:red;font-weight: bold;">{{errMsg}}</p>

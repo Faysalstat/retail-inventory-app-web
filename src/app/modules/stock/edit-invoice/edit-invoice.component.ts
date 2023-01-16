@@ -27,7 +27,8 @@ export class EditInvoiceComponent implements OnInit {
   rebate: number = 0;
   comment!: string;
   selection = new SelectionModel<any>(true, []);
-
+  supplyOrdersForSchedule: any[] = [];
+  deliveryDisable:boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
@@ -62,12 +63,19 @@ export class EditInvoiceComponent implements OnInit {
         if (this.supplyInvoice.duePayment > 0) {
           this.isDue = true;
         }
+        this.supplyOrdersForSchedule = [];
         for (let i = 0; i < this.supplyOrders.length; i++) {
           if (this.supplyOrders[i].deliveryStatus == 'PENDING') {
             this.isPending = true;
             break;
           }
         }
+        
+        this.supplyOrders.map((elem) => {
+          if (elem.deliveryStatus != 'DELIVERED') {
+            this.supplyOrdersForSchedule.push(elem);
+          }
+        });
       },
       error: (err) => {
         this.notificationService.showMessage('ERROR', err.message, 'OK', 1000);
@@ -98,7 +106,6 @@ export class EditInvoiceComponent implements OnInit {
         state: 'OPEN',
       };
     }
-    console.log(deliveryModel);
     const params: Map<string, any> = new Map();
     params.set('delivery', deliveryModel);
     this.inventoryService.issueSupplyOrderDelievery(params).subscribe({
@@ -118,31 +125,30 @@ export class EditInvoiceComponent implements OnInit {
     });
   }
   onSelectOrder(event:any) {
-    console.log(event);
     this.selectedOrderItem = event.source.value;
-    console.log(this.selectedOrderItem);
     if (this.selectedOrderItem.deliveryStatus == 'DELIVERED') {
+      
       this.isDelivered = true;
       this.errMsg = '*This Product delivery is completed!';
     } else {
+      
       this.isDelivered = false;
       this.errMsg = '';
     }
   }
 
   onChangeDelievredQuantity() {
-    let remainingPendingQuantity =
-      this.selectedOrderItem.quantityOrdered -
-      this.selectedOrderItem.quantityDelivered;
-    if (this.delieverySchedule.deliverableQuantity > remainingPendingQuantity) {
+    if (this.delieverySchedule.deliverableQuantity > this.selectedOrderItem.qunatityDeliveryPending) {
+      this.deliveryDisable = true;
       this.errMsg =
         '*Delivered Quantity is Greater Than Remaining Order Quantity';
       return;
     } else {
+      this.deliveryDisable = false;
       this.errMsg = '';
     }
 
-    if(remainingPendingQuantity==0){
+    if(this.selectedOrderItem.qunatityDeliveryPending==0){
       this.selectedOrderItem.deliveryStatus = 'DELIVERED';
     }else{
       this.selectedOrderItem.deliveryStatus = 'PENDING';

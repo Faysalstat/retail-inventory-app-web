@@ -24,7 +24,13 @@ export class SaleInvoiceListComponent implements OnInit {
   ) { 
     this.queryBody={
       offset:0,
-      limit:0
+      limit:0,
+      invoiceNo:'',
+      contactNo:'',
+      deliveryStatus:'',
+      fromDate: new Date('01-01-2023'),
+      toDate: new Date(),
+
     }
   }
 
@@ -60,6 +66,22 @@ export class SaleInvoiceListComponent implements OnInit {
   }
   viewInvoice(invoice:any){
     this.route.navigate(["/sale/edit-sale-invoice",invoice.id]);
+  }
+
+  refresh(){
+    this.queryBody={
+      offset:0,
+      limit:0,
+      invoiceNo:'',
+      contactNo:'',
+      deliveryStatus:'',
+      fromDate: new Date('01-01-2023'),
+      toDate: new Date(),
+    }
+    this.fetchSaleInvoices();
+  }
+  export(){
+
   }
 
 }

@@ -3,7 +3,7 @@
     <div class="row">
         <h2 *ngIf="isStock">Supply Order Details</h2>
         <h2 *ngIf="!isStock">Sale Order Details</h2>
-        <hr>
+        <div class="col-md-12"><hr></div>
         <div class="col-md-6" style="overflow-x:auto;">
             <table class="table" style="text-align:left ;">
                 <thead *ngIf="isStock">
@@ -38,16 +38,16 @@
                         <td> {{customer?.shopName}}</td>
                     </tr>
                     <tr>
-                        <th>Address:</th>
-                        <td> {{customer?.person?.personAddress}} </td>
-                    </tr>
-                    <tr>
                         <th>Contact No:</th>
                         <td> {{customer?.person?.contactNo}} </td>
                     </tr>
                     <tr>
                         <th>Email:</th>
                         <td> {{customer?.person?.email}} </td>
+                    </tr>
+                    <tr>
+                        <th>Address:</th>
+                        <td> {{customer?.person?.personAddress}} </td>
                     </tr>
                 </thead>
             </table>
@@ -57,15 +57,15 @@
                 <thead>
                     <tr>
                         <th>Total Bill:</th>
-                        <td style="text-align:right;"> {{invoiceDetails?.totalPrice || 0}} BDT</td>
+                        <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.totalPrice || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th>Discount:</th>
-                        <td style="text-align:right;"> {{invoiceDetails?.rebate || 0}} BDT</td>
+                        <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.rebate || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th>Balance:</th>
-                        <td style="text-align:right;">{{supplyer?.account?.balance || 0}} BDT</td>
+                        <td style="text-align:right;font-weight: bold;">{{supplyer?.account?.balance || 0}} BDT</td>
                     </tr>
                 </thead>
             </table>
@@ -75,32 +75,42 @@
                 <thead>
                     <tr>
                         <th style="text-align:left;">Total Bill:</th>
-                        <td style="text-align:right;">{{invoiceDetails?.totalPrice || 0}} BDT</td>
+                        <td style="text-align:right;font-weight: bold;">{{invoiceDetails?.totalPrice || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th style="text-align:left;">Previous Balance:</th>
-                        <td style="text-align:right;"> {{invoiceDetails?.previousBalance || 0}} BDT</td>
+                        <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.previousBalance || 0}} BDT</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left;">Extra Charge:</th>
+                        <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.extraCharge || 0}} BDT</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left;">Charge Reason:</th>
+                        <td style="text-align:right;"> {{invoiceDetails?.chargeReason}}</td>
                     </tr>
                     <tr>
                         <th style="text-align:left;">Discount:</th>
-                        <td style="text-align:right;"> {{invoiceDetails?.rebate || 0}} BDT</td>
+                        <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.rebate || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th style="text-align:left;">Total Payable Bill:</th>
-                        <td style="text-align:right;"> {{invoiceDetails?.totalPayableAmount || 0}} BDT</td>
+                        <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.totalPayableAmount || 0}} BDT</td>
                     </tr>
                     <tr>
                         <th style="text-align:left;">Total Paid:</th>
-                        <td style="text-align:right;"> {{invoiceDetails?.totalPaidAmount || 0}} BDT</td>
+                        <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.totalPaidAmount || 0}} BDT</td>
                     </tr>
+                    
                 </thead>
             </table>
         </div>
     </div>
     <div class="row">
         <h2>Order Details</h2>
-        <hr>
+        
         <div class="col-md-12">
+            <hr>
             <table class="table table-striped">
                 <thead>
                     <tr>

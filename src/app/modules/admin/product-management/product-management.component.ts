@@ -47,4 +47,16 @@ export class ProductManagementComponent implements OnInit {
   onselectProduct(product:any){
     this.route.navigate(["/supply/product-detail",product.id]);
   }
+  packProduct(product:any){
+    let packQnt ="";
+    if(product.unitPerPackage && product.packagingCategory){
+      packQnt = Math.floor(product.quantity/product.unitPerPackage) 
+      +" "+ product.packagingCategory
+      +" "+(product.quantity%product.unitPerPackage)
+      +" "+product.unitType
+    }else{
+      packQnt= "N/A";
+    }
+    return  packQnt;
+  }
 }

@@ -50,7 +50,8 @@ export class CashApprovalDetailsComponent implements OnInit {
     this.inventoryService.declineApproval(params).subscribe({
       next:(res)=>{
         this.showLoader = false;
-        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500)
+        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500);
+        this.router.navigate(['/admin/task-list']);
       },
       error:(err)=>{
         this.showLoader = false;

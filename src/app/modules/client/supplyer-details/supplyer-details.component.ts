@@ -14,13 +14,27 @@ export class SupplyerDetailsComponent implements OnInit {
   person:Person = new Person();
   account:Account = new Account();
   accountHistory: any[] = [];
+  tnxTypes: any[] = [];
   supplyer:any = {};
   showAccountHistory:boolean = false;
+  queryBody:any = {};
   constructor(
     private activatedRoute: ActivatedRoute,
     private clientService:ClientService,
     private notificationService: NotificationService
-  ) { }
+  ) {
+    this.tnxTypes = [
+      {label:"Select Tnx Type", value:''},
+      {label:"Debit", value:"DEBIT"},
+      {label:"Credit", value:"CREDIT"},
+    ]
+    this.queryBody={
+      accountId:"",
+      tnxType:"",
+      fromDate: new Date('1/1/2023'),
+      toDate: new Date(),
+    }
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((parameter) => {
@@ -31,19 +45,22 @@ export class SupplyerDetailsComponent implements OnInit {
   }
   fetchAccountDetailsById(id:any){
     const params: Map<string, any> = new Map();
+    params.set('code','');
     params.set('id',id);
-    this.clientService.getPersonById(id).subscribe({
+    this.clientService.getSupplyerByCode(params).subscribe({
       next:(res)=>{
-        this.person = res.body;
-        console.log(res.body);
-        if(res.body.supplyer){
-          this.supplyer = res.body.supplyer;
-          this.account = res.body.supplyer.account;
-          this.accountHistory = res.body.supplyer.account.accountHistories;
+        this.supplyer = res.body;
+        if(res.body.person){
+          this.person = res.body.person;
+          this.account = res.body.account;
+          this.queryBody.accountId = this.account.id;
+          this.accountHistory = res.body.account.accountHistories;
         }
       }
     })
   }
+
+
   showHistory(event:boolean){
     if(event){
       this.showAccountHistory = true;
@@ -82,6 +99,29 @@ export class SupplyerDetailsComponent implements OnInit {
       }
     })
     
+  }
+  onDateChange(){
+    console.log(this.queryBody.fromDate);
+  }
+  onChnageCategory(){
+
+  }
+  fetchAccountHistory(){
+    const params: Map<string, any> = new Map();
+    params.set("fromDate",this.queryBody.fromDate);
+    params.set("toDate",this.queryBody.toDate);
+    params.set("tnxType",this.queryBody.tnxType);
+    params.set("accountId",this.queryBody.accountId);
+
+    this.clientService.getAccountHistoryListByAccountId(params).subscribe({
+      next:(res)=>{
+        if(res.isSuccess){
+          this.accountHistory = res.body;
+        }else{
+          this.notificationService.showErrorMessage("ERROR",res.message,"OK",200);
+        }
+      }
+    })
   }
 }
 

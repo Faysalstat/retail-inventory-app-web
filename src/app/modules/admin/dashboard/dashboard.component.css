@@ -1,0 +1,12 @@
+.box{
+    width: 100%;
+    height: 80px;
+    color: white;
+    font-size: large;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+.c-hr{
+    margin: 3px;
+    background-color: white;
+}

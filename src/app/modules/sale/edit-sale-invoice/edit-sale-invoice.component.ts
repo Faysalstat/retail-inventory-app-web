@@ -5,7 +5,7 @@ import { Customer, ScehduleDelivery } from '../../model/models';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 import { PdfMakeService } from '../../services/pdf-make.service';
-
+import { ToWords } from 'to-words';
 @Component({
   selector: 'app-edit-sale-invoice',
   templateUrl: './edit-sale-invoice.component.html',
@@ -30,6 +30,8 @@ export class EditSaleInvoiceComponent implements OnInit {
   isPending: boolean = false;
   comment: string = '';
   selection = new SelectionModel<any>(true, []);
+  deliveryDisable: boolean = false;
+  toWords = new ToWords();
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
@@ -221,24 +223,23 @@ export class EditSaleInvoiceComponent implements OnInit {
       totalPrice: this.saleInvoice.totalPrice,
       previousBalance: this.saleInvoice.previousBalance,
       totalPayableAmount: this.saleInvoice.totalPayableAmount,
+      totalPayableAmountInWords: this.toWords.convert(this.saleInvoice.totalPayableAmount),
       totalPaid: this.saleInvoice.totalPaidAmount,
+      discount: this.saleInvoice.rebate,
       orders: orders,
     };
     this.pdfMakeService.downloadInvoice(invoiceModel);
   }
   onChangeDelievredQuantity() {
-    let remainingPendingQuantity =
-      this.selectedOrderItem.quantityOrdered -
-      this.selectedOrderItem.quantityDelivered;
-    if (this.delieverySchedule.deliverableQuantity > remainingPendingQuantity) {
+    if (this.delieverySchedule.deliverableQuantity > this.selectedOrderItem.qunatityDeliveryPending) {
       this.errMsg =
         '*Deliverable Quantity is Greater Than Remaining Order Quantity';
-      return;
+        this.deliveryDisable = true;
     } else {
+      this.deliveryDisable = false;
       this.errMsg = '';
     }
-
-    if(remainingPendingQuantity==0){
+    if(this.selectedOrderItem.qunatityDeliveryPending==0){
       this.selectedOrderItem.deliveryStatus = 'DELIVERED';
     }else{
       this.selectedOrderItem.deliveryStatus = 'PENDING';

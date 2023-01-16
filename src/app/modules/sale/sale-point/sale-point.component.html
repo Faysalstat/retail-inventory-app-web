@@ -164,22 +164,26 @@
                             <thead>
                                 <tr>
                                     <th>SN</th>
-                                    <th style="width:50% ;">Product Name</th>
+                                    <th style="width:30% ;">Product Name</th>
                                     <th>Rate</th>
-                                    <th>Quantity</th>
+                                    <th>Package Quantity</th>
+                                    <th>Loose Quantity</th>
+                                    <th>Total Quantity</th>
                                     <th>Price</th>
                                     <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngIf="orderList.length==0">
-                                    <th colspan="5" style="font-weight:bold;text-align: center;">No Order Added Yet!
+                                    <th colspan="7" style="font-weight:bold;text-align: center;">No Order Added Yet!
                                     </th>
                                 </tr>
                                 <tr *ngFor="let order of orderList; index as i">
                                     <th scope="row">{{i+1}}</th>
                                     <th>{{order.productName}}</th>
                                     <th>{{order.pricePerUnit}}</th>
+                                    <th>{{order.packageQuantity}}</th>
+                                    <th>{{order.looseQuantity}}</th>
                                     <th>{{order.quantityOrdered}} {{order.unitType}}</th>
                                     <th>{{order.totalOrderPrice}} BDT</th>
                                     <!-- <th>{{order.totalPrice}}</th> -->
@@ -197,24 +201,41 @@
                     <tfoot style="font-weight:bolder;">
                         <tr>
                             <th style="text-align:left;">Total Bill:</th>
-                            <th style="text-align:right;">{{totalPrice}} BDT</th>
+                            <th style="text-align:right;font-size:18px;">{{totalPrice}} BDT</th>
                         </tr>
                         <tr>
                             <th style="text-align:left;">Previous {{balanceTitle}}:</th>
-                            <th style="text-align:right;">{{showPositive(previousBalance)}} BDT</th>
+                            <th style="text-align:right;font-size:18px;">{{showPositive(previousBalance)}} BDT</th>
                         </tr>
                         <tr>
                             <th style="text-align:left;">Discount:</th>
                             <th style="text-align:right;">
                                 <mat-form-field class="input-field" appearance="fill">
                                     <input type="number" pInputText formControlName="rebate"
-                                        (change)="calculateSummary()" placeholder="Amount" matInput>
+                                        (change)="calculateSummary()" placeholder="Discount Amount" matInput>
+                                </mat-form-field>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:left;">Extra Charge:</th>
+                            <th style="text-align:right;">
+                                <mat-form-field class="input-field" appearance="fill">
+                                    <input type="number" pInputText formControlName="extraCharge"
+                                        (change)="calculateSummary()" placeholder="Extra Charge" matInput>
+                                </mat-form-field>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:left;">Charge Reason:</th>
+                            <th style="text-align:right;">
+                                <mat-form-field class="input-field" appearance="fill">
+                                    <input type="text" pInputText formControlName="chargeReason" placeholder="Reason" matInput>
                                 </mat-form-field>
                             </th>
                         </tr>
                         <tr>
                             <th style="text-align:left;">Total {{balanceType}}:</th>
-                            <th style="text-align:right;">{{showPositive(totalPayableAmount)}} BDT</th>
+                            <th style="text-align:right;font-size:18px;">{{showPositive(totalPayableAmount)}} BDT</th>
                         </tr>
 
                         <tr>

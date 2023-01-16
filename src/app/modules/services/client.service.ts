@@ -42,5 +42,12 @@ export class ClientService {
   public updateClient(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(ClientUrls.UPDATE_CLIENT, queryParams.get('client'));
   }
-  
+   public getAccountHistoryListByAccountId(queryParams: Map<string, any>): Observable<any>{
+    let params = new HttpParams();
+    params = params.append('tnxType', queryParams.get('tnxType'));
+    params = params.append('fromDate', queryParams.get('fromDate'));
+    params = params.append('toDate', queryParams.get('toDate'));
+    params = params.append('accountId', queryParams.get('accountId'));
+    return this.http.get(ClientUrls.FETCH_ACCOUNT_HISTORY_LIST, { params: params });
+   }
 }

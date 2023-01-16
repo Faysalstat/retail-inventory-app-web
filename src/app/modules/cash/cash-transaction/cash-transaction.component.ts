@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Account, Customer, Person, Supplyer, Tasks } from '../../model/models';
 import { ClientService } from '../../services/client.service';
@@ -58,11 +58,11 @@ export class CashTransactionComponent implements OnInit {
   }
   prepareForm() {
     this.cashTransactionForm = this.formBuilder.group({
-      transactionType: ['PAYMENT'],
+      transactionType: ['PAYMENT',[Validators.required]],
       transactionReason: [''],
       clientType: ['SUPPLIER'],
       accountId: [''],
-      cashAmount: [''],
+      cashAmount: ['',[Validators.required]],
       paymentMethod: ['BANK'],
       isReturn: [false],
     });
@@ -158,6 +158,10 @@ export class CashTransactionComponent implements OnInit {
   }
 
   submitTransaction() {
+
+    if(this.cashTransactionForm.invalid){
+      return;
+    }
     let transactionModel = this.cashTransactionForm.value;
     transactionModel.issuedBy = 'MANAGER';
     transactionModel.comment = this.comment;

@@ -15,10 +15,14 @@ import { AddTnxReasonComponent } from './add-tnx-reason/add-tnx-reason.component
 import { ProductCategoryComponent } from './product-category/product-category.component';
 import { UnitTypeComponent } from './unit-type/unit-type.component';
 import { AddPackagingCategoryComponent } from './add-packaging-category/add-packaging-category.component';
+import { ExpenseComponent } from './expense/expense.component';
+import { PayrollComponent } from './payroll/payroll.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,
   AddCustomerComponent,CashReceiveComponent,AddSupplyerComponent,MenuBarComponent,PointOfSaleComponent,
-  AddTnxReasonComponent,ProductCategoryComponent,UnitTypeComponent,AddPackagingCategoryComponent]
+  AddTnxReasonComponent,ProductCategoryComponent,UnitTypeComponent,AddPackagingCategoryComponent,
+  ExpenseComponent,PayrollComponent,DepositComponent]
 
 @NgModule({
   declarations: components,

@@ -9,7 +9,6 @@ export class PdfMakeService {
   constructor() { }
 
   public downloadInvoice(invoice:any){
-console.log(invoice);
     const doc = new jsPDF();
 
     autoTable(doc, {
@@ -61,7 +60,8 @@ console.log(invoice);
           {
             content: 'Billed to:'
             +'\n' + invoice.customer.shopName
-            +'\n' + invoice.customerAddress,
+            +'\n' + invoice.customer.person.contactNo
+            +'\n' + invoice.customer.person.personAddress,
             // +'\nBilling Address line 2'
             // +'\nZip code - City'
             // +'\nCountry',
@@ -116,14 +116,15 @@ console.log(invoice);
             }
           }
         ],
-        // [
-        //   {
-        //     content: 'Due date: ' ,
-        //     styles: {
-        //       halign:'right'
-        //     }
-        //   }
-        // ]
+        [
+          {
+            content: invoice.totalPayableAmountInWords,
+            styles: {
+              halign:'right',
+              fontSize: 14,
+            }
+          }
+        ]
       ],
       theme: 'plain'
     });
@@ -170,13 +171,27 @@ console.log(invoice);
         ],
         [
           {
-            content: 'Previous Due:',
+            content: invoice.previousBalance<0?'Previous Due:':'Previous Balance:',
             styles:{
               halign:'right'
             }
           },
           {
-            content: invoice.previousBalance+ " BDT",
+            content: Math.abs(invoice.previousBalance)+ " BDT",
+            styles:{
+              halign:'right'
+            }
+          },
+        ],
+        [
+          {
+            content: 'Discount:',
+            styles:{
+              halign:'right'
+            }
+          },
+          {
+            content: invoice.discount + " BDT",
             styles:{
               halign:'right'
             }

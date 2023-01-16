@@ -68,6 +68,7 @@
                         <th>Price Rate</th>
                         <th>Total Quantity</th>
                         <th>Quantity Delivered</th>
+                        <th>Quantity Pending</th>
                         <th>Status</th>
                         <th style="text-align: center;">
                             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
@@ -85,6 +86,7 @@
                         <td>{{order?.pricePerUnit}}</td>
                         <td>{{order?.quantityOrdered}}</td>
                         <td>{{order?.quantityDelivered}}</td>
+                        <td>{{order?.qunatityDeliveryPending}}</td>
                         <td>{{order?.deliveryStatus}}</td>
                         <td  style="text-align: center;">
                             <mat-checkbox *ngIf="order.deliveryStatus!='DELIVERED'"  (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(order) : null"
@@ -100,7 +102,7 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="7"></td>
+                        <td colspan="8"></td>
                         <td><button *ngIf="supplyInvoice.deliveryStatus!='DELIVERED'"  mat-raised-button color="warn" (click)="deliverAll()">Deliver All</button></td>
                     </tr>
                 </tfoot>
@@ -113,8 +115,8 @@
             <mat-form-field appearance="outline" class="input-field">
                 <mat-label>Product</mat-label>
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedOrderItem">
-                    <mat-option *ngFor="let order of supplyOrders" (onSelectionChange)="onSelectOrder($event)"
-                        [value]="order">{{order?.product?.productName}}
+                    <mat-option *ngFor="let order of supplyOrdersForSchedule" (onSelectionChange)="onSelectOrder($event)"
+                        [value]="order">{{order?.product?.productName}} ({{order?.deliveryStatus}})
                     </mat-option>
                 </mat-select>
             </mat-form-field>

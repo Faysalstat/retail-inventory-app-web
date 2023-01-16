@@ -54,13 +54,13 @@ export class InventoryService {
     let params = new HttpParams();
     params = params.append('offset',queryParams.get('query').offset);
     params = params.append('limit',queryParams.get('query').limit);
-    // params = params.append('contactNo',queryParams.get('query').contactNo);
-    // params = params.append('invoiceNo',queryParams.get('query').invoiceNo);
+    params = params.append('contactNo',queryParams.get('query').contactNo);
+    params = params.append('invoiceNo',queryParams.get('query').invoiceNo);
     // params = params.append('doNo',queryParams.get('query').doNo);
     // params = params.append('isDue',queryParams.get('query').isDue);
-    // params = params.append('fromDate',queryParams.get('query').fromDate);
-    // params = params.append('toDate',queryParams.get('query').toDate);
-    // params = params.append('deliveryStatus',queryParams.get('query').deliveryStatus);
+    params = params.append('fromDate',queryParams.get('query').fromDate);
+    params = params.append('toDate',queryParams.get('query').toDate);
+    params = params.append('deliveryStatus',queryParams.get('query').deliveryStatus);
     return this.http.get(InventoryUrls.FETCH_SALE_ORDER_LIST,{params:params});
   }
   public fetchSaleInvoiceById(invoiceId:any): Observable<any> {

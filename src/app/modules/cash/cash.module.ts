@@ -10,6 +10,7 @@ import { CashComponent } from './cash.component';
 import { CashRoutingModule } from './cash-routing.module';
 import { CashTransactionComponent } from './cash-transaction/cash-transaction.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { ExpensesComponent } from './expenses/expenses.component';
 
 
 
@@ -19,7 +20,8 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
     CashPaymentComponent,
     CashReceiveComponent,
     CashTransactionComponent,
-    TransactionListComponent
+    TransactionListComponent,
+    ExpensesComponent
   ],
   imports: [
     CommonModule,

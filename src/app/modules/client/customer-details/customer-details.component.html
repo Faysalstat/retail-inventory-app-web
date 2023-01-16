@@ -71,10 +71,40 @@
             <h3>Account History</h3>
         </div>
         <div class="col-md-1 float-right">
-
             <button mat-raised-button (click)="showHistory(false)" color="warn">
                 <mat-icon>close</mat-icon>
             </button>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field appearance="outline" class="input-field">
+                    <mat-label>Transaction Type</mat-label>
+                    <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchAccountHistory()"
+                        [(ngModel)]="queryBody.tnxType">
+                        <mat-option *ngFor="let type of tnxTypes" [value]="type.value">
+                            {{type?.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>From Date</mat-label>
+                    <input matInput [matDatepicker]="fromDatePicker" (dateInput)="fetchAccountHistory()"
+                        [ngModelOptions]="{standalone:true}" [(ngModel)]="queryBody.fromDate">
+                    <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #fromDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>To Date</mat-label>
+                    <input matInput [matDatepicker]="toDatePicker" (dateInput)="fetchAccountHistory()"
+                        [ngModelOptions]="{standalone:true}" [(ngModel)]="queryBody.toDate">
+                    <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #toDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
         </div>
         <div class="col-md-12">
             <hr class="mt-2">

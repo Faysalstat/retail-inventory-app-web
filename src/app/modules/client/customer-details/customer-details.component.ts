@@ -16,11 +16,25 @@ export class CustomerDetailsComponent implements OnInit {
   accountHistory: any[] = [];
   customer: any = {};
   showAccountHistory: boolean = false;
+  queryBody:any = {};
+  tnxTypes:any[];
   constructor(
     private activatedRoute: ActivatedRoute,
     private clientService: ClientService,
     private notificationService: NotificationService
-  ) {}
+  ) {
+    this.tnxTypes = [
+      {label:"Select Tnx Type", value:''},
+      {label:"Debit", value:"DEBIT"},
+      {label:"Credit", value:"CREDIT"},
+    ]
+    this.queryBody={
+      accountId:"",
+      tnxType:"",
+      fromDate: new Date('1/1/2023'),
+      toDate: new Date(),
+    }
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((parameter) => {
@@ -34,12 +48,10 @@ export class CustomerDetailsComponent implements OnInit {
     this.clientService.getPersonById(id).subscribe({
       next: (res) => {
         this.person = res.body;
-
-        console.log(res.body);
         if (res.body.customer) {
           this.customer = res.body.customer;
           this.account = res.body.customer.account;
-          this.accountHistory = res.body.customer.account.accountHistories;
+          this.queryBody.accountId = this.account.id;
         }
       },
     });
@@ -73,5 +85,22 @@ export class CustomerDetailsComponent implements OnInit {
       }
     })
     
+  }
+  fetchAccountHistory(){
+    const params: Map<string, any> = new Map();
+    params.set("fromDate",this.queryBody.fromDate);
+    params.set("toDate",this.queryBody.toDate);
+    params.set("tnxType",this.queryBody.tnxType);
+    params.set("accountId",this.queryBody.accountId);
+
+    this.clientService.getAccountHistoryListByAccountId(params).subscribe({
+      next:(res)=>{
+        if(res.isSuccess){
+          this.accountHistory = res.body;
+        }else{
+          this.notificationService.showErrorMessage("ERROR",res.message,"OK",200);
+        }
+      }
+    })
   }
 }

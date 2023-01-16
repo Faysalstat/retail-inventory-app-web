@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
+import { ToWords } from 'to-words';
 import {
   Account,
   Customer,
@@ -57,6 +58,7 @@ export class SalePointComponent implements OnInit {
   availableStock: number = 0;
   balanceType: string = 'Payable';
   productCode: string = '';
+  toWords = new ToWords();
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -81,6 +83,7 @@ export class SalePointComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchProducts();
+    // console.log(this.toWords.convert(1239271392))
   }
 
   getConfig(configname: any) {
@@ -131,7 +134,10 @@ export class SalePointComponent implements OnInit {
       rebate: [formData.rebate],
       paymentMethod: [formData.paymentMethod || ''],
       comment: [formData.comment],
+      extraCharge: [formData.extraCharge],
+      chargeReason: [formData.chargeReason],
     });
+    
   }
   searchCustomer() {
     this.clientService.getClientByContactNo(this.person.contactNo).subscribe({
@@ -237,7 +243,6 @@ export class SalePointComponent implements OnInit {
     return product && product.productName ? product.productName : '';
   }
   private _filter(name: string): string[] {
-    console.log('value--->', name);
     const filterValue = name.toLowerCase();
     return this.productList.filter((product) =>
       product.productName.toLowerCase().includes(filterValue)
@@ -245,7 +250,6 @@ export class SalePointComponent implements OnInit {
   }
 
   private _filterCode(code: string): string[] {
-    console.log('value--->', code);
     const filterValue = code.toLowerCase();
     return this.productList.filter((product) =>
       product.productCode.toLowerCase().includes(filterValue)
@@ -283,12 +287,11 @@ export class SalePointComponent implements OnInit {
     this.totalPayableAmount =
       this.totalPrice -
       this.previousBalance -
-      this.saleInvoiceIssueForm.get('rebate')?.value;
+      this.saleInvoiceIssueForm.get('rebate')?.value +
+      this.saleInvoiceIssueForm.get('extraCharge')?.value;
   }
   // testing
-  onChangeProduc() {
-    console.log(this.selectedProduct);
-  }
+ 
   addOrder() {
     if (
       !this.orderItem.productId ||
@@ -337,9 +340,7 @@ export class SalePointComponent implements OnInit {
     orderIssueModel.comment = this.comment;
     orderIssueModel.totalPayableAmount = this.totalPayableAmount;
     orderIssueModel.previousBalance = this.account.balance;
-    console.log(orderIssueModel);
     const params: Map<string, any> = new Map();
-
     if (this.isApprovalNeeded) {
       let approvalModel = {
         payload: JSON.stringify(orderIssueModel),
@@ -357,6 +358,7 @@ export class SalePointComponent implements OnInit {
             'OK',
             500
           );
+          this.downloadInvoice();
           this.route.navigate(['/sale/sale-invoice-list']);
         },
         error: (err) => {
@@ -393,10 +395,22 @@ export class SalePointComponent implements OnInit {
       });
     }
   }
+  applyFilter(date: any) {
+    let newDate = new Date(date);
+    return (
+      newDate.getDate() +
+      '/' +
+      (newDate.getMonth() + 1) +
+      '/' +
+      newDate.getFullYear()
+    );
+  }
+
   downloadInvoice() {
     let orders: any[] = [];
     let index = 1;
-    this.orderList.forEach((elem) => {
+    this.customer.person = this.person;
+    this.orderList.forEach((elem: any) => {
       let orderRow = [];
       orderRow.push(index);
       orderRow.push(elem.productName);
@@ -409,13 +423,20 @@ export class SalePointComponent implements OnInit {
     let invoiceModel = {
       doNo: '5853',
       invoiceId: 'INV#0001',
+      customer: this.customer,
+      tnxDate: this.applyFilter(new Date()),
       customerName: this.person.personName,
       customerAddress: this.person.personAddress,
       totalPrice: this.totalPrice,
       previousBalance: this.previousBalance,
       totalPayableAmount: this.totalPayableAmount,
+      totalPayableAmountInWords: this.toWords.convert(this.totalPayableAmount),
       totalPaid: this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
+      discount: this.rebate,
+      extraCharge:this.saleInvoiceIssueForm.get('extraCharge')?.value,
+      chargeReason: this.saleInvoiceIssueForm.get('chargeReason')?.value,
       orders: orders,
+
     };
     this.pdfMakeService.downloadInvoice(invoiceModel);
   }
@@ -423,4 +444,6 @@ export class SalePointComponent implements OnInit {
   showPositive(number: any) {
     return Math.abs(Number(number));
   }
+
+  
 }

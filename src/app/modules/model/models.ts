@@ -86,6 +86,8 @@ export class OrderIssueDomain {
   totalPaidAmount!: number;
   duePayment!: number;
   rebate!:number;
+  chargeReason!:string;
+  extraCharge!:number;
   paymentMethod!:string;
   comment!: string;
 }
