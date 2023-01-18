@@ -208,14 +208,17 @@ export class EditSaleInvoiceComponent implements OnInit {
       orderRow.push(index);
       orderRow.push(elem.product.productName);
       orderRow.push(elem.product.sellingPricePerUnit);
+      orderRow.push(elem.packageQuantity);
+      orderRow.push(elem.looseQuantity);
       orderRow.push(elem.quantityOrdered + ' ' + elem.product.unitType);
       orderRow.push(elem.totalPrice);
       index++;
       orders.push(orderRow);
     });
     let invoiceModel = {
-      doNo: '5853',
-      invoiceId: 'INV#0001',
+      doNo: '',
+      invoiceId:this.saleInvoice.invoiceNo,
+      issuedBy: localStorage.getItem('personName'),
       customer: this.customer,
       tnxDate: this.applyFilter(new Date()),
       customerName: this.customer.person.personName,
@@ -226,7 +229,10 @@ export class EditSaleInvoiceComponent implements OnInit {
       totalPayableAmountInWords: this.toWords.convert(this.saleInvoice.totalPayableAmount),
       totalPaid: this.saleInvoice.totalPaidAmount,
       discount: this.saleInvoice.rebate,
+      dueAmount: this.saleInvoice.totalPayableAmount - this.saleInvoice.totalPaidAmount,
       orders: orders,
+      extraCharge:this.saleInvoice.extraCharge,
+      chargeReason: this.saleInvoice.chargeReason
     };
     this.pdfMakeService.downloadInvoice(invoiceModel);
   }

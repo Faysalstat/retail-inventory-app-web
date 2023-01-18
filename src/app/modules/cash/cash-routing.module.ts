@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppAuthGuard } from '../app-auth.guard';
 import { CashAuthGuard } from './cash-auth.guard';
-import { CashReceiveComponent } from './cash-receive/cash-receive.component';
 import { CashTransactionComponent } from './cash-transaction/cash-transaction.component';
 import { CashComponent } from './cash.component';
 import { ExpensesComponent } from './expenses/expenses.component';
@@ -12,9 +11,7 @@ const routes: Routes = [{
     children: [
         {path: '', component: CashTransactionComponent},
         {path: 'cash-transaction', component: CashTransactionComponent},
-        {path: 'cash-receive', component: CashReceiveComponent},
         {path: 'expenses', component: ExpensesComponent},
-        {path: 'transaction-list', component: CashReceiveComponent},
         ]}
       ]
 

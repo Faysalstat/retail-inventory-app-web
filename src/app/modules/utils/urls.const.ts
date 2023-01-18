@@ -1,6 +1,6 @@
 // const BASE_URL = 'https://demo.vatasolution.me/api';
-// const BASE_URL = 'https://shopongroup.com/api';
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = 'https://shopongroup.com/api';
+// const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
@@ -83,4 +83,8 @@ export const AuthenticationUrls = {
   ADD_USER: BASE_URL + "/auth/adduser",
   CHECK_EXISTING_USER: BASE_URL + "/auth/checkexistinguser",
   CHECK_IS_LOGGEDIN: BASE_URL + "/auth/islogedin"
+}
+
+export const AccountUrls = {
+  FETCH_GL_DETAILS_BY_TYPE : BASE_URL + "/account/getgldetailsbytype"
 }

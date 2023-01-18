@@ -18,6 +18,7 @@
                     <mat-select (selectionChange)="onClientTypeChange()" [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedType">
                         <mat-option value="SUPPLIER">Supplier</mat-option>
                         <mat-option value="CUSTOMER">Customer</mat-option>
+                        <mat-option value="OTHER">Other</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -33,6 +34,8 @@
                     <input   (change)="searchCustomer()" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="code" placeholder="Code" matInput>
                 </mat-form-field>
             </div>
+        </div>
+        <div class="row">
             <div *ngIf="isClientFound" class="col-md-6">
                 <table class="table">
                     <tbody>
@@ -139,7 +142,6 @@
             <div  class="col-md-4">
                 <button style="float:right ;" (click)="submitTransaction()" mat-raised-button color="warn">Submit</button>
             </div>
-
         </div>
     </form>
 </mat-card>

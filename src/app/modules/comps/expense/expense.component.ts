@@ -15,10 +15,11 @@ export class ExpenseComponent implements OnInit {
   receivedBy!:string;
   remarks!:string;
   selectedExpense!:any;
-  expenseReason!:string;
+  expenseReason:string='';
   isSubmitted: boolean = false;
   showLoader: boolean = false;
-  paymentMethods:any = [];
+  paymentMethods:any[] = [];
+  transactionReasons:any[] = []
   paymentMethod:string = "CASH";
   constructor(
     private notificationService: NotificationService,
@@ -33,45 +34,56 @@ export class ExpenseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.fetchTransactionReasons()
   }
   
-  // fetchExpenseCategory(){
-  //   this.transactionService.fetchExpenseCategories("OFFICE").subscribe({
-  //     next:(data)=>{
-  //       if(data){
-  //         this.expenseTypes = data.body;
-  //         console.log(data.body);
-  //       }
-  //     },
-  //     error:(err)=>{
-  //       console.log(err.message);
-  //       this.userService.showMessage("ERROR!","Operation Failed" + err.message,"OK",2000);
-  //     }
-  //   })
-  // }
+  fetchTransactionReasons() {
+    this.transactionReasons = [
+      { label: 'Select Transaction Reasons', value: '' },
+    ];
+    this.transactionService.fetchAllTransactionReason().subscribe({
+      next: (res) => {
+        if (res.body) {
+          let reasons = res.body;
+          reasons.map((elem: any) => {
+            let option = { label: elem.key, value: elem.value };
+            this.transactionReasons.push(option);
+          });
+        }
+      },
+    });
+  }
 
   submit(){
     this.isSubmitted = true;
+    if(!this.expenseReason || this.expenseReason=='' || !this.amount ){
+      this.notificationService.showErrorMessage("INVALID","Input All Data","OK",200);
+      return;
+    }
     let expenseModel = {
-        expenseReason: this.expenseReason,
+        transactionReason: this.expenseReason,
         paymentMethod: this.paymentMethod,
         cashAmount: this.amount,
         receivedBy: this.receivedBy,
         comment: this.remarks,
-    }
+    };
     const params:Map<string,any> = new Map();
     params.set("expenseModel",expenseModel);
     this.transactionService.doExpense(params).subscribe({
       next:(data)=>{
         this.isSubmitted = false;
-        this.selectedExpense = null;
-        this.amount = 0;
-        this.receivedBy = "";
-        this.remarks ="";
-        this.expenseReason = "";
-        this.expenseEvent.emit("Balance Changed");
-        this.notificationService.showMessage("Success!","Payment Complete","OK",2000);
+        if(data.isSuccess){
+          this.selectedExpense = null;
+          this.amount = 0;
+          this.receivedBy = "";
+          this.remarks ="";
+          this.expenseReason = "";
+          this.expenseEvent.emit("Balance Changed");
+          this.notificationService.showMessage("Success!","Payment Complete","OK",500);
+        }else{
+          this.notificationService.showErrorMessage("ERROR!",data.message,"OK",500);
+        }
+
       },
       error:(err)=>{
         this.isSubmitted = false;

@@ -10,12 +10,11 @@ export class PdfMakeService {
 
   public downloadInvoice(invoice:any){
     const doc = new jsPDF();
-
     autoTable(doc, {
       body: [
         [
           {
-            content: 'Company brand',
+            content: 'Shopon Enterprise',
             styles: {
               halign: 'left',
               fontSize: 20,
@@ -23,7 +22,7 @@ export class PdfMakeService {
             }
           },
           {
-            content: 'Invoice',
+            content: 'Invoice :' + invoice.invoiceId || "N/A",
             styles: {
               halign: 'right',
               fontSize: 20,
@@ -38,54 +37,26 @@ export class PdfMakeService {
       }
     });
 
-    autoTable(doc, {
-      body: [
-        [
-          {
-            content: 'Reference:' + invoice.doNo
-            +'\nDate: ' + invoice.tnxDate
-            +'\nInvoice number: ' + invoice.invoiceId,
-            styles: {
-              halign: 'right'
-            }
-          }
-        ],
-      ],
-      theme: 'plain'
-    });
+
 
     autoTable(doc, {
       body: [
         [
           {
             content: 'Billed to:'
-            +'\n' + invoice.customer.shopName
+            +'\n' + invoice.customerName
             +'\n' + invoice.customer.person.contactNo
-            +'\n' + invoice.customer.person.personAddress,
-            // +'\nBilling Address line 2'
-            // +'\nZip code - City'
-            // +'\nCountry',
+            +'\n' + invoice.customer.shopName
+            +'\n' + invoice.customer.shopAddress,
             styles: {
               halign: 'left'
             }
           },
-          // {
-          //   content: 'Shipping address:'
-          //   +'\nJohn Doe'
-          //   +'\nShipping Address line 1'
-          //   +'\nShipping Address line 2'
-          //   +'\nZip code - City'
-          //   +'\nCountry',
-          //   styles: {
-          //     halign: 'left'
-          //   }
-          // },
           {
             content: 'From:'
-            +'\nCompany name'
-            +'\nShipping Address line 1'
-            +'\nZip code - City'
-            +'\nCountry',
+            +'\nShopon Exterprise'
+            +'\nTin Potti, Bogura'
+            +'\n' + 'Date: ' + invoice.tnxDate,
             styles: {
               halign: 'right'
             }
@@ -130,22 +101,7 @@ export class PdfMakeService {
     });
 
     autoTable(doc, {
-      body: [
-        [
-          {
-            content: 'Products',
-            styles: {
-              halign:'left',
-              fontSize: 14
-            }
-          }
-        ]
-      ],
-      theme: 'plain'
-    });
-
-    autoTable(doc, {
-      head: [['SN', 'Product Name', 'Rate', 'Quantity', 'Total']],
+      head: [['SN', 'Product Name', 'Rate', 'Package QNT', 'Loose QNT', 'Total QNT', 'Total Price (BDT)']],
       body:invoice.orders,
       theme: 'striped',
       headStyles:{
@@ -199,6 +155,20 @@ export class PdfMakeService {
         ],
         [
           {
+            content: invoice.chargeReason + ":",
+            styles:{
+              halign:'right'
+            }
+          },
+          {
+            content: invoice.extraCharge + " BDT",
+            styles:{
+              halign:'right'
+            }
+          },
+        ],
+        [
+          {
             content: 'Total Payable Amount:',
             styles:{
               halign:'right'
@@ -227,13 +197,13 @@ export class PdfMakeService {
         ],
         [
           {
-            content: 'Due Amount:',
+            content: invoice.dueAmount < 0?'Extra Balance':'Due Amount:',
             styles:{
               halign:'right'
             }
           },
           {
-            content: invoice.totalPayableAmount - invoice.totalPaid + " BDT",
+            content: Math.abs(invoice.dueAmount)+ " BDT",
             styles:{
               halign:'right'
             }
@@ -243,36 +213,12 @@ export class PdfMakeService {
       theme: 'plain'
     });
 
-    // autoTable(doc, {
-    //   body: [
-    //     [
-    //       {
-    //         content: 'Terms & notes',
-    //         styles: {
-    //           halign: 'left',
-    //           fontSize: 14
-    //         }
-    //       }
-    //     ],
-    //     [
-    //       {
-    //         content: 'orem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia'
-    //         +'molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum'
-    //         +'numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium',
-    //         styles: {
-    //           halign: 'left'
-    //         }
-    //       }
-    //     ],
-    //   ],
-    //   theme: "plain"
-    // });
-
+    
     autoTable(doc, {
       body: [
         [
           {
-            content: 'Issued By MANAGER',
+            content: 'Issued By '+ invoice.issuedBy,
             styles: {
               halign: 'center'
             }
@@ -282,7 +228,7 @@ export class PdfMakeService {
       theme: "plain"
     });
 
-    return doc.save("invoice_"+invoice.invoiceId);
+    return doc.save("invoice_"+invoice.invoiceId || "Printing_Copy");
 
   }
 }

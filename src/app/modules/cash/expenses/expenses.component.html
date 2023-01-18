@@ -5,15 +5,12 @@
         <hr>
     </div>
     <mat-tab-group class="mt-4">
-        <mat-tab label="EXPENSE">
-            <app-expense (expenseEvent)="updateBalance($event)" ></app-expense>
-        </mat-tab>
-        <!-- <mat-tab label="SALARY">
-            <app-payroll (payrollEvent)="updateBalance($event)" ></app-payroll>
-        </mat-tab>
-        <mat-tab label="EXPENSE">
-            <app-expense (expenseEvent)="updateBalance($event)" ></app-expense>
+        <!-- <mat-tab label="CLIENT TRANSACTION">
+            <app-cash-payment (payrollEvent)="updateBalance($event)" ></app-cash-payment>
         </mat-tab> -->
+        <mat-tab label="EXPENSE">
+            <app-expense (expenseEvent)="updateBalance($event)" ></app-expense>
+        </mat-tab>
     </mat-tab-group>
     
 </mat-card>

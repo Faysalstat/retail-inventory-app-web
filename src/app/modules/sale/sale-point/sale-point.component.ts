@@ -132,7 +132,7 @@ export class SalePointComponent implements OnInit {
       totalPaidAmount: [formData.totalPaidAmount],
       duePayment: [formData.duePayment],
       rebate: [formData.rebate],
-      paymentMethod: [formData.paymentMethod || ''],
+      paymentMethod: [formData.paymentMethod || 'CASH'],
       comment: [formData.comment],
       extraCharge: [formData.extraCharge],
       chargeReason: [formData.chargeReason],
@@ -415,14 +415,17 @@ export class SalePointComponent implements OnInit {
       orderRow.push(index);
       orderRow.push(elem.productName);
       orderRow.push(elem.pricePerUnit);
+      orderRow.push(elem.packageQuantity);
+      orderRow.push(elem.looseQuantity);
       orderRow.push(elem.quantityOrdered + ' ' + elem.unitType);
       orderRow.push(elem.totalOrderPrice);
       index++;
       orders.push(orderRow);
     });
     let invoiceModel = {
-      doNo: '5853',
-      invoiceId: 'INV#0001',
+      doNo: '',
+      invoiceId: 'N/A',
+      issuedBy: localStorage.getItem('personName'),
       customer: this.customer,
       tnxDate: this.applyFilter(new Date()),
       customerName: this.person.personName,
@@ -433,9 +436,10 @@ export class SalePointComponent implements OnInit {
       totalPayableAmountInWords: this.toWords.convert(this.totalPayableAmount),
       totalPaid: this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
       discount: this.rebate,
+      orders: orders,
+      dueAmount: this.totalPayableAmount - this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
       extraCharge:this.saleInvoiceIssueForm.get('extraCharge')?.value,
       chargeReason: this.saleInvoiceIssueForm.get('chargeReason')?.value,
-      orders: orders,
 
     };
     this.pdfMakeService.downloadInvoice(invoiceModel);

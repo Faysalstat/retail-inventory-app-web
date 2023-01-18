@@ -32,6 +32,7 @@ export class CashTransactionComponent implements OnInit {
   isApprovalNeeded: boolean = true;
   userName: string = 'MANAGER';
   isReturn: boolean = false;
+  isOther: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
@@ -68,16 +69,23 @@ export class CashTransactionComponent implements OnInit {
     });
   }
   onClientTypeChange() {
+    this.isOther = false;
     if (this.selectedType == 'CUSTOMER') {
       this.isCustomer = true;
       this.isSupplier = false;
       this.cashTransactionForm.get('transactionType')?.setValue('RECEIVE');
+      
+    this.cashTransactionForm.get('clientType')?.setValue(this.selectedType);
     } else if (this.selectedType == 'SUPPLIER') {
       this.isCustomer = false;
       this.isSupplier = true;
       this.cashTransactionForm.get('transactionType')?.setValue('PAYMENT');
-    }
+      
     this.cashTransactionForm.get('clientType')?.setValue(this.selectedType);
+    }
+    else if(this.selectedType == 'OTHER') {
+      this.isOther = true;
+    }
   }
   searchCustomer() {
     const params: Map<string, any> = new Map();

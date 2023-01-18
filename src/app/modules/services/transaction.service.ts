@@ -21,6 +21,6 @@ export class TransactionService {
     return this.http.post(TransactionUrls.DELETE_TNX_REASON,{id:id});
   }
   public doExpense(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(TransactionUrls.ADD_TNX_REASON, queryParams.get('expenseModel'));
+    return this.http.post(TransactionUrls.DO_EXPENSE_TRANSACTION, queryParams.get('expenseModel'));
   }
 }
