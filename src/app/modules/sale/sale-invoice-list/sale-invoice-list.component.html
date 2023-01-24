@@ -88,7 +88,7 @@
                 <tbody>
                     <tr *ngIf="!isListExist">
                         <td colspan="9" style="font-weight:bold ; ">
-                            No Due Payment Pending!!
+                            No Invoice Found!!
                         </td>
                     </tr>
                     <tr class="row-hover" *ngFor="let invoice of saleInvoiceList; index as i" (click)="viewInvoice(invoice)">

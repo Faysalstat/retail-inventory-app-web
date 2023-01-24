@@ -24,7 +24,7 @@ export class CustomerDetailsComponent implements OnInit {
     private notificationService: NotificationService
   ) {
     this.tnxTypes = [
-      {label:"Select Tnx Type", value:''},
+      {label:"All", value:''},
       {label:"Debit", value:"DEBIT"},
       {label:"Credit", value:"CREDIT"},
     ]
@@ -58,6 +58,7 @@ export class CustomerDetailsComponent implements OnInit {
   }
   showHistory(event: boolean) {
     this.showAccountHistory = event;
+    this.fetchAccountHistory();
   }
   updateCustomer(){
     const params: Map<string, any> = new Map();

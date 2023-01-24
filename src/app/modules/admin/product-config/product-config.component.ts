@@ -69,7 +69,7 @@ export class ProductConfigComponent implements OnInit {
       productCategory: ['',[Validators.required]],
       unitType: ['',[Validators.required]],
       quantity: [0],
-      brandName:[''],
+      brandName:['',[Validators.required]],
       costPricePerUnit: [0],
       sellingPricePerUnit: [0],
       packagingCategory:['',[Validators.required]],
@@ -115,7 +115,7 @@ export class ProductConfigComponent implements OnInit {
           this.notificationService.showMessage("SUCCESS!","Product Updated Successfuly","OK",1000);
           this.product = res.body
         }
-        this.route.navigate(["/admin/product-list"]);
+        // this.route.navigate(["/admin/product-list"]);
       },
       error:(err)=>{
         this.notificationService.showMessage("FAILED!","Product Add Failed","OK",1000);

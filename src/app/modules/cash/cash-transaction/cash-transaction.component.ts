@@ -30,7 +30,7 @@ export class CashTransactionComponent implements OnInit {
   transactionReasons!: any[];
   isTnxDone: boolean = false;
   isApprovalNeeded: boolean = true;
-  userName: string = 'MANAGER';
+  userName!: any;
   isReturn: boolean = false;
   isOther: boolean = false;
   constructor(
@@ -56,6 +56,7 @@ export class CashTransactionComponent implements OnInit {
   ngOnInit(): void {
     this.prepareForm();
     this.fetchTransactionReasons();
+    this.userName = localStorage.getItem('username');
   }
   prepareForm() {
     this.cashTransactionForm = this.formBuilder.group({
@@ -171,7 +172,7 @@ export class CashTransactionComponent implements OnInit {
       return;
     }
     let transactionModel = this.cashTransactionForm.value;
-    transactionModel.issuedBy = 'MANAGER';
+    transactionModel.issuedBy =this.userName;
     transactionModel.comment = this.comment;
     transactionModel.person = this.person;
     transactionModel.account = this.account;

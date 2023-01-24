@@ -12,6 +12,9 @@ export class CashApprovalDetailsComponent implements OnInit {
   taskId!:number;
   taskDetail!:any;
   showLoader: boolean = false;
+  comment:string ="";
+  updatedBalance:number = 0;
+  userProfile:any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
@@ -23,6 +26,7 @@ export class CashApprovalDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userProfile = localStorage.getItem('username');
     this.fetchPayloadByTaskId();
   }
 
@@ -34,7 +38,13 @@ export class CashApprovalDetailsComponent implements OnInit {
         next: (res) => {
           console.log(res.body);
           this.taskDetail = res.body.payload;
-          // this.fetchClientById(res.body);
+          this.comment = this.taskDetail.comment;
+          if(this.taskDetail.isReturn){
+            this.updatedBalance = Number(this.taskDetail.account.balance) - Number(this.taskDetail.cashAmount)
+          }else{
+            this.updatedBalance = Number(this.taskDetail.account.balance) + Number(this.taskDetail.cashAmount)
+          }
+         
         },
       });
     });
@@ -63,7 +73,9 @@ export class CashApprovalDetailsComponent implements OnInit {
   approveTransaction(){
     this.showLoader = true;
     const params: Map<string, any> = new Map();
-    this.taskDetail.taskId = this.taskId
+    this.taskDetail.taskId = this.taskId;
+    this.taskDetail.comment = this.comment;
+    this.taskDetail.approveBy = this.userProfile;
     params.set("payment",this.taskDetail);
     this.inventoryService.doPaymentTransaction(params).subscribe({
       next:(res)=>{

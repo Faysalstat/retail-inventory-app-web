@@ -3,24 +3,63 @@
     <hr>
     <div class="row">
         <div class="col-md-3">
-            <button class="box" mat-raised-button color="accent">Factory Balance <br>
+            <button class="box" mat-raised-button color="accent">GL Balance <br>
                 <hr class="c-hr"> {{glBalance || 0}} BDT
             </button>
         </div>
         <div class="col-md-3">
-            <button class="box" mat-raised-button color="accent">Factory Balance <br>
-                <hr class="c-hr"> {{glBalance || 0}} BDT
+            <button class="box" mat-raised-button color="accent">Asset Balance <br>
+                <hr class="c-hr"> {{assetBalance || 0}} BDT
             </button>
         </div>
         <div class="col-md-3">
-            <button class="box" mat-raised-button color="accent">Factory Balance <br>
-                <hr class="c-hr"> {{glBalance || 0}} BDT
+            <button class="box" mat-raised-button color="primary">Total Discount Given <br>
+                <hr class="c-hr"> {{dashboardSummary?.saleProfitSumamry?.totalDiscount || 0}} BDT
             </button>
         </div>
         <div class="col-md-3">
-            <button class="box" mat-raised-button color="accent">Factory Balance <br>
-                <hr class="c-hr"> {{glBalance || 0}} BDT
+            <button class="box" mat-raised-button color="primary">Total Discount Received<br>
+                <hr class="c-hr"> {{dashboardSummary?.supplySumamry?.totalDiscountReceived || 0}} BDT
             </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-card class="mt-2">
+                <h4>Todays Sale</h4>
+                <h2>{{dashboardSummary?.todaysTotalSale || 0}} BDT</h2>
+                <hr>
+                <h4>Total Sale</h4>
+                <h2>{{dashboardSummary?.totalSale|| 0}} BDT</h2>
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="mt-2">
+                <h4>Todays Purchase</h4>
+                <h2>{{dashboardSummary?.todaysTotalPurchase || 0}} BDT</h2>
+                <hr>
+                <h4>Total Purchase</h4>
+                <h2>{{dashboardSummary?.totalPurchase|| 0}} BDT</h2>
+            </mat-card>
+        </div>
+
+        <div class="col-md-3">
+            <mat-card class="mt-2">
+                <h4>Total Due From Customer</h4>
+                <h2>{{dashboardSummary?.customerBalanceSummary?.totalDueAmount || 0}} BDT</h2>
+                <hr>
+                <h4>Total Due to Supplyer</h4>
+                <h2>{{dashboardSummary?.supplierBalanceSummary?.totalOwedAmount|| 0}} BDT</h2>
+            </mat-card>
+        </div>
+        <div class="col-md-3">
+            <mat-card class="mt-2">
+                <h4>Total Owe From Customer</h4>
+                <h2>{{dashboardSummary?.customerBalanceSummary?.totalOwedAmount || 0}} BDT</h2>
+                <hr>
+                <h4>Total Owe to Supplyer</h4>
+                <h2>{{dashboardSummary?.supplierBalanceSummary?.totalDueAmount|| 0}} BDT</h2>
+            </mat-card>
         </div>
     </div>
 </mat-card>

@@ -11,19 +11,29 @@ import { NotificationService } from '../../services/notification-service.service
 })
 export class CustomerComponent implements OnInit {
   clientList!: any[];
+  queryBody: any;
   constructor(
     private formBuilder: FormBuilder,
     private clientService: ClientService,
     private notificationService: NotificationService,
     private route: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.fetchClientList('CUSTOMER');
+  ) {
+    this.queryBody = {
+      contactNo:'',
+      shopName:''
+    }
   }
 
-  fetchClientList(clientType: any) {
-    this.clientService.getAllClient(clientType).subscribe({
+  ngOnInit(): void {
+    this.fetchClientList();
+  }
+
+  fetchClientList() {
+    const params: Map<string, any> = new Map();
+    params.set("clientType","CUSTOMER");
+    params.set("contactNo",this.queryBody.contactNo);
+    params.set("shopName",this.queryBody.shopName);
+    this.clientService.getAllClient(params).subscribe({
       next: (res) => {
         console.log(res.body);
         this.clientList = res.body;
@@ -35,5 +45,14 @@ export class CustomerComponent implements OnInit {
   }
   viewClient(id: any) {
     this.route.navigate(['client/customer-details', id]);
+  }
+
+  refresh(){
+    this.queryBody.contactNo  ='';
+    this.queryBody.shopName  ='';
+    this.fetchClientList();
+  }
+  export(){
+
   }
 }

@@ -51,4 +51,9 @@ export class ReportServiceService {
     params = params.append('productCode',queryParams.productCode);
     return this.http.get(ReportUrls.SUPPLY_ORDER_REPORT,{params:params});
   }
+
+  public fetchDashboardSummary(): Observable<any> {
+    let params = new HttpParams();
+    return this.http.get(ReportUrls.DASHBORAD_SUMMARY,{params:params});
+  }
 }

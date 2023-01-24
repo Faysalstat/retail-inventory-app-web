@@ -16,6 +16,7 @@ export class ProductService {
     let params = new HttpParams();
     params = params.append('offset',queryParams.get('offset'));
     params = params.append('limit',queryParams.get('limit'));
+    params = params.append('brandName',queryParams.get('brandName'));
     return this.http.get(ProductUrls.FETCH_ALL_PRODUCT,{params:params});
   }
 

@@ -67,6 +67,10 @@
                         <th>Balance:</th>
                         <td style="text-align:right;font-weight: bold;">{{supplyer?.account?.balance || 0}} BDT</td>
                     </tr>
+                    <tr *ngIf="isDue">
+                        <th>Due :</th>
+                        <td style="text-align:right;font-weight: bold;">{{ dueAmount || 0}} BDT</td>
+                    </tr>
                 </thead>
             </table>
         </div>
@@ -147,7 +151,7 @@
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Comment:</mat-label>
                 <textarea type="text" pInputText [ngModelOptions]="{standalone:true}"
-                    [(ngModel)]="invoiceDetails.comment" matInput></textarea>
+                    [(ngModel)]="comment" matInput></textarea>
             </mat-form-field>
         </div>
         <div class="col-md-12">

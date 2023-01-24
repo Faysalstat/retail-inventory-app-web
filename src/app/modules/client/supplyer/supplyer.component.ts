@@ -11,20 +11,30 @@ import { NotificationService } from '../../services/notification-service.service
 })
 export class SupplyerComponent implements OnInit {
   clientList!:any[];
+  queryBody:any;
   constructor(
     private formBuilder:FormBuilder,
     private clientService: ClientService,
     private notificationService: NotificationService,
     private route: Router
   ) {
-
+this.queryBody = {
+  code:'',
+  companyName:'',
+  brandName:''
+}
    }
 
   ngOnInit(): void {
-    this.fetchClientList("SUPPLYER");
+    this.fetchClientList();
   }
-  fetchClientList(clientType:any){
-    this.clientService.getAllClient(clientType).subscribe({
+  fetchClientList(){
+    const params: Map<string, any> = new Map();
+    params.set("clientType","SUPPLYER");
+    params.set("code",this.queryBody.code);
+    params.set("companyName",this.queryBody.companyName);
+    params.set("brandName",this.queryBody.brandName);
+    this.clientService.getAllClient(params).subscribe({
       next:(res)=>{
         console.log(res.body);
         this.clientList = res.body;
@@ -36,5 +46,14 @@ export class SupplyerComponent implements OnInit {
   }
   viewClient(id:any){
     this.route.navigate(["client/supplyer-details",id]);
+  }
+  refresh(){
+    this.queryBody.code  ='';
+    this.queryBody.companyName  ='';
+    this.queryBody.brandName  ='';
+    this.fetchClientList();
+  }
+  export(){
+
   }
 }

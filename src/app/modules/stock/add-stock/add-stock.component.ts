@@ -47,7 +47,7 @@ export class AddStockComponent implements OnInit {
   totalPrice:number = 0;
   subTotalPrice:number = 0;
   comment!:string;
-  userName:string = "Manager"
+  userName:any;
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -66,6 +66,7 @@ export class AddStockComponent implements OnInit {
   ngOnInit(): void {
     this.fetchProducts();
     this.getConfig(COFIGS.STOCK_APPROVAL_NEEDED);
+    this.userName = localStorage.getItem('username');
   }
 
   getConfig(configname:any){
@@ -257,7 +258,7 @@ export class AddStockComponent implements OnInit {
   }
   calculateSummary() {
     this.subTotalPrice = this.totalPrice - this.supplyInvoiceIssueForm.get('rebate')?.value;
-    this.supplyInvoiceIssueForm.get('totalPrice')?.setValue(this.subTotalPrice);
+    // this.supplyInvoiceIssueForm.get('totalPrice')?.setValue(this.subTotalPrice);
   }
   submitOrder() {
     if (!this.isSupplyerExist) {
@@ -281,6 +282,7 @@ export class AddStockComponent implements OnInit {
     let orderIssueModel = this.supplyInvoiceIssueForm.value;
     orderIssueModel.supplyerId = this.supplyer.id;
     orderIssueModel.comment = this.comment;
+    orderIssueModel.issuedBy = this.userName;
     console.log(orderIssueModel);
     if(this.isApprovalNeeded){
       let approvalModel = {

@@ -18,6 +18,7 @@ export class AddUserComponent implements OnInit {
   selectedRole!:string;
   roles!:any[];
   isExist:boolean = false;
+  showLoader: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private adminService:AdminService,
@@ -50,6 +51,7 @@ export class AddUserComponent implements OnInit {
     });
   }
   searchCustomer(){
+    this.showLoader = true;
     console.log("Change Detected");
     this.clientService.getClientByContactNo(this.userForm.get('contactNo')?.value).subscribe({
       next:(res)=>{
@@ -73,13 +75,16 @@ export class AddUserComponent implements OnInit {
         console.log(err.message);
         this.notificationService.showMessage("ERROR!","Operation Failed" + err.message,"OK",2000);
       },
-      complete: ()=>{}
+      complete: ()=>{
+        this.showLoader = false;
+      }
     })
   }
   onChangeRole(){
 
   }
   checkUser(){
+    this.showLoader = true;
     let userName = this.userForm.get('userName')?.value;
     this.authService.checkExistingUser(userName).subscribe({
       next:(res)=>{
@@ -89,10 +94,14 @@ export class AddUserComponent implements OnInit {
       error:(err)=>{
         console.log(err.message);
         this.notificationService.showMessage("ERROR!","Operation Failed" + err.message,"OK",2000);
+      },
+      complete:()=>{
+        this.showLoader = false;
       }
     })
   }
   submit() {
+    this.showLoader = true;
     const params:Map<string,any> = new Map();
     console.log(this.userForm.value);
     if(this.userForm.invalid){
@@ -110,7 +119,9 @@ export class AddUserComponent implements OnInit {
         console.log(err.message);
         this.notificationService.showMessage("ERROR!","Operation Failed" + err.message,"OK",2000);
       },
-      complete: ()=>{}
+      complete: ()=>{
+        this.showLoader = false;
+      }
     })
   }
 

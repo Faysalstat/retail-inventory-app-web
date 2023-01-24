@@ -15,6 +15,7 @@ export class ProductManagementComponent implements OnInit {
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100, 500, 1000];
   productList!: any[];
+  brandName: string = '';
   constructor(
     private productService: ProductService,
     private notificationService: NotificationService,
@@ -30,6 +31,7 @@ export class ProductManagementComponent implements OnInit {
     this.offset = this.offset;
     params.set('offset', this.offset);
     params.set('limit', this.pageSize);
+    params.set('brandName', this.brandName);
     this.productService.fetchAllProduct(params).subscribe({
       next: (res) => {
         if (res) {

@@ -20,6 +20,9 @@ export class ApprovalDetailsComponent implements OnInit {
   isStock:boolean = false;
   taskType:string = '';
   showLoader: boolean = false;
+  isDue: boolean = false;
+  dueAmount:number = 0;
+  userName:any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
@@ -29,6 +32,7 @@ export class ApprovalDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.userName = localStorage.getItem('username');
     this.fetchPayloadByTaskId();
   }
 
@@ -43,6 +47,7 @@ export class ApprovalDetailsComponent implements OnInit {
           this.showLoader  = false;
           this.taskDetail = res.body;
           this.invoiceDetails = res.body.payload;
+          this.comment = this.invoiceDetails.comment;
           this.taskType = res.body.taskType;
           this.fetchClientById(res.body);
         },
@@ -60,6 +65,13 @@ export class ApprovalDetailsComponent implements OnInit {
         next: (res) => {
           if (res.body) {
             this.supplyer = res.body;
+            let due = (this.supplyer.account.balance - this.invoiceDetails.totalPrice + this.invoiceDetails.rebate);
+            if(due<0){
+              this.isDue = true;
+              this.dueAmount = Math.abs(due);
+            }else{
+              this.isDue = false;
+            }
           }
         },
       });
@@ -76,6 +88,8 @@ export class ApprovalDetailsComponent implements OnInit {
   submitOrder(){
     this.showLoader  = true;
       this.invoiceDetails.taskId = this.taskId;
+      this.invoiceDetails.comment = this.comment;
+      this.invoiceDetails.approvedBy = this.userName
       const params: Map<string, any> = new Map();
       if(this.isStock){
         params.set('order', this.invoiceDetails);
