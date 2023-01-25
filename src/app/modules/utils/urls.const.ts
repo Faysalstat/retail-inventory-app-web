@@ -1,7 +1,7 @@
 // const BASE_URL = 'https://demo.vatasolution.me/api';
-const BASE_URL = 'https://shopongroup.com/api';
+// const BASE_URL = 'https://shopongroup.com/api';
 // const BASE_URL = 'https://uat.shopongroup.com/api';
-// const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
@@ -55,7 +55,9 @@ export const ReportUrls = {
   ACCOUNT_HISTORY_REPORT : BASE_URL + "/report/getaccounthistoryrecord",
   SALE_ORDER_REPORT : BASE_URL + "/report/get-sale-order-report",  
   SUPPLY_ORDER_REPORT : BASE_URL + "/report/get-supply-order-report",  
+  STOCK_REPORT : BASE_URL + "/report/getstockreportrecord",  
   DASHBORAD_SUMMARY : BASE_URL + "/report/getdashboardsummaryrecord",  
+  DASHBORAD_ENTITY_SUMMARY : BASE_URL + "/report/getentitysummary",  
   
 }
 export const ConfigUrls = {
@@ -77,6 +79,7 @@ export const TransactionUrls = {
   DELETE_TNX_REASON : BASE_URL + "/transaction/deletereason",
   FETCH_TRANSACTION_REASONS : BASE_URL + "/transaction/fetchtransactionreason",
   DO_EXPENSE_TRANSACTION : BASE_URL + "/transaction/doexpense",
+  DO_DEPOSIT_TRANSACTION : BASE_URL + "/transaction/doexpense",
 }
 
 export const AuthenticationUrls = {

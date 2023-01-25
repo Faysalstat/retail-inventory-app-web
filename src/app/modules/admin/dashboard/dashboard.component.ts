@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit {
   totalSell:number = 0;
   totalBuy:number = 0;
   dashboardSummary:any = {};
+  entitySummary:any = {};
   showLoader:boolean = false;
   constructor(
     private reportService: ReportServiceService,
@@ -20,8 +21,14 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.showLoader = true;
+    
+    this.fetchDashboardSummary();
     this.fetchGlBalance();
+    this.fetchEntitySummary();
+    
+  }
+  fetchDashboardSummary(){
+    this.showLoader = true;
     this.reportService.fetchDashboardSummary().subscribe({
       next:(res)=>{
         this.dashboardSummary = res.body;
@@ -33,7 +40,22 @@ export class DashboardComponent implements OnInit {
         this.showLoader = false;
       }
     })
-  }
+  };
+  fetchEntitySummary(){
+    this.showLoader = true;
+    this.reportService.fetchEntitySummary().subscribe({
+      next:(res)=>{
+        console.log(res)
+        this.entitySummary = res.body;
+      },
+      error:(err)=>{
+
+      },
+      complete:()=>{
+        this.showLoader = false;
+      }
+    })
+  };
   fetchGlBalance(){
     this.adminService.getGlBalanceByType("INVENTORY_GL").subscribe({
       next:(res)=>{

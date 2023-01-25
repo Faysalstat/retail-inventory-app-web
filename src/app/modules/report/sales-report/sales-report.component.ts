@@ -20,12 +20,13 @@ export class SalesReportComponent implements OnInit {
     private reportService: ReportServiceService
   ) { 
     this.queryBody = {
-      deliveryStatus:'DELIVERED',
+      deliveryStatus:'',
       invoiceNo: '',
       orderNo:'',
       productCode:''
     }
     this.statusOptions = [
+      {label:'All', value:''},
       {label:'Delivered', value:'DELIVERED'},
       {label:'Pending', value:'PENDING'}
     ]

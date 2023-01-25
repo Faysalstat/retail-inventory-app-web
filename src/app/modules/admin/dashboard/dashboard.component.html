@@ -8,17 +8,17 @@
             </button>
         </div>
         <div class="col-md-3">
-            <button class="box" mat-raised-button color="accent">Asset Balance <br>
+            <button class="box" mat-raised-button color="primary">Asset Balance <br>
                 <hr class="c-hr"> {{assetBalance || 0}} BDT
             </button>
         </div>
         <div class="col-md-3">
-            <button class="box" mat-raised-button color="primary">Total Discount Given <br>
+            <button class="box" mat-raised-button color="warn">Total Discount Given <br>
                 <hr class="c-hr"> {{dashboardSummary?.saleProfitSumamry?.totalDiscount || 0}} BDT
             </button>
         </div>
         <div class="col-md-3">
-            <button class="box" mat-raised-button color="primary">Total Discount Received<br>
+            <button class="box" mat-raised-button color="accent">Total Discount Received<br>
                 <hr class="c-hr"> {{dashboardSummary?.supplySumamry?.totalDiscountReceived || 0}} BDT
             </button>
         </div>
@@ -60,6 +60,31 @@
                 <h4>Total Owe to Supplyer</h4>
                 <h2>{{dashboardSummary?.supplierBalanceSummary?.totalDueAmount|| 0}} BDT</h2>
             </mat-card>
+        </div>
+        <div class="col-md-12 mt-5">
+            <hr>
+            <table class="table table-striped" style="text-align:center">
+                <thead>
+                    <tr class="table-primary">
+                        <th>Product Entity</th>
+                        <th>Product Category</th>
+                        <th>Total Customer</th>
+                        <th>Total Supplier</th>
+                        <th>Total Manager</th>
+                        <th>Total HR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-Info">
+                        <th>{{entitySummary.totalProduct}}</th>
+                        <th>{{entitySummary.totalProductCategory}}</th>
+                        <th>{{entitySummary.totalCustomer}}</th>
+                        <th>{{entitySummary.totalSupplier}}</th>
+                        <th>{{entitySummary.totalManager}}</th>
+                        <th>{{entitySummary.totalHr}}</th>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </mat-card>

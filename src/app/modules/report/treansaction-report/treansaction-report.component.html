@@ -1,5 +1,17 @@
 <mat-card>
     <div class="row">
+        <div class="col-md-12">
+            <h2>Transaction Report</h2>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="input-field" appearance="outline">
+              <mat-label>Tnx Category</mat-label>
+              <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchTransactionRecord()" [(ngModel)]="query.tnxCategory">
+                <mat-option *ngFor="let category of tnxCategory" [value]="category.value">{{category?.label}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
               <mat-label>Tnx Type</mat-label>
@@ -8,12 +20,28 @@
               </mat-select>
             </mat-form-field>
         </div>
-       
-
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>From Date</mat-label>
+                <input matInput [matDatepicker]="fromDatePicker" (dateInput)="fetchTransactionRecord()"
+                    [ngModelOptions]="{standalone:true}" [(ngModel)]="query.fromDate">
+                <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #fromDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>To Date</mat-label>
+                <input matInput [matDatepicker]="toDatePicker" (dateInput)="fetchTransactionRecord()"
+                    [ngModelOptions]="{standalone:true}" [(ngModel)]="query.toDate">
+                <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #toDatePicker></mat-datepicker>
+            </mat-form-field>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12 overflow-auto mt-3">
-            <h2>Transaction Report</h2>
+            
             <table class="table table-stripe mt-4 ">
                 <thead>
                     <th style="width:5%;">SN</th>

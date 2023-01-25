@@ -21,6 +21,8 @@ export class ExpenseComponent implements OnInit {
   paymentMethods:any[] = [];
   transactionReasons:any[] = []
   paymentMethod:string = "CASH";
+  isApprovalNeeded:boolean = false;
+  userName:any;
   constructor(
     private notificationService: NotificationService,
     private transactionService: TransactionService,
@@ -34,6 +36,7 @@ export class ExpenseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userName = localStorage.getItem('userName');
     this.fetchTransactionReasons()
   }
   
@@ -66,30 +69,35 @@ export class ExpenseComponent implements OnInit {
         cashAmount: this.amount,
         receivedBy: this.receivedBy,
         comment: this.remarks,
+        transactionType:"EXPENSE"
     };
-    const params:Map<string,any> = new Map();
-    params.set("expenseModel",expenseModel);
-    this.transactionService.doExpense(params).subscribe({
-      next:(data)=>{
-        this.isSubmitted = false;
-        if(data.isSuccess){
-          this.selectedExpense = null;
-          this.amount = 0;
-          this.receivedBy = "";
-          this.remarks ="";
-          this.expenseReason = "";
-          this.expenseEvent.emit("Balance Changed");
-          this.notificationService.showMessage("Success!","Payment Complete","OK",500);
-        }else{
-          this.notificationService.showErrorMessage("ERROR!",data.message,"OK",500);
-        }
+    if(this.isApprovalNeeded){
 
-      },
-      error:(err)=>{
-        this.isSubmitted = false;
-        console.log(err.message);
-        this.notificationService.showErrorMessage("ERROR!","Operation Failed" + err.message,"OK",2000);
-      }
-    })
-  }
+    }else{
+      const params:Map<string,any> = new Map();
+      params.set("expenseModel",expenseModel);
+      this.transactionService.doExpense(params).subscribe({
+        next:(data)=>{
+          this.isSubmitted = false;
+          if(data.isSuccess){
+            this.selectedExpense = null;
+            this.amount = 0;
+            this.receivedBy = "";
+            this.remarks ="";
+            this.expenseReason = "";
+            this.expenseEvent.emit("Balance Changed");
+            this.notificationService.showMessage("Success!","Payment Complete","OK",500);
+          }else{
+            this.notificationService.showErrorMessage("ERROR!",data.message,"OK",500);
+          }
+        },
+        error:(err)=>{
+          this.isSubmitted = false;
+          console.log(err.message);
+          this.notificationService.showErrorMessage("ERROR!","Operation Failed" + err.message,"OK",2000);
+        }
+      })
+    }
+    }
+    
 }

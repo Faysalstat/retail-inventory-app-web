@@ -8,8 +8,15 @@ export class PdfMakeService {
 
   constructor() { }
 
-  public downloadInvoice(invoice:any){
+  public async downloadInvoice(invoice:any){
     const doc = new jsPDF();
+    await this.buildPage(doc,invoice);
+    doc.addPage();
+    await this.buildPage(doc,invoice);
+    return doc.save("invoice_"+invoice.invoiceId || "Printing_Copy");
+
+  }
+  async buildPage(doc:any,invoice:any) {
     autoTable(doc, {
       body: [
         [
@@ -36,9 +43,9 @@ export class PdfMakeService {
         fillColor: '#3366ff'
       }
     });
-
-
-
+  
+  
+  
     autoTable(doc, {
       body: [
         [
@@ -65,7 +72,7 @@ export class PdfMakeService {
       ],
       theme: 'plain'
     });
-
+  
     autoTable(doc, {
       body: [
         [
@@ -99,7 +106,7 @@ export class PdfMakeService {
       ],
       theme: 'plain'
     });
-
+  
     autoTable(doc, {
       head: [['SN', 'Product Name', 'Rate', 'Package QNT', 'Loose QNT', 'Total QNT', 'Total Price (BDT)']],
       body:invoice.orders,
@@ -108,7 +115,7 @@ export class PdfMakeService {
         fillColor: '#343a40'
       }
     });
-
+  
     autoTable(doc, {
       body: [
         [
@@ -212,7 +219,7 @@ export class PdfMakeService {
       ],
       theme: 'plain'
     });
-
+  
     
     autoTable(doc, {
       body: [
@@ -227,8 +234,7 @@ export class PdfMakeService {
       ],
       theme: "plain"
     });
-
-    return doc.save("invoice_"+invoice.invoiceId || "Printing_Copy");
-
   }
 }
+
+

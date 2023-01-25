@@ -15,7 +15,10 @@ export class ProductManagementComponent implements OnInit {
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100, 500, 1000];
   productList!: any[];
+  categories:any[] = [];
   brandName: string = '';
+  categoryName: string = '';
+  code: string = '';
   constructor(
     private productService: ProductService,
     private notificationService: NotificationService,
@@ -23,7 +26,24 @@ export class ProductManagementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.fetchProductCategory();
     this.fetchAllProducts();
+  }
+  fetchProductCategory(){
+    this.categories = [{ label: 'Select Category', value: '' }];
+    this.productService.fetchAllProductCategory().subscribe({
+      next:(res)=>{
+        if(res.body){
+          let categoryList = res.body;
+          categoryList.map((elem:any)=>{
+            let option = {label:elem.key,value: elem.value};
+            this.categories.push(option);
+          })
+        }else{
+          this.notificationService.showErrorMessage("ERROR","No Product Category Found","OK",500);
+        }
+      }
+    })
   }
 
   fetchAllProducts() {
@@ -32,6 +52,8 @@ export class ProductManagementComponent implements OnInit {
     params.set('offset', this.offset);
     params.set('limit', this.pageSize);
     params.set('brandName', this.brandName);
+    params.set('categoryName', this.categoryName);
+    params.set('code', this.code);
     this.productService.fetchAllProduct(params).subscribe({
       next: (res) => {
         if (res) {
@@ -51,8 +73,9 @@ export class ProductManagementComponent implements OnInit {
   }
   packProduct(product:any){
     let packQnt ="";
+    let availableQuantity = product.quantity - product.quantitySold;
     if(product.unitPerPackage && product.packagingCategory){
-      packQnt = Math.floor(product.quantity/product.unitPerPackage) 
+      packQnt = Math.floor(availableQuantity/product.unitPerPackage) 
       +" "+ product.packagingCategory
       +" "+(product.quantity%product.unitPerPackage)
       +" "+product.unitType
@@ -60,5 +83,11 @@ export class ProductManagementComponent implements OnInit {
       packQnt= "N/A";
     }
     return  packQnt;
+  }
+  refreshFilter(){
+    this.brandName = '';
+    this.categoryName = '';
+    this.code = '';
+    this.fetchAllProducts();
   }
 }

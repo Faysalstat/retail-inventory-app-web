@@ -1,15 +1,105 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { NotificationService } from '../../services/notification-service.service';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-deposit',
   templateUrl: './deposit.component.html',
-  styleUrls: ['./deposit.component.css']
+  styleUrls: ['./deposit.component.css'],
 })
 export class DepositComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  @Output() depositEvent = new EventEmitter<string>();
+  depositAmount!: number;
+  depositType: string='';
+  depositFrom: string='';
+  paymentMethod: string='';
+  comment!: String;
+  types: any[];
+  paymentMethods: any[];
+  userName: any;
+  isApprovalNeeded: boolean = false;
+  isSubmitted: boolean = false;
+  constructor(
+    private notificationService: NotificationService,
+    private transactionService: TransactionService
+  ) {
+    this.types = [
+      { label: 'Select Deposit Type', value: '' },
+      { label: 'Director Investment', value: 'DIRECTOR_INVESTMENT' },
+      { label: 'Loan', value: 'LOAN' },
+      { label: 'Bank', value: 'BANK' },
+      { label: 'Other', value: 'OTHER' },
+    ];
+    this.paymentMethods = [
+      { label: 'Select Payment Method', value: '' },
+      { label: 'BANK', value: 'BANK' },
+      { label: 'BKASH', value: 'BKASH' },
+      { label: 'CASH', value: 'CASH' },
+    ];
   }
-
+  ngOnInit(): void {
+    this.userName = localStorage.getItem('userName');
+    this.fetchDepositTypes();
+  }
+  fetchDepositTypes() {}
+  submit() {
+    this.isSubmitted = true;
+    if (!this.depositType || this.depositFrom == '' || !this.depositAmount) {
+      this.notificationService.showErrorMessage(
+        'INVALID',
+        'Input All Data',
+        'OK',
+        200
+      );
+      return;
+    }
+    let expenseModel = {
+      transactionReason: this.depositType,
+      paymentMethod: this.paymentMethod,
+      cashAmount: this.depositAmount,
+      receivedBy: 'INVENTORY_GL',
+      comment: this.comment,
+      transactionType: 'DEPOSIT',
+    };
+    if (this.isApprovalNeeded) {
+    } else {
+      const params: Map<string, any> = new Map();
+      params.set('expenseModel', expenseModel);
+      this.transactionService.doExpense(params).subscribe({
+        next: (res) => {
+          if (res.isSuccess) {
+            this.isSubmitted = false;
+            this.depositAmount = 0;
+            this.depositFrom = '';
+            this.depositType = '';
+            this.comment = '';
+            this.depositEvent.emit('Balance Changed');
+            this.notificationService.showMessage(
+              'Success!',
+              'Payment Complete',
+              'OK',
+              500
+            );
+          } else {
+            this.notificationService.showErrorMessage(
+              'ERROR!',
+              res.message,
+              'OK',
+              500
+            );
+          }
+        },
+        error: (err) => {
+          this.isSubmitted = false;
+          console.log(err.message);
+          this.notificationService.showErrorMessage(
+            'ERROR!',
+            'Operation Failed' + err.message,
+            'OK',
+            2000
+          );
+        },
+      });
+    }
+  }
 }

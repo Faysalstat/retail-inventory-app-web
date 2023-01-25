@@ -23,4 +23,7 @@ export class TransactionService {
   public doExpense(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(TransactionUrls.DO_EXPENSE_TRANSACTION, queryParams.get('expenseModel'));
   }
+  public doDeposit(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(TransactionUrls.DO_DEPOSIT_TRANSACTION, queryParams.get('depositModel'));
+  }
 }

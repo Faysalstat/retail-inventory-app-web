@@ -16,7 +16,7 @@ const routes: Routes = [{
       {path: 'create-supply', component: AddStockComponent},
       {path: 'supply-invoice-list', component: SupplyInvoiceListComponent},
       {path: 'edit-supply-invoice/:id', component: EditInvoiceComponent},
-      {path: 'product-list', component: ProductManagementComponent},
+      {path: 'product-stock', component: ProductManagementComponent},
       {path: 'product-detail/:id', component: ProductConfigComponent}
       ]}
     ]

@@ -8,6 +8,9 @@
         <!-- <mat-tab label="CLIENT TRANSACTION">
             <app-cash-payment (payrollEvent)="updateBalance($event)" ></app-cash-payment>
         </mat-tab> -->
+        <mat-tab label="DEPOSIT">
+            <app-deposit (depositEvent)="updateBalance($event)"></app-deposit>
+        </mat-tab>
         <mat-tab label="EXPENSE">
             <app-expense (expenseEvent)="updateBalance($event)" ></app-expense>
         </mat-tab>

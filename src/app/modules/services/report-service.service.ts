@@ -15,8 +15,9 @@ export class ReportServiceService {
     // params = params.append('offset',queryParams.get('offset'));
     // params = params.append('limit',queryParams.get('limit'));
     params = params.append('tnxType',queryParams.get('tnxType'));
-    params = params.append('isCredit',queryParams.get('isCredit'));
-    params = params.append('isDebit',queryParams.get('isDebit'));
+    params = params.append('tnxCategory',queryParams.get('tnxCategory'));
+    params = params.append('fromDate',queryParams.get('fromDate'));
+    params = params.append('toDate',queryParams.get('toDate'));
     return this.http.get(ReportUrls.TRANSACTION_REPORT,{params:params});
   }
 
@@ -51,9 +52,17 @@ export class ReportServiceService {
     params = params.append('productCode',queryParams.productCode);
     return this.http.get(ReportUrls.SUPPLY_ORDER_REPORT,{params:params});
   }
-
+  public fetchStockListRecord(): Observable<any> {
+    let params = new HttpParams();
+    return this.http.get(ReportUrls.STOCK_REPORT,{params:params});
+  }
   public fetchDashboardSummary(): Observable<any> {
     let params = new HttpParams();
     return this.http.get(ReportUrls.DASHBORAD_SUMMARY,{params:params});
+  }
+
+  public fetchEntitySummary(): Observable<any> {
+    let params = new HttpParams();
+    return this.http.get(ReportUrls.DASHBORAD_ENTITY_SUMMARY,{params:params});
   }
 }

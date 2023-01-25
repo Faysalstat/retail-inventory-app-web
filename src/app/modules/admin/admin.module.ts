@@ -16,6 +16,7 @@ import { ProductConfigComponent } from './product-config/product-config.componen
 import { AddUserComponent } from './add-user/add-user.component';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { CashApprovalDetailsComponent } from './cash-approval-details/cash-approval-details.component';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { CashApprovalDetailsComponent } from './cash-approval-details/cash-appro
     ProductConfigComponent,
     AddUserComponent,
     DashboardComponent,
-    CashApprovalDetailsComponent
+    CashApprovalDetailsComponent,
+    AddEmployeeComponent
   ],
   imports: [
     CommonModule,
