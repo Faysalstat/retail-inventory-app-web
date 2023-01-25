@@ -26,7 +26,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [{provide : LocationStrategy , useClass: HashLocationStrategy}],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
