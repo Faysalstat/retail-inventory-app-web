@@ -225,13 +225,13 @@ export class EditSaleInvoiceComponent implements OnInit {
       customerAddress: this.customer.person.personAddress,
       totalPrice: this.saleInvoice.totalPrice,
       previousBalance: this.saleInvoice.previousBalance,
-      totalPayableAmount: this.saleInvoice.totalPayableAmount,
-      totalPayableAmountInWords: this.toWords.convert(this.saleInvoice.totalPayableAmount),
-      totalPaid: this.saleInvoice.totalPaidAmount,
-      discount: this.saleInvoice.rebate,
-      dueAmount: this.saleInvoice.totalPayableAmount - this.saleInvoice.totalPaidAmount,
+      totalPayableAmount: this.saleInvoice.totalPayableAmount || 0,
+      totalPayableAmountInWords: this.toWords.convert(this.saleInvoice.totalPayableAmount || 0),
+      totalPaid: this.saleInvoice.totalPaidAmount || 0,
+      discount: this.saleInvoice.rebate || 0,
+      dueAmount: this.saleInvoice.totalPayableAmount ||0 - this.saleInvoice.totalPaidAmount ||0,
       orders: orders,
-      extraCharge:this.saleInvoice.extraCharge,
+      extraCharge:this.saleInvoice.extraCharge || 0,
       chargeReason: this.saleInvoice.chargeReason
     };
     this.pdfMakeService.downloadInvoice(invoiceModel);

@@ -435,11 +435,11 @@ export class SalePointComponent implements OnInit {
       totalPayableAmount: this.totalPayableAmount,
       totalPayableAmountInWords: this.toWords.convert(this.totalPayableAmount),
       totalPaid: this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
-      discount: this.rebate,
+      discount: this.saleInvoiceIssueForm.get('rebate')?.value,
       orders: orders,
       dueAmount: this.totalPayableAmount - this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
       extraCharge:this.saleInvoiceIssueForm.get('extraCharge')?.value,
-      chargeReason: this.saleInvoiceIssueForm.get('chargeReason')?.value,
+      chargeReason: this.saleInvoiceIssueForm.get('chargeReason')?.value!=''? this.saleInvoiceIssueForm.get('chargeReason')?.value:"Extra Charge",
 
     };
     this.pdfMakeService.downloadInvoice(invoiceModel);

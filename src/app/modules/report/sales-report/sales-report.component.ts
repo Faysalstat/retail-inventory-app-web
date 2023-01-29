@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ExcelExportService } from '../../services/excel-export.service';
 import { ReportServiceService } from '../../services/report-service.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class SalesReportComponent implements OnInit {
   statusOptions!:any[];
   queryBody!: any;
   constructor(
-    private reportService: ReportServiceService
+    private reportService: ReportServiceService,
+    private excelExportService: ExcelExportService
   ) { 
     this.queryBody = {
       deliveryStatus:'',
@@ -38,11 +40,28 @@ export class SalesReportComponent implements OnInit {
   fetchOrderRecord(){
     this.queryBody.offset = this.offset;
     this.queryBody.limit = this.pageSize;
+    this.orderListExportable = []; 
     this.reportService.fetchOrderListRecord(this.queryBody).subscribe({
       next:(res)=>{
-        console.log(res.body);
         this.orderList= res.body.data;
         this.length = res.body.length;
+        console.log(res.body);
+        let sn = 0;
+        this.orderList.map((elem) => {
+          let item = {
+            SN: sn + 1,
+            OrderNo: elem.orderNo,
+            Product: elem.product.productName,
+            QunatityOrdered: elem.quantityOrdered,
+            QunatityDelivered: elem.quantityDelivered,
+            QunatityDeliveryPending: elem.qunatityDeliveryPending,
+            Total_Price: elem.totalPrice,
+            Profit_Amount: (elem.pricePerUnit-elem.buyingPricePerUnit ) * (Math.abs(elem.quantityOrdered)),
+            TNX_Date: elem.supplyInvoice?.purchaseDate,
+            Delivery_Status: elem.deliveryStatus,
+          };
+          this.orderListExportable.push(item);
+        });
       },
       error:(err)=>{
         console.log(err.message)
@@ -54,6 +73,12 @@ export class SalesReportComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.offset = this.pageSize * event.pageIndex;
     this.fetchOrderRecord();
+  }
+  export() {
+    this.excelExportService.exportAsExcelFile(
+      this.orderListExportable,
+      'STOCK_REPORT'
+    );
   }
 
 }

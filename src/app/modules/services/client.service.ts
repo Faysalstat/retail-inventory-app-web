@@ -25,6 +25,9 @@ export class ClientService {
     params = params.append('shopName', queryParams.get("shopName")|| '');
     params = params.append('companyName', queryParams.get("companyName")|| '');
     params = params.append('brandName', queryParams.get("brandName")|| '');
+    params = params.append('employeeId', queryParams.get("employeeId")|| '');
+    params = params.append('designation', queryParams.get("designation")|| '');
+    params = params.append('role', queryParams.get("role")|| '');
     return this.http.get(ClientUrls.FETCH_CLIENT_LIST_BY_TYPE, { params: params });
   }
   public getSupplyerByCode(queryParams: Map<string, any>): Observable<any> {
@@ -55,4 +58,11 @@ export class ClientService {
     params = params.append('accountId', queryParams.get('accountId'));
     return this.http.get(ClientUrls.FETCH_ACCOUNT_HISTORY_LIST, { params: params });
    }
+
+   public getEmployeeByCodeOrID(queryParams: Map<string, any>): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('employeeId', queryParams.get("employeeId"));
+    params = params.append('id', queryParams.get("id"));
+    return this.http.get(ClientUrls.FETCH_EMPLOYEE_BY_CODE_OR_ID, { params: params });
+  }
 }

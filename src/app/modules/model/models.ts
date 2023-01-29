@@ -5,6 +5,8 @@ export class Person {
   contactNo!: string;
   personAddress!: string;
   email!: string;
+  fatherName!:string;
+  nId!:string;
 }
 export class Customer {
   id!: number;
@@ -24,6 +26,15 @@ export class Supplyer {
   shopName!: string;
   regNo!:string;
   website!:string;
+}
+export class Employee {
+  id!: number;
+  person!: Person;
+  account!:Account;
+  employeeId!: string;
+  designation!:string;
+  role!:string;
+  joiningDate: Date = new Date();
 }
 export class Account {
   id!: number;

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ExcelExportService } from '../../services/excel-export.service';
+import { NotificationService } from '../../services/notification-service.service';
 import { ReportServiceService } from '../../services/report-service.service';
 
 @Component({
@@ -14,7 +16,9 @@ export class TreansactionReportComponent implements OnInit {
   tnxTypes!:any[];
   query!: any;
   constructor(
-    private reportService: ReportServiceService
+    private reportService: ReportServiceService,
+    private notificationService:NotificationService,
+    private excelExportServie :ExcelExportService
   ) { 
     this.query = {
       tnxCategory:"",
@@ -46,13 +50,27 @@ export class TreansactionReportComponent implements OnInit {
     params.set('toDate',this.query.toDate);
     this.reportService.fetchTransactionRecord(params).subscribe({
       next:(res)=>{
-        console.log(res.body);
+        this.transactionListExportable = [];
         this.transactionList= res.body;
+        this.transactionList.map((elem)=>{
+          let item = {
+            TNX_TYPE:elem.transactionType,
+            TNX_REASON:elem.transactionReason,
+            DEBIT: elem.income,
+            CREDIT: elem.expense,
+            TNX_DATE:elem.transactionDate,
+            REMARK:elem.refference,
+          };
+          this.transactionListExportable.push(item);
+        })
       },
       error:(err)=>{
         console.log(err.message)
       }
     })
+  }
+  exportAsExcel(){
+      this.excelExportServie.exportAsExcelFile(this.transactionListExportable,"Tnx-Report");
   }
 
 }

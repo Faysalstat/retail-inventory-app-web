@@ -30,6 +30,10 @@
                 [(ngModel)]="queryBody.invoiceNo" matInput>
             </mat-form-field>
           </div>
+          <div class="col-md-2">
+            <button style="margin: 10px; float: left;" (click)="export()" mat-raised-button
+              color="warn"> <mat-icon>output</mat-icon> Export</button>
+        </div>
 
     </div>
     <div class="row">

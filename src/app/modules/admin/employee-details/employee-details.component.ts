@@ -1,25 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Account, Person, Supplyer } from '../../model/models';
+import { Account, Person } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { ExcelExportService } from '../../services/excel-export.service';
 import { NotificationService } from '../../services/notification-service.service';
 
 @Component({
-  selector: 'app-supplyer-details',
-  templateUrl: './supplyer-details.component.html',
-  styleUrls: ['./supplyer-details.component.css'],
+  selector: 'app-employee-details',
+  templateUrl: './employee-details.component.html',
+  styleUrls: ['./employee-details.component.css'],
 })
-export class SupplyerDetailsComponent implements OnInit {
+export class EmployeeDetailsComponent implements OnInit {
   client!: any;
   person: Person = new Person();
   account: Account = new Account();
   accountHistory: any[] = [];
   accountHistoryExportable: any[] = [];
-  tnxTypes: any[] = [];
-  supplyer: any = {};
+  employee: any = {};
   showAccountHistory: boolean = false;
   queryBody: any = {};
+  tnxTypes: any[];
   constructor(
     private activatedRoute: ActivatedRoute,
     private clientService: ClientService,
@@ -47,42 +47,34 @@ export class SupplyerDetailsComponent implements OnInit {
   }
   fetchAccountDetailsById(id: any) {
     const params: Map<string, any> = new Map();
-    params.set('code', '');
     params.set('id', id);
-    this.clientService.getSupplyerByCode(params).subscribe({
+    this.clientService.getPersonById(id).subscribe({
       next: (res) => {
-        this.supplyer = res.body;
-        if (res.body.person) {
-          this.person = res.body.person;
-          this.account = res.body.account;
+        this.person = res.body;
+        if (res.body.employee) {
+          this.employee = res.body.employee;
+          this.account = res.body.employee.account;
           this.queryBody.accountId = this.account.id;
-          this.accountHistory = res.body.account.accountHistories;
         }
       },
     });
   }
-
   showHistory(event: boolean) {
     this.showAccountHistory = event;
     this.fetchAccountHistory();
   }
-  updateSupplyer() {
+  updateEmployee() {
     const params: Map<string, any> = new Map();
-    let supplyerModel = {
-      clientType: 'SUPPLYER',
+    let employeeModel = {
+      clientType: 'EMPLOYEE',
       personName: this.person.personName,
       personAddress: this.person.personAddress,
       personId: this.person.id,
-      supplyerId: this.supplyer.id,
       email: this.person.email,
-      companyName: this.supplyer.companyName,
-      shopName: this.supplyer.shopName,
-      shopAddress: this.supplyer.shopAddress,
-      brand: this.supplyer.brand,
-      regNo: this.supplyer.regNo,
-      website: this.supplyer.website,
+      designation: this.employee.designation,
+      role: this.employee.role,
     };
-    params.set('client', supplyerModel);
+    params.set('client', employeeModel);
     this.clientService.updateClient(params).subscribe({
       next: (res) => {
         if (res.isSuccess) {
@@ -111,10 +103,6 @@ export class SupplyerDetailsComponent implements OnInit {
       },
     });
   }
-  onDateChange() {
-    console.log(this.queryBody.fromDate);
-  }
-  onChnageCategory() {}
   fetchAccountHistory() {
     const params: Map<string, any> = new Map();
     params.set('fromDate', this.queryBody.fromDate);

@@ -6,9 +6,23 @@
         </div>
         <div class="col-md-4">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Customer Name:</mat-label>
+                <mat-label>Employee Name:</mat-label>
                 <input [ngModelOptions]="{standalone:true}" [(ngModel)]="person.personName"
-                    placeholder="Customer Name" matInput>
+                    placeholder="Employee Name" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Father Name:</mat-label>
+                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="person.fatherName"
+                    placeholder="Father Name" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>NID:</mat-label>
+                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="person.nId"
+                    placeholder="NID" matInput>
             </mat-form-field>
         </div>
         <div class="col-md-4">
@@ -35,32 +49,41 @@
     </div>
 
     <div class="row">
-        <h3>Customer Details</h3>
+        <h3>Employee Details</h3>
         <div class="col-md-12">
             <hr class="mt-2">
         </div>
         <div class="col-md-6">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Shop Name:</mat-label>
-                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="customer.shopName"
-                    placeholder="Shop Name" matInput>
+                <mat-label>Employee ID:</mat-label>
+                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="employee.employeeId" [disabled]="true"
+                    placeholder="Employee ID" matInput>
             </mat-form-field>
         </div>
         <div class="col-md-6">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Shop Address:</mat-label>
-                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="customer.shopAddress"
-                    placeholder="Shop Address" matInput>
+                <mat-label>Designation:</mat-label>
+                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="employee.designation"
+                    placeholder="Designation" matInput>
             </mat-form-field>
         </div>
+        <div class="col-md-6">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Role:</mat-label>
+                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="employee.role"
+                    placeholder="Role" matInput>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <h2 style="font-weight:bold ;color:red">Balance: <span style="color:black">{{account.balance}} TAKA</span>
             </h2>
         </div>
         <div class="col-md-6">
-            <button style="float: right;" mat-raised-button (click)="updateCustomer()" color="warn">Update</button>
+            <button style="float: right;" mat-raised-button (click)="updateEmployee()" color="warn">Update</button>
         </div>
-        <div *ngIf="!showAccountHistory" class="col-md-12">
+        <div *ngIf="!showAccountHistory" class="col-md-12 mt-3">
             <button mat-raised-button (click)="showHistory(true)" color="primary" style="width: 100%;">Show Account History</button>
         </div>
     </div>

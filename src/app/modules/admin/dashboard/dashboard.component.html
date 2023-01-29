@@ -25,7 +25,7 @@
     </div>
     <div class="row">
         <div class="col-md-3">
-            <mat-card class="mt-2">
+            <mat-card class="sum-box mt-2">
                 <h4>Todays Sale</h4>
                 <h2>{{dashboardSummary?.todaysTotalSale || 0}} BDT</h2>
                 <hr>
@@ -34,7 +34,7 @@
             </mat-card>
         </div>
         <div class="col-md-3">
-            <mat-card class="mt-2">
+            <mat-card class="sum-box mt-2">
                 <h4>Todays Purchase</h4>
                 <h2>{{dashboardSummary?.todaysTotalPurchase || 0}} BDT</h2>
                 <hr>
@@ -44,7 +44,7 @@
         </div>
 
         <div class="col-md-3">
-            <mat-card class="mt-2">
+            <mat-card class="sum-box mt-2">
                 <h4>Total Due From Customer</h4>
                 <h2>{{dashboardSummary?.customerBalanceSummary?.totalDueAmount || 0}} BDT</h2>
                 <hr>
@@ -53,7 +53,7 @@
             </mat-card>
         </div>
         <div class="col-md-3">
-            <mat-card class="mt-2">
+            <mat-card class="sum-box mt-2">
                 <h4>Total Owe From Customer</h4>
                 <h2>{{dashboardSummary?.customerBalanceSummary?.totalOwedAmount || 0}} BDT</h2>
                 <hr>

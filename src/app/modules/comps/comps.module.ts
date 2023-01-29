@@ -18,11 +18,13 @@ import { AddPackagingCategoryComponent } from './add-packaging-category/add-pack
 import { ExpenseComponent } from './expense/expense.component';
 import { PayrollComponent } from './payroll/payroll.component';
 import { DepositComponent } from './deposit/deposit.component';
+import { AddEmployeeComponent } from './add-employee/add-employee.component';
+import { SalaryExpenseComponent } from './salary-expense/salary-expense.component';
 
 const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,
   AddCustomerComponent,CashReceiveComponent,AddSupplyerComponent,MenuBarComponent,PointOfSaleComponent,
   AddTnxReasonComponent,ProductCategoryComponent,UnitTypeComponent,AddPackagingCategoryComponent,
-  ExpenseComponent,PayrollComponent,DepositComponent]
+  ExpenseComponent,PayrollComponent,DepositComponent,AddEmployeeComponent,SalaryExpenseComponent]
 
 @NgModule({
   declarations: components,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Account, Customer, Person } from '../../model/models';
 import { ClientService } from '../../services/client.service';
+import { ExcelExportService } from '../../services/excel-export.service';
 import { NotificationService } from '../../services/notification-service.service';
 
 @Component({
@@ -14,6 +15,8 @@ export class CustomerDetailsComponent implements OnInit {
   person: Person = new Person();
   account: Account = new Account();
   accountHistory: any[] = [];
+  accountHistoryExportable: any[] = [];
+  
   customer: any = {};
   showAccountHistory: boolean = false;
   queryBody:any = {};
@@ -21,7 +24,8 @@ export class CustomerDetailsComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private clientService: ClientService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private excelExportService: ExcelExportService
   ) {
     this.tnxTypes = [
       {label:"All", value:''},
@@ -98,10 +102,29 @@ export class CustomerDetailsComponent implements OnInit {
       next:(res)=>{
         if(res.isSuccess){
           this.accountHistory = res.body;
+          this.accountHistoryExportable = [];
+          let sn = 0;
+          this.accountHistory.map((elem) => {
+            let item = {
+              SN: sn + 1,
+              TNX_TYPE: elem.tnxType,
+              TNX_DATE: elem.tnxDate,
+              TNX_AMOUNT: elem.tnxAmount,
+              PAYMENT_METHOD: elem.paymentMethod,
+              COMMENT: elem.remark,
+            };
+            this.accountHistoryExportable.push(item);
+          });
         }else{
           this.notificationService.showErrorMessage("ERROR",res.message,"OK",200);
         }
       }
     })
+  }
+  export() {
+    this.excelExportService.exportAsExcelFile(
+      this.accountHistoryExportable,
+      'ACCOUNT_STATEMENT'
+    );
   }
 }

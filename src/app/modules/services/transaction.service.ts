@@ -26,4 +26,7 @@ export class TransactionService {
   public doDeposit(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(TransactionUrls.DO_DEPOSIT_TRANSACTION, queryParams.get('depositModel'));
   }
+  public paySalary(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(TransactionUrls.DO_SALARY_TRANSACTION, queryParams.get('salaryModel'));
+  }
 }

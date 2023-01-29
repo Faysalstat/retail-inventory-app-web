@@ -33,7 +33,9 @@ export const ClientUrls = {
     FETCH_CUSTOMER_BY_ID : BASE_URL + "/client/getcustomerbyid",
     FETCH_PERSON_BY_ID : BASE_URL + "/client/getpersonbyid",
     FETCH_CLIENT_LIST_BY_TYPE : BASE_URL + "/client/getallclient",
-    FETCH_ACCOUNT_HISTORY_LIST : BASE_URL + "/client/getaccounthistorybyid"
+    FETCH_ACCOUNT_HISTORY_LIST : BASE_URL + "/client/getaccounthistorybyid",
+    FETCH_EMPLOYEE_BY_CODE_OR_ID : BASE_URL + "/client/getemployeebycodeorid",
+
 }
 
 export const InventoryUrls = {
@@ -80,6 +82,7 @@ export const TransactionUrls = {
   FETCH_TRANSACTION_REASONS : BASE_URL + "/transaction/fetchtransactionreason",
   DO_EXPENSE_TRANSACTION : BASE_URL + "/transaction/doexpense",
   DO_DEPOSIT_TRANSACTION : BASE_URL + "/transaction/doexpense",
+  DO_SALARY_TRANSACTION : BASE_URL + "/transaction/paysalary",
 }
 
 export const AuthenticationUrls = {

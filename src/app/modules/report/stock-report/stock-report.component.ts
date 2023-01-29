@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { type } from 'os';
+import { ExcelExportService } from '../../services/excel-export.service';
 import { NotificationService } from '../../services/notification-service.service';
 import { ProductService } from '../../services/product-service.service';
 import { ReportServiceService } from '../../services/report-service.service';
@@ -17,6 +18,7 @@ export class StockReportComponent implements OnInit {
   pageSize = 10;
   pageSizeOptions: number[] = [100, 500, 1000];
   productList!: any[];
+  productListExportable!: any[];
   categories: any[] = [];
   brandName: string = '';
   categoryName: string = '';
@@ -27,6 +29,7 @@ export class StockReportComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private notificationService: NotificationService,
+    private excelExportService: ExcelExportService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +59,7 @@ export class StockReportComponent implements OnInit {
   }
 
   fetchAllProducts() {
+    this.productListExportable = [];
     const params: Map<string, any> = new Map();
     this.offset = this.offset;
     params.set('offset', this.offset);
@@ -69,10 +73,23 @@ export class StockReportComponent implements OnInit {
           this.productList = res.body;
           this.totalProduct = res.length;
           this.totalCostValue = 0;
+          let sn = 0
           this.productList.forEach((product)=>{
             // need to the value type, from cost or from selling price? 
             this.totalCostValue += (product.quantity-product.quantitySold)* product.costPricePerUnit;
             this.totalSellValue += (product.quantity-product.quantitySold)* product.sellingPricePerUnit;
+
+            let item = {
+              SN:sn+1,
+              ProductCode:product.productCode,
+              ProductName:product.productName,
+              BrandName:product.brandName,
+              Quantity:this.packProduct(product),
+              AvailableQuantity:(product?.quantity - product?.quantitySold)||0,
+              BuyingPrice: product.costPricePerUnit,
+              SellingPRice: product.sellingPricePerUnit
+            }
+            this.productListExportable.push(item);
           })
         }
       },
@@ -105,5 +122,11 @@ export class StockReportComponent implements OnInit {
     this.categoryName = '';
     this.code = '';
     this.fetchAllProducts();
+  }
+  export() {
+    this.excelExportService.exportAsExcelFile(
+      this.productListExportable,
+      'STOCK_REPORT'
+    );
   }
 }

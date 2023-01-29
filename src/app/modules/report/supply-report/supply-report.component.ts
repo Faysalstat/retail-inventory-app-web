@@ -1,61 +1,81 @@
 import { Component, OnInit } from '@angular/core';
+import { ExcelExportService } from '../../services/excel-export.service';
 import { ReportServiceService } from '../../services/report-service.service';
 
 @Component({
   selector: 'app-supply-report',
   templateUrl: './supply-report.component.html',
-  styleUrls: ['./supply-report.component.css']
+  styleUrls: ['./supply-report.component.css'],
 })
 export class SupplyReportComponent implements OnInit {
-  offset:number = 0;
+  offset: number = 0;
   limit = 5;
   length = 100;
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100];
-  orderList:any[] = [];
-  orderListExportable:any[] = [];
-  statusOptions!:any[];
+  orderList: any[] = [];
+  orderListExportable: any[] = [];
+  statusOptions!: any[];
   queryBody!: any;
   constructor(
-    private reportService: ReportServiceService
-  ) { 
+    private reportService: ReportServiceService,
+    private excelExportService: ExcelExportService
+  ) {
     this.queryBody = {
-      deliveryStatus:'',
+      deliveryStatus: '',
       invoiceNo: '',
-      orderNo:'',
-      productCode:''
-    }
+      orderNo: '',
+      productCode: '',
+    };
     this.statusOptions = [
-      {label:'All', value:''},
-      {label:'Delivered', value:'DELIVERED'},
-      {label:'Pending', value:'PENDING'}
-    ]
+      { label: 'All', value: '' },
+      { label: 'Delivered', value: 'DELIVERED' },
+      { label: 'Pending', value: 'PENDING' },
+    ];
   }
 
   ngOnInit(): void {
     this.fetchOrderRecord();
   }
-  fetchOrderRecord(){
+  fetchOrderRecord() {
     this.queryBody.offset = this.offset;
     this.queryBody.limit = this.pageSize;
+    this.orderListExportable = [];
     this.reportService.fetchSupplyOrderListRecord(this.queryBody).subscribe({
-      next:(res)=>{
-        console.log(res.body);
-        this.orderList= res.body.data;
+      next: (res) => {
+        this.orderList = res.body.data;
         this.length = res.body.length;
+        let sn = 0;
+        this.orderList.map((elem) => {
+          let item = {
+            SN: sn + 1,
+            OrderNo: elem.orderNo,
+            Product: elem.product.productName,
+            QunatityOrdered: elem.quantityOrdered,
+            QunatityDelivered: elem.quantityDelivered,
+            QunatityDeliveryPending: elem.qunatityDeliveryPending,
+            Total_Price: elem.totalPrice,
+            TNX_Date: elem.supplyInvoice?.purchaseDate,
+            Delivery_Statur: elem.deliveryStatus,
+          };
+          this.orderListExportable.push(item);
+        });
       },
-      error:(err)=>{
-        console.log(err.message)
-      }
-    })
+      error: (err) => {
+        console.log(err.message);
+      },
+    });
   }
 
-  pageChange(event:any){
+  pageChange(event: any) {
     this.pageSize = event.pageSize;
     this.offset = this.pageSize * event.pageIndex;
     this.fetchOrderRecord();
   }
-
+  export() {
+    this.excelExportService.exportAsExcelFile(
+      this.orderListExportable,
+      'SUPPLY_ORDER'
+    );
+  }
 }
-
-

@@ -14,6 +14,10 @@
         <mat-tab label="EXPENSE">
             <app-expense (expenseEvent)="updateBalance($event)" ></app-expense>
         </mat-tab>
+        <mat-tab label="SALARY">
+            <app-salary-expense (salaryEvent)="updateBalance($event)"></app-salary-expense>
+        </mat-tab>
+
     </mat-tab-group>
     
 </mat-card>
