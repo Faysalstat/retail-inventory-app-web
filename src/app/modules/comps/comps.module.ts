@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { AddPersonComponent } from './add-person/add-person.component';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
-import { CashReceiveComponent } from './cash-receive/cash-receive.component';
 import { AddSupplyerComponent } from './add-supplyer/add-supplyer.component';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
 import { PointOfSaleComponent } from './point-of-sale/point-of-sale.component';
@@ -20,11 +19,19 @@ import { PayrollComponent } from './payroll/payroll.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { SalaryExpenseComponent } from './salary-expense/salary-expense.component';
+import { VisualDashboardComponent } from './visual-dashboard/visual-dashboard.component';
+import { CanvasJSChart } from './visual-dashboard/canvasjs.angular.component';
+import { AddAssetsComponent } from './add-assets/add-assets.component';
+import { AddLoanDetailsComponent } from './add-loan-details/add-loan-details.component';
+import { AddBrandNameComponent } from './add-brand-name/add-brand-name.component';
+import { ProfitReportComponent } from './profit-report/profit-report.component';
 
 const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,
-  AddCustomerComponent,CashReceiveComponent,AddSupplyerComponent,MenuBarComponent,PointOfSaleComponent,
+  AddCustomerComponent,AddSupplyerComponent,MenuBarComponent,PointOfSaleComponent,
   AddTnxReasonComponent,ProductCategoryComponent,UnitTypeComponent,AddPackagingCategoryComponent,
-  ExpenseComponent,PayrollComponent,DepositComponent,AddEmployeeComponent,SalaryExpenseComponent]
+  ExpenseComponent,PayrollComponent,DepositComponent,AddEmployeeComponent,SalaryExpenseComponent,VisualDashboardComponent,
+  CanvasJSChart,AddAssetsComponent,AddLoanDetailsComponent,AddBrandNameComponent,ProfitReportComponent]
+
 
 @NgModule({
   declarations: components,

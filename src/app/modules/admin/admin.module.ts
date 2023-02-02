@@ -19,6 +19,7 @@ import { CashApprovalDetailsComponent } from './cash-approval-details/cash-appro
 import { EmployeeManagementComponent } from './employee-management/employee-management.component';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 import { AddEmployeePanelComponent } from './add-employee-panel/add-employee-panel.component';
+import { AssetsManagementComponent } from './assets-management/assets-management.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { AddEmployeePanelComponent } from './add-employee-panel/add-employee-pan
     CashApprovalDetailsComponent,
     EmployeeManagementComponent,
     EmployeeDetailsComponent,
-    AddEmployeePanelComponent
+    AddEmployeePanelComponent,
+    AssetsManagementComponent
   ],
   imports: [
     CommonModule,

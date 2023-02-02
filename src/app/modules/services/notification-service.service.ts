@@ -24,4 +24,14 @@ export class NotificationService {
         timer: timer
       });
 }
+
+public showNotFoundErrorMessage(msg:string,timer:number){
+  return Swal.fire({
+    title: "ERROR",
+    text: msg + " Not Found",
+    confirmButtonText: "OK",
+    icon: "error",
+    timer: timer
+  });
+}
 }

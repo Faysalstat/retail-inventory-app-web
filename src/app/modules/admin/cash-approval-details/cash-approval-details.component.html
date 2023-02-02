@@ -1,5 +1,5 @@
 <mat-card>
-    <h1>Transaction Details:</h1>
+    <h2>Transaction Details: <span style="font-weight: bold;float:right;">Task ID: {{taskId}}</span></h2>
     <hr>
     <app-page-loader *ngIf="showLoader"></app-page-loader>
     <div class="row">
@@ -11,12 +11,12 @@
                         <td>{{taskDetail?.transactionType}}</td>
                     </tr>
                     <tr>
-                        <th>{{taskDetail?.transactionType=='RECEIVE'?"Receive From":"Pay To"}}</th>
-                        <td>{{taskDetail?.person?.personName}}</td>
+                        <th>{{(taskDetail?.transactionType=='RECEIVE')?"Receive From":"Pay To"}}</th>
+                        <td>{{taskDetail?.person?.personName || "X"}}</td>
                     </tr>
                     <tr>
                         <th>Client Type</th>
-                        <td>{{taskDetail?.clientType}}</td>
+                        <td>{{taskDetail?.clientType || "X"}}</td>
                     </tr>
                     <tr>
                         <th>Issued By</th>

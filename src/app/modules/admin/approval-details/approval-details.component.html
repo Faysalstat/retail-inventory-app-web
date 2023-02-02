@@ -1,8 +1,8 @@
 <mat-card>
     <app-page-loader *ngIf="showLoader"></app-page-loader>
     <div class="row">
-        <h2 *ngIf="isStock">Supply Order Details</h2>
-        <h2 *ngIf="!isStock">Sale Order Details</h2>
+        <h2 *ngIf="isStock">Supply Order Details  <span style="font-weight: bold;float:right;">Task ID: {{taskId}}</span></h2>
+        <h2 *ngIf="!isStock">Sale Order Details  <span style="font-weight: bold;float:right;">Task ID: {{taskId}}</span></h2>
         <div class="col-md-12"><hr></div>
         <div class="col-md-6" style="overflow-x:auto;">
             <table class="table" style="text-align:left ;">

@@ -10,6 +10,7 @@ import { ProductService } from '../../services/product-service.service';
 export class AddPackagingCategoryComponent implements OnInit {
   category!:string;
   categories!:any[];
+  showLoader = false;
   constructor(
     private productService: ProductService,
     private notificationService : NotificationService
@@ -20,6 +21,7 @@ export class AddPackagingCategoryComponent implements OnInit {
   }
 
   addcategory(){
+    this.showLoader = true;
     const params: Map<string, any> = new Map();
     let model = {
       key: this.category,
@@ -32,7 +34,14 @@ export class AddPackagingCategoryComponent implements OnInit {
           this.category = '';
           this.notificationService.showMessage("SUCCESS",res.message,"OK",500);
           this.fetchPackagingCategory();
+          this.showLoader = false;
         }
+      },
+      error:(err)=>{
+        this.notificationService.showErrorMessage("ERROR",err.message,"OK",500);
+      },
+      complete:()=>{
+        this.showLoader = false;
       }
     })
   }

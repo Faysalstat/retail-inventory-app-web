@@ -11,6 +11,7 @@ import { SalesReportComponent } from './sales-report/sales-report.component';
 import { StockReportComponent } from './stock-report/stock-report.component';
 import { SupplyReportComponent } from './supply-report/supply-report.component';
 import { ProductReportComponent } from './product-report/product-report.component';
+import { LoanReportComponent } from './loan-report/loan-report.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ProductReportComponent } from './product-report/product-report.componen
     SalesReportComponent,
     StockReportComponent,
     SupplyReportComponent,
-    ProductReportComponent
+    ProductReportComponent,
+    LoanReportComponent
   ],
   imports: [
     CommonModule,

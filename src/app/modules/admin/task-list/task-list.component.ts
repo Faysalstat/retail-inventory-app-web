@@ -39,7 +39,7 @@ export class TaskListComponent implements OnInit {
       task.taskType == Tasks.UPDATE_INVOICE ||
       task.taskType == Tasks.UPDATE_SUPPLY){
         this.router.navigate(["/admin/task-details",task.id]);
-      }else if(task.taskType == Tasks.TRANSACTION){
+      }else {
           this.router.navigate(["/admin/tnx-task-details",task.id]);
         }
     

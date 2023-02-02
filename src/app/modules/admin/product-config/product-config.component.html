@@ -25,7 +25,10 @@
         <div class="col-md-4">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Brand Name</mat-label>
-                <input formControlName="brandName" placeholder="Brand Name" matInput>
+                <mat-select formControlName="brandName">
+                    <mat-option *ngFor="let brand of brandNames" [value]="brand.value">{{brand?.label}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
         <div class="col-md-4">

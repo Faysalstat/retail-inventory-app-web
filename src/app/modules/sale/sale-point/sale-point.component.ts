@@ -10,6 +10,7 @@ import { map, Observable, startWith } from 'rxjs';
 import { ToWords } from 'to-words';
 import {
   Account,
+  COFIGS,
   Customer,
   OrderIssueDomain,
   OrderItem,
@@ -83,6 +84,7 @@ export class SalePointComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchProducts();
+    this.getConfig(COFIGS.SALE_APPROVAL_NEEDED);
     // console.log(this.toWords.convert(1239271392))
   }
 

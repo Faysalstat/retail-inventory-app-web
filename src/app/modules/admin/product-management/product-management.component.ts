@@ -19,6 +19,7 @@ export class ProductManagementComponent implements OnInit {
   brandName: string = '';
   categoryName: string = '';
   code: string = '';
+  showLoader = false;
   constructor(
     private productService: ProductService,
     private notificationService: NotificationService,

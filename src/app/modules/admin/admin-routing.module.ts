@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddAssetsComponent } from '../comps/add-assets/add-assets.component';
 import { AddEmployeePanelComponent } from './add-employee-panel/add-employee-panel.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AdminAuthGuard } from './admin-auth.guard';
 import { AdminComponent } from './admin.component';
 import { ApprovalDetailsComponent } from './approval-details/approval-details.component';
+import { AssetsManagementComponent } from './assets-management/assets-management.component';
 import { CashApprovalDetailsComponent } from './cash-approval-details/cash-approval-details.component';
 import { ConfigurationSettingComponent } from './configuration-setting/configuration-setting.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -19,8 +21,10 @@ const routes: Routes = [{
     children: [
         {path: '', component: DashboardComponent},
         {path: 'dashboard', component: DashboardComponent},
+        {path: 'assets', component: AssetsManagementComponent},
         {path: 'add-product', component: ProductConfigComponent},
         {path: 'add-config', component: ConfigurationSettingComponent},
+        {path: 'add-asset', component: AddAssetsComponent},
         {path: 'add-user', component: AddUserComponent},
         {path: 'add-employee', component: AddEmployeePanelComponent},
         {path: 'employee-list', component: EmployeeManagementComponent},

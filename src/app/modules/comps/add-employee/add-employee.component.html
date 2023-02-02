@@ -1,5 +1,6 @@
+<app-page-loader *ngIf="showLoader"></app-page-loader>
 <mat-card>
-    <app-page-loader *ngIf="showLoader"></app-page-loader>
+
     <form [formGroup]="clientForm">
         <div class="row">
             <h2 style="font-weight:bold;">

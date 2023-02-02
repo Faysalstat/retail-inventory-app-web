@@ -12,10 +12,11 @@ export class ReportServiceService {
 
   public fetchTransactionRecord(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
-    // params = params.append('offset',queryParams.get('offset'));
-    // params = params.append('limit',queryParams.get('limit'));
+    params = params.append('offset',queryParams.get('offset'));
+    params = params.append('limit',queryParams.get('limit'));
     params = params.append('tnxType',queryParams.get('tnxType'));
-    params = params.append('tnxCategory',queryParams.get('tnxCategory'));
+    params = params.append('transactionType',queryParams.get('transactionType'));
+    params = params.append('transactionCategory',queryParams.get('transactionCategory'));
     params = params.append('fromDate',queryParams.get('fromDate'));
     params = params.append('toDate',queryParams.get('toDate'));
     return this.http.get(ReportUrls.TRANSACTION_REPORT,{params:params});
@@ -64,5 +65,10 @@ export class ReportServiceService {
   public fetchEntitySummary(): Observable<any> {
     let params = new HttpParams();
     return this.http.get(ReportUrls.DASHBORAD_ENTITY_SUMMARY,{params:params});
+  }
+
+  public fetchProfitReport(): Observable<any> {
+    let params = new HttpParams();
+    return this.http.get(ReportUrls.PROFIT_REPORT_SUMMARY,{params:params});
   }
 }

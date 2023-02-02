@@ -14,6 +14,7 @@ export class EmployeeManagementComponent implements OnInit {
   clientList!: any[];
   clientExportList!: any[];
   queryBody: any;
+  showLoader:boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private clientService: ClientService,
@@ -34,6 +35,7 @@ export class EmployeeManagementComponent implements OnInit {
   }
 
   fetchClientList() {
+    this.showLoader = true;
     const params: Map<string, any> = new Map();
     params.set("clientType","EMPLOYEE");
     params.set("contactNo",this.queryBody.contactNo);
@@ -60,6 +62,9 @@ export class EmployeeManagementComponent implements OnInit {
       error: (err) => {
         console.log(err.message);
       },
+      complete:()=>{
+        this.showLoader = false;
+      }
     });
   }
   viewClient(id: any) {

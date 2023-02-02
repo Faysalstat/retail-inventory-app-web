@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Account, Customer, Person, Supplyer, Tasks } from '../../model/models';
+import { Account, COFIGS, Customer, Person, Supplyer, Tasks } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
@@ -57,6 +57,18 @@ export class CashTransactionComponent implements OnInit {
     this.prepareForm();
     this.fetchTransactionReasons();
     this.userName = localStorage.getItem('username');
+    this.getConfig(COFIGS.TRANSACTION_APPROVAL_NEEDED);
+  }
+  getConfig(configname: any) {
+    this.inventoryService.getConfigByName(configname).subscribe({
+      next: (res) => {
+        if (res.body && res.body.value == 1) {
+          this.isApprovalNeeded = true;
+        } else {
+          this.isApprovalNeeded = false;
+        }
+      },
+    });
   }
   prepareForm() {
     this.cashTransactionForm = this.formBuilder.group({
@@ -182,7 +194,7 @@ export class CashTransactionComponent implements OnInit {
       let approvalModel = {
         payload: JSON.stringify(transactionModel),
         createdBy: this.userName,
-        taskType: Tasks.TRANSACTION,
+        taskType: Tasks.PAYMENT_TRANSACTION,
         status: 'OPEN',
       };
       const params: Map<string, any> = new Map();

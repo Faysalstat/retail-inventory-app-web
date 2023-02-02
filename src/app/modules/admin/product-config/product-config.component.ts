@@ -13,6 +13,7 @@ export class ProductConfigComponent implements OnInit {
   productAddingForm!: FormGroup;
   categories!: any[];
   packagingCategories!: any[];
+  brandNames!: any[];
   units!: any[];
   showLoader:boolean = false;
   isEdit:boolean = false;
@@ -45,6 +46,7 @@ export class ProductConfigComponent implements OnInit {
     this.fetchPackagingCategory();
     this.fetchProductCategory();
     this.fetchUnitType();
+    this.fetchBrandName();
   }
   fetchProductById(id:any){
     this.productService.fetchProductById(id).subscribe({
@@ -207,6 +209,22 @@ export class ProductConfigComponent implements OnInit {
         }
       })
     }
+  }
+  fetchBrandName(){
+    this.brandNames = [{ label: 'Select Brand Name', value: '' }];
+    this.productService.fetchAllBrandName().subscribe({
+      next:(res)=>{
+        if(res.body){
+          let brandNames = res.body;
+          brandNames.map((elem:any)=>{
+            let option = {label:elem.key,value: elem.value};
+            this.brandNames.push(option);
+          })
+        }else{
+          this.notificationService.showErrorMessage("ERROR","No Brand Name Found","OK",500);
+        }
+      }
+    })
   }
 }
 

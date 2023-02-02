@@ -10,8 +10,8 @@ import { AuthComponent } from './modules/auth/auth.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { HttpClientModule } from '@angular/common/http';
-import { CashComponent } from './modules/cash/cash.component';
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import * as CanvasJSAngularChart from '../assets/canvas/canvasjs.angular.component';
+var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 @NgModule({
   declarations: [

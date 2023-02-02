@@ -46,7 +46,9 @@ export class ProductService {
     params = params.append('name',queryParams.get('name'));
     return this.http.get(ProductUrls.FETCH_PRODUCT_BY_CODE,{params:params});
   }
-
+  public fetchAllBrandName(): Observable<any> {
+    return this.http.get(ProductUrls.FETCH_PRODUCT_BRAND_NAME);
+  }
   public addProductCategory(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(ProductUrls.ADD_PRODUCT_CATEGORY, queryParams.get('model'));
   }
@@ -56,9 +58,15 @@ export class ProductService {
   public addUnitType(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(ProductUrls.ADD_UNIT_TYPE, queryParams.get('model'));
   }
+  public addBrnadName(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(ProductUrls.ADD_BRAND_NAME, queryParams.get('model'));
+  }
 // Delete 
   public deleteUnitType(unitId:any): Observable<any> {
     return this.http.post(ProductUrls.DELETE_UNIT_TYPE, {unitId:unitId});
+  }
+  public deleteBrandName(unitId:any): Observable<any> {
+    return this.http.post(ProductUrls.DELETE_BRAND_NAME, {unitId:unitId});
   }
   public deleteProductCategory(categoryId:any): Observable<any> {
     return this.http.post(ProductUrls.DELETE_PRODUCT_CATEGORY, {categoryId:categoryId});

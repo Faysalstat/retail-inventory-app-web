@@ -9,10 +9,13 @@ import { ReportServiceService } from '../../services/report-service.service';
   styleUrls: ['./treansaction-report.component.css']
 })
 export class TreansactionReportComponent implements OnInit {
-  offset: number = 0;
+  offset = 0;
+  length = 1000;
+  pageSize = 500;
+  pageSizeOptions: number[] = [100,500,1000];
   transactionList:any[] = [];
   transactionListExportable:any[] = [];
-  tnxCategory!:any[];
+  transactionType!:any[];
   tnxTypes!:any[];
   query!: any;
   constructor(
@@ -21,12 +24,12 @@ export class TreansactionReportComponent implements OnInit {
     private excelExportServie :ExcelExportService
   ) { 
     this.query = {
-      tnxCategory:"",
+      transactionType:"",
       tnxType:"",
       fromDate:'',
       toDate:'',
     }
-    this.tnxCategory = [
+    this.transactionType = [
       {label:'All Category', value:''},
       {label:'Income', value:'INCOME'},
       {label:'Expense', value:'EXPENSE'},
@@ -44,14 +47,18 @@ export class TreansactionReportComponent implements OnInit {
   }
   fetchTransactionRecord(){
     const params: Map<string, any> = new Map();
+    params.set('offset',this.offset);
+    params.set('limit',this.pageSize);
     params.set('tnxType',this.query.tnxType);
-    params.set('tnxCategory',this.query.tnxCategory);
+    params.set('transactionType',this.query.transactionType);
     params.set('fromDate',this.query.fromDate);
     params.set('toDate',this.query.toDate);
+    params.set('transactionCategory','');
     this.reportService.fetchTransactionRecord(params).subscribe({
       next:(res)=>{
         this.transactionListExportable = [];
-        this.transactionList= res.body;
+        this.transactionList= res.body.data;
+        this.length = res.body.size;
         this.transactionList.map((elem)=>{
           let item = {
             TNX_TYPE:elem.transactionType,
@@ -72,5 +79,9 @@ export class TreansactionReportComponent implements OnInit {
   exportAsExcel(){
       this.excelExportServie.exportAsExcelFile(this.transactionListExportable,"Tnx-Report");
   }
-
+  pageChange(event:any){
+    this.pageSize = event.pageSize;
+    this.offset = this.pageSize * event.pageIndex;
+    this.fetchTransactionRecord();
+  }
 }

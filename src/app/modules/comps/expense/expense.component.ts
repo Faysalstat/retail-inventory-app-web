@@ -1,4 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { COFIGS, Tasks } from '../../model/models';
+import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 import { TransactionService } from '../../services/transaction.service';
 
@@ -26,6 +29,8 @@ export class ExpenseComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private transactionService: TransactionService,
+    private inventoryService: InventoryService,
+    private route:Router
   ) { 
     this.paymentMethods = [
       { label: 'Select Payment Method', value: '' },
@@ -36,10 +41,21 @@ export class ExpenseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userName = localStorage.getItem('userName');
-    this.fetchTransactionReasons()
+    this.userName = localStorage.getItem('username');
+    this.fetchTransactionReasons();
+    this.getConfig(COFIGS.TRANSACTION_APPROVAL_NEEDED);
   }
-  
+  getConfig(configname: any) {
+    this.inventoryService.getConfigByName(configname).subscribe({
+      next: (res) => {
+        if (res.body && res.body.value == 1) {
+          this.isApprovalNeeded = true;
+        } else {
+          this.isApprovalNeeded = false;
+        }
+      },
+    });
+  }
   fetchTransactionReasons() {
     this.transactionReasons = [
       { label: 'Select Transaction Reasons', value: '' },
@@ -69,9 +85,37 @@ export class ExpenseComponent implements OnInit {
         cashAmount: this.amount,
         receivedBy: this.receivedBy,
         comment: this.remarks,
-        transactionType:"EXPENSE"
+        transactionType:"EXPENSE",
+        issuedBy: localStorage.getItem("username"),
     };
     if(this.isApprovalNeeded){
+      let approvalModel = {
+        payload: JSON.stringify(expenseModel),
+        createdBy: this.userName,
+        taskType: Tasks.EXPENSE_TRANSACTION,
+        status: 'OPEN',
+      };
+      const params: Map<string, any> = new Map();
+      params.set('approval', approvalModel);
+      this.inventoryService.sendToApproval(params).subscribe({
+        next: (res) => {
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            'Approval Sent',
+            'OK',
+            500
+          );
+          this.route.navigate(['/cash/transaction-list']);
+        },
+        error: (err) => {
+          this.notificationService.showMessage(
+            'Failed!',
+            'Approval Sending Failed. ' + err.message,
+            'OK',
+            500
+          );
+        },
+      });
 
     }else{
       const params:Map<string,any> = new Map();

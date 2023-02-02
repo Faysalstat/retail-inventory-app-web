@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Employee } from '../../model/models';
+import { Router } from '@angular/router';
+import { COFIGS, Employee, Tasks } from '../../model/models';
 import { ClientService } from '../../services/client.service';
+import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 import { TransactionService } from '../../services/transaction.service';
 
@@ -26,7 +28,9 @@ export class SalaryExpenseComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private transactionService: TransactionService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private inventoryService: InventoryService,
+    private route:Router
   ) { 
     this.paymentMethods = [
       { label: 'Select Payment Method', value: '' },
@@ -53,6 +57,18 @@ export class SalaryExpenseComponent implements OnInit {
 
   ngOnInit(): void {
     this.userName = localStorage.getItem('username');
+    this.getConfig(COFIGS.TRANSACTION_APPROVAL_NEEDED);
+  }
+  getConfig(configname: any) {
+    this.inventoryService.getConfigByName(configname).subscribe({
+      next: (res) => {
+        if (res.body && res.body.value == 1) {
+          this.isApprovalNeeded = true;
+        } else {
+          this.isApprovalNeeded = false;
+        }
+      },
+    });
   }
   searchEmployeeById(){
     this.showLoader = true;
@@ -84,10 +100,39 @@ export class SalaryExpenseComponent implements OnInit {
         receivedBy: this.employee.id,
         comment: this.remarks,
         transactionType:"EXPENSE",
-        issuedBy:this.userName
+        issuedBy: localStorage.getItem("username"),
+        person: this.employee.person,
+        account: this.employee.account,
+        clientType: 'EMPLOYEE: ' +this.employee.designation
     };
     if(this.isApprovalNeeded){
-
+      let approvalModel = {
+        payload: JSON.stringify(expenseModel),
+        createdBy: this.userName,
+        taskType: Tasks.SALARY_TRANSACTION,
+        status: 'OPEN',
+      };
+      const params: Map<string, any> = new Map();
+      params.set('approval', approvalModel);
+      this.inventoryService.sendToApproval(params).subscribe({
+        next: (res) => {
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            'Approval Sent',
+            'OK',
+            500
+          );
+          this.route.navigate(['/cash/transaction-list']);
+        },
+        error: (err) => {
+          this.notificationService.showMessage(
+            'Failed!',
+            'Approval Sending Failed. ' + err.message,
+            'OK',
+            500
+          );
+        },
+      });
     }else{
       const params:Map<string,any> = new Map();
       params.set("salaryModel",expenseModel);

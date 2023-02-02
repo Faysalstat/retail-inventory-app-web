@@ -20,6 +20,7 @@ export class EmployeeDetailsComponent implements OnInit {
   showAccountHistory: boolean = false;
   queryBody: any = {};
   tnxTypes: any[];
+  showLoader:boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private clientService: ClientService,
@@ -46,6 +47,7 @@ export class EmployeeDetailsComponent implements OnInit {
     });
   }
   fetchAccountDetailsById(id: any) {
+    this.showLoader = true;
     const params: Map<string, any> = new Map();
     params.set('id', id);
     this.clientService.getPersonById(id).subscribe({
@@ -57,6 +59,12 @@ export class EmployeeDetailsComponent implements OnInit {
           this.queryBody.accountId = this.account.id;
         }
       },
+      error:(err)=>{
+        this.notificationService.showNotFoundErrorMessage("Person",200);
+      },
+      complete:()=>{
+        this.showLoader = false;
+      }
     });
   }
   showHistory(event: boolean) {
