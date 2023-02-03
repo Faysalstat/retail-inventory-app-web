@@ -58,3 +58,26 @@
         <p style="color: crimson;font-size:medium;margin-top:10px;">{{message}}</p>
     </form>
 </mat-card>
+<mat-card class="mt-3">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>User Name</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of userList; index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{user.userName}}</td>
+                        <td>{{user.userRole}}</td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</mat-card>

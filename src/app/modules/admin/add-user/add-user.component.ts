@@ -19,6 +19,8 @@ export class AddUserComponent implements OnInit {
   roles!:any[];
   isExist:boolean = false;
   showLoader: boolean = false;
+  userList: any[] = [];
+  query!:any;
   constructor(
     private formBuilder: FormBuilder,
     private adminService:AdminService,
@@ -26,6 +28,9 @@ export class AddUserComponent implements OnInit {
     private clientService : ClientService,
     private notificationService : NotificationService
   ) {
+    this.query = {
+      username:""
+    }
     this.roles = [
       {roleName:"ADMIN"},
       {roleName:"MANAGER"},
@@ -35,6 +40,7 @@ export class AddUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.prepareForm(null);
+    this.fetchUserList();
   }
   prepareForm(formData: any) {
     formData = new UserModel();
@@ -113,7 +119,9 @@ export class AddUserComponent implements OnInit {
       next:(res)=>{
         console.log(res);
         this.userForm.reset();
+        this.userForm.clearValidators();
         this.notificationService.showMessage("SUCCESS!","Operation Successfull!","OK",2000);
+        this.fetchUserList();
       },
       error:(err)=>{
         console.log(err.message);
@@ -121,6 +129,16 @@ export class AddUserComponent implements OnInit {
       },
       complete: ()=>{
         this.showLoader = false;
+      }
+    })
+  }
+  fetchUserList(){
+    this.authService.getAllUser(this.query.username).subscribe({
+      next:(res)=>{
+        this.userList = res.body;
+      },
+      error:(err)=>{
+        this.notificationService.showErrorMessage("ERROR",err.message,"OK",300);
       }
     })
   }

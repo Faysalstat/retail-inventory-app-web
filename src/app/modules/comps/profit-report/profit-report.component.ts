@@ -9,7 +9,8 @@ import { ReportServiceService } from '../../services/report-service.service';
 export class ProfitReportComponent implements OnInit {
 profitSummary!:any;
 totalProfitFromSale = 0;
-query = {};
+query!:any;
+isProfit:boolean = true;
   constructor(
     private reportService: ReportServiceService
   ) {
@@ -26,8 +27,14 @@ fetchReportSummary(){
   this.reportService.fetchProfitReport().subscribe({
     next:(res)=>{
       this.profitSummary = res.body;
-      this.totalProfitFromSale = this.profitSummary.totalSellingPrice - this.profitSummary.totalBuyingPrice
+      let totalProfitFromSale = this.profitSummary.totalSellingPrice - this.profitSummary.totalBuyingPrice
        - this.profitSummary.totalDiscountGiven + this.profitSummary.totalExtraChargeTaken;
+       if(totalProfitFromSale<0){
+        this.isProfit = false;
+       }else{
+        this.isProfit = true;
+       }
+       this.totalProfitFromSale = Math.abs(totalProfitFromSale);
     }
   })
 }

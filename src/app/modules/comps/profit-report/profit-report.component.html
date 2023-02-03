@@ -1,45 +1,50 @@
 <mat-card>
-    <div class="row">
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
-                <mat-label>From Date</mat-label>
-                <input matInput [matDatepicker]="fromDatePicker" (dateInput)="fetchReportSummary()"
-                    [ngModelOptions]="{standalone:true}" [(ngModel)]="query.fromDate">
-                <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #fromDatePicker></mat-datepicker>
-            </mat-form-field>
+    <h1>Profit Report</h1>
+    <hr>
+        <div class="row">
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>From Date</mat-label>
+                    <input matInput [matDatepicker]="fromDatePicker" (dateInput)="fetchReportSummary()"
+                        [ngModelOptions]="{standalone:true}" [(ngModel)]="query.fromDate">
+                    <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #fromDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>To Date</mat-label>
+                    <input matInput [matDatepicker]="toDatePicker" (dateInput)="fetchReportSummary()"
+                        [ngModelOptions]="{standalone:true}" [(ngModel)]="query.toDate">
+                    <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #toDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
         </div>
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
-                <mat-label>To Date</mat-label>
-                <input matInput [matDatepicker]="toDatePicker" (dateInput)="fetchReportSummary()"
-                    [ngModelOptions]="{standalone:true}" [(ngModel)]="query.toDate">
-                <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #toDatePicker></mat-datepicker>
-            </mat-form-field>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped" style="text-align:center">
+                    <thead>
+                        <tr class="table-primary">
+                            <th>Total Selling Amount</th>
+                            <th>Total Buying Amount</th>
+                            <th>Total Discount Given</th>
+                            <th>Total Extra Charge Taken</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-Info">
+                            <th>{{profitSummary.totalSellingPrice || 0}} BDT</th>
+                            <th>{{profitSummary.totalBuyingPrice || 0}} BDT</th>
+                            <th>{{profitSummary.totalDiscountGiven || 0}} BDT</th>
+                            <th>{{profitSummary.totalExtraChargeTaken || 0}} BDT</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <table class="table table-striped" style="text-align:center">
-            <thead>
-                <tr class="table-primary">
-                    <th>Total Selling Price</th>
-                    <th>Total Buying Price</th>
-                    <th>Total Discount Given</th>
-                    <th>Total Extra Charge Taken</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="table-Info">
-                    <th>{{profitSummary.totalSellingPrice || 0}}</th>
-                    <th>{{profitSummary.totalBuyingPrice || 0}}</th>
-                    <th>{{profitSummary.totalDiscountGiven || 0}}</th>
-                    <th>{{profitSummary.totalExtraChargeTaken || 0}}</th>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <br>
-    <br>
-    <h2>Total Profit From Sale: <span>{{totalProfitFromSale}}</span></h2>
+        <br>
+        <br>
+        <h2>Total {{isProfit?"Profit":"Loss"}} From Sale: <span>{{totalProfitFromSale}}</span> BDT</h2>
+        <hr>
 </mat-card>

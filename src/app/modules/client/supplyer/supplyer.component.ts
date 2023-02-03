@@ -45,6 +45,9 @@ this.queryBody = {
     })
   }
   viewClient(id:any){
+    if(localStorage.getItem("userRole")=="SALER"){
+      return;
+    }
     this.route.navigate(["client/supplyer-details",id]);
   }
   refresh(){

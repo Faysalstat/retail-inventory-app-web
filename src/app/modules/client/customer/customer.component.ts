@@ -44,6 +44,9 @@ export class CustomerComponent implements OnInit {
     });
   }
   viewClient(id: any) {
+    if(localStorage.getItem("userRole")=="SALER"){
+      return;
+    }
     this.route.navigate(['client/customer-details', id]);
   }
 
