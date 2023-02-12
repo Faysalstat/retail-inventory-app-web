@@ -129,6 +129,7 @@ export class SalePointComponent implements OnInit {
       productName: [formData.productName],
       productCode: [formData.productCode],
       totalPrice: [formData.totalPrice, [Validators.required]],
+      totalCost: [formData.totalCost],
       previousBalance: [formData.previousBalance],
       totalPayableAmount: [formData.totalPayableAmount],
       totalPaidAmount: [formData.totalPaidAmount],
@@ -139,7 +140,6 @@ export class SalePointComponent implements OnInit {
       extraCharge: [formData.extraCharge],
       chargeReason: [formData.chargeReason],
     });
-    
   }
   searchCustomer() {
     this.clientService.getClientByContactNo(this.person.contactNo).subscribe({
@@ -259,8 +259,12 @@ export class SalePointComponent implements OnInit {
   }
   productSelected(event: any) {
     this.selectedProduct = event.option.value;
-    this.saleInvoiceIssueForm.get('productCode')?.setValue(this.selectedProduct.productCode);
-    this.saleInvoiceIssueForm.get('productName')?.setValue(this.selectedProduct.productName);
+    this.saleInvoiceIssueForm
+      .get('productCode')
+      ?.setValue(this.selectedProduct.productCode);
+    this.saleInvoiceIssueForm
+      .get('productName')
+      ?.setValue(this.selectedProduct.productName);
     this.orderItem.productId = this.selectedProduct.id;
     this.orderItem.productCode = this.selectedProduct.productCode;
     this.orderItem.productName = this.selectedProduct.productName;
@@ -278,6 +282,8 @@ export class SalePointComponent implements OnInit {
   calculateOrder() {
     this.orderItem.totalOrderPrice =
       this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
+    this.orderItem.totalOrderCost =
+      this.orderItem.quantityOrdered * this.orderItem.buyingPricePerUnit;
   }
   calculateQuantity() {
     this.orderItem.quantityOrdered =
@@ -293,7 +299,7 @@ export class SalePointComponent implements OnInit {
       this.saleInvoiceIssueForm.get('extraCharge')?.value;
   }
   // testing
- 
+
   addOrder() {
     if (
       !this.orderItem.productId ||
@@ -305,11 +311,14 @@ export class SalePointComponent implements OnInit {
     this.orderList.push(this.orderItem);
     this.orderItem = new OrderItem();
     let totalPrice = 0;
+    let totalCost = 0;
     this.orderList.map((elem) => {
       totalPrice += elem.totalOrderPrice;
+      totalCost += elem.totalOrderCost;
     });
     this.saleInvoiceIssueForm.get('orders')?.setValue(this.orderList);
     this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+    this.saleInvoiceIssueForm.get('totalCost')?.setValue(totalCost);
     this.saleInvoiceIssueForm.get('productName')?.setValue('');
     this.saleInvoiceIssueForm.get('productCode')?.setValue('');
     this.totalPrice = totalPrice;
@@ -439,10 +448,14 @@ export class SalePointComponent implements OnInit {
       totalPaid: this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
       discount: this.saleInvoiceIssueForm.get('rebate')?.value,
       orders: orders,
-      dueAmount: this.totalPayableAmount - this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
-      extraCharge:this.saleInvoiceIssueForm.get('extraCharge')?.value,
-      chargeReason: this.saleInvoiceIssueForm.get('chargeReason')?.value!=''? this.saleInvoiceIssueForm.get('chargeReason')?.value:"Extra Charge",
-
+      dueAmount:
+        this.totalPayableAmount -
+        this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
+      extraCharge: this.saleInvoiceIssueForm.get('extraCharge')?.value,
+      chargeReason:
+        this.saleInvoiceIssueForm.get('chargeReason')?.value != ''
+          ? this.saleInvoiceIssueForm.get('chargeReason')?.value
+          : 'Extra Charge',
     };
     this.pdfMakeService.downloadInvoice(invoiceModel);
   }
@@ -450,6 +463,4 @@ export class SalePointComponent implements OnInit {
   showPositive(number: any) {
     return Math.abs(Number(number));
   }
-
-  
 }

@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit {
     })
   };
   fetchGlBalance(){
-    this.adminService.getGlBalanceByType("INVENTORY_GL").subscribe({
+    this.adminService.getGlBalanceByType("ProductGL").subscribe({
       next:(res)=>{
         this.glBalance = res.body.balance;
       }

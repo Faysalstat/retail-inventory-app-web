@@ -88,12 +88,12 @@ export class CashApprovalDetailsComponent implements OnInit {
       params.set("payment",this.taskDetail);
       this.inventoryService.doPaymentTransaction(params).subscribe({
         next:(res)=>{
-         
+          this.showLoader = false;
           this.notificationService.showMessage("SUCCESS!","Payment Successful","OK",400);
           this.router.navigate(['/admin/task-list']);
         },
         error:(err)=>{
-          
+          this.showLoader = false;
           this.notificationService.showMessage("ERROR!","Payment FAILED","OK",200);
         },
         complete:()=>{
@@ -101,7 +101,7 @@ export class CashApprovalDetailsComponent implements OnInit {
         }
       })
     }
-    if(this.taskType == Tasks.DEPOSIT_TRANSACTION 
+    else if(this.taskType == Tasks.DEPOSIT_TRANSACTION 
       || this.taskType == Tasks.EXPENSE_TRANSACTION){
       params.set('expenseModel', this.taskDetail);
       this.transactionService.doExpense(params).subscribe({
@@ -115,6 +115,7 @@ export class CashApprovalDetailsComponent implements OnInit {
             );
             this.router.navigate(['/admin/task-list']);
           } else {
+            this.showLoader = false;
             this.notificationService.showErrorMessage(
               'ERROR!',
               res.message,
@@ -124,6 +125,7 @@ export class CashApprovalDetailsComponent implements OnInit {
           }
         },
         error: (err) => {
+          this.showLoader = false;
           this.notificationService.showErrorMessage(
             'ERROR!',
             'Operation Failed' + err.message,
@@ -136,10 +138,11 @@ export class CashApprovalDetailsComponent implements OnInit {
         }
       });
     }
-    if(this.taskType == Tasks.SALARY_TRANSACTION){
+    else if(this.taskType == Tasks.SALARY_TRANSACTION){
       params.set("salaryModel",this.taskDetail);
       this.transactionService.paySalary(params).subscribe({
         next:(res)=>{
+          this.showLoader = false;
           if (res.isSuccess) {
             this.notificationService.showMessage(
               'Success!',
@@ -158,8 +161,7 @@ export class CashApprovalDetailsComponent implements OnInit {
           }
         },
         error:(err)=>{
-          
-          console.log(err.message);
+          this.showLoader = false;
           this.notificationService.showErrorMessage(
             'ERROR!',
             'Operation Failed' + err.message,

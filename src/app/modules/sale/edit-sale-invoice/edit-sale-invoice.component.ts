@@ -32,6 +32,7 @@ export class EditSaleInvoiceComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   deliveryDisable: boolean = false;
   toWords = new ToWords();
+  isShowReturnPanel:boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
@@ -64,6 +65,7 @@ export class EditSaleInvoiceComponent implements OnInit {
         this.totalPaid = res.body.totalPaid;
         this.duePayment = res.body.duePayment;
         this.rebate = res.body.rebate;
+        this.comment = res.body.comment;
         if (this.saleInvoice.duePayment > 0) {
           this.isDue = true;
         }
@@ -259,7 +261,7 @@ export class EditSaleInvoiceComponent implements OnInit {
     };
     const params: Map<string, any> = new Map();
     params.set('invoice', inviceModel);
-    this.inventoryService.updateSupplyInvoice(params).subscribe({
+    this.inventoryService.updateSaleInvoice(params).subscribe({
       next: (res) => {
         console.log(res.body);
         this.notificationService.showMessage(
@@ -286,5 +288,11 @@ export class EditSaleInvoiceComponent implements OnInit {
       : this.saleOrders.forEach((row) => {
           this.selection.select(row);
         });
+  }
+  showReturnPanel(ev:boolean){
+    this.isShowReturnPanel = ev;
+  }
+  receiveReturn(){
+    
   }
 }

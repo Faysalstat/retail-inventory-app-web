@@ -124,7 +124,22 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th colspan="7" rowspan="4"></th>
+                        <th colspan="7" rowspan="4">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <mat-form-field class="input-field" appearance="outline">
+                                        <mat-label>Comment:</mat-label>
+                                        <textarea type="text" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="comment"
+                                            matInput></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <button style="margin-top: 10px;" mat-mini-fab (click)="updateComment()" color="primary">
+                                        <mat-icon>refresh</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </th>
                         <th>Total Price:</th>
                         <th>{{saleInvoice?.totalPrice}} BDT</th>
                     </tr>
@@ -144,8 +159,11 @@
 
         </div>
     </div>
-    <div *ngIf="isPending" class="row">
+</mat-card>
+<mat-card *ngIf="isPending" class="mt-3">
+    <div  class="row">
         <h2>Receive Product Delivery:</h2>
+        <hr>
         <div class="col-md-3">
             <mat-form-field appearance="outline" class="input-field">
                 <mat-label>Product</mat-label>
@@ -178,17 +196,19 @@
                 Delivery</button>
         </div>
         <p style="color:red;font-weight: bold;">{{errMsg}}</p>
-        <div class="col-md-10">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Comment:</mat-label>
-                <textarea type="text" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="comment"
-                    matInput></textarea>
-            </mat-form-field>
+        
+        <div class="col-md-12">
+            <button mat-raised-button (click)="showReturnPanel(true)" color="primary" style="width: 100%;">ADD RETURN PRODUCTS</button>
         </div>
-        <div class="col-md-2">
-            <button style="margin-top: 10px;" mat-mini-fab (click)="updateComment()" color="primary">
-                <mat-icon>refresh</mat-icon>
-            </button>
+    </div>
+</mat-card>
+<mat-card *ngIf="isShowReturnPanel" class="mt-3">
+    <div class="row">
+        
+        
+        <div class="col-md-12">
+            <hr>
+            <button style="float: right;" mat-raised-button color="warn" (click)="receiveReturn()">Receive</button>
         </div>
     </div>
 </mat-card>

@@ -15,7 +15,7 @@ export class ReportServiceService {
     params = params.append('offset',queryParams.get('offset'));
     params = params.append('limit',queryParams.get('limit'));
     params = params.append('tnxType',queryParams.get('tnxType'));
-    params = params.append('transactionType',queryParams.get('transactionType'));
+    params = params.append('voucherNo',queryParams.get('voucherNo'));
     params = params.append('transactionCategory',queryParams.get('transactionCategory'));
     params = params.append('fromDate',queryParams.get('fromDate'));
     params = params.append('toDate',queryParams.get('toDate'));

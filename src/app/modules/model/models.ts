@@ -69,6 +69,7 @@ export class OrderItem {
   pricePerUnit: number = 0;
   buyingPricePerUnit: number = 0;
   totalOrderPrice!: number;
+  totalOrderCost!: number;
   deliveredQuantity!:number;
   deliverySchedules!:ScehduleDelivery[];
   quantity:number = 0;

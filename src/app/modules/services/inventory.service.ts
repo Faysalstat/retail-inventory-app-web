@@ -24,11 +24,11 @@ export class InventoryService {
     return this.http.post(InventoryUrls.DO_SUPPLY_ORDER_DELIVERY, queryParams.get('delivery'));
   }
   public updateSupplyInvoice(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(InventoryUrls.UPDATE_INVOICE, queryParams.get('invoice'));
+    return this.http.post(InventoryUrls.UPDATE_SUPPLY_INVOICE, queryParams.get('invoice'));
   }
 
   public updateSaleInvoice(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(InventoryUrls.UPDATE_INVOICE, queryParams.get('invoice'));
+    return this.http.post(InventoryUrls.UPDATE_SALE_INVOICE, queryParams.get('invoice'));
   }
   public fetchAllSupplyInvoice(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
