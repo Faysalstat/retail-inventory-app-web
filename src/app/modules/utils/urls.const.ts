@@ -52,6 +52,8 @@ export const InventoryUrls = {
   FETCH_SUPPLY_ORDER_BY_ID : BASE_URL + "/supply/getinvoicebyid",
   FETCH_SALE_ORDER_BY_ID : BASE_URL + "/sales/getinvoicebyid",
   ISSUE_DO_PAYMENT : BASE_URL + "/sales/dopayment",
+  ISSUE_SALE_ORDER_RETURN : BASE_URL + "/sales/dosaleorderreturn",
+  ISSUE_SUPPLY_ORDER_RETURN : BASE_URL + "/sales/dosupplyorderreturn",
 
 }
 
@@ -99,7 +101,9 @@ export const AuthenticationUrls = {
 }
 
 export const AccountUrls = {
-  FETCH_GL_DETAILS_BY_TYPE : BASE_URL + "/account/getgldetailsbytype"
+  FETCH_GL_DETAILS_BY_TYPE : BASE_URL + "/account/getgldetailsbytype",
+  FETCH_ALL_LOAN : BASE_URL + "/account/getloanlist",
+  FETCH_LOAN_DETAILS_BY_ID : BASE_URL + "/account/getloandetailsbyid",
 }
 
 export const AssetUrls = {

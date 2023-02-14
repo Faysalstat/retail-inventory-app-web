@@ -8,6 +8,7 @@ import { CompsModule } from '../comps/comps.module';
 import { SaleInvoiceListComponent } from './sale-invoice-list/sale-invoice-list.component';
 import { EditSaleInvoiceComponent } from './edit-sale-invoice/edit-sale-invoice.component';
 import { SaleComponent } from './sale.component';
+import { ReturnOrderComponent } from './return-order/return-order.component';
 
 
 
@@ -16,7 +17,8 @@ import { SaleComponent } from './sale.component';
     SalePointComponent,
     SaleInvoiceListComponent,
     EditSaleInvoiceComponent,
-    SaleComponent
+    SaleComponent,
+    ReturnOrderComponent
   ],
   imports: [
     CommonModule,

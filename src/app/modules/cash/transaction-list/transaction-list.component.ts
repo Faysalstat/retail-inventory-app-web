@@ -18,6 +18,8 @@ export class TransactionListComponent implements OnInit {
   transactionType!:any[];
   tnxTypes!:any[];
   query!: any;
+  totalDebitAmount = 0;
+  totalCreditAmount = 0;
   constructor(
     private reportService: ReportServiceService,
     private notificationService:NotificationService,
@@ -60,6 +62,8 @@ export class TransactionListComponent implements OnInit {
         this.transactionListExportable = [];
         this.transactionList= res.body.data;
         this.length = res.body.size;
+        this.totalCreditAmount = 0;
+        this.totalDebitAmount = 0;
         this.transactionList.map((elem)=>{
           let item = {
             TNX_TYPE:elem.transactionType,
@@ -70,6 +74,9 @@ export class TransactionListComponent implements OnInit {
             REMARK:elem.refference,
           };
           this.transactionListExportable.push(item);
+          this.totalCreditAmount += elem.isDebit==1?0:elem.amount;
+          this.totalDebitAmount += elem.isDebit==0?0:elem.amount;
+
         })
       },
       error:(err)=>{

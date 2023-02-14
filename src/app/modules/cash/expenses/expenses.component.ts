@@ -22,7 +22,7 @@ export class ExpensesComponent implements OnInit {
       next:(res)=>{
         console.log(res);
         this.glAccount = res.body;
-        this.balance = this.glAccount.balance;
+        // this.balance = this.glAccount.balance;
       }
     })
 

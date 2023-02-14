@@ -9,12 +9,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CompsModule } from '../comps/comps.module';
 import { SupplyInvoiceListComponent } from './supply-invoice-list/supply-invoice-list.component';
 import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
+import { ReturnSupplyOrderComponent } from './return-supply-order/return-supply-order.component';
 @NgModule({
   declarations: [
     StockComponent,
     AddStockComponent,
     SupplyInvoiceListComponent,
-    EditInvoiceComponent
+    EditInvoiceComponent,
+    ReturnSupplyOrderComponent
   ],
   imports: [
     CommonModule,

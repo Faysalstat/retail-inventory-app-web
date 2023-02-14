@@ -5,6 +5,8 @@ import { CashAuthGuard } from './cash-auth.guard';
 import { CashTransactionComponent } from './cash-transaction/cash-transaction.component';
 import { CashComponent } from './cash.component';
 import { ExpensesComponent } from './expenses/expenses.component';
+import { LoanDetailsComponent } from './loan-details/loan-details.component';
+import { LoanListComponent } from './loan-list/loan-list.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 const routes: Routes = [{
@@ -14,6 +16,8 @@ const routes: Routes = [{
         {path: 'cash-transaction', component: CashTransactionComponent},
         {path: 'expenses', component: ExpensesComponent},
         {path: 'transaction-list', component: TransactionListComponent},
+        {path: 'loan-list', component: LoanListComponent},
+        {path: 'loan-details/:id', component: LoanDetailsComponent},
         ]}
       ]
 

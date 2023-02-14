@@ -9,6 +9,8 @@ import { CashRoutingModule } from './cash-routing.module';
 import { CashTransactionComponent } from './cash-transaction/cash-transaction.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { ExpensesComponent } from './expenses/expenses.component';
+import { LoanListComponent } from './loan-list/loan-list.component';
+import { LoanDetailsComponent } from './loan-details/loan-details.component';
 
 
 
@@ -17,7 +19,9 @@ import { ExpensesComponent } from './expenses/expenses.component';
     CashComponent,
     CashTransactionComponent,
     TransactionListComponent,
-    ExpensesComponent
+    ExpensesComponent,
+    LoanListComponent,
+    LoanDetailsComponent
   ],
   imports: [
     CommonModule,

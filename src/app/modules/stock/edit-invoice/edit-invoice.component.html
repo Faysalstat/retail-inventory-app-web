@@ -69,6 +69,7 @@
                         <th>Total Quantity</th>
                         <th>Quantity Delivered</th>
                         <th>Quantity Pending</th>
+                        <th>Quantity Retured</th>
                         <th>Status</th>
                         <th style="text-align: center;">
                             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
@@ -87,6 +88,7 @@
                         <td>{{order?.quantityOrdered}}</td>
                         <td>{{order?.quantityDelivered}}</td>
                         <td>{{order?.qunatityDeliveryPending}}</td>
+                        <th>{{order?.quantityReturned}}</th>
                         <td>{{order?.deliveryStatus}}</td>
                         <td  style="text-align: center;">
                             <mat-checkbox *ngIf="order.deliveryStatus!='DELIVERED'"  (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(order) : null"
@@ -107,6 +109,9 @@
                     </tr>
                 </tfoot>
             </table>
+        </div>
+        <div class="col-md-12">
+            <button mat-raised-button (click)="showReturnPanel(true)" color="primary" style="width: 100%;">ADD RETURN PRODUCTS</button>
         </div>
     </div>
     <div *ngIf="isPending" class="row">

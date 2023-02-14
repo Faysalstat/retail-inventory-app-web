@@ -98,5 +98,12 @@ export class InventoryService {
   public doPaymentTransaction(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(TransactionUrls.DO_PAYMENT_TRANSACTION, queryParams.get('payment'));
   }
+
+  public issueSaleOrderReturn(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(InventoryUrls.ISSUE_SALE_ORDER_RETURN, queryParams.get('return'));
+  }
+  public issueSupplyOrderReturn(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(InventoryUrls.ISSUE_SUPPLY_ORDER_RETURN, queryParams.get('return'));
+  }
 }
 

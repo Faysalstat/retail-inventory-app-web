@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ScehduleDelivery, Supplyer } from '../../model/models';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
@@ -29,7 +29,9 @@ export class EditInvoiceComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   supplyOrdersForSchedule: any[] = [];
   deliveryDisable:boolean = false;
+  
   constructor(
+    private route:Router,
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
     private notificationService: NotificationService
@@ -231,5 +233,8 @@ export class EditInvoiceComponent implements OnInit {
         this.supplyOrders.forEach((row) =>{
             this.selection.select(row)
           });
+  }
+  showReturnPanel(ev: boolean) {
+    this.route.navigate(["/supply/return-supply-order",this.supplyInvoice.id]);
   }
 }

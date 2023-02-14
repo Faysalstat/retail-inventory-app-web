@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddAssetsComponent } from '../comps/add-assets/add-assets.component';
+import { AddLoanAccComponent } from '../comps/add-loan-acc/add-loan-acc.component';
 import { AddEmployeePanelComponent } from './add-employee-panel/add-employee-panel.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { AdminAuthGuard } from './admin-auth.guard';
@@ -12,6 +13,7 @@ import { ConfigurationSettingComponent } from './configuration-setting/configura
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 import { EmployeeManagementComponent } from './employee-management/employee-management.component';
+import { LoanApprovalDetailsComponent } from './loan-approval-details/loan-approval-details.component';
 import { ProductConfigComponent } from './product-config/product-config.component';
 import { ProductManagementComponent } from './product-management/product-management.component';
 import { TaskListComponent } from './task-list/task-list.component';
@@ -26,6 +28,7 @@ const routes: Routes = [{
         {path: 'add-config', component: ConfigurationSettingComponent},
         {path: 'add-asset', component: AddAssetsComponent},
         {path: 'add-user', component: AddUserComponent},
+        {path: 'add-loan-acc', component: AddLoanAccComponent},
         {path: 'add-employee', component: AddEmployeePanelComponent},
         {path: 'employee-list', component: EmployeeManagementComponent},
         {path: 'task-list', component: TaskListComponent},
@@ -33,6 +36,7 @@ const routes: Routes = [{
         {path: 'product-detail/:id', component: ProductConfigComponent},
         {path: 'task-details/:id', component: ApprovalDetailsComponent},
         {path: 'tnx-task-details/:id', component: CashApprovalDetailsComponent},
+        {path: 'loan-task-details/:id', component: LoanApprovalDetailsComponent},
         {path: 'employee-details/:id', component: EmployeeDetailsComponent},
       ]
 }];

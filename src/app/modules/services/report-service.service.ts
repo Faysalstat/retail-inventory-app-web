@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ReportUrls } from '../utils/urls.const';
+import { AccountUrls, ReportUrls } from '../utils/urls.const';
 
 @Injectable({
   providedIn: 'root'
@@ -71,4 +71,17 @@ export class ReportServiceService {
     let params = new HttpParams();
     return this.http.get(ReportUrls.PROFIT_REPORT_SUMMARY,{params:params});
   }
+
+  public fetchLoanList(): Observable<any>{
+    let params = new HttpParams();
+    return this.http.get(AccountUrls.FETCH_ALL_LOAN,{params:params});
+  }
+
+  public fetchLoanDetails(id:any): Observable<any>{
+    let params = new HttpParams();
+    params = params.append('loanAccountId',id);
+    return this.http.get(AccountUrls.FETCH_LOAN_DETAILS_BY_ID,{params:params});
+  }
+
+
 }

@@ -5,6 +5,7 @@ import { ProductManagementComponent } from '../admin/product-management/product-
 import { AppAuthGuard } from '../app-auth.guard';
 import { AddStockComponent } from './add-stock/add-stock.component';
 import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
+import { ReturnSupplyOrderComponent } from './return-supply-order/return-supply-order.component';
 import { StockAuthGuard } from './stock-auth.guard';
 import { StockComponent } from './stock.component';
 import { SupplyInvoiceListComponent } from './supply-invoice-list/supply-invoice-list.component';
@@ -17,7 +18,8 @@ const routes: Routes = [{
       {path: 'supply-invoice-list', component: SupplyInvoiceListComponent},
       {path: 'edit-supply-invoice/:id', component: EditInvoiceComponent},
       {path: 'product-stock', component: ProductManagementComponent},
-      {path: 'product-detail/:id', component: ProductConfigComponent}
+      {path: 'product-detail/:id', component: ProductConfigComponent},
+      {path: 'return-supply-order/:id', component: ReturnSupplyOrderComponent},
       ]}
     ]
 

@@ -8,11 +8,7 @@
                 <tbody>
                     <tr>
                         <th>Transaction Type</th>
-                        <td>{{taskDetail?.transactionType}}</td>
-                    </tr>
-                    <tr>
-                        <th>{{(taskDetail?.transactionType=='RECEIVE')?"Receive From":"Pay To"}}</th>
-                        <td>{{taskDetail?.person?.personName || "X"}}</td>
+                        <td>Loan Transaction</td>
                     </tr>
                     <tr>
                         <th>Client Type</th>
@@ -34,20 +30,16 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <th>Present Balance</th>
-                        <th>{{taskDetail?.account?.balance}} BDT</th>
-                    </tr>
-                    <tr>
-                        <th>Tnx Amount</th>
+                        <th>Loan Amount</th>
                         <th>{{taskDetail?.cashAmount}} BDT</th>
                     </tr>
                     <tr>
-                        <th>Updated Balance</th>
-                        <th>{{updatedBalance}} BDT</th>
+                        <th>Received Date</th>
+                        <th>{{applyFilter(taskDetail?.receivedDate)}} BDT</th>
                     </tr>
                     <tr>
-                        <th>Transaction Reason</th>
-                        <td>{{taskDetail?.transactionReason}}</td>
+                        <th>Return Date</th>
+                        <th>{{applyFilter(taskDetail?.returnDate)}} BDT</th>
                     </tr>
                     <tr>
                         <th>Pament Method</th>

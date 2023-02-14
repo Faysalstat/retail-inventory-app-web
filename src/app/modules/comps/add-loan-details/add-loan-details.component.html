@@ -9,13 +9,6 @@
                      placeholder="00" matInput>
             </mat-form-field>
         </div>
-        <div class="col-md-3">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Interest Rate(%): </mat-label>
-                <input type="number" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="interestRate"
-                 placeholder="00%" matInput>
-            </mat-form-field>
-        </div>
         
         <!-- <div class="col-md-3">
             <mat-form-field appearance="outline" class="input-field">
@@ -29,8 +22,8 @@
         
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Loan Category:</mat-label>
-                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="loanCategory">
+                <mat-label>Client Type:</mat-label>
+                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="clientType">
                     <mat-option value='BANK_LOAN'>Bank</mat-option>
                     <mat-option value='OTHER_LOAN'>Other</mat-option>
                 </mat-select>
@@ -39,13 +32,15 @@
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Received From: </mat-label>
-                <input type="text" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="receivedFrom"
-                    placeholder="Source" matInput>
+                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedClient">
+                    <mat-option *ngFor="let client of clients" [value]="client.value">{{client.label}}</mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
         <div class="col-md-3">
             <mat-form-field appearance="outline" class="input-field">
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="paymentMethod">
+                    <mat-label>Payment Method: </mat-label>
                     <mat-option *ngFor="let method of paymentMethods"
                         [value]="method.value">{{method?.label}}
                     </mat-option>
@@ -54,9 +49,18 @@
         </div>
         <div class="col-md-3">
             <mat-form-field appearance="outline">
-                <mat-label>Date:</mat-label>
-                <input matInput [matDatepicker]="rawpicker" [ngModelOptions]="{standalone:true}"
+                <mat-label>Receive Date:</mat-label>
+                <input matInput [matDatepicker]="rawpicker1" [ngModelOptions]="{standalone:true}"
                     [(ngModel)]="receivedDate">
+                <mat-datepicker-toggle matSuffix [for]="rawpicker1"></mat-datepicker-toggle>
+                <mat-datepicker #rawpicker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Return Date:</mat-label>
+                <input matInput [matDatepicker]="rawpicker" [ngModelOptions]="{standalone:true}"
+                    [(ngModel)]="returnDate">
                 <mat-datepicker-toggle matSuffix [for]="rawpicker"></mat-datepicker-toggle>
                 <mat-datepicker #rawpicker></mat-datepicker>
             </mat-form-field>
@@ -69,8 +73,8 @@
             </mat-form-field>
         </div>
         <div class="col-md-12">
-            <button style="margin: 10px; float: right;" mat-raised-button color="primary"
-                (click)="submit()">Submit</button>
+             <button style="margin: 10px; float: right;" mat-raised-button color="primary"
+               (click)="submit()">Submit</button>
         </div>
     </div>
 </mat-card>

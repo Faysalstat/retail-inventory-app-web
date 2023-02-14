@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Customer, ScehduleDelivery } from '../../model/models';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Customer, OrderItem, ScehduleDelivery } from '../../model/models';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 import { PdfMakeService } from '../../services/pdf-make.service';
@@ -32,8 +32,10 @@ export class EditSaleInvoiceComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   deliveryDisable: boolean = false;
   toWords = new ToWords();
-  isShowReturnPanel:boolean = false;
+  isShowReturnPanel: boolean = false;
+  saleOrdersForReduce!: any[];
   constructor(
+    private route: Router,
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
     private notificationService: NotificationService,
@@ -46,6 +48,7 @@ export class EditSaleInvoiceComponent implements OnInit {
       newDueAmount: 0,
       remarks: '',
     };
+
   }
 
   ngOnInit(): void {
@@ -80,6 +83,9 @@ export class EditSaleInvoiceComponent implements OnInit {
         this.saleOrders.map((elem) => {
           if (elem.deliveryStatus != 'DELIVERED') {
             this.saleOrdersForSchedule.push(elem);
+          }
+          if (elem.state == 'SOLD') {
+            this.saleOrdersForReduce.push(elem);
           }
         });
       },
@@ -202,6 +208,8 @@ export class EditSaleInvoiceComponent implements OnInit {
     }
   }
 
+
+
   downloadInvoice() {
     let orders: any[] = [];
     let index = 1;
@@ -219,7 +227,7 @@ export class EditSaleInvoiceComponent implements OnInit {
     });
     let invoiceModel = {
       doNo: '',
-      invoiceId:this.saleInvoice.invoiceNo,
+      invoiceId: this.saleInvoice.invoiceNo,
       issuedBy: localStorage.getItem('personName'),
       customer: this.customer,
       tnxDate: this.applyFilter(new Date()),
@@ -228,32 +236,40 @@ export class EditSaleInvoiceComponent implements OnInit {
       totalPrice: this.saleInvoice.totalPrice,
       previousBalance: this.saleInvoice.previousBalance,
       totalPayableAmount: this.saleInvoice.totalPayableAmount || 0,
-      totalPayableAmountInWords: this.toWords.convert(this.saleInvoice.totalPayableAmount || 0),
+      totalPayableAmountInWords: this.toWords.convert(
+        this.saleInvoice.totalPayableAmount || 0
+      ),
       totalPaid: this.saleInvoice.totalPaidAmount || 0,
       discount: this.saleInvoice.rebate || 0,
-      dueAmount: this.saleInvoice.totalPayableAmount ||0 - this.saleInvoice.totalPaidAmount ||0,
+      dueAmount:
+        this.saleInvoice.totalPayableAmount ||
+        0 - this.saleInvoice.totalPaidAmount ||
+        0,
       orders: orders,
-      extraCharge:this.saleInvoice.extraCharge || 0,
-      chargeReason: this.saleInvoice.chargeReason
+      extraCharge: this.saleInvoice.extraCharge || 0,
+      chargeReason: this.saleInvoice.chargeReason,
     };
     this.pdfMakeService.downloadInvoice(invoiceModel);
   }
   onChangeDelievredQuantity() {
-    if (this.delieverySchedule.deliverableQuantity > this.selectedOrderItem.qunatityDeliveryPending) {
+    if (
+      this.delieverySchedule.deliverableQuantity >
+      this.selectedOrderItem.qunatityDeliveryPending
+    ) {
       this.errMsg =
         '*Deliverable Quantity is Greater Than Remaining Order Quantity';
-        this.deliveryDisable = true;
+      this.deliveryDisable = true;
     } else {
       this.deliveryDisable = false;
       this.errMsg = '';
     }
-    if(this.selectedOrderItem.qunatityDeliveryPending==0){
+    if (this.selectedOrderItem.qunatityDeliveryPending == 0) {
       this.selectedOrderItem.deliveryStatus = 'DELIVERED';
-    }else{
+    } else {
       this.selectedOrderItem.deliveryStatus = 'PENDING';
     }
   }
-
+  onChangeReduceQuantity() {}
   updateComment() {
     let inviceModel = {
       comment: this.comment,
@@ -289,10 +305,9 @@ export class EditSaleInvoiceComponent implements OnInit {
           this.selection.select(row);
         });
   }
-  showReturnPanel(ev:boolean){
+  showReturnPanel(ev: boolean) {
     this.isShowReturnPanel = ev;
+    this.route.navigate(["/sale/retun-sale-order",this.saleInvoice.id]);
   }
-  receiveReturn(){
-    
-  }
+
 }

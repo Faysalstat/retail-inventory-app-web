@@ -36,6 +36,23 @@ export class Employee {
   role!:string;
   joiningDate: Date = new Date();
 }
+export class LoanClient {
+  id!: number;
+  account!:LoanAccount[];
+  clientName!: string;
+  clientDisc!: string;
+  
+};
+export class LoanAccount {
+  id!: number;
+  balance!: number;
+  accountType!: string;
+  interestRate!: number;
+  receiveDate!: Date;
+  returnDate!: Date;
+  period!: number;
+  remark!: string
+}
 export class Account {
   id!: number;
   balance: number = 0;
@@ -73,6 +90,7 @@ export class OrderItem {
   deliveredQuantity!:number;
   deliverySchedules!:ScehduleDelivery[];
   quantity:number = 0;
+  quantityReturned:number =0;
 }
 export class ScehduleDelivery{
   id!:number;
@@ -163,6 +181,7 @@ export enum Tasks{
   // CASH_PAYMENT = "CASH_PAYMENT",
   PAYMENT_TRANSACTION = "PAYMENT_TRANSACTION",
   DEPOSIT_TRANSACTION = "DEPOSIT_TRANSACTION",
+  CREATE_LOAN = "CREATE_LOAN",
   EXPENSE_TRANSACTION = "EXPENSE_TRANSACTION",
   SALARY_TRANSACTION = "SALARY_TRANSACTION",
   // SALARY_TRANSACTION = "SALARY_TRANSACTION",

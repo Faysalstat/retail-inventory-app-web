@@ -20,6 +20,7 @@ import { EmployeeManagementComponent } from './employee-management/employee-mana
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 import { AddEmployeePanelComponent } from './add-employee-panel/add-employee-panel.component';
 import { AssetsManagementComponent } from './assets-management/assets-management.component';
+import { LoanApprovalDetailsComponent } from './loan-approval-details/loan-approval-details.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { AssetsManagementComponent } from './assets-management/assets-management
     EmployeeManagementComponent,
     EmployeeDetailsComponent,
     AddEmployeePanelComponent,
-    AssetsManagementComponent
+    AssetsManagementComponent,
+    LoanApprovalDetailsComponent
   ],
   imports: [
     CommonModule,

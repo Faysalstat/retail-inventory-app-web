@@ -28,6 +28,7 @@ export class TreansactionReportComponent implements OnInit {
       tnxType:"",
       fromDate:'',
       toDate:'',
+      voucherNo:''
     }
     this.transactionType = [
       {label:'All Category', value:''},
@@ -50,7 +51,7 @@ export class TreansactionReportComponent implements OnInit {
     params.set('offset',this.offset);
     params.set('limit',this.pageSize);
     params.set('tnxType',this.query.tnxType);
-    params.set('transactionType',this.query.transactionType);
+    params.set('voucherNo',this.query.voucherNo || '');
     params.set('fromDate',this.query.fromDate);
     params.set('toDate',this.query.toDate);
     params.set('transactionCategory','');
