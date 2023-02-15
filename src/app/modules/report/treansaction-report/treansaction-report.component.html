@@ -56,7 +56,7 @@
             <table class="table table-stripe mt-4 ">
                 <thead>
                     <th style="width:5%;">SN</th>
-                    <th style="width:10%;">Tnx Type</th>
+                    <!-- <th style="width:10%;">Tnx Type</th> -->
                     <th style="width:10%;">Tnx Reason</th>
                     <th style="width:10%;">Account Type</th>
                     <th style="width:10%;">Credit</th>
@@ -73,7 +73,7 @@
                     </tr>
                     <tr *ngFor="let tnx of transactionList; index as i">
                         <td>{{i+offset+1}}</td>
-                        <td>{{tnx.transactionType}}</td>
+                        <!-- <td>{{tnx.transactionType}}</td> -->
                         <td>{{tnx.transactionReason}}</td>
                         <td>{{tnx.account.accountType}}</td>
                         <td>{{tnx.isDebit==0?tnx.amount:0}}</td>
