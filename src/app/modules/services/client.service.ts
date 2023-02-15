@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ClientUrls } from '../utils/urls.const';
+import { AccountUrls, ClientUrls } from '../utils/urls.const';
 
 @Injectable({
   providedIn: 'root'
@@ -65,4 +65,10 @@ export class ClientService {
     params = params.append('id', queryParams.get("id"));
     return this.http.get(ClientUrls.FETCH_EMPLOYEE_BY_CODE_OR_ID, { params: params });
   }
+
+  public getAccountListByCategory(queryParams: Map<string, any>): Observable<any>{
+    let params = new HttpParams();
+    params = params.append('category', queryParams.get('category'));
+    return this.http.get(AccountUrls.FETCH_ACCOUNT_LIST_BY_CATEGORY, { params: params });
+   }
 }

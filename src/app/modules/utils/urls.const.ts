@@ -37,6 +37,7 @@ export const ClientUrls = {
     FETCH_PERSON_BY_ID : BASE_URL + "/client/getpersonbyid",
     FETCH_CLIENT_LIST_BY_TYPE : BASE_URL + "/client/getallclient",
     FETCH_ACCOUNT_HISTORY_LIST : BASE_URL + "/client/getaccounthistorybyid",
+   
     FETCH_EMPLOYEE_BY_CODE_OR_ID : BASE_URL + "/client/getemployeebycodeorid",
 
 }
@@ -104,6 +105,7 @@ export const AccountUrls = {
   FETCH_GL_DETAILS_BY_TYPE : BASE_URL + "/account/getgldetailsbytype",
   FETCH_ALL_LOAN : BASE_URL + "/account/getloanlist",
   FETCH_LOAN_DETAILS_BY_ID : BASE_URL + "/account/getloandetailsbyid",
+  FETCH_ACCOUNT_LIST_BY_CATEGORY : BASE_URL + "/account/getaccountlistbycategory",
 }
 
 export const AssetUrls = {

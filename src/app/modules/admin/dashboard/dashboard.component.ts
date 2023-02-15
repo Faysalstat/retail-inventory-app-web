@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin.service';
+import { NotificationService } from '../../services/notification-service.service';
 import { ReportServiceService } from '../../services/report-service.service';
 
 @Component({
@@ -8,7 +9,7 @@ import { ReportServiceService } from '../../services/report-service.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  glBalance:number = 0;
+  cashGlBalance:number = 0;
   assetBalance:number = 0;
   totalSell:number = 0;
   totalBuy:number = 0;
@@ -17,7 +18,8 @@ export class DashboardComponent implements OnInit {
   showLoader:boolean = false;
   constructor(
     private reportService: ReportServiceService,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private notificationService:NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -57,9 +59,21 @@ export class DashboardComponent implements OnInit {
     })
   };
   fetchGlBalance(){
-    this.adminService.getGlBalanceByType("ProductGL").subscribe({
+    this.adminService.getGlBalanceByType("CashGL").subscribe({
       next:(res)=>{
-        this.glBalance = res.body.balance;
+        this.cashGlBalance = res.body.balance;
+      },
+      error:(err)=>{
+        this.notificationService.showErrorMessage("ERROR","Cash GL NOT FOUND","OK",500);
+      }
+    });
+
+    this.adminService.getGlBalanceByType("AssetGL").subscribe({
+      next:(res)=>{
+        this.assetBalance = res.body.balance;
+      },
+      error:(err)=>{
+        this.notificationService.showErrorMessage("ERROR","Asset GL NOT FOUND","OK",500);
       }
     })
 

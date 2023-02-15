@@ -53,6 +53,7 @@ export class AddAssetsComponent implements OnInit {
         this.description = '';
       },
       error:(err)=>{
+        this.showLoader = false;
         console.log(err.message);
       }
     })
