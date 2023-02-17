@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
+import { ToWords } from 'to-words';
 import {
   COFIGS,
   OrderItem,
@@ -18,6 +19,7 @@ import {
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
+import { PdfMakeService } from '../../services/pdf-make.service';
 import { ProductService } from '../../services/product-service.service';
 
 @Component({
@@ -48,13 +50,15 @@ export class AddStockComponent implements OnInit {
   subTotalPrice:number = 0;
   comment!:string;
   userName:any;
+  toWords = new ToWords();
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
     private clientService: ClientService,
     private productService: ProductService,
     private inventoryService: InventoryService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private pdfMakeService:PdfMakeService
   ) {
     this.supplyer = new Supplyer();
     this.person = new Person();
@@ -111,15 +115,17 @@ export class AddStockComponent implements OnInit {
             2000
           );
           this.supplyer = res.body;
-          if (res.body) {
-            this.supplyer = res.body;
-            this.person = this.supplyer.person;
-            this.isSupplyerExist = true;
-          } else {
-            this.errMsg = '** Supplyer Not Found, Add One';
-            this.isSupplyerExist = false;
-          }
+          this.person = this.supplyer.person;
+          this.isSupplyerExist = true;
+          this.errMsg =''
         } else {
+          this.notificationService.showMessage(
+            'ERROR!',
+            'Supplier Not Found',
+            'OK',
+            2000
+          );
+          this.errMsg = '** Supplyer Not Found, Add One';
           this.person.personAddress = '';
           this.person.personName = '';
           this.person.id = 0;
@@ -132,7 +138,7 @@ export class AddStockComponent implements OnInit {
         console.log(err.message);
         this.notificationService.showMessage(
           'ERROR!',
-          'Customer Found Failed' + err.message,
+          'Supplier Found Failed' + err.message,
           'OK',
           2000
         );
@@ -140,45 +146,6 @@ export class AddStockComponent implements OnInit {
       complete: () => {},
     });
   }
-  // addSupplyer() {
-  //   const params: Map<string, any> = new Map();
-  //   let supplyerModel = {
-  //     personId: this.person.id,
-  //     clientType: 'SUPPLYER',
-  //     personName: this.person.personName,
-  //     contactNo: this.person.contactNo,
-  //     personAddress: this.person.personAddress,
-  //     shopName: this.supplyer.shopName,
-  //     regNo: this.supplyer.regNo,
-  //   };
-  //   params.set('client', supplyerModel);
-
-  //   this.clientService.addClient(params).subscribe({
-  //     next: (res) => {
-  //       if (res.body) {
-  //         this.isSupplyerExist = true;
-  //         this.supplyInvoiceIssueForm.get('supplyerId')?.setValue(res.body.id);
-  //         console.log(res.body);
-  //       }
-  //       this.errMsg = '';
-  //       this.notificationService.showMessage(
-  //         'SUCCESS!',
-  //         'Client Add Successful',
-  //         'OK',
-  //         1000
-  //       );
-  //     },
-  //     error: (err) => {
-  //       console.log(err);
-  //       this.notificationService.showMessage(
-  //         'SUCCESS!',
-  //         'Client Add Failed',
-  //         'OK',
-  //         500
-  //       );
-  //     },
-  //   });
-  // }
   fetchProducts() {
     this.showLoader = true;
     const params: Map<string, any> = new Map();
@@ -201,7 +168,6 @@ export class AddStockComponent implements OnInit {
     });
   }
   private _filter(name: string): string[] {
-    console.log('value--->', name);
     const filterValue = name.toLowerCase();
     return this.productList.filter((product) =>
       product.productName.toLowerCase().includes(filterValue)
@@ -209,7 +175,6 @@ export class AddStockComponent implements OnInit {
   }
 
   private _filterCode(code: string): string[] {
-    console.log('value--->', code);
     const filterValue = code.toLowerCase();
     return this.productList.filter((product) =>
       product.productCode.toLowerCase().includes(filterValue)
@@ -301,6 +266,7 @@ export class AddStockComponent implements OnInit {
             'OK',
             500
           );
+          this.downloadInvoice();
           this.route.navigate(['/supply/supply-invoice-list']);
         },
         error:(err)=>{
@@ -324,6 +290,7 @@ export class AddStockComponent implements OnInit {
             'OK',
             500
           );
+          this.downloadInvoice();
           this.route.navigate(['/supply/supply-invoice-list']);
         },
         error: (err) => {
@@ -358,5 +325,48 @@ export class AddStockComponent implements OnInit {
     } else {
       this.filteredOptions = this._filterCode(event.target.value);
     }
+  }
+  downloadInvoice() {
+    let orders: any[] = [];
+    let index = 1;
+    this.supplyer.person = this.person;
+    this.orderList.forEach((elem: any) => {
+      let orderRow = [];
+      orderRow.push(index);
+      orderRow.push(elem.productName);
+      orderRow.push(elem.pricePerUnit);
+      orderRow.push(elem.packageQuantity);
+      orderRow.push(elem.looseQuantity);
+      orderRow.push(elem.quantityOrdered + ' ' + elem.unitType);
+      orderRow.push(elem.totalOrderPrice);
+      index++;
+      orders.push(orderRow);
+    });
+    let invoiceModel = {
+      doNo: '',
+      invoiceId: 'N/A',
+      issuedBy: localStorage.getItem('personName'),
+      supplyer: this.supplyer,
+      tnxDate: this.applyFilter(new Date()),
+      supplierName: this.person.personName,
+      customerAddress: this.person.personAddress,
+      totalPrice: this.totalPrice,
+      balance: this.supplyer.account.balance,
+      totalPayableAmount: this.subTotalPrice,
+      totalPriceInWords: this.toWords.convert(this.totalPrice),
+      discount: this.supplyInvoiceIssueForm.get('rebate')?.value,
+      orders: orders,
+    };
+    this.pdfMakeService.downloadSupplyInvoice(invoiceModel);
+  }
+  applyFilter(date: any) {
+    let newDate = new Date(date);
+    return (
+      newDate.getDate() +
+      '/' +
+      (newDate.getMonth() + 1) +
+      '/' +
+      newDate.getFullYear()
+    );
   }
 }

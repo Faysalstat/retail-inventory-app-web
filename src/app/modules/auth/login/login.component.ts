@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
         }
       },
       error:(err)=>{
-        this.notificationService.showMessage("ERROR!","Authentication Failed" + err.message,"OK",2000);
+        this.notificationService.showMessage("ERROR!","Authentication Failed " + err.message,"OK",2000);
       },
       complete: ()=>{}
     })

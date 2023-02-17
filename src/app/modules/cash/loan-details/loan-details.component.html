@@ -70,13 +70,13 @@
                      placeholder="00" matInput>
             </mat-form-field>
         </div>
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Interest Amount: </mat-label>
                 <input type="number" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="installmentModel.interestAmount"
                      placeholder="00" matInput>
             </mat-form-field>
-        </div>
+        </div> -->
         <div class="col-md-3">
             <mat-form-field appearance="outline" class="input-field">
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="installmentModel.paymentMethod">
@@ -96,7 +96,7 @@
                 <mat-datepicker #rawpicker1></mat-datepicker>
             </mat-form-field>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-3">
             <button style="margin: 10px; float: right;" mat-raised-button color="primary"
                (click)="payInstallment()">Submit</button>
         </div>

@@ -457,7 +457,7 @@ export class SalePointComponent implements OnInit {
           ? this.saleInvoiceIssueForm.get('chargeReason')?.value
           : 'Extra Charge',
     };
-    this.pdfMakeService.downloadInvoice(invoiceModel);
+    this.pdfMakeService.downloadSaleInvoice(invoiceModel);
   }
 
   showPositive(number: any) {

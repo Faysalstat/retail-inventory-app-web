@@ -1,7 +1,7 @@
 // const BASE_URL = 'https://demo.vatasolution.me/api';
 // const BASE_URL = 'https://shopongroup.com/api';
-// const BASE_URL = 'https://uat.shopongroup.com/api';
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = 'https://uat.shopongroup.com/api';
+// const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
@@ -90,6 +90,7 @@ export const TransactionUrls = {
   DO_EXPENSE_TRANSACTION : BASE_URL + "/transaction/doexpense",
   DO_DEPOSIT_TRANSACTION : BASE_URL + "/transaction/doexpense",
   DO_SALARY_TRANSACTION : BASE_URL + "/transaction/paysalary",
+  DO_LOAN_INSTALLMENT_TRANSACTION : BASE_URL + "/transaction/payinstallment",
 }
 
 export const AuthenticationUrls = {

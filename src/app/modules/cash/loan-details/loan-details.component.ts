@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Tasks } from '../../model/models';
+import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 import { ReportServiceService } from '../../services/report-service.service';
+import { TransactionService } from '../../services/transaction.service';
 
 @Component({
   selector: 'app-loan-details',
@@ -17,17 +20,22 @@ export class LoanDetailsComponent implements OnInit {
   accountistory: any[] = [];
   installmentModel: any = {};
   paymentMethods: any[];
+  isApprovalNeeded: boolean = false;
+  id:any;
   constructor(
+    private route: Router,
     private activatedRoute: ActivatedRoute,
     private notificationService: NotificationService,
-    private reportService: ReportServiceService
+    private reportService: ReportServiceService,
+    private inventoryService: InventoryService,
+    private transactionService: TransactionService
   ) {
     this.installmentModel = {
       installMentAmount: 0,
       interestAmount: 0,
       payingDate: new Date(),
       paymentMethod: 'CASH',
-      loanAccount: this.loanAccount,
+      loanAccount: 0,
     };
     this.paymentMethods = [
       { label: 'Select Payment Method', value: '' },
@@ -39,8 +47,8 @@ export class LoanDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((parameter) => {
-      let id = parameter['id'];
-      this.fetchDetailsBID(id);
+      this.id = parameter['id'];
+      this.fetchDetailsBID(this.id);
     });
   }
   fetchDetailsBID(id: any) {
@@ -62,11 +70,56 @@ export class LoanDetailsComponent implements OnInit {
     this.showInstallmentPanel = event;
   }
   payInstallment() {
-    this.notificationService.showMessage(
-      'WARNING',
-      'NOT IMPLEMENTED YET.',
-      'OK',
-      1000
-    );
+    this.installmentModel.loanAccount = this.loanAccount.account.id;
+    if (this.isApprovalNeeded) {
+      let approvalModel = {
+        payload: JSON.stringify(this.installmentModel),
+        createdBy: localStorage.getItem('username'),
+        taskType: Tasks.PAYMENT_TRANSACTION,
+        status: 'OPEN',
+      };
+      const params: Map<string, any> = new Map();
+      params.set('approval', approvalModel);
+      this.inventoryService.sendToApproval(params).subscribe({
+        next: (res) => {
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            'Approval Sent',
+            'OK',
+            500
+          );
+          this.route.navigate(['/cash/transaction-list']);
+        },
+        error: (err) => {
+          this.notificationService.showMessage(
+            'Failed!',
+            'Approval Sending Failed. ' + err.message,
+            'OK',
+            500
+          );
+        },
+      });
+    } else {
+      const params: Map<string, any> = new Map();
+      params.set('installment', this.installmentModel);
+      this.transactionService.payInstallment(params).subscribe({
+        next: (res) => {
+          this.notificationService.showMessage(
+            'SUCCESS',
+            'PAYMENT SUCCESSFULL',
+            '5K',
+            200
+          );
+          this.installmentModel = {
+            installMentAmount: 0,
+            interestAmount: 0,
+            payingDate: new Date(),
+            paymentMethod: 'CASH',
+            loanAccount: 0,
+          };
+          this.fetchDetailsBID(this.id);
+        },
+      });
+    }
   }
 }

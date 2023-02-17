@@ -25,6 +25,7 @@ export class SalaryExpenseComponent implements OnInit {
   paymentMethod:string = "CASH";
   isApprovalNeeded:boolean = false;
   userName:any;
+  isFound:boolean = false;
   constructor(
     private notificationService: NotificationService,
     private transactionService: TransactionService,
@@ -78,9 +79,10 @@ export class SalaryExpenseComponent implements OnInit {
     this.clientService.getEmployeeByCodeOrID(params).subscribe({
       next:(res)=>{
         this.employee = res.body;
+        this.isFound = true;
       },
       error:(err)=>{
-
+        this.isFound = false;
       },
       complete:()=>{
         this.showLoader = false;

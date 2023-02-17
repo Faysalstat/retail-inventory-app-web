@@ -249,7 +249,7 @@ export class EditSaleInvoiceComponent implements OnInit {
       extraCharge: this.saleInvoice.extraCharge || 0,
       chargeReason: this.saleInvoice.chargeReason,
     };
-    this.pdfMakeService.downloadInvoice(invoiceModel);
+    this.pdfMakeService.downloadSaleInvoice(invoiceModel);
   }
   onChangeDelievredQuantity() {
     if (

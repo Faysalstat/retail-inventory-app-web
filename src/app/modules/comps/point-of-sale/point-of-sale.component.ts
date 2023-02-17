@@ -374,6 +374,6 @@ export class PointOfSaleComponent implements OnInit {
         totalPaid: this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
         orders: orders,
       };
-      this.pdfMakeService.downloadInvoice(invoiceModel);
+      this.pdfMakeService.downloadSaleInvoice(invoiceModel);
     }
   }
