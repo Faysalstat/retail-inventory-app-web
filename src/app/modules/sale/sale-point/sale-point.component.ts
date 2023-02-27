@@ -444,7 +444,7 @@ export class SalePointComponent implements OnInit {
       totalPrice: this.totalPrice,
       previousBalance: this.previousBalance,
       totalPayableAmount: this.totalPayableAmount,
-      totalPayableAmountInWords: this.toWords.convert(this.totalPayableAmount),
+      totalPayableAmountInWords: this.toWords.convert(Math.abs(this.totalPayableAmount)),
       totalPaid: this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
       discount: this.saleInvoiceIssueForm.get('rebate')?.value,
       orders: orders,

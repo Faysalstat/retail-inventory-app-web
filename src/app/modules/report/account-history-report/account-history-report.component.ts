@@ -19,13 +19,14 @@ export class AccountHistoryReportComponent implements OnInit {
   contactNo = "";
   code = "";
   glAccounts:any [] = [];
+  selectedGl!:any;
   constructor(
     private clientService:ClientService,
     private notificationService:NotificationService
   ) { 
     this.queryBody = {
       tnxType:"",
-      accountId:0,
+      accountId: this.selectedGl || 0,
       fromDate: new Date('1/1/2023'),
       toDate: new Date(),
     };
@@ -65,7 +66,7 @@ export class AccountHistoryReportComponent implements OnInit {
         let accounts = res.body;
         this.glAccounts = [];
         accounts.map((elem:any)=>{
-          let model = {label:elem.accountType,value:elem.id};
+          let model = {label:elem.accountType,value:elem};
           this.glAccounts.push(model);
         })
         this.glAccounts
@@ -84,6 +85,8 @@ export class AccountHistoryReportComponent implements OnInit {
           if (res.body) {
             if (res.body.customer) {
               this.queryBody.accountId = res.body.customer.account.id;
+              this.selectedGl = res.body.customer.account;
+              this.fetchAccountHistory();
             } else {
               this.notificationService.showMessage(
                 'NOT FOUND',
@@ -117,6 +120,8 @@ export class AccountHistoryReportComponent implements OnInit {
         next: (res) => {
           if (res.body) {
             this.queryBody.accountId = res.body.account.id;
+            this.selectedGl = res.body.account;
+            this.fetchAccountHistory();
           } else {
             this.notificationService.showMessage(
               'NOT FOUND',
@@ -167,4 +172,8 @@ export class AccountHistoryReportComponent implements OnInit {
     })
   }
   export(){}
+  onselectGL(){
+    this.queryBody.accountId = this.selectedGl.id;
+    this.fetchAccountHistory();
+  }
 }

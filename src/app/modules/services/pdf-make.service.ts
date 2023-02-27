@@ -85,7 +85,7 @@ export class PdfMakeService {
       body: [
         [
           {
-            content: 'Total Bill:',
+            content: invoice.totalPayableAmount<0?'New Balance:':'Total Bill:',
             styles: {
               halign:'right',
               fontSize: 14
@@ -94,7 +94,7 @@ export class PdfMakeService {
         ],
         [
           {
-            content: invoice.totalPayableAmount + " BDT",
+            content: Math.abs(invoice.totalPayableAmount) + " BDT",
             styles: {
               halign:'right',
               fontSize: 20,

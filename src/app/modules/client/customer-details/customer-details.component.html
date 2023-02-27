@@ -76,7 +76,7 @@
             </button>
         </div>
         <div class="row">
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
                 <mat-form-field appearance="outline" class="input-field">
                     <mat-label>Transaction Type</mat-label>
                     <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchAccountHistory()"
@@ -86,7 +86,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </div>
+            </div> -->
             <div class="col-md-3">
                 <mat-form-field appearance="outline">
                     <mat-label>From Date</mat-label>
@@ -120,12 +120,13 @@
                         <th>Tnx Date</th>
                         <th>Tnx Amount</th>
                         <th>Method</th>
+                        <th>Previous Balance</th>
                         <th>Comment</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngIf="accountHistory.length==0">
-                        <th style="text-align: center;" colspan="6">No Transaction</th>
+                        <th style="text-align: center;" colspan="7">No Transaction</th>
                     </tr>
                     <tr *ngFor="let history of accountHistory; index as i">
                         <td>{{i+1}}</td>
@@ -133,6 +134,7 @@
                         <td>{{history?.tnxDate}}</td>
                         <td>{{history?.tnxAmount}}</td>
                         <td>{{history?.paymentMethod}}</td>
+                        <td>{{history?.previousBalance}}</td>
                         <td>{{history?.remark}}</td>
                     </tr>
                 </tbody>

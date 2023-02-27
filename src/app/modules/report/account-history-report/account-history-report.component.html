@@ -29,12 +29,12 @@
                     <input   (change)="searchCustomer()" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="code" placeholder="Code" matInput>
                 </mat-form-field>
             </div>
-            <div class="col-md-3">
+            <div *ngIf="!isSupplier && !isCustomer" class="col-md-3">
                 <mat-form-field appearance="outline" class="input-field">
                     <mat-label>GL Accounts</mat-label>
                     <mat-select [ngModelOptions]="{standalone:true}" 
-                    (selectionChange)="fetchAccountHistory()"
-                        [(ngModel)]="queryBody.accountId">
+                    (selectionChange)="onselectGL()"
+                        [(ngModel)]="selectedGl">
                         <mat-option *ngFor="let account of glAccounts" [value]="account.value">
                             {{account?.label}}
                         </mat-option>
@@ -63,9 +63,12 @@
                 <button style="margin: 10px; float: left;" (click)="export()" mat-raised-button
                   color="warn"> <mat-icon>output</mat-icon> Export</button>
             </div>
+            <br>
+            
         </div>
         <div class="col-md-12">
             <hr class="mt-2">
+            <h3 style="font-weight: bold;">Total Balance: <span style="margin-left: 5px;">{{selectedGl?.balance || 0}} BDT</span></h3>
             <table class="table">
                 <thead>
                     <tr>

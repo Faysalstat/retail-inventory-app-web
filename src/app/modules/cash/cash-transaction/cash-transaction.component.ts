@@ -77,7 +77,7 @@ export class CashTransactionComponent implements OnInit {
       clientType: ['SUPPLIER'],
       accountId: [''],
       cashAmount: ['',[Validators.required]],
-      paymentMethod: ['BANK'],
+      paymentMethod: ['CASH'],
       isReturn: [false],
     });
   }
