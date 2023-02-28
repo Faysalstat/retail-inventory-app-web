@@ -90,7 +90,7 @@ export class EditInvoiceComponent implements OnInit {
     if (order != null) {
       deliveryModel = {
         orderId: order.id,
-        deliverableQuantity: order.quantityOrdered - order.quantityDelivered,
+        deliverableQuantity: order.qunatityDeliveryPending,
         scheduledDate: new Date(),
         deliveryStatus: 'DELIVERED',
         isSupply: true,
@@ -192,7 +192,7 @@ export class EditInvoiceComponent implements OnInit {
       if (order.deliveryStatus != 'DELIVERED') {
         let deliveryModel = {
           orderId: order.id,
-          deliverableQuantity: order.quantityOrdered - order.quantityDelivered,
+          deliverableQuantity: order.qunatityDeliveryPending,
           scheduledDate: new Date(),
           deliveryStatus: 'DELIVERED',
           isSupply: true,

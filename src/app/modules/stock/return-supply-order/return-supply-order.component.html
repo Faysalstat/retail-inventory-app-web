@@ -5,9 +5,9 @@
             <mat-form-field appearance="outline" class="input-field">
                 <mat-label>Product</mat-label>
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedProduct">
-                    <mat-option *ngFor="let product of productForReduce;index as i"  
+                    <mat-option *ngFor="let order of productForReduce;index as i"  
                     (onSelectionChange)="onSelectReturnOrder($event)"
-                        [value]="product">{{product?.productName}}
+                        [value]="order">{{order?.product?.productName}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

@@ -113,7 +113,7 @@
                         <td>{{order?.quantityReturned || 0}}</td>
                         <td>{{order?.deliveryStatus}}</td>
                         <td style="text-align: center;">
-                            <mat-checkbox *ngIf="order.deliveryStatus!='DELIVERED'" (click)="$event.stopPropagation()"
+                            <mat-checkbox *ngIf="order.deliveryStatus =='PENDING'" (click)="$event.stopPropagation()"
                                 (change)="$event ? selection.toggle(order) : null"
                                 [checked]="selection.isSelected(order)">
                             </mat-checkbox>

@@ -51,13 +51,12 @@ export class ReturnSupplyOrderComponent implements OnInit {
   fetchInvoiceDetailsByID(id: any) {
     this.inventoryService.fetchSupplyInvoiceById(id).subscribe({
       next: (res) => {
-        console.log(res.body);
         this.supplyInvoice = res.body;
         this.productForReduce = [];
         let orders = this.supplyInvoice.supplyOrders;
         orders.map((elem: any) => {
           if (elem.state == 'PURCHASED') {
-            this.productForReduce.push(elem.product);
+            this.productForReduce.push(elem);
           }
         });
       },
@@ -85,7 +84,8 @@ export class ReturnSupplyOrderComponent implements OnInit {
     this.selectedProduct = {};
   }
   onSelectReturnOrder(event: any) {
-    let selectedProduct = event.source.value;
+    let selectedProduct = event.source.value.product;
+    this.selectedReturnItem.id = event.source.value.id;
     this.selectedReturnItem.productId = selectedProduct.id;
     this.selectedReturnItem.productCode = selectedProduct.productCode;
     this.selectedReturnItem.productName = selectedProduct.productName;

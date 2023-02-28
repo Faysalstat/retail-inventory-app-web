@@ -136,7 +136,7 @@ export class EditSaleInvoiceComponent implements OnInit {
     if (order != null) {
       deliveryModel = {
         orderId: order.id,
-        deliverableQuantity: order.quantityOrdered - order.quantityDelivered,
+        deliverableQuantity: order.qunatityDeliveryPending,
         scheduledDate: new Date(),
         deliveryStatus: 'DELIVERED',
         isSupply: false,
@@ -161,10 +161,10 @@ export class EditSaleInvoiceComponent implements OnInit {
     let selectedOrders = this.selection.selected;
     for (let i = 0; i < selectedOrders.length; i++) {
       let order = selectedOrders[i];
-      if (order.deliveryStatus != 'DELIVERED') {
+      if (order.deliveryStatus == 'PENDING') {
         deliveryModel = {
           orderId: order.id,
-          deliverableQuantity: order.quantityOrdered - order.quantityDelivered,
+          deliverableQuantity: order.qunatityDeliveryPending,
           scheduledDate: new Date(),
           deliveryStatus: 'DELIVERED',
           isSupply: false,

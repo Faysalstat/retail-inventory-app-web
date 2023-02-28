@@ -62,7 +62,7 @@ export class PdfMakeService {
             +'\n' + invoice.customerName
             +'\n' + invoice.customer.person.contactNo
             +'\n' + invoice.customer.shopName
-            +'\n' + invoice.customer.shopAddress,
+            +'\n' + invoice.customer.shopAddress || "",
             styles: {
               halign: 'left'
             }

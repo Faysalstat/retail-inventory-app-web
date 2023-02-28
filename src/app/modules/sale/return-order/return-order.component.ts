@@ -57,7 +57,7 @@ export class ReturnOrderComponent implements OnInit {
         let orders = this.saleInvoice.orders;
         orders.map((elem: any) => {
           if (elem.state == 'SOLD') {
-            this.productForReduce.push(elem.product);
+            this.productForReduce.push(elem);
           }
         });
       },
@@ -85,8 +85,9 @@ export class ReturnOrderComponent implements OnInit {
     this.selectedProduct = {};
   }
   onSelectReturnOrder(event: any) {
-    let selectedProduct = event.source.value;
-    this.selectedReturnItem.productId = selectedProduct.id;
+    let selectedProduct = event.source.value.product;
+    this.selectedReturnItem.productId = event.source.value.id;
+    this.selectedReturnItem.id = selectedProduct.id;
     this.selectedReturnItem.productCode = selectedProduct.productCode;
     this.selectedReturnItem.productName = selectedProduct.productName;
     this.selectedReturnItem.unitType = selectedProduct.unitType;
