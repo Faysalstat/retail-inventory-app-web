@@ -1,7 +1,7 @@
 // const BASE_URL = 'https://demo.vatasolution.me/api';
 // const BASE_URL = 'https://shopongroup.com/api';
-// const BASE_URL = 'https://uat.shopongroup.com/api';
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = 'https://uat.shopongroup.com/api';
+// const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
@@ -67,6 +67,7 @@ export const ReportUrls = {
   DASHBORAD_SUMMARY : BASE_URL + "/report/getdashboardsummaryrecord",  
   DASHBORAD_ENTITY_SUMMARY : BASE_URL + "/report/getentitysummary",  
   PROFIT_REPORT_SUMMARY : BASE_URL + "/report/getprofitreport",  
+  VISUAL_SUMMARY : BASE_URL + "/report/getvisualsummary",  
   
 }
 export const ConfigUrls = {
@@ -107,6 +108,7 @@ export const AccountUrls = {
   FETCH_ALL_LOAN : BASE_URL + "/account/getloanlist",
   FETCH_LOAN_DETAILS_BY_ID : BASE_URL + "/account/getloandetailsbyid",
   FETCH_ACCOUNT_LIST_BY_CATEGORY : BASE_URL + "/account/getaccountlistbycategory",
+  FETCH_GL_ACCOUNTS : BASE_URL + "/account/getallgl",
 }
 
 export const AssetUrls = {

@@ -26,12 +26,13 @@ import { AddLoanDetailsComponent } from './add-loan-details/add-loan-details.com
 import { AddBrandNameComponent } from './add-brand-name/add-brand-name.component';
 import { ProfitReportComponent } from './profit-report/profit-report.component';
 import { AddLoanAccComponent } from './add-loan-acc/add-loan-acc.component';
+import { GlAccountsDetailsComponent } from './gl-accounts-details/gl-accounts-details.component';
 
 const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,
   AddCustomerComponent,AddSupplyerComponent,MenuBarComponent,PointOfSaleComponent,
   AddTnxReasonComponent,ProductCategoryComponent,UnitTypeComponent,AddPackagingCategoryComponent,
   ExpenseComponent,PayrollComponent,DepositComponent,AddEmployeeComponent,SalaryExpenseComponent,VisualDashboardComponent,
-  CanvasJSChart,AddAssetsComponent,AddLoanDetailsComponent,AddBrandNameComponent,ProfitReportComponent,AddLoanAccComponent]
+  CanvasJSChart,AddAssetsComponent,AddLoanDetailsComponent,AddBrandNameComponent,ProfitReportComponent,AddLoanAccComponent,GlAccountsDetailsComponent]
 
 
 @NgModule({

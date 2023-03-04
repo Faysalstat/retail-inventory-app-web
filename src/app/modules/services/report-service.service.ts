@@ -82,6 +82,8 @@ export class ReportServiceService {
     params = params.append('loanAccountId',id);
     return this.http.get(AccountUrls.FETCH_LOAN_DETAILS_BY_ID,{params:params});
   }
-
+  public fetchVisualDetails(): Observable<any>{
+    return this.http.get(ReportUrls.VISUAL_SUMMARY);
+  }
 
 }

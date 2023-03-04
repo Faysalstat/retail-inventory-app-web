@@ -11,6 +11,7 @@ profitSummary!:any;
 totalProfitFromSale = 0;
 query!:any;
 isProfit:boolean = true;
+profitList:any[] = []
   constructor(
     private reportService: ReportServiceService
   ) {
@@ -27,6 +28,7 @@ fetchReportSummary(){
   this.reportService.fetchProfitReport().subscribe({
     next:(res)=>{
       this.profitSummary = res.body;
+      this.profitList = res.body.invoiceList;
       let totalProfitFromSale = this.profitSummary.totalSellingPrice - this.profitSummary.totalBuyingPrice
        - this.profitSummary.totalDiscountGiven + this.profitSummary.totalExtraChargeTaken;
        if(totalProfitFromSale<0){

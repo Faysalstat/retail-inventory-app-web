@@ -24,4 +24,7 @@ export class AdminService {
     params = params.append('glType', glType);
     return this.http.get(AccountUrls.FETCH_GL_DETAILS_BY_TYPE, { params: params });
   }
+  public getGlList(): Observable<any> {
+    return this.http.get(AccountUrls.FETCH_GL_ACCOUNTS);
+  }
 }

@@ -1,116 +1,158 @@
 import { Component, OnInit } from '@angular/core';
 import * as CanvasJSAngularChart from '../../../../assets/canvas/canvasjs.angular.component';
+import { ReportServiceService } from '../../services/report-service.service';
 var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 @Component({
   selector: 'app-visual-dashboard',
   templateUrl: './visual-dashboard.component.html',
-  styleUrls: ['./visual-dashboard.component.css']
+  styleUrls: ['./visual-dashboard.component.css'],
 })
 export class VisualDashboardComponent implements OnInit {
   chart: any;
-  months:any[] = ["Jan","Feb","Mar","Apr","May","Jun", "Jul","Aug","Sep", "Oct","Nov","Dec"];
-	chartOptions = {
-	  animationEnabled: true,
-	  theme: "light2",
-	  title:{
-		text: "Revenue Analysis"
-	  },
-	  axisY: {
-		title: "Number of Orders",
-		includeZero: true
-	  },
-	  axisY2: {
-		title: "Total Revenue",
-		includeZero: true,
-		labelFormatter: (e:any) => {
-			var suffixes = ["", "Lac", "M", "B"];
- 
-			var order = Math.max(Math.floor(Math.log(e.value) / Math.log(10000)), 0);
-			if(order > suffixes.length - 1)
-				order = suffixes.length - 1;
- 
-			var suffix = suffixes[order];
-			return '$' + (e.value / Math.pow(10000, order)) + suffix;
-		}
-	  },
-	  toolTip: {
-		shared: true
-	  },
-	  legend: {
-		cursor: "pointer",
-		itemclick: function (e: any) {
-			if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-				e.dataSeries.visible = false;
-			} else {
-				e.dataSeries.visible = true;
-			} 
-			e.chart.render();
-		}
-	  },
-	  data: [{
-		type: "column",
-		showInLegend: true,
-		name: "Sale",
-		axisYType: "secondary",
-		yValueFormatString: "$#,###",
-		dataPoints: [
-			{ label: "Jan", y: 250000 },
-			{ label: "Feb", y: 431000 },
-			{ label: "Mar", y: 646000 },
-			{ label: "Apr", y: 522000 },
-			{ label: "May", y: 464000 },
-			{ label: "Jun", y: 470000 },
-			{ label: "Jul", y: 534000 },
-			{ label: "Aug", y: 407000 },
-			{ label: "Sep", y: 484000 },
-			{ label: "Oct", y: 465000 },
-			{ label: "Nov", y: 424000 },
-			{ label: "Dec", y: 231000 }
-		]
-	  },{
-      type: "column",
-      showInLegend: true,
-      name: "Purchase",
-      axisYType: "secondary",
-      yValueFormatString: "$#,###",
-      dataPoints: [
-        { label: "Jan", y: 200000 },
-        { label: "Feb", y: 531000 },
-        { label: "Mar", y: 104000 },
-        { label: "Apr", y: 122000 },
-        { label: "May", y: 46000 },
-        { label: "Jun", y: 970000 },
-        { label: "Jul", y: 994000 },
-        { label: "Aug", y: 127000 },
-        { label: "Sep", y: 480000 },
-        { label: "Oct", y: 421000 },
-        { label: "Nov", y: 521000 },
-        { label: "Dec", y: 291000 }
-      ]
-      },{
-		type: "spline",
-		showInLegend: true,
-		name: "No of Orders",
-		dataPoints: [
-			{ label: "Jan", y: 372 },
-			{ label: "Feb", y: 412 },
-			{ label: "Mar", y: 572 },
-			{ label: "Apr", y: 224 },
-			{ label: "May", y: 246 },
-			{ label: "Jun", y: 601 },
-			{ label: "Jul", y: 642 },
-			{ label: "Aug", y: 590 },
-			{ label: "Sep", y: 527 },
-			{ label: "Oct", y: 273 },
-			{ label: "Nov", y: 251 },
-			{ label: "Dec", y: 331 }
-		]
-	  }]
-	}	
-  constructor() { }
-
-  ngOnInit(): void {
+  months: any[] = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  chartOptions = {};
+  constructor(
+	private reportService: ReportServiceService
+  ) {
+	this.fetchVisualSummary();
   }
 
+  ngOnInit(): void {
+	
+  }
+
+  fetchVisualSummary(){
+	this.reportService.fetchVisualDetails().subscribe({
+		next:(res)=>{
+			console.log(res);
+			let monthlySaleModel = res.body.sale;
+			let monthlyOrderCountModel = res.body.orderCount;
+			let monthlyPurchaseModel = res.body.purchase;
+			this.chartOptions = {
+				animationEnabled: true,
+				theme: 'light2',
+				title: {
+				  text: 'Revenue Analysis',
+				},
+				axisY: {
+				  title: 'Number of Orders',
+				  includeZero: true,
+				},
+				axisY2: {
+				  title: 'Total Revenue',
+				  includeZero: true,
+				  labelFormatter: (e: any) => {
+					var suffixes = ['', 'Lac', 'M', 'B'];
+			
+					var order = Math.max(
+					  Math.floor(Math.log(e.value) / Math.log(10000)),
+					  0
+					);
+					if (order > suffixes.length - 1) order = suffixes.length - 1;
+			
+					var suffix = suffixes[order];
+					return '$' + e.value / Math.pow(100000, order) + suffix;
+				  },
+				},
+				toolTip: {
+				  shared: true,
+				},
+				legend: {
+				  cursor: 'pointer',
+				  itemclick: function (e: any) {
+					if (
+					  typeof e.dataSeries.visible === 'undefined' ||
+					  e.dataSeries.visible
+					) {
+					  e.dataSeries.visible = false;
+					} else {
+					  e.dataSeries.visible = true;
+					}
+					e.chart.render();
+				  },
+				},
+				data: [
+				  {
+					type: 'column',
+					showInLegend: true,
+					name: 'Sale',
+					axisYType: 'secondary',
+					yValueFormatString: '$#,###',
+					dataPoints: [
+					  { label: 'Jan', y: monthlySaleModel.jan },
+					  { label: 'Feb', y: monthlySaleModel.feb },
+					  { label: 'Mar', y: monthlySaleModel.mar},
+					  { label: 'Apr', y: monthlySaleModel.apr },
+					  { label: 'May', y: monthlySaleModel.may },
+					  { label: 'Jun', y: monthlySaleModel.jun },
+					  { label: 'Jul', y: monthlySaleModel.jul },
+					  { label: 'Aug', y: monthlySaleModel.aug },
+					  { label: 'Sep', y: monthlySaleModel.sep },
+					  { label: 'Oct', y: monthlySaleModel.oct },
+					  { label: 'Nov', y: monthlySaleModel.nov },
+					  { label: 'Dec', y: monthlySaleModel.dec },
+					],
+				  },
+				  {
+					type: 'column',
+					showInLegend: true,
+					name: 'Purchase',
+					axisYType: 'secondary',
+					yValueFormatString: '$#,###',
+					dataPoints: [
+					  { label: 'Jan', y: monthlyPurchaseModel.jan },
+					  { label: 'Feb', y: monthlyPurchaseModel.feb },
+					  { label: 'Mar', y: monthlyPurchaseModel.mar },
+					  { label: 'Apr', y: monthlyPurchaseModel.apr },
+					  { label: 'May', y: monthlyPurchaseModel.may },
+					  { label: 'Jun', y: monthlyPurchaseModel.jun },
+					  { label: 'Jul', y: monthlyPurchaseModel.jul },
+					  { label: 'Aug', y: monthlyPurchaseModel.aug },
+					  { label: 'Sep', y: monthlyPurchaseModel.sep },
+					  { label: 'Oct', y: monthlyPurchaseModel.oct },
+					  { label: 'Nov', y: monthlyPurchaseModel.nov },
+					  { label: 'Dec', y: monthlyPurchaseModel.dec },
+					],
+				  },
+				  {
+					type: 'spline',
+					showInLegend: true,
+					name: 'No of Orders',
+					dataPoints: [
+					  { label: 'Jan', y: monthlyOrderCountModel.jan },
+					  { label: 'Feb', y: monthlyOrderCountModel.feb },
+					  { label: 'Mar', y: monthlyOrderCountModel.mar },
+					  { label: 'Apr', y: monthlyOrderCountModel.apr },
+					  { label: 'May', y: monthlyOrderCountModel.may },
+					  { label: 'Jun', y: monthlyOrderCountModel.jun },
+					  { label: 'Jul', y: monthlyOrderCountModel.jul },
+					  { label: 'Aug', y: monthlyOrderCountModel.aug },
+					  { label: 'Sep', y: monthlyOrderCountModel.sep },
+					  { label: 'Oct', y: monthlyOrderCountModel.oct },
+					  { label: 'Nov', y: monthlyOrderCountModel.nov },
+					  { label: 'Dec', y: monthlyOrderCountModel.dec },
+					],
+				  },
+				],
+			  };
+		},
+		error:(err)=>{
+			console.log(err);
+		}
+	})
+  }
 }
