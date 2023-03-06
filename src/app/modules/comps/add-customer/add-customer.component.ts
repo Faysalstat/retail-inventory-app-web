@@ -19,7 +19,8 @@ export class AddCustomerComponent implements OnInit {
   isCustomerExist: boolean = false;
   showLoader: boolean = false;
   isEdit: boolean = false;
-  balanceTitle: string = "Balance"
+  isLengthError: boolean = false;
+  balanceTitle: string = "Balance";
   constructor(
     private formBuilder:FormBuilder,
     private clientService: ClientService,
@@ -40,6 +41,12 @@ export class AddCustomerComponent implements OnInit {
     });
   }
   searchCustomer() {
+    if(this.person.contactNo.length<11){
+      this.isLengthError =true;
+      return;
+    }else{
+      this.isLengthError =false;
+    }
     this.showLoader  = true;
     this.clientService.getClientByContactNo(this.person.contactNo).subscribe({
       next: (res) => {

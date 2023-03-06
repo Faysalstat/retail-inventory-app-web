@@ -40,6 +40,8 @@ export class ReportServiceService {
     params = params.append('offset',queryParams.offset);
     params = params.append('limit',queryParams.limit);
     params = params.append('productCode',queryParams.productCode);
+    params = params.append('fromDate',queryParams.get('fromDate'));
+    params = params.append('toDate',queryParams.get('toDate'));
     return this.http.get(ReportUrls.SALE_ORDER_REPORT,{params:params});
   }
 
@@ -51,6 +53,8 @@ export class ReportServiceService {
     params = params.append('offset',queryParams.offset);
     params = params.append('limit',queryParams.limit);
     params = params.append('productCode',queryParams.productCode);
+    params = params.append('fromDate',queryParams.get('fromDate'));
+    params = params.append('toDate',queryParams.get('toDate'));
     return this.http.get(ReportUrls.SUPPLY_ORDER_REPORT,{params:params});
   }
   public fetchStockListRecord(): Observable<any> {

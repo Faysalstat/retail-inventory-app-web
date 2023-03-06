@@ -8,13 +8,6 @@
               [(ngModel)]="queryBody.invoiceNo" matInput>
           </mat-form-field>
         </div>
-        <!-- <div class="col-md-2">
-          <mat-form-field class="input-field" appearance="outline">
-            <mat-label>D.O No</mat-label>
-            <input placeholder="Invoice No" pInputText (change)="fetchSaleInvoices()" [ngModelOptions]="{standalone:true}"
-              [(ngModel)]="queryBody.doNo" matInput>
-          </mat-form-field>
-        </div> -->
         <div class="col-md-2">
           <mat-form-field class="input-field" appearance="outline">
             <mat-label>Contact No</mat-label>
@@ -50,15 +43,15 @@
               <mat-datepicker #toDatePicker></mat-datepicker>
           </mat-form-field>
       </div>
-      <!-- <div class="col-md-2">
+      <div class="col-md-3">
         <mat-form-field appearance="outline" class="input-field">
-          <mat-label>Select Due Type: </mat-label>
+          <mat-label>Issued By: </mat-label>
           <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchSaleInvoices()"
-            [(ngModel)]="queryBody.isDue">
-            <mat-option *ngFor="let due of dueList" [value]="due.value">{{due?.label}}</mat-option>
+            [(ngModel)]="queryBody.issuedBy">
+            <mat-option *ngFor="let user of userList" [value]="user.value">{{user?.label}}</mat-option>
           </mat-select>
         </mat-form-field>
-      </div> -->
+      </div>
         <div class="col-md-2">
           <button style="margin-top:10px ;" mat-raised-button color="warn"  (click)="refresh()" >
             Refresh

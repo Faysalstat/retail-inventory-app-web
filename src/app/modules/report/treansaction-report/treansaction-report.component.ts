@@ -26,8 +26,8 @@ export class TreansactionReportComponent implements OnInit {
     this.query = {
       transactionType:"",
       tnxType:"",
-      fromDate:'',
-      toDate:'',
+      fromDate: new Date('1/1/2023'),
+      toDate: new Date(),
       voucherNo:''
     }
     this.transactionType = [

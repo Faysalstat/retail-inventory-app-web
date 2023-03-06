@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/authService';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 
@@ -17,10 +18,12 @@ export class SaleInvoiceListComponent implements OnInit {
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100,500,1000];
   queryBody:any;
+  userList:any[] = [];
   constructor(
     private route: Router,
     private inventoryService: InventoryService,
-    private notificationService: NotificationService 
+    private notificationService: NotificationService,
+    private authService:AuthService
   ) { 
     this.queryBody={
       offset:0,
@@ -30,12 +33,27 @@ export class SaleInvoiceListComponent implements OnInit {
       deliveryStatus:'',
       fromDate: new Date('01-01-2023'),
       toDate: new Date(),
+      issuedBy:''
 
     }
   }
 
   ngOnInit(): void {
     this.fetchSaleInvoices();
+    this.fetchUserList();
+  }
+  fetchUserList(){
+    this.authService.getAllUser("").subscribe({
+      next:(res)=>{
+        let users = res.body;
+        users.map((elem:any)=>{
+          this.userList.push({label:elem.userName,value:elem.userName})
+        })
+      },
+      error:(err)=>{
+        this.notificationService.showErrorMessage("ERROR",err.message,"OK",300);
+      }
+    })
   }
   fetchSaleInvoices(){
     const params: Map<string, any> = new Map();

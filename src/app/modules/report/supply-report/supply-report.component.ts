@@ -26,6 +26,8 @@ export class SupplyReportComponent implements OnInit {
       invoiceNo: '',
       orderNo: '',
       productCode: '',
+      fromDate: new Date('1/1/2023'),
+      toDate: new Date(),
     };
     this.statusOptions = [
       { label: 'All', value: '' },

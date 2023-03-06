@@ -56,8 +56,7 @@ export class InventoryService {
     params = params.append('limit',queryParams.get('query').limit);
     params = params.append('contactNo',queryParams.get('query').contactNo);
     params = params.append('invoiceNo',queryParams.get('query').invoiceNo);
-    // params = params.append('doNo',queryParams.get('query').doNo);
-    // params = params.append('isDue',queryParams.get('query').isDue);
+    params = params.append('issuedBy',queryParams.get('query').issuedBy);
     params = params.append('fromDate',queryParams.get('query').fromDate);
     params = params.append('toDate',queryParams.get('query').toDate);
     params = params.append('deliveryStatus',queryParams.get('query').deliveryStatus);

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToWords } from 'to-words';
 import { Account, COFIGS, Customer, Person, Supplyer, Tasks } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
+import { PdfMakeService } from '../../services/pdf-make.service';
 import { TransactionService } from '../../services/transaction.service';
 
 @Component({
@@ -33,13 +35,15 @@ export class CashTransactionComponent implements OnInit {
   userName!: any;
   isReturn: boolean = false;
   isOther: boolean = false;
+  toWords = new ToWords();
   constructor(
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
     private clientService: ClientService,
     private inventoryService: InventoryService,
     private transactionService: TransactionService,
-    private route: Router
+    private route: Router,
+    private pdfMakeService: PdfMakeService
   ) {
     this.types = [
       { value: 'PAYMENT', label: 'Payment' },
@@ -179,7 +183,6 @@ export class CashTransactionComponent implements OnInit {
   }
 
   submitTransaction() {
-
     if(this.cashTransactionForm.invalid){
       return;
     }
@@ -188,8 +191,8 @@ export class CashTransactionComponent implements OnInit {
     transactionModel.comment = this.comment;
     transactionModel.person = this.person;
     transactionModel.account = this.account;
-    console.log(transactionModel);
-
+    transactionModel.customer = this.customer;
+    transactionModel.supplier = this.supplier; 
     if (this.isApprovalNeeded) {
       let approvalModel = {
         payload: JSON.stringify(transactionModel),
@@ -207,6 +210,7 @@ export class CashTransactionComponent implements OnInit {
             'OK',
             500
           );
+          this.downloadMemo();
           this.route.navigate(['/cash/transaction-list']);
         },
         error: (err) => {
@@ -223,7 +227,7 @@ export class CashTransactionComponent implements OnInit {
       params.set('payment', transactionModel);
       this.inventoryService.doPaymentTransaction(params).subscribe({
         next: (res) => {
-          console.log(res.body);
+          this.downloadMemo();
           this.notificationService.showMessage(
             'SUCCESS!',
             'Payment Successful',
@@ -233,6 +237,7 @@ export class CashTransactionComponent implements OnInit {
           this.cashTransactionForm.reset();
           this.comment = '';
           this.account = res.body;
+          
         },
         error: (err) => {
           this.notificationService.showMessage(
@@ -274,5 +279,56 @@ export class CashTransactionComponent implements OnInit {
       this.cashTransactionForm.get('transactionType')?.setValue('PAYMENT');
     }
     
+  }
+  applyFilter(date: any) {
+    let newDate = new Date(date);
+    return (
+      newDate.getDate() +
+      '/' +
+      (newDate.getMonth() + 1) +
+      '/' +
+      newDate.getFullYear()
+    );
+  }
+  downloadMemo() {
+    let data: any[] = [];
+    let index = 1;
+    let tnxAmount = this.cashTransactionForm.get('cashAmount')?.value;
+    let tnxDate = this.applyFilter(new Date());
+    let debitAmount = 0;
+    let creditAmount = 0;
+    if (this.selectedType == 'CUSTOMER'){
+      if(!this.isReturn){
+        debitAmount = tnxAmount;
+      }else{
+        creditAmount = tnxAmount;
+      }
+    } else if(this.selectedType == 'SUPPLIER'){
+      if(!this.isReturn){
+        creditAmount = tnxAmount;
+      }else{
+        debitAmount = tnxAmount;
+      }
+    }
+    data.push(['1',tnxDate,this.cashTransactionForm.get('paymentMethod')?.value,debitAmount,creditAmount])
+    let model = {
+      voucher: "",
+      issuedBy: localStorage.getItem('personName'),
+      customer: this.customer,
+      supplier:this.supplier,
+      tnxDate: this.applyFilter(new Date()),
+      clientName: this.isCustomer?this.customer.person.personName:this.supplier.person.personName,
+      tnxAmount: this.cashTransactionForm.get('cashAmount')?.value,
+      tnxType: this.cashTransactionForm.get('transactionType')?.value,
+      tnxAmountInWords: this.toWords.convert(
+        this.cashTransactionForm.get('cashAmount')?.value || 0
+      ),
+      data:data
+    };
+    if(this.isCustomer){
+      this.pdfMakeService.downloadCustomerPaymentInvoice(model);
+    }else if(this.isSupplier){
+      this.pdfMakeService.downloadSupplyerPaymentInvoice(model);
+    }
   }
 }

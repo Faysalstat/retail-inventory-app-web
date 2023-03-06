@@ -12,12 +12,11 @@ import { NotificationService } from '../../services/notification-service.service
 export class ReturnOrderComponent implements OnInit {
   productForReduce: any[] = [];
   orderReturnCondition: any[] = [];
-  saleInvoice: any;
-  selectedselectedReturnItem: any;
-  selectedProduct: any;
+  saleInvoice!: any;
+  selectedProduct!: any;
   selectedReturnItem: OrderItem = new OrderItem();
   selectedReturnCondition = 'RETURN';
-  returnModel: any;
+  returnModel!: any;
   returnOrderList: any[] = [];
   constructor(
     private route: Router,
@@ -51,7 +50,6 @@ export class ReturnOrderComponent implements OnInit {
   fetchInvoiceDetailsByID(id: any) {
     this.inventoryService.fetchSaleInvoiceById(id).subscribe({
       next: (res) => {
-        console.log(res.body);
         this.saleInvoice = res.body;
         this.productForReduce = [];
         let orders = this.saleInvoice.orders;
@@ -86,8 +84,8 @@ export class ReturnOrderComponent implements OnInit {
   }
   onSelectReturnOrder(event: any) {
     let selectedProduct = event.source.value.product;
-    this.selectedReturnItem.productId = event.source.value.id;
-    this.selectedReturnItem.id = selectedProduct.id;
+    this.selectedReturnItem.id = event.source.value.id;
+    this.selectedReturnItem.productId = selectedProduct.id;
     this.selectedReturnItem.productCode = selectedProduct.productCode;
     this.selectedReturnItem.productName = selectedProduct.productName;
     this.selectedReturnItem.unitType = selectedProduct.unitType;

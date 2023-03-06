@@ -76,17 +76,6 @@
             </button>
         </div>
         <div class="row">
-            <!-- <div class="col-md-3">
-                <mat-form-field appearance="outline" class="input-field">
-                    <mat-label>Transaction Type</mat-label>
-                    <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchAccountHistory()"
-                        [(ngModel)]="queryBody.tnxType">
-                        <mat-option *ngFor="let type of tnxTypes" [value]="type.value">
-                            {{type?.label}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
             <div class="col-md-3">
                 <mat-form-field appearance="outline">
                     <mat-label>From Date</mat-label>
@@ -116,10 +105,10 @@
                 <thead>
                     <tr>
                         <th>Sn</th>
-                        <th>Tnx Type</th>
                         <th>Tnx Date</th>
-                        <th>Tnx Amount</th>
                         <th>Method</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
                         <th>Previous Balance</th>
                         <th>Comment</th>
                     </tr>
@@ -130,10 +119,10 @@
                     </tr>
                     <tr *ngFor="let history of accountHistory; index as i">
                         <td>{{i+1}}</td>
-                        <td>{{history?.tnxType}}</td>
                         <td>{{history?.tnxDate}}</td>
-                        <td>{{history?.tnxAmount}}</td>
                         <td>{{history?.paymentMethod}}</td>
+                        <td>{{history?.tnxType == "DEBIT"?history?.tnxAmount:0}}</td>
+                        <td>{{history?.tnxType == "CREDIT"?history?.tnxAmount:0}}</td>
                         <td>{{history?.previousBalance}}</td>
                         <td>{{history?.remark}}</td>
                     </tr>

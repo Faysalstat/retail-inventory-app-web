@@ -28,8 +28,11 @@
                         <td>{{task?.taskType}}</td>
                         <td>{{task?.createdBy}}</td>
                         <td>
-                            <button mat-raised-button (click)="openTask(task)" color="warn">
+                            <button mat-raised-button (click)="openTask(task)" color="primary">
                                 Open
+                            </button>
+                            <button mat-button (click)="declineApproval(task.id)" color="warn">
+                                <mat-icon>delete</mat-icon>
                             </button>
                         </td>
                     </tr>

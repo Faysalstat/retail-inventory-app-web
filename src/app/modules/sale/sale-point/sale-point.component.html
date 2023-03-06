@@ -15,6 +15,7 @@
                 <input (change)="searchCustomer()" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
                     [(ngModel)]="person.contactNo" placeholder="Contact No" matInput>
             </mat-form-field>
+            <p style="margin-left: 10px;font-weight: bold;color: red;" *ngIf="isLengthError"> *Contact Number Must Be 11 Character</p>
         </div>
         <div class="col-md-4">
             <mat-form-field class="input-field" appearance="outline">
@@ -43,7 +44,7 @@
             </h2>
         </div>
         <div class="col-md-12">
-            <button (click)="addCustomer()" mat-raised-button [disabled]="isCustomerExist" color="warn">Add
+            <button (click)="addCustomer()" mat-raised-button [disabled]="isCustomerExist || isLengthError" color="warn">Add
                 Customer</button>
         </div>
         <p style="color:red;font-weight:bolder">{{errMsg}}</p>

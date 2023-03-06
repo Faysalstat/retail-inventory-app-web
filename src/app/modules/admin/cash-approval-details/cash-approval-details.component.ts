@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToWords } from 'to-words';
 import { Tasks } from '../../model/models';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
+import { PdfMakeService } from '../../services/pdf-make.service';
 import { TransactionService } from '../../services/transaction.service';
 
 @Component({
@@ -18,14 +20,15 @@ export class CashApprovalDetailsComponent implements OnInit {
   comment:string ="";
   updatedBalance:number = 0;
   userProfile:any;
-  
+  toWords = new ToWords();
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
     // private clientService: ClientService,
     private notificationService : NotificationService,
     private transactionService :TransactionService,
-    private router: Router
+    private router: Router,
+    private pdfMakeService: PdfMakeService
   ) { 
 
   }
@@ -42,6 +45,7 @@ export class CashApprovalDetailsComponent implements OnInit {
       this.inventoryService.fetchTaskById(this.taskId).subscribe({
         next: (res) => {
           this.taskDetail = res.body.payload;
+          console.log(this.taskDetail);
           this.taskType = res.body.taskType;
           this.comment = this.taskDetail.comment;
           if(this.taskDetail.isReturn){
@@ -90,6 +94,7 @@ export class CashApprovalDetailsComponent implements OnInit {
         next:(res)=>{
           this.showLoader = false;
           this.notificationService.showMessage("SUCCESS!","Payment Successful","OK",400);
+          this.downloadMemo();
           this.router.navigate(['/admin/task-list']);
         },
         error:(err)=>{
@@ -175,6 +180,57 @@ export class CashApprovalDetailsComponent implements OnInit {
       })
     }
     
+  }
+  applyFilter(date: any) {
+    let newDate = new Date(date);
+    return (
+      newDate.getDate() +
+      '/' +
+      (newDate.getMonth() + 1) +
+      '/' +
+      newDate.getFullYear()
+    );
+  }
+  downloadMemo() {
+    let data: any[] = [];
+    let index = 1;
+    let tnxAmount = this.taskDetail.cashAmount;
+    let tnxDate = this.applyFilter(new Date());
+    let debitAmount = 0;
+    let creditAmount = 0;
+    if (this.taskDetail.clientType == 'CUSTOMER'){
+      if(this.taskDetail.transactionType !="RETURN" ){
+        debitAmount = tnxAmount;
+      }else{
+        creditAmount = tnxAmount;
+      }
+    } else if(this.taskDetail.clientType == 'SUPPLIER'){
+      if(this.taskDetail.transactionType !="RETURN"){
+        creditAmount = tnxAmount;
+      }else{
+        debitAmount = tnxAmount;
+      }
+    }
+    data.push(['1',tnxDate,this.taskDetail.paymentMethod,debitAmount,creditAmount])
+    let model = {
+      voucher: "",
+      issuedBy: this.taskDetail.issuedBy,
+      customer: this.taskDetail.customer,
+      supplier:this.taskDetail.supplier,
+      tnxDate: this.applyFilter(new Date()),
+      clientName: this.taskDetail.person.personName,
+      tnxAmount: this.taskDetail.cashAmount,
+      tnxType: this.taskDetail.transactionType,
+      tnxAmountInWords: this.toWords.convert(
+        this.taskDetail.cashAmount || 0
+      ),
+      data:data
+    };
+    if(this.taskDetail.clientType == "CUSTOMER"){
+      this.pdfMakeService.downloadCustomerPaymentInvoice(model);
+    }else if(this.taskDetail.clientType == "SUPPLIER"){
+      this.pdfMakeService.downloadSupplyerPaymentInvoice(model);
+    }
   }
 
 }

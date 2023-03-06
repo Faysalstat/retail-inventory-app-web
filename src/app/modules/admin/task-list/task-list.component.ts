@@ -47,4 +47,22 @@ export class TaskListComponent implements OnInit {
         }
     
   }
+  declineApproval(id:any){
+    const params: Map<string, any> = new Map();
+    let task = {
+      taskId: id
+    }
+    params.set("task",task)
+    this.inventoryService.declineApproval(params).subscribe({
+      next:(res)=>{
+        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500);
+      },
+      error:(err)=>{
+        this.notificationService.showErrorMessage("Warning","Deletion Failed","Ok",500);
+      },
+      complete:()=>{
+        this.fetchAllTaskList();
+      }
+    })
+  }
 }

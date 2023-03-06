@@ -25,7 +25,9 @@ export class SalesReportComponent implements OnInit {
       deliveryStatus:'',
       invoiceNo: '',
       orderNo:'',
-      productCode:''
+      productCode:'',
+      fromDate: new Date('1/1/2023'),
+      toDate: new Date(),
     }
     this.statusOptions = [
       {label:'All', value:''},

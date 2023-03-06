@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Tasks } from '../../model/models';
+import { ClientService } from '../../services/client.service';
+import { ExcelExportService } from '../../services/excel-export.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 import { ReportServiceService } from '../../services/report-service.service';
@@ -17,18 +19,22 @@ export class LoanDetailsComponent implements OnInit {
   comment: string = '';
   showAccountHistory: boolean = false;
   showInstallmentPanel: boolean = false;
-  accountistory: any[] = [];
+  accountHistory: any[] = [];
+  accountHistoryExportable: any[] = [];
   installmentModel: any = {};
   paymentMethods: any[];
   isApprovalNeeded: boolean = false;
   id:any;
+  queryBody:any = {};
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
     private notificationService: NotificationService,
     private reportService: ReportServiceService,
     private inventoryService: InventoryService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private clientService: ClientService,
+    private excelExportService:ExcelExportService
   ) {
     this.installmentModel = {
       installMentAmount: 0,
@@ -43,6 +49,12 @@ export class LoanDetailsComponent implements OnInit {
       { label: 'BANK', value: 'BANK' },
       { label: 'BKASH', value: 'BKASH' },
     ];
+    this.queryBody={
+      accountId:"",
+      tnxType:"",
+      fromDate: new Date('1/1/2023'),
+      toDate: new Date(),
+    }
   }
 
   ngOnInit(): void {
@@ -54,10 +66,9 @@ export class LoanDetailsComponent implements OnInit {
   fetchDetailsBID(id: any) {
     this.reportService.fetchLoanDetails(id).subscribe({
       next: (res) => {
-        console.log(res.body);
         this.loanAccount = res.body;
         this.comment = this.loanAccount.remark;
-        this.accountistory = this.loanAccount.account.accountHistories;
+        this.accountHistory = this.loanAccount.account.accountHistories;
       },
     });
   }
@@ -121,5 +132,41 @@ export class LoanDetailsComponent implements OnInit {
         },
       });
     }
+  }
+  fetchAccountHistory(){
+    const params: Map<string, any> = new Map();
+    params.set("fromDate",this.queryBody.fromDate);
+    params.set("toDate",this.queryBody.toDate);
+    params.set("tnxType",this.queryBody.tnxType);
+    params.set("accountId",this.queryBody.accountId);
+
+    this.clientService.getAccountHistoryListByAccountId(params).subscribe({
+      next:(res)=>{
+        if(res.isSuccess){
+          this.accountHistory = res.body;
+          this.accountHistoryExportable = [];
+          let sn = 0;
+          this.accountHistory.map((elem) => {
+            let item = {
+              SN: sn + 1,
+              TNX_DATE: elem.tnxDate,
+              PAYMENT_METHOD: elem.paymentMethod,
+              DEBIT: elem.tnxType=="DEBIT"?elem.tnxAmount:0,
+              CREDIT: elem.tnxType=="CREDIT"?elem.tnxAmount:0,
+              COMMENT: elem.remark,
+            };
+            this.accountHistoryExportable.push(item);
+          });
+        }else{
+          this.notificationService.showErrorMessage("ERROR",res.message,"OK",200);
+        }
+      }
+    })
+  }
+  export() {
+    this.excelExportService.exportAsExcelFile(
+      this.accountHistoryExportable,
+      'ACCOUNT_STATEMENT'
+    );
   }
 }

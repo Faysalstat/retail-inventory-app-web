@@ -73,6 +73,7 @@ export class EditSaleInvoiceComponent implements OnInit {
           this.isDue = true;
         }
         this.saleOrdersForSchedule = [];
+        this.saleOrdersForReduce = [];
         for (let i = 0; i < this.saleOrders.length; i++) {
           if (this.saleOrders[i].deliveryStatus == 'PENDING') {
             this.isPending = true;
@@ -196,9 +197,7 @@ export class EditSaleInvoiceComponent implements OnInit {
     });
   }
   onSelectOrder(event: any) {
-    console.log(event);
     this.selectedOrderItem = event.source.value;
-    console.log(this.selectedOrderItem);
     if (this.selectedOrderItem.deliveryStatus == 'DELIVERED') {
       this.isDelivered = true;
       this.errMsg = '*This Product delivery is completed!';
@@ -228,7 +227,7 @@ export class EditSaleInvoiceComponent implements OnInit {
     let invoiceModel = {
       doNo: '',
       invoiceId: this.saleInvoice.invoiceNo,
-      issuedBy: localStorage.getItem('personName'),
+      issuedBy: this.saleInvoice.issuedBy,
       customer: this.customer,
       tnxDate: this.applyFilter(new Date()),
       customerName: this.customer.person.personName,
@@ -242,9 +241,7 @@ export class EditSaleInvoiceComponent implements OnInit {
       totalPaid: this.saleInvoice.totalPaidAmount || 0,
       discount: this.saleInvoice.rebate || 0,
       dueAmount:
-        this.saleInvoice.totalPayableAmount ||
-        0 - this.saleInvoice.totalPaidAmount ||
-        0,
+        (this.saleInvoice.totalPayableAmount || 0) - (this.saleInvoice.totalPaidAmount || 0),
       orders: orders,
       extraCharge: this.saleInvoice.extraCharge || 0,
       chargeReason: this.saleInvoice.chargeReason,

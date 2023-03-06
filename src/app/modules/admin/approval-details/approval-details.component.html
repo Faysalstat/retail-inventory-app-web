@@ -27,6 +27,10 @@
                         <th>Contact No:</th>
                         <td> {{supplyer?.person?.contactNo}} </td>
                     </tr>
+                    <tr>
+                        <th>Issued By:</th>
+                        <td> {{invoiceDetails?.issuedBy}} </td>
+                    </tr>
                 </thead>
                 <thead *ngIf="!isStock">
                     <tr>
@@ -48,6 +52,10 @@
                     <tr>
                         <th>Address:</th>
                         <td> {{customer?.person?.personAddress}} </td>
+                    </tr>
+                    <tr>
+                        <th>Issued By:</th>
+                        <td> {{invoiceDetails?.issuedBy}} </td>
                     </tr>
                 </thead>
             </table>

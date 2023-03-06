@@ -131,10 +131,10 @@ export class SupplyerDetailsComponent implements OnInit {
           this.accountHistory.map((elem) => {
             let item = {
               SN: sn + 1,
-              TNX_TYPE: elem.tnxType,
               TNX_DATE: elem.tnxDate,
-              TNX_AMOUNT: elem.tnxAmount,
               PAYMENT_METHOD: elem.paymentMethod,
+              DEBIT: elem.tnxType=="DEBIT"?elem.tnxAmount:0,
+              CREDIT: elem.tnxType=="CREDIT"?elem.tnxAmount:0,
               COMMENT: elem.remark,
             };
             this.accountHistoryExportable.push(item);

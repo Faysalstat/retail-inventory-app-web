@@ -53,13 +53,14 @@ export class SalePointComponent implements OnInit {
   balanceTitle: string = 'Balance';
   comment: string = '';
   isApprovalNeeded: boolean = true;
-  userName: string = 'MANAGER';
+  userName: any;
   rebate: number = 0;
   paymentMethods: any[] = [];
   availableStock: number = 0;
   balanceType: string = 'Payable';
   productCode: string = '';
   toWords = new ToWords();
+  isLengthError:boolean = false;
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -85,6 +86,7 @@ export class SalePointComponent implements OnInit {
   ngOnInit(): void {
     this.fetchProducts();
     this.getConfig(COFIGS.SALE_APPROVAL_NEEDED);
+    this.userName = localStorage.getItem('username');
     // console.log(this.toWords.convert(1239271392))
   }
 
@@ -142,6 +144,12 @@ export class SalePointComponent implements OnInit {
     });
   }
   searchCustomer() {
+    if(this.person.contactNo.length<11){
+      this.isLengthError =true;
+      return;
+    }else{
+      this.isLengthError =false;
+    }
     this.clientService.getClientByContactNo(this.person.contactNo).subscribe({
       next: (res) => {
         if (res.body) {
@@ -277,7 +285,6 @@ export class SalePointComponent implements OnInit {
     this.unitType = this.selectedProduct.unitType;
     this.availableStock = this.selectedProduct.quantity;
 
-    console.log(this.selectedProduct);
   }
   calculateOrder() {
     this.orderItem.totalOrderPrice =
@@ -351,6 +358,7 @@ export class SalePointComponent implements OnInit {
     orderIssueModel.comment = this.comment;
     orderIssueModel.totalPayableAmount = this.totalPayableAmount;
     orderIssueModel.previousBalance = this.account.balance;
+    orderIssueModel.issuedBy = this.userName;
     const params: Map<string, any> = new Map();
     if (this.isApprovalNeeded) {
       let approvalModel = {

@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map, Observable, startWith } from 'rxjs';
 import { ToWords } from 'to-words';
 import {
   COFIGS,
@@ -248,7 +247,6 @@ export class AddStockComponent implements OnInit {
     orderIssueModel.supplyerId = this.supplyer.id;
     orderIssueModel.comment = this.comment;
     orderIssueModel.issuedBy = this.userName;
-    console.log(orderIssueModel);
     if(this.isApprovalNeeded){
       let approvalModel = {
         payload:JSON.stringify(orderIssueModel),
@@ -345,7 +343,7 @@ export class AddStockComponent implements OnInit {
     let invoiceModel = {
       doNo: '',
       invoiceId: 'N/A',
-      issuedBy: localStorage.getItem('personName'),
+      issuedBy: this.userName,
       supplyer: this.supplyer,
       tnxDate: this.applyFilter(new Date()),
       supplierName: this.person.personName,
