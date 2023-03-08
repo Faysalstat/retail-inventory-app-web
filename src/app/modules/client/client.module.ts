@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { ClientListComponent } from './client-list/client-list.component';
 import { SupplyerComponent } from './supplyer/supplyer.component';
 import { CustomerComponent } from './customer/customer.component';
-import { EmployeeComponent } from './employee/employee.component';
 import { ClientDetailsComponent } from './client-details/client-details.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { SupplyerDetailsComponent } from './supplyer-details/supplyer-details.component';
@@ -22,7 +21,6 @@ import { SupplyerDetailsComponent } from './supplyer-details/supplyer-details.co
     ClientListComponent,
     SupplyerComponent,
     CustomerComponent,
-    EmployeeComponent,
     ClientDetailsComponent,
     CustomerDetailsComponent,
     SupplyerDetailsComponent

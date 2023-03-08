@@ -18,7 +18,7 @@ export class EmployeeDetailsComponent implements OnInit {
   accountHistoryExportable: any[] = [];
   employee: any = {};
   showAccountHistory: boolean = false;
-  queryBody: any = {};
+  accountId!:any;
   tnxTypes: any[];
   showLoader:boolean = false;
   constructor(
@@ -32,12 +32,6 @@ export class EmployeeDetailsComponent implements OnInit {
       { label: 'Debit', value: 'DEBIT' },
       { label: 'Credit', value: 'CREDIT' },
     ];
-    this.queryBody = {
-      accountId: '',
-      tnxType: '',
-      fromDate: new Date('1/1/2023'),
-      toDate: new Date(),
-    };
   }
 
   ngOnInit(): void {
@@ -56,7 +50,7 @@ export class EmployeeDetailsComponent implements OnInit {
         if (res.body.employee) {
           this.employee = res.body.employee;
           this.account = res.body.employee.account;
-          this.queryBody.accountId = this.account.id;
+          this.accountId = this.account.id;
         }
       },
       error:(err)=>{
@@ -69,7 +63,6 @@ export class EmployeeDetailsComponent implements OnInit {
   }
   showHistory(event: boolean) {
     this.showAccountHistory = event;
-    this.fetchAccountHistory();
   }
   updateEmployee() {
     const params: Map<string, any> = new Map();
@@ -110,46 +103,5 @@ export class EmployeeDetailsComponent implements OnInit {
         );
       },
     });
-  }
-  fetchAccountHistory() {
-    const params: Map<string, any> = new Map();
-    params.set('fromDate', this.queryBody.fromDate);
-    params.set('toDate', this.queryBody.toDate);
-    params.set('tnxType', this.queryBody.tnxType);
-    params.set('accountId', this.queryBody.accountId);
-
-    this.clientService.getAccountHistoryListByAccountId(params).subscribe({
-      next: (res) => {
-        if (res.isSuccess) {
-          this.accountHistory = res.body;
-          this.accountHistoryExportable = [];
-          let sn = 0;
-          this.accountHistory.map((elem) => {
-            let item = {
-              SN: sn + 1,
-              TNX_DATE: elem.tnxDate,
-              PAYMENT_METHOD: elem.paymentMethod,
-              DEBIT: elem.tnxType=="DEBIT"?elem.tnxAmount:0,
-              CREDIT: elem.tnxType=="CREDIT"?elem.tnxAmount:0,
-              COMMENT: elem.remark,
-            };
-            this.accountHistoryExportable.push(item);
-          });
-        } else {
-          this.notificationService.showErrorMessage(
-            'ERROR',
-            res.message,
-            'OK',
-            200
-          );
-        }
-      },
-    });
-  }
-  export() {
-    this.excelExportService.exportAsExcelFile(
-      this.accountHistoryExportable,
-      'ACCOUNT_STATEMENT'
-    );
   }
 }

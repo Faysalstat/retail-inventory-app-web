@@ -14,12 +14,10 @@ export class SupplyerDetailsComponent implements OnInit {
   client!: any;
   person: Person = new Person();
   account: Account = new Account();
-  accountHistory: any[] = [];
-  accountHistoryExportable: any[] = [];
   tnxTypes: any[] = [];
   supplyer: any = {};
   showAccountHistory: boolean = false;
-  queryBody: any = {};
+  accountId!:any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private clientService: ClientService,
@@ -31,12 +29,6 @@ export class SupplyerDetailsComponent implements OnInit {
       { label: 'Debit', value: 'DEBIT' },
       { label: 'Credit', value: 'CREDIT' },
     ];
-    this.queryBody = {
-      accountId: '',
-      tnxType: '',
-      fromDate: new Date('1/1/2023'),
-      toDate: new Date(),
-    };
   }
 
   ngOnInit(): void {
@@ -55,8 +47,7 @@ export class SupplyerDetailsComponent implements OnInit {
         if (res.body.person) {
           this.person = res.body.person;
           this.account = res.body.account;
-          this.queryBody.accountId = this.account.id;
-          this.accountHistory = res.body.account.accountHistories;
+          this.accountId = this.account.id;
         }
       },
     });
@@ -64,7 +55,6 @@ export class SupplyerDetailsComponent implements OnInit {
 
   showHistory(event: boolean) {
     this.showAccountHistory = event;
-    this.fetchAccountHistory();
   }
   updateSupplyer() {
     const params: Map<string, any> = new Map();
@@ -110,50 +100,5 @@ export class SupplyerDetailsComponent implements OnInit {
         );
       },
     });
-  }
-  onDateChange() {
-    console.log(this.queryBody.fromDate);
-  }
-  onChnageCategory() {}
-  fetchAccountHistory() {
-    const params: Map<string, any> = new Map();
-    params.set('fromDate', this.queryBody.fromDate);
-    params.set('toDate', this.queryBody.toDate);
-    params.set('tnxType', this.queryBody.tnxType);
-    params.set('accountId', this.queryBody.accountId);
-
-    this.clientService.getAccountHistoryListByAccountId(params).subscribe({
-      next: (res) => {
-        if (res.isSuccess) {
-          this.accountHistory = res.body;
-          this.accountHistoryExportable = [];
-          let sn = 0;
-          this.accountHistory.map((elem) => {
-            let item = {
-              SN: sn + 1,
-              TNX_DATE: elem.tnxDate,
-              PAYMENT_METHOD: elem.paymentMethod,
-              DEBIT: elem.tnxType=="DEBIT"?elem.tnxAmount:0,
-              CREDIT: elem.tnxType=="CREDIT"?elem.tnxAmount:0,
-              COMMENT: elem.remark,
-            };
-            this.accountHistoryExportable.push(item);
-          });
-        } else {
-          this.notificationService.showErrorMessage(
-            'ERROR',
-            res.message,
-            'OK',
-            200
-          );
-        }
-      },
-    });
-  }
-  export() {
-    this.excelExportService.exportAsExcelFile(
-      this.accountHistoryExportable,
-      'ACCOUNT_STATEMENT'
-    );
   }
 }

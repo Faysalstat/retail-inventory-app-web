@@ -25,7 +25,7 @@ export class LoanDetailsComponent implements OnInit {
   paymentMethods: any[];
   isApprovalNeeded: boolean = false;
   id:any;
-  queryBody:any = {};
+  accountId!:any;
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
@@ -49,12 +49,6 @@ export class LoanDetailsComponent implements OnInit {
       { label: 'BANK', value: 'BANK' },
       { label: 'BKASH', value: 'BKASH' },
     ];
-    this.queryBody={
-      accountId:"",
-      tnxType:"",
-      fromDate: new Date('1/1/2023'),
-      toDate: new Date(),
-    }
   }
 
   ngOnInit(): void {
@@ -68,7 +62,7 @@ export class LoanDetailsComponent implements OnInit {
       next: (res) => {
         this.loanAccount = res.body;
         this.comment = this.loanAccount.remark;
-        this.accountHistory = this.loanAccount.account.accountHistories;
+        this.accountId = this.loanAccount.account.id;
       },
     });
   }
@@ -132,41 +126,5 @@ export class LoanDetailsComponent implements OnInit {
         },
       });
     }
-  }
-  fetchAccountHistory(){
-    const params: Map<string, any> = new Map();
-    params.set("fromDate",this.queryBody.fromDate);
-    params.set("toDate",this.queryBody.toDate);
-    params.set("tnxType",this.queryBody.tnxType);
-    params.set("accountId",this.queryBody.accountId);
-
-    this.clientService.getAccountHistoryListByAccountId(params).subscribe({
-      next:(res)=>{
-        if(res.isSuccess){
-          this.accountHistory = res.body;
-          this.accountHistoryExportable = [];
-          let sn = 0;
-          this.accountHistory.map((elem) => {
-            let item = {
-              SN: sn + 1,
-              TNX_DATE: elem.tnxDate,
-              PAYMENT_METHOD: elem.paymentMethod,
-              DEBIT: elem.tnxType=="DEBIT"?elem.tnxAmount:0,
-              CREDIT: elem.tnxType=="CREDIT"?elem.tnxAmount:0,
-              COMMENT: elem.remark,
-            };
-            this.accountHistoryExportable.push(item);
-          });
-        }else{
-          this.notificationService.showErrorMessage("ERROR",res.message,"OK",200);
-        }
-      }
-    })
-  }
-  export() {
-    this.excelExportService.exportAsExcelFile(
-      this.accountHistoryExportable,
-      'ACCOUNT_STATEMENT'
-    );
   }
 }
