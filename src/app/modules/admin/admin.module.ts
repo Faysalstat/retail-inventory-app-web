@@ -21,6 +21,7 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
 import { AddEmployeePanelComponent } from './add-employee-panel/add-employee-panel.component';
 import { AssetsManagementComponent } from './assets-management/assets-management.component';
 import { LoanApprovalDetailsComponent } from './loan-approval-details/loan-approval-details.component';
+import { ProfitCalculationComponent } from './profit-calculation/profit-calculation.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { LoanApprovalDetailsComponent } from './loan-approval-details/loan-appro
     EmployeeDetailsComponent,
     AddEmployeePanelComponent,
     AssetsManagementComponent,
-    LoanApprovalDetailsComponent
+    LoanApprovalDetailsComponent,
+    ProfitCalculationComponent
   ],
   imports: [
     CommonModule,

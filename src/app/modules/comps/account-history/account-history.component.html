@@ -31,13 +31,18 @@
                     <th>Sn</th>
                     <th>Tnx Date</th>
                     <th>Method</th>
+                    <th>Comment</th>
                     <th>Debit</th>
                     <th>Credit</th>
-                    <th>Previous Balance</th>
-                    <th>Comment</th>
+                    <th>Balance</th>
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <th style="text-align: right;" colspan="5"></th>
+                    <th>Opening</th>
+                    <td style="text-align: center;">{{openingBalance}}</td>
+                </tr>
                 <tr *ngIf="accountHistory.length==0">
                     <th style="text-align: center;" colspan="7">No Transaction</th>
                 </tr>
@@ -45,19 +50,26 @@
                     <td>{{i+1}}</td>
                     <td>{{history?.tnxDate}}</td>
                     <td>{{history?.paymentMethod}}</td>
+                    <td>{{history?.remark}}</td>
                     <td>{{history?.tnxType == "DEBIT"?history?.tnxAmount:0}}</td>
                     <td>{{history?.tnxType == "CREDIT"?history?.tnxAmount:0}}</td>
-                    <td>{{history?.previousBalance}}</td>
-                    <td>{{history?.remark}}</td>
+                    <td>{{
+                        (tnxSide =="DEBIT")?
+                        ((history?.tnxType == "DEBIT")?
+                        (history?.previousBalance + history?.tnxAmount):(history?.previousBalance - history?.tnxAmount))
+                        :((history?.tnxType == "CREDIT")?
+                        (history?.previousBalance + history?.tnxAmount):(history?.previousBalance - history?.tnxAmount))
+                    }}</td>
+                    
                 </tr>
             </tbody>
-            <tfoot>
+            <!-- <tfoot>
                 <tr>
-                    <th style="text-align: left;" colspan="2">Opening Balance: <span>{{openingBalance}}</span></th>
-                    <th style="text-align: left;" colspan="2">Closing Balance: <span>{{closingBalance}}</span></th>
+                    <th style="text-align: left;" colspan="2">Opening Balance: <span>{{openingBalance}} BDT</span></th>
+                    <th style="text-align: left;" colspan="2">Closing Balance: <span>{{closingBalance}} BDT</span></th>
                     <th style="text-align: center;" colspan="3"></th>
                 </tr>
-            </tfoot>
+            </tfoot> -->
         </table>
     </div>
 </div>

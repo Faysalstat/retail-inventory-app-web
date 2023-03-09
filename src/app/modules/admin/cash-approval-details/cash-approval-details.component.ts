@@ -45,15 +45,15 @@ export class CashApprovalDetailsComponent implements OnInit {
       this.inventoryService.fetchTaskById(this.taskId).subscribe({
         next: (res) => {
           this.taskDetail = res.body.payload;
-          console.log(this.taskDetail);
           this.taskType = res.body.taskType;
           this.comment = this.taskDetail.comment;
-          if(this.taskDetail.isReturn){
-            this.updatedBalance = Number(this.taskDetail.account.balance) - Number(this.taskDetail.cashAmount)
-          }else{
-            this.updatedBalance = Number(this.taskDetail.account.balance) + Number(this.taskDetail.cashAmount)
+          if(this.taskDetail.account){
+            if(this.taskDetail.isReturn){
+              this.updatedBalance = Number(this.taskDetail.account.balance) - Number(this.taskDetail.cashAmount)
+            }else{
+              this.updatedBalance = Number(this.taskDetail.account.balance) + Number(this.taskDetail.cashAmount)
+            }
           }
-         
         },
       });
     });
@@ -107,7 +107,8 @@ export class CashApprovalDetailsComponent implements OnInit {
       })
     }
     else if(this.taskType == Tasks.DEPOSIT_TRANSACTION 
-      || this.taskType == Tasks.EXPENSE_TRANSACTION){
+      || this.taskType == Tasks.EXPENSE_TRANSACTION
+      || this.taskType == Tasks.CASH_HANDOVER){
       params.set('expenseModel', this.taskDetail);
       this.transactionService.doExpense(params).subscribe({
         next: (res) => {

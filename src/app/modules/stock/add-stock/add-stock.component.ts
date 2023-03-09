@@ -212,7 +212,7 @@ export class AddStockComponent implements OnInit {
       this.totalPrice += elem.totalOrderPrice;
     });
     this.supplyInvoiceIssueForm.get('orders')?.setValue(this.orderList);
-    this.supplyInvoiceIssueForm.get('totalPrice')?.setValue(this.totalPrice);
+    this.supplyInvoiceIssueForm.get('totalPrice')?.setValue(+(this.totalPrice).toFixed(2));
     this.supplyInvoiceIssueForm.get("productName")?.setValue('');
     this.supplyInvoiceIssueForm.get("productCode")?.setValue('');
     this.calculateSummary();
@@ -221,7 +221,7 @@ export class AddStockComponent implements OnInit {
     console.log(event);
   }
   calculateSummary() {
-    this.subTotalPrice = this.totalPrice - this.supplyInvoiceIssueForm.get('rebate')?.value;
+    this.subTotalPrice = +(this.totalPrice - this.supplyInvoiceIssueForm.get('rebate')?.value).toFixed(2);
     // this.supplyInvoiceIssueForm.get('totalPrice')?.setValue(this.subTotalPrice);
   }
   submitOrder() {

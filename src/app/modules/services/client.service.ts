@@ -71,4 +71,10 @@ export class ClientService {
     params = params.append('category', queryParams.get('category'));
     return this.http.get(AccountUrls.FETCH_ACCOUNT_LIST_BY_CATEGORY, { params: params });
    }
+   public getAccountHistoryForProfitCalculation(queryParams: Map<string, any>): Observable<any>{
+    let params = new HttpParams();
+    params = params.append('fromDate', queryParams.get('fromDate'));
+    params = params.append('toDate', queryParams.get('toDate'));
+    return this.http.get(AccountUrls.FETCH_ACCOUNT_HISTORY_FOR_PROFIT_CALCULATION, { params: params });
+   }
 }

@@ -46,6 +46,7 @@ export class AccountHistoryComponent implements OnInit {
           this.closingBalance = 0;
           this.accountHistoryExportable = [];
           let sn = 0;
+          
           this.accountHistory.map((elem) => {
             if(this.tnxSide =="DEBIT"){
               elem.tnxType=="DEBIT"?(this.closingBalance+=elem.tnxAmount):(this.closingBalance-=elem.tnxAmount)
@@ -56,11 +57,25 @@ export class AccountHistoryComponent implements OnInit {
               SN: sn + 1,
               TNX_DATE: elem.tnxDate,
               PAYMENT_METHOD: elem.paymentMethod,
+              COMMENT: elem.remark,
               DEBIT: elem.tnxType=="DEBIT"?elem.tnxAmount:0,
               CREDIT: elem.tnxType=="CREDIT"?elem.tnxAmount:0,
-              COMMENT: elem.remark,
+              BALANCE: (this.tnxSide =="DEBIT")?
+              ((elem.tnxType == "DEBIT")?
+              (elem.previousBalance + elem.tnxAmount):(elem.previousBalance - elem.tnxAmount))
+              :((elem.tnxType == "CREDIT")?
+              (elem.previousBalance + elem.tnxAmount):(elem.previousBalance - elem.tnxAmount))
             };
             this.accountHistoryExportable.push(item);
+          });
+          this.accountHistoryExportable.unshift({
+            SN: '',
+            TNX_DATE: '',
+            PAYMENT_METHOD:'',
+            COMMENT:'',
+            DEBIT:'',
+            CREDIT:'Opening',
+            BALANCE:this.openingBalance
           });
         }else{
           this.notificationService.showErrorMessage("ERROR",res.message,"OK",200);

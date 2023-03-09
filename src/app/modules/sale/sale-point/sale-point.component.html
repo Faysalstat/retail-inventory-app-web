@@ -249,6 +249,15 @@
                             </th>
                         </tr>
                         <tr>
+                            <th style="text-align:left;">Due:</th>
+                            <th style="text-align:right;">
+                                <mat-form-field class="input-field" appearance="fill">
+                                    <input type="number" pInputText formControlName="duePayment"
+                                        [disabled]="true" matInput>
+                                </mat-form-field>
+                            </th>
+                        </tr>
+                        <tr>
                             <th style="text-align:left;">Payment Method:</th>
                             <th style="text-align:right;">
                                 <mat-form-field appearance="fill" class="input-field">

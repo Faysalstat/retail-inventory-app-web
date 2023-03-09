@@ -94,13 +94,13 @@
                         <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.previousBalance || 0}} BDT</td>
                     </tr>
                     <tr>
-                        <th style="text-align:left;">Extra Charge:</th>
+                        <th style="text-align:left;">Extra Charge: ({{invoiceDetails?.chargeReason}})</th>
                         <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.extraCharge || 0}} BDT</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th style="text-align:left;">Charge Reason:</th>
-                        <td style="text-align:right;"> {{invoiceDetails?.chargeReason}}</td>
-                    </tr>
+                        <td style="text-align:right;"> </td>
+                    </tr> -->
                     <tr>
                         <th style="text-align:left;">Discount:</th>
                         <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.rebate || 0}} BDT</td>
@@ -112,6 +112,10 @@
                     <tr>
                         <th style="text-align:left;">Total Paid:</th>
                         <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.totalPaidAmount || 0}} BDT</td>
+                    </tr>
+                    <tr>
+                        <th style="text-align:left;">Due:</th>
+                        <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.duePayment || 0}} BDT</td>
                     </tr>
                     
                 </thead>

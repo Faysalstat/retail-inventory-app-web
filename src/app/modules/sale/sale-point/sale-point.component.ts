@@ -142,6 +142,12 @@ export class SalePointComponent implements OnInit {
       extraCharge: [formData.extraCharge],
       chargeReason: [formData.chargeReason],
     });
+
+    this.saleInvoiceIssueForm.get('totalPaidAmount')?.valueChanges.subscribe((data)=>{
+      this.saleInvoiceIssueForm.get('duePayment')?.setValue((
+        this.totalPayableAmount-data
+      ))
+    })
   }
   searchCustomer() {
     if(this.person.contactNo.length<11){
@@ -288,22 +294,22 @@ export class SalePointComponent implements OnInit {
   }
   calculateOrder() {
     this.orderItem.totalOrderPrice =
-      this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
+      +(this.orderItem.quantityOrdered * this.orderItem.pricePerUnit).toFixed(2);
     this.orderItem.totalOrderCost =
-      this.orderItem.quantityOrdered * this.orderItem.buyingPricePerUnit;
+      +(this.orderItem.quantityOrdered * this.orderItem.buyingPricePerUnit).toFixed(2);
   }
   calculateQuantity() {
     this.orderItem.quantityOrdered =
-      this.orderItem.packageQuantity * this.orderItem.unitPerPackage +
-      this.orderItem.looseQuantity;
+      +(this.orderItem.packageQuantity * this.orderItem.unitPerPackage +
+      this.orderItem.looseQuantity).toFixed(2);
     this.calculateOrder();
   }
   calculateSummary() {
     this.totalPayableAmount =
-      this.totalPrice -
+      +(this.totalPrice -
       this.previousBalance -
       this.saleInvoiceIssueForm.get('rebate')?.value +
-      this.saleInvoiceIssueForm.get('extraCharge')?.value;
+      this.saleInvoiceIssueForm.get('extraCharge')?.value).toFixed(2);
   }
   // testing
 

@@ -16,6 +16,7 @@ import { EmployeeManagementComponent } from './employee-management/employee-mana
 import { LoanApprovalDetailsComponent } from './loan-approval-details/loan-approval-details.component';
 import { ProductConfigComponent } from './product-config/product-config.component';
 import { ProductManagementComponent } from './product-management/product-management.component';
+import { ProfitCalculationComponent } from './profit-calculation/profit-calculation.component';
 import { TaskListComponent } from './task-list/task-list.component';
 
 const routes: Routes = [{
@@ -38,6 +39,7 @@ const routes: Routes = [{
         {path: 'tnx-task-details/:id', component: CashApprovalDetailsComponent},
         {path: 'loan-task-details/:id', component: LoanApprovalDetailsComponent},
         {path: 'employee-details/:id', component: EmployeeDetailsComponent},
+        {path: 'profit-calculation', component: ProfitCalculationComponent},
       ]
 }];
 
