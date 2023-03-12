@@ -18,6 +18,7 @@ export class ReturnOrderComponent implements OnInit {
   selectedReturnCondition = 'RETURN';
   returnModel!: any;
   returnOrderList: any[] = [];
+  prodMsg:string = '';
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
@@ -54,10 +55,13 @@ export class ReturnOrderComponent implements OnInit {
         this.productForReduce = [];
         let orders = this.saleInvoice.orders;
         orders.map((elem: any) => {
-          if (elem.state == 'SOLD') {
+          if (elem.state == 'SOLD' && elem.deliveryStatus == 'DELIVERED') {
             this.productForReduce.push(elem);
           }
         });
+        if(this.productForReduce.length == 0){
+          this.prodMsg = "***No Delivered Product To Return";
+        }
       },
       error: (err) => {
         this.notificationService.showMessage('ERROR', err.message, 'OK', 1000);
@@ -129,7 +133,7 @@ export class ReturnOrderComponent implements OnInit {
         this.route.navigate(["/sale/edit-sale-invoice",this.saleInvoice.id]);
       },
       error: (err) => {
-        this.notificationService.showErrorMessage("ERROR","Order Returned Failed","OK",200);
+        this.notificationService.showErrorMessage("ERROR","Order Returned Failed","OK",500);
       },
     });
   }

@@ -1,14 +1,20 @@
 <mat-card>
 <app-page-loader *ngIf="showLoader"></app-page-loader>
-<h1>Add Products:</h1>
+<h1>Product Config:</h1>
 <hr>
 <form [formGroup]="productAddingForm">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
             <h2>Total Stock: <span>{{product?.quantity - product?.quantitySold}}</span></h2>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-3">
             <h2>Total Sold: <span>{{product?.quantitySold || 0}}</span></h2>
+        </div>
+        <div class="col-md-3">
+            <h2>Total Damaged: <span>{{product?.quantityDamaged || 0}}</span></h2>
+        </div>
+        <div class="col-md-3">
+            <h2>Total Returned: <span>{{product?.quantityReturn || 0}}</span></h2>
         </div>
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">

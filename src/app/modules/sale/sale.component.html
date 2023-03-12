@@ -1,56 +1,54 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2">
-            <nav class="main-menu bg-dark">
-                <ul>
-                    <li>
-                        <a routerLink="/home">
-                            <i class="fa fa-home"></i>
-                            <span class="nav-text">
-                                Home
-                            </span>
-                        </a>
-            
-                    </li>
-                    <li class="has-subnav">
-                        <a routerLink="sale-point">
-                            <i class="fa fa-list"></i>
-                            <span class="nav-text">
-                                Sale Point
-                            </span>
-                        </a>
-                    </li>
-                    <li class="has-subnav">
-                        <a routerLink="sale-invoice-list">
-                            <i class="fa fa-plus-square"></i>
-                            <span class="nav-text">
-                                Invoice List
-                            </span>
-                        </a>
-                    </li>
-                    <li class="has-subnav">
-                        <a routerLink="customer-list">
-                            <i class="fa fa-list"></i>
-                            <span class="nav-text">
-                                Customer List
-                            </span>
-                        </a>
-                    </li>
-                    <li class="has-subnav">
-                        <a routerLink="supplyer-list">
-                            <i class="fa fa-list"></i>
-                            <span class="nav-text">
-                                Supplyer List
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="col-md-10">
-            <div class="container-fluid">
-                <router-outlet></router-outlet>
-            </div>
+<div class="row">
+    <div class="col-md-2">
+        <nav class="main-menu bg-dark">
+            <ul>
+                <li>
+                    <a routerLink="/home">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-text">
+                            Home
+                        </span>
+                    </a>
+
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="sale-point">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Sale Point
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="sale-invoice-list">
+                        <i class="fa fa-plus-square"></i>
+                        <span class="nav-text">
+                            Invoice List
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="customer-list">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Customer List
+                        </span>
+                    </a>
+                </li>
+                <li class="has-subnav">
+                    <a routerLink="supplyer-list">
+                        <i class="fa fa-list"></i>
+                        <span class="nav-text">
+                            Supplyer List
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-10">
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>

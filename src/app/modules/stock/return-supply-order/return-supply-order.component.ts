@@ -19,6 +19,7 @@ export class ReturnSupplyOrderComponent implements OnInit {
   selectedReturnCondition = 'RETURN';
   returnModel: any;
   returnOrderList: any[] = [];
+  prodMsg:string = '';
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
@@ -55,10 +56,13 @@ export class ReturnSupplyOrderComponent implements OnInit {
         this.productForReduce = [];
         let orders = this.supplyInvoice.supplyOrders;
         orders.map((elem: any) => {
-          if (elem.state == 'PURCHASED') {
+          if (elem.state == 'PURCHASED' && elem.deliveryStatus == 'DELIVERED') {
             this.productForReduce.push(elem);
           }
         });
+        if(this.productForReduce.length == 0){
+          this.prodMsg = "***No Delivered Product To Return";
+        }
       },
       error: (err) => {
         this.notificationService.showMessage('ERROR', err.message, 'OK', 1000);

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <mat-form-field appearance="outline" class="input-field">
-                        <mat-label>Product</mat-label>
+                        <mat-label>Product </mat-label>
                         <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedProduct">
                             <mat-option *ngFor="let order of productForReduce;index as i"
                                 (onSelectionChange)="onSelectReturnOrder($event)"
@@ -13,6 +13,7 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+                    <p><span style="color:red">{{prodMsg}}</span></p>
                 </div>
                 <div class="col-md-2">
                     <mat-form-field appearance="outline" class="input-field">
