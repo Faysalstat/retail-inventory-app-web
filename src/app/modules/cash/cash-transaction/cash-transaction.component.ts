@@ -35,6 +35,7 @@ export class CashTransactionComponent implements OnInit {
   userName!: any;
   isReturn: boolean = false;
   isOther: boolean = false;
+  showLoader: boolean = false;
   toWords = new ToWords();
   constructor(
     private formBuilder: FormBuilder,
@@ -105,11 +106,11 @@ export class CashTransactionComponent implements OnInit {
     }
   }
   searchCustomer() {
+    this.showLoader = true;
     const params: Map<string, any> = new Map();
     if (this.selectedType == 'CUSTOMER') {
       this.clientService.getClientByContactNo(this.contactNo).subscribe({
         next: (res) => {
-          console.log(res.body);
           if (res.body) {
             this.person = res.body;
             if (res.body.customer) {
@@ -145,6 +146,9 @@ export class CashTransactionComponent implements OnInit {
           );
           this.isClientFound = false;
         },
+        complete:()=>{
+          this.showLoader = false;
+        }
       });
     } else if (this.selectedType == 'SUPPLIER') {
       params.set('id', '');
@@ -186,6 +190,7 @@ export class CashTransactionComponent implements OnInit {
     if(this.cashTransactionForm.invalid){
       return;
     }
+    this.showLoader = true;
     let transactionModel = this.cashTransactionForm.value;
     transactionModel.issuedBy =this.userName;
     transactionModel.comment = this.comment;
@@ -221,8 +226,12 @@ export class CashTransactionComponent implements OnInit {
             500
           );
         },
+        complete:()=>{
+          this.showLoader = false;
+        }
       });
     } else {
+      this.showLoader = true;
       const params: Map<string, any> = new Map();
       params.set('payment', transactionModel);
       this.inventoryService.doPaymentTransaction(params).subscribe({
@@ -248,6 +257,9 @@ export class CashTransactionComponent implements OnInit {
           );
           this.isTnxDone = false;
         },
+        complete:()=>{
+          this.showLoader = false;
+        }
       });
     }
   }

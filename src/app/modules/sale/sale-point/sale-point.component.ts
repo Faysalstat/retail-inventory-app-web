@@ -142,7 +142,7 @@ export class SalePointComponent implements OnInit {
       extraCharge: [formData.extraCharge],
       chargeReason: [formData.chargeReason],
     });
-
+    this.saleInvoiceIssueForm.get('duePayment')?.disable();
     this.saleInvoiceIssueForm.get('totalPaidAmount')?.valueChanges.subscribe((data)=>{
       this.saleInvoiceIssueForm.get('duePayment')?.setValue((
         this.totalPayableAmount-data
@@ -383,7 +383,7 @@ export class SalePointComponent implements OnInit {
             'OK',
             500
           );
-          this.downloadInvoice();
+          // this.downloadInvoice();
           this.route.navigate(['/sale/sale-invoice-list']);
         },
         error: (err) => {
@@ -399,7 +399,7 @@ export class SalePointComponent implements OnInit {
       params.set('invoice', orderIssueModel);
       this.inventoryService.issueSalesOrder(params).subscribe({
         next: (res) => {
-          console.log(res.body);
+          this.downloadInvoice();
           this.notificationService.showMessage(
             'SUCCESS!',
             'Invoice Created',

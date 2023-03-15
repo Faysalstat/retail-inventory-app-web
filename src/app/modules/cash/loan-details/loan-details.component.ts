@@ -26,6 +26,7 @@ export class LoanDetailsComponent implements OnInit {
   isApprovalNeeded: boolean = false;
   id:any;
   accountId!:any;
+  showLoader: boolean = false;
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
@@ -75,6 +76,7 @@ export class LoanDetailsComponent implements OnInit {
     this.showInstallmentPanel = event;
   }
   payInstallment() {
+    this.showLoader = true;
     this.installmentModel.loanAccount = this.loanAccount.account.id;
     if (this.isApprovalNeeded) {
       let approvalModel = {
@@ -103,6 +105,9 @@ export class LoanDetailsComponent implements OnInit {
             500
           );
         },
+        complete:()=>{
+          this.showLoader = true;
+        }
       });
     } else {
       const params: Map<string, any> = new Map();
@@ -124,6 +129,17 @@ export class LoanDetailsComponent implements OnInit {
           };
           this.fetchDetailsBID(this.id);
         },
+        error:(err)=>{
+          this.notificationService.showMessage(
+            'SUCCESS',
+            'PAYMENT Failed '+err.message,
+            '5K',
+            200
+          );
+        },
+        complete:()=>{
+          this.showLoader = true;
+        }
       });
     }
   }

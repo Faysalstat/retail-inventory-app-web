@@ -95,6 +95,7 @@ export class SaleInvoiceListComponent implements OnInit {
       deliveryStatus:'',
       fromDate: new Date('01-01-2023'),
       toDate: new Date(),
+      issuedBy:''
     }
     this.fetchSaleInvoices();
   }

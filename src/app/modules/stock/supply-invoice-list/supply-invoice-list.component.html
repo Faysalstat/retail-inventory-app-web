@@ -16,11 +16,12 @@
                         <th scope="col">Shop Name</th>
                         <th scope="col">Total Bill</th>
                         <th scope="col">Delivery Status</th>
+                        <th scope="col">Date</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngIf="!isListExist">
-                        <td colspan="9" style="font-weight:bold ; ">
+                        <td colspan="8" style="font-weight:bold ; ">
                             No Due Payment Pending!!
                         </td>
                     </tr>
@@ -32,6 +33,7 @@
                         <td>{{invoice?.supplyer?.shopName}}</td>
                         <td>{{invoice?.totalPrice}}</td>
                         <td>{{invoice?.deliveryStatus}}</td>
+                        <td>{{invoice?.purchaseDate}}</td>
                     </tr>
                 </tbody>
             </table>

@@ -1,56 +1,56 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <nav class="main-menu bg-dark">
+                <ul>
+                    <li>
+                        <a routerLink="/home">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-text">
+                                Home
+                            </span>
+                        </a>
 
-<div class="row">
-    <div class="col-md-2">
-        <nav class="main-menu bg-dark">
-            <ul>
-                <li>
-                    <a routerLink="/home">
-                        <i class="fa fa-home"></i>
-                        <span class="nav-text">
-                            Home
-                        </span>
-                    </a>
-        
-                </li>
-                <li class="has-subnav">
-                    <a routerLink="customer-list">
-                        <i class="fa fa-list"></i>
-                        <span class="nav-text">
-                            Customer List
-                        </span>
-                    </a>
-                </li>
-                <li class="has-subnav">
-                    <a routerLink="supplyer-list">
-                        <i class="fa fa-list"></i>
-                        <span class="nav-text">
-                            Supplyer List
-                        </span>
-                    </a>
-                </li>
-                <li class="has-subnav">
-                    <a routerLink="add-supplyer">
-                        <i class="fa fa-plus-square"></i>
-                        <span class="nav-text">
-                            Add Supplyer
-                        </span>
-                    </a>
-                </li>
-                <li class="has-subnav">
-                    <a routerLink="add-customer">
-                        <i class="fa fa-plus-square"></i>
-                        <span class="nav-text">
-                            Add Customer
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-    <div class="col-md-10">
-        <div class="container-fluid">
-            <router-outlet></router-outlet>
+                    </li>
+                    <li class="has-subnav">
+                        <a routerLink="customer-list">
+                            <i class="fa fa-list"></i>
+                            <span class="nav-text">
+                                Customer List
+                            </span>
+                        </a>
+                    </li>
+                    <li class="has-subnav">
+                        <a routerLink="supplyer-list">
+                            <i class="fa fa-list"></i>
+                            <span class="nav-text">
+                                Supplyer List
+                            </span>
+                        </a>
+                    </li>
+                    <li class="has-subnav">
+                        <a routerLink="add-supplyer">
+                            <i class="fa fa-plus-square"></i>
+                            <span class="nav-text">
+                                Add Supplyer
+                            </span>
+                        </a>
+                    </li>
+                    <li class="has-subnav">
+                        <a routerLink="add-customer">
+                            <i class="fa fa-plus-square"></i>
+                            <span class="nav-text">
+                                Add Customer
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
-        
+        <div class="col-md-10">
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
     </div>
 </div>

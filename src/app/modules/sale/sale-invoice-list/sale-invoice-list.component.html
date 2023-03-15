@@ -78,11 +78,12 @@
               <th scope="col">Total Bill</th>
               <th scope="col">Paid</th>
               <th scope="col">Delivery Status</th>
+              <th scope="col">Date</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngIf="!isListExist">
-              <td colspan="9" style="font-weight:bold ; ">
+              <td colspan="10" style="font-weight:bold ; ">
                 No Invoice Found!!
               </td>
             </tr>
@@ -95,6 +96,7 @@
               <td>{{invoice.totalPrice}}</td>
               <td>{{invoice.totalPaidAmount}}</td>
               <td>{{invoice.deliveryStatus}}</td>
+              <td>{{invoice.purchaseDate}}</td>
             </tr>
           </tbody>
         </table>

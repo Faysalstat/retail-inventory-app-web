@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToWords } from 'to-words';
 import { Tasks } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
+import { PdfMakeService } from '../../services/pdf-make.service';
 
 @Component({
   selector: 'app-approval-details',
@@ -23,12 +25,14 @@ export class ApprovalDetailsComponent implements OnInit {
   isDue: boolean = false;
   dueAmount:number = 0;
   userName:any;
+  toWords = new ToWords();
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
     private clientService: ClientService,
     private notificationService : NotificationService,
-    private router: Router
+    private router: Router,
+    private pdfMakeService: PdfMakeService
   ) {}
 
   ngOnInit(): void {
@@ -96,12 +100,14 @@ export class ApprovalDetailsComponent implements OnInit {
         this.inventoryService.issueBuyOrder(params).subscribe({
           next: (res) => {
             this.showLoader  = false;
+            this.downloadSupplyInvoice();
             this.notificationService.showMessage(
               'SUCCESS!',
               'Invoice Created',
               'OK',
               500
             );
+            
             this.router.navigate(['/admin/task-list']);
           },
           error: (err) => {
@@ -121,6 +127,7 @@ export class ApprovalDetailsComponent implements OnInit {
           next:(res)=>{
             this.showLoader  = false;
             this.notificationService.showMessage("SUCCESS","Order Placed Successfully","OK",300);
+            this.downloadSaleInvoice();
             this.router.navigate(['/admin/task-list']);
           },
           error:(err)=>{
@@ -150,5 +157,94 @@ export class ApprovalDetailsComponent implements OnInit {
         this.notificationService.showErrorMessage("Warning","Deletion Failed","Ok",500);
       }
     })
+  }
+
+  applyFilter(date: any) {
+    let newDate = new Date(date);
+    return (
+      newDate.getDate() +
+      '/' +
+      (newDate.getMonth() + 1) +
+      '/' +
+      newDate.getFullYear()
+    );
+  }
+
+  downloadSaleInvoice() {
+    let orders: any[] = [];
+    let index = 1;
+    let person = this.customer.person;
+    this.invoiceDetails.orders.forEach((elem: any) => {
+      let orderRow = [];
+      orderRow.push(index);
+      orderRow.push(elem.productName);
+      orderRow.push(elem.pricePerUnit);
+      orderRow.push(elem.packageQuantity);
+      orderRow.push(elem.looseQuantity);
+      orderRow.push(elem.quantityOrdered + ' ' + elem.unitType);
+      orderRow.push(elem.totalOrderPrice);
+      index++;
+      orders.push(orderRow);
+    });
+    let invoiceModel = {
+      doNo: '',
+      invoiceId: 'N/A',
+      issuedBy: localStorage.getItem('personName'),
+      customer: this.customer,
+      tnxDate: this.applyFilter(new Date()),
+      customerName: person.personName,
+      customerAddress: person.personAddress,
+      totalPrice: this.invoiceDetails.totalPrice,
+      previousBalance: this.invoiceDetails.previousBalance,
+      totalPayableAmount: this.invoiceDetails.totalPayableAmount,
+      totalPayableAmountInWords: this.toWords.convert(Math.abs(this.invoiceDetails.totalPayableAmount)),
+      totalPaid: this.invoiceDetails.totalPaidAmount,
+      discount: this.invoiceDetails.rebate,
+      orders: orders,
+      dueAmount: this.invoiceDetails.totalPayableAmount - this.invoiceDetails.totalPaidAmount,
+      extraCharge: this.invoiceDetails.extraCharge,
+      chargeReason:
+          this.invoiceDetails.chargeReason != ''
+          ? this.invoiceDetails.chargeReason
+          : 'Extra Charge',
+    };
+    this.pdfMakeService.downloadSaleInvoice(invoiceModel);
+  }
+  downloadSupplyInvoice() {
+    let orders: any[] = [];
+    let totalPaable = +(this.invoiceDetails.totalPrice - this.invoiceDetails.rebate).toFixed(2);
+    let index = 1;
+    let person = this.supplyer.person;
+    this.invoiceDetails.orders.forEach((elem: any) => {
+      let orderRow = [];
+      orderRow.push(index);
+      orderRow.push(elem.productName);
+      orderRow.push(elem.pricePerUnit);
+      orderRow.push(elem.packageQuantity);
+      orderRow.push(elem.looseQuantity);
+      orderRow.push(elem.quantityOrdered + ' ' + elem.unitType);
+      orderRow.push(elem.totalOrderPrice);
+      index++;
+      orders.push(orderRow);
+    });
+    let invoiceModel = {
+      doNo: '',
+      invoiceId: 'N/A',
+      issuedBy: this.userName,
+      supplyer: this.supplyer,
+      tnxDate: this.applyFilter(new Date()),
+      supplierName: person.personName,
+      customerAddress: person.personAddress,
+      totalPrice: this.invoiceDetails.totalPrice,
+      balance: this.supplyer.account.balance,
+      totalPayableAmount: totalPaable,
+      totalPriceInWords: this.toWords.convert(totalPaable),
+      discount: this.invoiceDetails.rebate,
+      orders: orders,
+    };
+    this.pdfMakeService.downloadSupplyInvoice(invoiceModel);
+  }
+  showPositive(number: any) {
+    return Math.abs(Number(number));
   }
 }

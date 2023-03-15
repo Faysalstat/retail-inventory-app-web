@@ -1,6 +1,7 @@
 
 <mat-card>
     <h2>Cash Transactions</h2>
+    <app-page-loader *ngIf="showLoader"></app-page-loader>
     <form [formGroup]="cashTransactionForm" (keydown.enter)="$event.preventDefault()">
         <div class="row">
             <!-- <div class="col-md-4">

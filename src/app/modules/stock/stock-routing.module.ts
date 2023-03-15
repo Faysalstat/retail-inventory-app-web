@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProductConfigComponent } from '../admin/product-config/product-config.component';
 import { ProductManagementComponent } from '../admin/product-management/product-management.component';
 import { AppAuthGuard } from '../app-auth.guard';
+import { SupplyerComponent } from '../client/supplyer/supplyer.component';
 import { AddStockComponent } from './add-stock/add-stock.component';
 import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
 import { ReturnSupplyOrderComponent } from './return-supply-order/return-supply-order.component';
@@ -20,6 +21,7 @@ const routes: Routes = [{
       {path: 'product-stock', component: ProductManagementComponent},
       {path: 'product-detail/:id', component: ProductConfigComponent},
       {path: 'return-supply-order/:id', component: ReturnSupplyOrderComponent},
+      {path: 'supplyer-list', component: SupplyerComponent},
       ]}
     ]
 

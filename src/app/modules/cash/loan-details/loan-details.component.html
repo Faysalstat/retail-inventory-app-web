@@ -58,6 +58,7 @@
     </div>
 </mat-card>
 <mat-card *ngIf="showInstallmentPanel" class="mt-3">
+    <app-page-loader *ngIf="showLoader"></app-page-loader>
     <div class="row">
         <div class="col-md-12">
             <h2>Pay Installment</h2>

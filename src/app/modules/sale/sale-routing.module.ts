@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppAuthGuard } from '../app-auth.guard';
 import { CustomerComponent } from '../client/customer/customer.component';
-import { SupplyerComponent } from '../client/supplyer/supplyer.component';
 import { EditSaleInvoiceComponent } from './edit-sale-invoice/edit-sale-invoice.component';
 import { ReturnOrderComponent } from './return-order/return-order.component';
 import { SaleInvoiceListComponent } from './sale-invoice-list/sale-invoice-list.component';
@@ -18,7 +17,7 @@ const routes: Routes = [{
         {path: 'edit-sale-invoice/:id', component: EditSaleInvoiceComponent},
         {path: 'retun-sale-order/:id', component: ReturnOrderComponent},
         {path: 'customer-list', component: CustomerComponent},
-        {path: 'supplyer-list', component: SupplyerComponent},
+        
         ]}
       ]
 

@@ -264,7 +264,7 @@ export class AddStockComponent implements OnInit {
             'OK',
             500
           );
-          this.downloadInvoice();
+          // this.downloadInvoice();
           this.route.navigate(['/supply/supply-invoice-list']);
         },
         error:(err)=>{
@@ -288,7 +288,7 @@ export class AddStockComponent implements OnInit {
             'OK',
             500
           );
-          this.downloadInvoice();
+          // this.downloadInvoice();
           this.route.navigate(['/supply/supply-invoice-list']);
         },
         error: (err) => {

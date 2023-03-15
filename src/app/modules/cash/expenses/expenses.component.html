@@ -1,16 +1,6 @@
 <mat-card>
-    <div class="mt-5" style="padding:10px 20px ;">
-        <h1>GL Account</h1>
-        <h2>Balance: <span>{{balance}} BDT</span></h2>
-        <hr>
-    </div>
+    <h2>Cash Transactions</h2>
     <mat-tab-group class="mt-4">
-        <!-- <mat-tab label="CLIENT TRANSACTION">
-            <app-cash-payment (payrollEvent)="updateBalance($event)" ></app-cash-payment>
-        </mat-tab> -->
-        <!-- <mat-tab label="DEPOSIT">
-            <app-deposit (depositEvent)="updateBalance($event)"></app-deposit>
-        </mat-tab> -->
         <mat-tab label="LOAN MANAGEMENT">
             <app-add-loan-details (loanEvent)="updateBalance($event)" ></app-add-loan-details>
         </mat-tab>
@@ -23,8 +13,5 @@
         <mat-tab label="CASH WITHDRAWAL">
             <app-cash-withdrawal (withdrawalEvent)="updateBalance($event)"></app-cash-withdrawal>
         </mat-tab>
-       
-
     </mat-tab-group>
-    
 </mat-card>
