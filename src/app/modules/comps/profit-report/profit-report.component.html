@@ -1,26 +1,6 @@
 <mat-card>
-    <h1>Profit Report</h1>
+    <h1>Buying Selling Summary</h1>
     <hr>
-    <div class="row">
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
-                <mat-label>From Date</mat-label>
-                <input matInput [matDatepicker]="fromDatePicker" (dateInput)="fetchReportSummary()"
-                    [ngModelOptions]="{standalone:true}" [(ngModel)]="query.fromDate">
-                <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #fromDatePicker></mat-datepicker>
-            </mat-form-field>
-        </div>
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
-                <mat-label>To Date</mat-label>
-                <input matInput [matDatepicker]="toDatePicker" (dateInput)="fetchReportSummary()"
-                    [ngModelOptions]="{standalone:true}" [(ngModel)]="query.toDate">
-                <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #toDatePicker></mat-datepicker>
-            </mat-form-field>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-12">
             <table class="table table-striped" style="text-align:center">
@@ -53,6 +33,59 @@
         <div class="col-md-12">
             <hr>
             <h2>Invoice Wise Profit Report</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <mat-form-field class="input-field" appearance="outline">
+                        <mat-label>Invoice No</mat-label>
+                        <input placeholder="Invoice No" pInputText (change)="fetchReportSummary()"
+                            [ngModelOptions]="{standalone:true}" [(ngModel)]="query.invoiceNo" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>From Date</mat-label>
+                        <input matInput [matDatepicker]="fromDatePicker" (dateInput)="fetchReportSummary()"
+                            [ngModelOptions]="{standalone:true}" [(ngModel)]="query.fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #fromDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>To Date</mat-label>
+                        <input matInput [matDatepicker]="toDatePicker" (dateInput)="fetchReportSummary()"
+                            [ngModelOptions]="{standalone:true}" [(ngModel)]="query.toDate">
+                        <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #toDatePicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped" style="text-align:center">
+                        <thead>
+                            <tr class="table-primary">
+                                <th>Total Income</th>
+                                <th>Total Discount</th>
+                                <th>Total Extra Charge</th>
+                                <th>Total Profit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-Info">
+                                <th>{{totalIncome}}</th>
+                                <th>{{totalDiscount}}</th>
+                                <th>{{totalExtraCharge}}</th>
+                                <th>{{totalProfit}}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-md-12">
+
             <table class="table table-striped" style="text-align:center">
                 <thead>
                     <tr class="table-primary">
@@ -76,7 +109,25 @@
                         <td>{{model?.date}}</td>
                     </tr>
                 </tbody>
+                <!-- <tfoot>
+                    <tr>
+                        <th colspan="2">Total</th>
+                        <th>{{totalIncome}}</th>
+                        <th>{{totalDiscount}}</th>
+                        <th>{{totalExtraCharge}}</th>
+                        <th>{{totalProfit}}</th>
+                        <th>BDT</th>
+                    </tr>
+                </tfoot> -->
             </table>
         </div>
+        <!-- <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <div style="float:right ;font-size: 16px;">
+                <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChange($event)" aria-label="Select page">
+                </mat-paginator>
+            </div>
+        </div> -->
     </div>
 </mat-card>

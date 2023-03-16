@@ -26,7 +26,12 @@ export class SupplyInvoiceListComponent implements OnInit {
   ) { 
     this.queryBody={
       offset:0,
-      limit:0
+      limit:0,
+      invoiceNo:'',
+      code:'',
+      deliveryStatus:'',
+      fromDate: new Date('01-01-2023'),
+      toDate: new Date(),
     }
   }
 
@@ -54,7 +59,6 @@ export class SupplyInvoiceListComponent implements OnInit {
     params.set('query', this.queryBody);
     this.inventoryService.fetchAllSupplyInvoice(params).subscribe({
       next:(res)=>{
-        console.log(res.body);
         if(res.body.length>0){
           this.isListExist = true;
         }else{
@@ -76,6 +80,18 @@ export class SupplyInvoiceListComponent implements OnInit {
   }
   viewInvoice(invoice:any){
     this.route.navigate(["/supply/edit-supply-invoice",invoice.id]);
+  }
+  refresh(){
+    this.queryBody={
+      offset:0,
+      limit:0,
+      invoiceNo:'',
+      code:'',
+      deliveryStatus:'',
+      fromDate: new Date('01-01-2023'),
+      toDate: new Date()
+    }
+    this.fetchSupplyList();
   }
 
 }

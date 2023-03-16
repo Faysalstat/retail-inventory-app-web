@@ -156,6 +156,7 @@ export class SalePointComponent implements OnInit {
     }else{
       this.isLengthError =false;
     }
+    this.showLoader = true;
     this.clientService.getClientByContactNo(this.person.contactNo).subscribe({
       next: (res) => {
         if (res.body) {
@@ -203,7 +204,9 @@ export class SalePointComponent implements OnInit {
           2000
         );
       },
-      complete: () => {},
+      complete: () => {
+        this.showLoader = false;
+      },
     });
   }
   addCustomer() {
@@ -350,6 +353,7 @@ export class SalePointComponent implements OnInit {
     this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
   }
   submitOrder() {
+    
     if (!this.saleInvoiceIssueForm.valid) {
       this.notificationService.showMessage(
         'INVALID FORM!',
@@ -359,6 +363,7 @@ export class SalePointComponent implements OnInit {
       );
       return;
     }
+    this.showLoader = true;
     let orderIssueModel = this.saleInvoiceIssueForm.value;
     orderIssueModel.accountId = this.account.id;
     orderIssueModel.comment = this.comment;
@@ -394,8 +399,12 @@ export class SalePointComponent implements OnInit {
             500
           );
         },
+        complete:()=>{
+          this.showLoader = false;
+        }
       });
     } else {
+      this.showLoader = true;
       params.set('invoice', orderIssueModel);
       this.inventoryService.issueSalesOrder(params).subscribe({
         next: (res) => {
@@ -409,7 +418,6 @@ export class SalePointComponent implements OnInit {
           this.route.navigate(['/sale/sale-invoice-list']);
         },
         error: (err) => {
-          console.log(err);
           this.notificationService.showMessage(
             'ERROR!',
             'Invoice Not Created',
@@ -417,6 +425,9 @@ export class SalePointComponent implements OnInit {
             500
           );
         },
+        complete:()=>{
+          this.showLoader = false;
+        }
       });
     }
   }

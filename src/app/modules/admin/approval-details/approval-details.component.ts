@@ -100,7 +100,7 @@ export class ApprovalDetailsComponent implements OnInit {
         this.inventoryService.issueBuyOrder(params).subscribe({
           next: (res) => {
             this.showLoader  = false;
-            this.downloadSupplyInvoice();
+            this.downloadSupplyInvoice(res.body.invoiceNo);
             this.notificationService.showMessage(
               'SUCCESS!',
               'Invoice Created',
@@ -127,7 +127,7 @@ export class ApprovalDetailsComponent implements OnInit {
           next:(res)=>{
             this.showLoader  = false;
             this.notificationService.showMessage("SUCCESS","Order Placed Successfully","OK",300);
-            this.downloadSaleInvoice();
+            this.downloadSaleInvoice(res.body.invoiceNo);
             this.router.navigate(['/admin/task-list']);
           },
           error:(err)=>{
@@ -170,7 +170,7 @@ export class ApprovalDetailsComponent implements OnInit {
     );
   }
 
-  downloadSaleInvoice() {
+  downloadSaleInvoice(invoiceNo:any) {
     let orders: any[] = [];
     let index = 1;
     let person = this.customer.person;
@@ -188,7 +188,7 @@ export class ApprovalDetailsComponent implements OnInit {
     });
     let invoiceModel = {
       doNo: '',
-      invoiceId: 'N/A',
+      invoiceId: invoiceNo,
       issuedBy: localStorage.getItem('personName'),
       customer: this.customer,
       tnxDate: this.applyFilter(new Date()),
@@ -210,7 +210,7 @@ export class ApprovalDetailsComponent implements OnInit {
     };
     this.pdfMakeService.downloadSaleInvoice(invoiceModel);
   }
-  downloadSupplyInvoice() {
+  downloadSupplyInvoice(inoviceNo:any) {
     let orders: any[] = [];
     let totalPaable = +(this.invoiceDetails.totalPrice - this.invoiceDetails.rebate).toFixed(2);
     let index = 1;
@@ -229,7 +229,7 @@ export class ApprovalDetailsComponent implements OnInit {
     });
     let invoiceModel = {
       doNo: '',
-      invoiceId: 'N/A',
+      invoiceId: inoviceNo,
       issuedBy: this.userName,
       supplyer: this.supplyer,
       tnxDate: this.applyFilter(new Date()),

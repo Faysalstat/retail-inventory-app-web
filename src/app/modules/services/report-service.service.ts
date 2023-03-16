@@ -14,9 +14,9 @@ export class ReportServiceService {
     let params = new HttpParams();
     params = params.append('offset',queryParams.get('offset'));
     params = params.append('limit',queryParams.get('limit'));
-    params = params.append('tnxType',queryParams.get('tnxType'));
-    params = params.append('voucherNo',queryParams.get('voucherNo'));
-    params = params.append('transactionCategory',queryParams.get('transactionCategory'));
+    params = params.append('tnxType',queryParams.get('tnxType').trim());
+    params = params.append('voucherNo',queryParams.get('voucherNo').trim());
+    params = params.append('transactionCategory',queryParams.get('transactionCategory').trim());
     params = params.append('fromDate',queryParams.get('fromDate'));
     params = params.append('toDate',queryParams.get('toDate'));
     return this.http.get(ReportUrls.TRANSACTION_REPORT,{params:params});
@@ -34,12 +34,12 @@ export class ReportServiceService {
 
   public fetchOrderListRecord(queryParams:any): Observable<any> {
     let params = new HttpParams();
-    params = params.append('deliveryStatus',queryParams.deliveryStatus);
-    params = params.append('invoiceNo',queryParams.invoiceNo);
-    params = params.append('orderNo',queryParams.orderNo);
+    params = params.append('deliveryStatus',queryParams.deliveryStatus.trim());
+    params = params.append('invoiceNo',queryParams.invoiceNo.trim());
+    params = params.append('orderNo',queryParams.orderNo.trim());
     params = params.append('offset',queryParams.offset);
     params = params.append('limit',queryParams.limit);
-    params = params.append('productCode',queryParams.productCode);
+    params = params.append('productCode',queryParams.productCode.trim());
     params = params.append('fromDate',queryParams.fromDate);
     params = params.append('toDate',queryParams.toDate);
     return this.http.get(ReportUrls.SALE_ORDER_REPORT,{params:params});
@@ -48,11 +48,11 @@ export class ReportServiceService {
   public fetchSupplyOrderListRecord(queryParams:any): Observable<any> {
     let params = new HttpParams();
     params = params.append('deliveryStatus',queryParams.deliveryStatus);
-    params = params.append('invoiceNo',queryParams.invoiceNo);
-    params = params.append('orderNo',queryParams.orderNo);
-    params = params.append('offset',queryParams.offset);
-    params = params.append('limit',queryParams.limit);
-    params = params.append('productCode',queryParams.productCode);
+    params = params.append('invoiceNo',queryParams.invoiceNo.trim());
+    params = params.append('orderNo',queryParams.orderNo.trim());
+    params = params.append('offset',queryParams.offset.trim());
+    params = params.append('limit',queryParams.limit.trim());
+    params = params.append('productCode',queryParams.productCode.trim());
     params = params.append('fromDate',queryParams.fromDate);
     params = params.append('toDate',queryParams.toDate);
     return this.http.get(ReportUrls.SUPPLY_ORDER_REPORT,{params:params});
@@ -71,8 +71,13 @@ export class ReportServiceService {
     return this.http.get(ReportUrls.DASHBORAD_ENTITY_SUMMARY,{params:params});
   }
 
-  public fetchProfitReport(): Observable<any> {
+  public fetchProfitReport(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
+    params = params.append('offset',queryParams.get('query').offset);
+    params = params.append('limit',queryParams.get('query').limit);
+    params = params.append('fromDate',queryParams.get('query').fromDate);
+    params = params.append('toDate',queryParams.get('query').toDate);
+    params = params.append('invoiceNo',queryParams.get('query').invoiceNo.trim());
     return this.http.get(ReportUrls.PROFIT_REPORT_SUMMARY,{params:params});
   }
 

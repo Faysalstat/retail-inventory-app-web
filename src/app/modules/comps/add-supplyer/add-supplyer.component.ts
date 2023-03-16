@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientIssueModel, Customer, Person } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { NotificationService } from '../../services/notification-service.service';
@@ -40,14 +40,14 @@ export class AddSupplyerComponent implements OnInit {
     this.supplyerAddingForm = this.formBuilder.group({
       id: [formData.id],
       companyName: [formData.companyName],
-      shopName: [formData.shopName],
-      code: [formData.code],
+      shopName: [formData.shopName,[Validators.required]],
+      code: [formData.code,[Validators.required]],
       regNo: [formData.regNo],
-      brandName: [formData.brandName],
-      contactNo: [formData.contactNo],
+      brandName: [formData.brandName,[Validators.required]],
+      contactNo: [formData.contactNo,[Validators.required]],
       website: [formData.website],
-      personName: [formData.personName],
-      personAddress: [formData.personAddress],
+      personName: [formData.personName,[Validators.required]],
+      personAddress: [formData.personAddress,[Validators.required]],
       email: [formData.email],
     });
 
@@ -79,7 +79,12 @@ export class AddSupplyerComponent implements OnInit {
   
 
 addSupplyer(){
-  if (this.supplyerAddingForm.invalid) {
+  if (this.supplyerAddingForm.invalid ) {
+    if(!this.person.contactNo || this.person.contactNo!='' || this.person.personName!='' ){
+      this.notificationService.showMessage("WARNING!","Form Invalid, Add Person Information","OK",1000);
+      return;
+    }
+    this.notificationService.showMessage("WARNING!","Form Invalid","OK",1000);
     return;
   }
   this.showLoader = true;
@@ -103,7 +108,7 @@ addSupplyer(){
       this.notificationService.showMessage("SUCCESS!","Supplyer Add Successful","OK",1000);
     },
     error:(err)=>{
-      this.notificationService.showMessage("FAILED!","Supplyer Add Failed","OK",1000);
+      this.notificationService.showMessage("FAILED!","Supplyer Add Failed "+err.message,"OK",1000);
     },
     complete:()=>{
       this.showLoader = false;

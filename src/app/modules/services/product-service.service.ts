@@ -16,9 +16,9 @@ export class ProductService {
     let params = new HttpParams();
     params = params.append('offset',queryParams.get('offset'));
     params = params.append('limit',queryParams.get('limit'));
-    params = params.append('brandName',queryParams.get('brandName'));
-    params = params.append('categoryName',queryParams.get('categoryName'));
-    params = params.append('code',queryParams.get('code'));
+    params = params.append('brandName',queryParams.get('brandName').trim());
+    params = params.append('categoryName',queryParams.get('categoryName').trim());
+    params = params.append('code',queryParams.get('code').trim());
     return this.http.get(ProductUrls.FETCH_ALL_PRODUCT,{params:params});
   }
 
@@ -42,8 +42,8 @@ export class ProductService {
   }
   public fetchProductByCode(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
-    params = params.append('code',queryParams.get('code'));
-    params = params.append('name',queryParams.get('name'));
+    params = params.append('code',queryParams.get('code').trim());
+    params = params.append('name',queryParams.get('name').trim());
     return this.http.get(ProductUrls.FETCH_PRODUCT_BY_CODE,{params:params});
   }
   public fetchAllBrandName(): Observable<any> {

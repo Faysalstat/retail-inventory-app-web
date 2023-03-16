@@ -173,6 +173,7 @@ export class EditSaleInvoiceComponent implements OnInit {
           invoiceId: order.saleInvoiceId,
         };
         this.doDelievery(deliveryModel);
+        this.selection = new SelectionModel<any>(true, []); 
       }
     }
     this.fetchInvoiceDetailsByID();
@@ -182,9 +183,9 @@ export class EditSaleInvoiceComponent implements OnInit {
     params.set('delivery', deliveryModel);
     this.inventoryService.issueSupplyOrderDelievery(params).subscribe({
       next: (res) => {
-        console.log(res.body);
         this.delieverySchedule = new ScehduleDelivery();
         this.fetchInvoiceDetailsByID();
+        
       },
       error: (err) => {
         this.notificationService.showMessage(

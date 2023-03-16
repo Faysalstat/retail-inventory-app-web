@@ -1,6 +1,11 @@
 <mat-card>
-    <h1>Invoice Details:</h1>
+    
     <div class="row">
+        <div class="col-md-6"><h1>Invoice Details:</h1></div>
+        <div class="col-md-6">
+            <button style="float:right;" (click)="downloadInvoice()" mat-raised-button color="accent">Download
+                Invoice</button>
+        </div>
         <div class="col-md-6">
             <table class="table table-striped">
                 <thead>
@@ -105,7 +110,7 @@
                 <tfoot>
                     <tr>
                         <td colspan="8"></td>
-                        <td><button *ngIf="supplyInvoice.deliveryStatus!='DELIVERED'"  mat-raised-button color="warn" (click)="deliverAll()">Deliver All</button></td>
+                        <td><button *ngIf="supplyInvoice?.deliveryStatus!='DELIVERED'"  mat-raised-button color="warn" (click)="deliverAll()">Deliver All</button></td>
                     </tr>
                 </tfoot>
             </table>

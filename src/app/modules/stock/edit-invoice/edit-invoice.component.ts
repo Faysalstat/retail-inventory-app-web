@@ -1,9 +1,11 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToWords } from 'to-words';
 import { ScehduleDelivery, Supplyer } from '../../model/models';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
+import { PdfMakeService } from '../../services/pdf-make.service';
 
 @Component({
   selector: 'app-edit-invoice',
@@ -29,12 +31,14 @@ export class EditInvoiceComponent implements OnInit {
   selection = new SelectionModel<any>(true, []);
   supplyOrdersForSchedule: any[] = [];
   deliveryDisable:boolean = false;
+  toWords = new ToWords();
   
   constructor(
     private route:Router,
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private pdfMakeService: PdfMakeService
   ) {
     this.payment = {
       invoiceId: 0,
@@ -53,7 +57,6 @@ export class EditInvoiceComponent implements OnInit {
   fetchInvoiceDetailsByID() {
     this.inventoryService.fetchSupplyInvoiceById(this.id).subscribe({
       next: (res) => {
-        console.log(res.body);
         this.supplyer = res.body.supplyer;
         this.supplyOrders = res.body.supplyOrders;
         this.isPending = false;
@@ -185,7 +188,6 @@ export class EditInvoiceComponent implements OnInit {
   }
 
   deliverAll() {
-    console.log(this.selection.selected)
     let selectedOrders = this.selection.selected;
     for (let i = 0; i < selectedOrders.length; i++) {
       let order = selectedOrders[i];
@@ -203,8 +205,8 @@ export class EditInvoiceComponent implements OnInit {
         params.set('delivery', deliveryModel);
         this.inventoryService.issueSupplyOrderDelievery(params).subscribe({
           next: (res) => {
-            console.log(res.body);
             this.fetchInvoiceDetailsByID();
+            this.selection = new SelectionModel<any>(true, []);
           },
           error: (err) => {
             this.notificationService.showMessage(
@@ -236,5 +238,48 @@ export class EditInvoiceComponent implements OnInit {
   }
   showReturnPanel(ev: boolean) {
     this.route.navigate(["/supply/return-supply-order",this.supplyInvoice.id]);
+  }
+  downloadInvoice() {
+    let orders: any[] = [];
+    let index = 1;
+    let totalPayableAmount = this.supplyInvoice.totalPrice - this.supplyInvoice.rebate;
+    this.supplyOrders.forEach((elem: any) => {
+      let orderRow = [];
+      orderRow.push(index);
+      orderRow.push(elem.product.productName);
+      orderRow.push(elem.pricePerUnit);
+      orderRow.push(elem.packageQuantity);
+      orderRow.push(elem.looseQuantity);
+      orderRow.push(elem.quantityOrdered + ' ' + elem.product.unitType);
+      orderRow.push(elem.totalPrice);
+      index++;
+      orders.push(orderRow);
+    });
+    let invoiceModel = {
+      doNo: '',
+      invoiceId: this.supplyInvoice.invoiceNo,
+      issuedBy: this.supplyInvoice.issuedBy,
+      supplyer: this.supplyer,
+      tnxDate: this.supplyInvoice.purchaseDate,
+      supplierName: this.supplyer.person.personName,
+      customerAddress: this.supplyer.person.personAddress,
+      totalPrice: this.supplyInvoice.totalPrice,
+      balance: this.supplyer.account.balance,
+      totalPayableAmount: totalPayableAmount,
+      totalPriceInWords: this.toWords.convert(totalPayableAmount),
+      discount: this.supplyInvoice.rebate,
+      orders: orders,
+    };
+    this.pdfMakeService.downloadSupplyInvoice(invoiceModel);
+  }
+  applyFilter(date: any) {
+    let newDate = new Date(date);
+    return (
+      newDate.getDate() +
+      '/' +
+      (newDate.getMonth() + 1) +
+      '/' +
+      newDate.getFullYear()
+    );
   }
 }

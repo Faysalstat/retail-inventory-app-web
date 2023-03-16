@@ -6,20 +6,41 @@
             <button class="box" mat-raised-button color="accent">Cash In Hand <br>
                 <hr class="c-hr"> {{cashGlBalance || 0}} BDT
             </button>
-        </div>
-        <div class="col-md-3">
+            <br>
+            <hr>
             <button class="box" mat-raised-button color="primary">Asset Balance <br>
                 <hr class="c-hr"> {{assetBalance || 0}} BDT
             </button>
         </div>
+
         <div class="col-md-3">
-            <button class="box" mat-raised-button color="warn">Total Discount Given <br>
-                <hr class="c-hr"> {{dashboardSummary?.saleProfitSumamry?.totalDiscount || 0}} BDT
+            <button class="box" mat-raised-button color="warn">Todays Discount Given <br>
+                <hr class="c-hr"> {{dashboardSummary?.todaysDiscountGiven || 0}} BDT
+            </button>
+            <br>
+            <hr>
+            <button class="box" mat-raised-button color="accent">Total Discount Given <br>
+                <hr class="c-hr"> {{dashboardSummary?.totalDiscountGiven || 0}} BDT
             </button>
         </div>
         <div class="col-md-3">
-            <button class="box" mat-raised-button color="accent">Total Discount Received<br>
+            <button class="box" mat-raised-button color="primary">Todays Discount Received<br>
+                <hr class="c-hr"> {{dashboardSummary?.supplySumamry?.todaysDiscount || 0}} BDT
+            </button>
+            <br>
+            <hr>
+            <button class="box" mat-raised-button color="warn">Total Discount Received<br>
                 <hr class="c-hr"> {{dashboardSummary?.supplySumamry?.totalDiscountReceived || 0}} BDT
+            </button>
+        </div>
+        <div class="col-md-3">
+            <button class="box" mat-raised-button color="accent">Todays Extra Charge<br>
+                <hr class="c-hr"> {{dashboardSummary?.todaysExtraCharge || 0}} BDT
+            </button>
+            <br>
+            <hr>
+            <button class="box" mat-raised-button color="primary">Total Extra Charge<br>
+                <hr class="c-hr"> {{dashboardSummary?.totalExtraCharge || 0}} BDT
             </button>
         </div>
     </div>

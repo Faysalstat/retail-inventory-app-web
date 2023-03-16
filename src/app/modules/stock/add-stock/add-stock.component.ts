@@ -100,6 +100,7 @@ export class AddStockComponent implements OnInit {
     });
   }
   searchSupllyer() {
+    this.showLoader = true;
     const params: Map<string, any> = new Map();
     params.set("id","");
     params.set("code",this.supplyer.code);
@@ -142,7 +143,9 @@ export class AddStockComponent implements OnInit {
           2000
         );
       },
-      complete: () => {},
+      complete: () => {
+        this.showLoader = false;
+      },
     });
   }
   fetchProducts() {
@@ -243,6 +246,7 @@ export class AddStockComponent implements OnInit {
       );
       return;
     }
+    this.showLoader = true;
     let orderIssueModel = this.supplyInvoiceIssueForm.value;
     orderIssueModel.supplyerId = this.supplyer.id;
     orderIssueModel.comment = this.comment;
@@ -274,6 +278,9 @@ export class AddStockComponent implements OnInit {
             'OK',
             500
           );
+        },
+        complete:()=>{
+          this.showLoader = false;
         }
       })
     }else{
@@ -300,6 +307,9 @@ export class AddStockComponent implements OnInit {
             500
           );
         },
+        complete:()=>{
+          this.showLoader = false;
+        }
       });
     }
     

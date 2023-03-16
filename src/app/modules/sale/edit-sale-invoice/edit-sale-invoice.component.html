@@ -123,7 +123,7 @@
                         </tr>
                         <tr>
                             <td colspan="8"></td>
-                            <td><button mat-raised-button color="warn" (click)="deliverAll()">Deliver All</button></td>
+                            <td><button *ngIf="saleInvoice?.deliveryStatus!='DELIVERED'" mat-raised-button color="warn" (click)="deliverAll()">Deliver All</button></td>
                         </tr>
                     </tbody>
                     <tfoot>
