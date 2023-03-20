@@ -65,7 +65,7 @@ export class VisualDashboardComponent implements OnInit {
 					if (order > suffixes.length - 1) order = suffixes.length - 1;
 			
 					var suffix = suffixes[order];
-					return '$' + e.value / Math.pow(100000, order) + suffix;
+					return 'BDT' + e.value / Math.pow(100000, order) + suffix;
 				  },
 				},
 				toolTip: {
@@ -91,7 +91,7 @@ export class VisualDashboardComponent implements OnInit {
 					showInLegend: true,
 					name: 'Sale',
 					axisYType: 'secondary',
-					yValueFormatString: '$#,###',
+					yValueFormatString: 'BDT #,###',
 					dataPoints: [
 					  { label: 'Jan', y: monthlySaleModel.jan },
 					  { label: 'Feb', y: monthlySaleModel.feb },
@@ -112,7 +112,7 @@ export class VisualDashboardComponent implements OnInit {
 					showInLegend: true,
 					name: 'Purchase',
 					axisYType: 'secondary',
-					yValueFormatString: '$#,###',
+					yValueFormatString: 'BDT #,###',
 					dataPoints: [
 					  { label: 'Jan', y: monthlyPurchaseModel.jan },
 					  { label: 'Feb', y: monthlyPurchaseModel.feb },

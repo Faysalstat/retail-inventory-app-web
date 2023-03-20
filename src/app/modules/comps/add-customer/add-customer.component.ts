@@ -103,6 +103,7 @@ export class AddCustomerComponent implements OnInit {
       contactNo: this.person.contactNo,
       personAddress: this.person.personAddress,
       shopName: this.customer.shopName,
+      shopAddress: this.customer.shopAddress,
       // regNo: this.customer.regNo
     };
     params.set('client', customerModel);
@@ -110,7 +111,7 @@ export class AddCustomerComponent implements OnInit {
     this.clientService.addClient(params).subscribe({
       next: (res) => {
         if (res.body) {
-          this.showLoader = false;
+          
           this.isCustomerExist = true;
         }
         this.errMsg ="";
@@ -121,6 +122,17 @@ export class AddCustomerComponent implements OnInit {
           1000
         );
       },
+      error:(err)=>{
+        this.notificationService.showErrorMessage(
+          'ERROR!',
+          'Client Add Failed ' +err.message,
+          'OK',
+          1000
+        );
+      },
+      complete:()=>{
+        this.showLoader = false;
+      }
     });
   }
 

@@ -109,7 +109,7 @@ export class CashTransactionComponent implements OnInit {
     this.showLoader = true;
     const params: Map<string, any> = new Map();
     if (this.selectedType == 'CUSTOMER') {
-      this.clientService.getClientByContactNo(this.contactNo).subscribe({
+      this.clientService.getClientByContactNo(this.contactNo.trim()).subscribe({
         next: (res) => {
           if (res.body) {
             this.person = res.body;
@@ -152,10 +152,9 @@ export class CashTransactionComponent implements OnInit {
       });
     } else if (this.selectedType == 'SUPPLIER') {
       params.set('id', '');
-      params.set('code', this.code);
+      params.set('code', this.code.trim());
       this.clientService.getSupplyerByCode(params).subscribe({
         next: (res) => {
-          console.log(res.body);
           if (res.body) {
             this.supplier = res.body;
             this.person = res.body.person;
@@ -182,6 +181,9 @@ export class CashTransactionComponent implements OnInit {
             200
           );
         },
+        complete:()=>{
+          this.showLoader = false;
+        }
       });
     }
   }
@@ -328,8 +330,9 @@ export class CashTransactionComponent implements OnInit {
       issuedBy: localStorage.getItem('personName'),
       customer: this.customer,
       supplier:this.supplier,
+      person: this.person,
       tnxDate: this.applyFilter(new Date()),
-      clientName: this.isCustomer?this.customer.person.personName:this.supplier.person.personName,
+      clientName: this.isCustomer?this.person.personName:this.supplier.person.personName,
       tnxAmount: this.cashTransactionForm.get('cashAmount')?.value,
       tnxType: this.cashTransactionForm.get('transactionType')?.value,
       tnxAmountInWords: this.toWords.convert(

@@ -76,8 +76,14 @@ export class AddLoanAccComponent implements OnInit {
           this.fetchAllLoanAcc();
         }
       },
-      error:(res)=>{
+      error:(err)=>{
         this.showLoader = false;
+        this.notificationService.showErrorMessage(
+          'ERROR!',
+          'Client Add Failed '+ err.message,
+          'OK',
+          1000
+        );
       }
     });
   }

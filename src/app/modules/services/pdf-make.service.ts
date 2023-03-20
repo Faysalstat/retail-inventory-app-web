@@ -455,7 +455,7 @@ export class PdfMakeService {
           {
             content: 'Paid By:'
             +'\n' + (model.clientName || '')
-            +'\n' + (model.customer.person.contactNo || '')
+            +'\n' + (model.person.contactNo || '')
             +'\n' + (model.customer.shopName || '')
             +'\n' + (model.customer.shopAddress || ''),
             styles: {

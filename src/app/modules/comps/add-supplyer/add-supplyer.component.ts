@@ -44,10 +44,10 @@ export class AddSupplyerComponent implements OnInit {
       code: [formData.code,[Validators.required]],
       regNo: [formData.regNo],
       brandName: [formData.brandName,[Validators.required]],
-      contactNo: [formData.contactNo,[Validators.required]],
+      contactNo: [formData.contactNo],
       website: [formData.website],
-      personName: [formData.personName,[Validators.required]],
-      personAddress: [formData.personAddress,[Validators.required]],
+      personName: [formData.personName],
+      personAddress: [formData.personAddress],
       email: [formData.email],
     });
 

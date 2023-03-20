@@ -16,13 +16,13 @@
         <div class="col-md-3">
             <h2>Total Returned: <span>{{product?.quantityReturn || 0}}</span></h2>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Product Code</mat-label>
                 <input formControlName="productCode" (change)="checkDuplicateProduct()" placeholder="Product Code" matInput>
             </mat-form-field>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Product Name</mat-label>
                 <input formControlName="productName" placeholder="Product Name" matInput>
