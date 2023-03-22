@@ -1,4 +1,4 @@
-<mat-card>
+<!-- <mat-card>
     <h1>Return Product from Customer</h1>
     <div class="row">
         <div class="col-md-3">
@@ -47,15 +47,6 @@
                     placeholder="Quantity" matInput>
             </mat-form-field>
         </div>
-        <!-- <div class="col-md-3">
-            <mat-form-field appearance="outline">
-                <mat-label>Return Date:</mat-label>
-                <input matInput [matDatepicker]="picker"  [ngModelOptions]="{standalone:true}"
-                    [(ngModel)]="delieverySchedule.scheduledDate">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-        </div> -->
         <div class="col-md-12">
             <div class="input-field">
                 <button (click)="addOrder()" mat-raised-button color="warn">Add
@@ -74,7 +65,6 @@
                         <th>Loose Quantity</th>
                         <th>Total Quantity</th>
                         <th>Price</th>
-                        <!-- <th>Action</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -90,7 +80,6 @@
                         <th>{{order.looseQuantity}}</th>
                         <th>{{order.quantityReturned}} {{order.unitType}}</th>
                         <th>{{order.totalOrderPrice}} BDT</th>
-                        <!-- <th>{{order.totalPrice}}</th> -->
                     </tr>
                 </tbody>
             </table>
@@ -100,4 +89,4 @@
             <button style="float: right;" mat-raised-button color="warn" (click)="receiveReturn()">Receive</button>
         </div>
     </div>
-</mat-card>
+</mat-card> -->

@@ -1,95 +1,73 @@
 <mat-card>
-<app-page-loader *ngIf="showLoader"></app-page-loader>
-<h1>Product Config:</h1>
-<hr>
-<form [formGroup]="productAddingForm">
-    <div class="row">
-        <div class="col-md-3">
-            <h2>Total Stock: <span>{{product?.quantity - product?.quantitySold}}</span></h2>
+    <app-page-loader *ngIf="showLoader"></app-page-loader>
+    <h1>Product Config:</h1>
+    <hr>
+    <form [formGroup]="productAddingForm">
+        <div class="row">
+            <div class="col-md-3">
+                <h2>Total Stock: <span>{{product?.quantity - product?.quantitySold}}</span></h2>
+            </div>
+            <div class="col-md-3">
+                <h2>Total Sold: <span>{{product?.quantitySold || 0}}</span></h2>
+            </div>
+            <div class="col-md-3">
+                <h2>Total Damaged: <span>{{product?.quantityDamaged || 0}}</span></h2>
+            </div>
+            <div class="col-md-3">
+                <h2>Total Replaced: <span>{{product?.quantityReplaced || 0}}</span></h2>
+            </div>
         </div>
-        <div class="col-md-3">
-            <h2>Total Sold: <span>{{product?.quantitySold || 0}}</span></h2>
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Product Code</mat-label>
+                    <input formControlName="productCode" (change)="checkDuplicateProduct()" placeholder="Product Code"
+                        matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-8">
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Product Name</mat-label>
+                    <input formControlName="productName" placeholder="Product Name" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Brand Name</mat-label>
+                    <mat-select formControlName="brandName">
+                        <mat-option *ngFor="let brand of brandNames" [value]="brand.value">{{brand?.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline" class="input-field">
+                    <mat-label>Product Category</mat-label>
+                    <mat-select formControlName="productCategory">
+                        <mat-option *ngFor="let cat of categories" [value]="cat.value">{{cat?.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>MRP</mat-label>
+                    <input type="number" formControlName="mrpPerUnit" placeholder="MRP" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <mat-form-field class="input-field" style="width:50%" appearance="outline">
+                    <mat-label>Warranty Period (Month)</mat-label>
+                    <input type="number" formControlName="warrantyPeriod"
+                        placeholder="Period No" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-12">
+                <p style="color: red;font-weight: bold;">{{errMsg}}</p>
+            </div>
+            <div class="col-md-12">
+                <button (click)="addProduct()" mat-raised-button color="warn">{{isEdit?"Update Product":"Add Product"}}</button>
+            </div>
         </div>
-        <div class="col-md-3">
-            <h2>Total Damaged: <span>{{product?.quantityDamaged || 0}}</span></h2>
-        </div>
-        <div class="col-md-3">
-            <h2>Total Returned: <span>{{product?.quantityReturn || 0}}</span></h2>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Product Code</mat-label>
-                <input formControlName="productCode" (change)="checkDuplicateProduct()" placeholder="Product Code" matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-8">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Product Name</mat-label>
-                <input formControlName="productName" placeholder="Product Name" matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Brand Name</mat-label>
-                <mat-select formControlName="brandName">
-                    <mat-option *ngFor="let brand of brandNames" [value]="brand.value">{{brand?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Product Category</mat-label>
-                <mat-select formControlName="productCategory">
-                    <mat-option *ngFor="let cat of categories" [value]="cat.value">{{cat?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Unit Type</mat-label>
-                <mat-select formControlName="unitType">
-                    <mat-option *ngFor="let unit of units" [value]="unit.value">{{unit?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <div class="col-md-4">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Packaging Category</mat-label>
-                <mat-select formControlName="packagingCategory">
-                    <mat-option *ngFor="let unit of packagingCategories" [value]="unit.value">{{unit?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Unit Per Package</mat-label>
-                <input type="number" formControlName="unitPerPackage" placeholder="Unit Per Package" matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Buying Price</mat-label>
-                <input type="number" formControlName="costPricePerUnit" placeholder="Buying Price" matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Selling Price</mat-label>
-                <input type="number" type="number" formControlName="sellingPricePerUnit" placeholder="Selling Price"
-                    matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-12">
-            <p style="color: red;font-weight: bold;">{{errMsg}}</p>
-        </div>
-        <div class="col-md-12">
-            <button (click)="addProduct()" mat-raised-button color="warn">{{isEdit?"Update Product":"Add Product"}}</button>
-        </div>
-    </div>
-</form>
+    </form>
 </mat-card>

@@ -12,6 +12,7 @@ import {
   OrderItem,
   Person,
   Product,
+  SupplyOrderItem,
   Supplyer,
   SupplyIssueDomain,
   Tasks} from '../../model/models';
@@ -36,7 +37,7 @@ export class AddStockComponent implements OnInit {
   personId!: number;
   productName ='';
   selectedProduct = new Product();
-  orderItem!: OrderItem;
+  orderItem!: SupplyOrderItem;
   selectedOrderItem!: OrderItem;
   orderList!: any[];
   productList: any[] = [];
@@ -61,7 +62,7 @@ export class AddStockComponent implements OnInit {
   ) {
     this.supplyer = new Supplyer();
     this.person = new Person();
-    this.orderItem = new OrderItem();
+    this.orderItem = new SupplyOrderItem();
     this.orderList = [];
     this.prepareInvoiceIssueForm(null);
   }
@@ -91,7 +92,6 @@ export class AddStockComponent implements OnInit {
       id: [formData.id],
       supplyerId: [formData.supplyerId],
       orders: [formData.orders, [Validators.required]],
-      schedules: [formData.schedules],
       productName: [formData.productName],
       productCode: [formData.productCode],
       totalPrice: [formData.totalPrice, [Validators.required]],
@@ -189,14 +189,11 @@ export class AddStockComponent implements OnInit {
     this.orderItem.productId = this.selectedProduct.id;
     this.orderItem.productName = this.selectedProduct.productName;
     this.orderItem.productCode = this.selectedProduct.productCode;
-    this.orderItem.unitType = this.selectedProduct.unitType;
-    this.orderItem.pricePerUnit = this.selectedProduct.costPricePerUnit;
-    this.orderItem.unitPerPackage = this.selectedProduct.unitPerPackage;
-    this.unitType = this.selectedProduct.unitType;
-    console.log(this.selectedProduct);
+    this.orderItem.mrpPerUnit = this.selectedProduct.mrpPerUnit;
   }
   calculateOrder() {
-    this.orderItem.totalOrderPrice =
+    this.orderItem.pricePerUnit = this.orderItem.mrpPerUnit * (this.orderItem.buyingPercentage/100);
+    this.orderItem.totalPrice =
       this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
   }
   addSupplyOrder() {
@@ -208,7 +205,7 @@ export class AddStockComponent implements OnInit {
       return;
     }
     this.orderList.push(this.orderItem);
-    this.orderItem = new OrderItem();
+    this.orderItem = new SupplyOrderItem();
     this.productName = '';
     this.totalPrice = 0;
     this.orderList.map((elem) => {
@@ -314,10 +311,6 @@ export class AddStockComponent implements OnInit {
     }
     
   }
-  calculateQuantity() {
-    this.orderItem.quantityOrdered = (this.orderItem.packageQuantity * this.orderItem.unitPerPackage) + this.orderItem.looseQuantity;
-    this.calculateOrder();
-  }
 
   onProductNameInput(event: any) {
     if (event.target.value == '') {
@@ -376,5 +369,12 @@ export class AddStockComponent implements OnInit {
       '/' +
       newDate.getFullYear()
     );
+  }
+  findBySerialNo(){
+    this.productService.fetchProductEntityBySerial(this.orderItem.productSerialNo).subscribe({
+      next:(res)=>{
+        console.log(res.message);
+      }
+    })
   }
 }

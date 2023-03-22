@@ -1,7 +1,7 @@
 // const BASE_URL = 'https://demo.vatasolution.me/api';
 // const BASE_URL = 'https://shopongroup.com/api';
-const BASE_URL = 'https://uat.shopongroup.com/api';
-// const BASE_URL = "http://localhost:3000/api";
+// const BASE_URL = 'https://uat.shopongroup.com/api';
+const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
@@ -15,6 +15,7 @@ export const ProductUrls = {
   FETCH_PRODUCT_BY_NAME: BASE_URL + '/product/getproductbyname',
   FETCH_PRODUCT_BY_CODE: BASE_URL + '/product/getproductbycode',
   FETCH_PRODUCT_BRAND_NAME: BASE_URL + '/product/getallbrandname',
+  FETCH_PRODUCT_ENTITY_BY_SERIAL: BASE_URL + '/product/getproductentitbyserial',
   ADD_PRODUCT_CATEGORY: BASE_URL + '/product/addproductcategory',
   ADD_PACKAGING_CATEGORY: BASE_URL + '/product/addpackagingcategory',
   ADD_UNIT_TYPE: BASE_URL + '/product/addunittype',

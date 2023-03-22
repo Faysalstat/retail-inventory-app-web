@@ -285,27 +285,17 @@ export class SalePointComponent implements OnInit {
     this.orderItem.productId = this.selectedProduct.id;
     this.orderItem.productCode = this.selectedProduct.productCode;
     this.orderItem.productName = this.selectedProduct.productName;
-    this.orderItem.unitType = this.selectedProduct.unitType;
-    this.orderItem.packagingCategory = this.selectedProduct.packagingCategory;
-    this.orderItem.unitPerPackage = this.selectedProduct.unitPerPackage;
-    this.orderItem.pricePerUnit = this.selectedProduct.sellingPricePerUnit;
-    this.orderItem.buyingPricePerUnit = this.selectedProduct.costPricePerUnit;
+    this.orderItem.sellingPricePerUnit = this.selectedProduct.sellingPricePerUnit;
+    this.orderItem.buyingPricePerUnit = this.selectedProduct.buyingPricePerUnit;
     this.orderItem.quantity = this.selectedProduct.quantity;
-    this.unitType = this.selectedProduct.unitType;
     this.availableStock = this.selectedProduct.quantity;
 
   }
   calculateOrder() {
-    this.orderItem.totalOrderPrice =
-      +(this.orderItem.quantityOrdered * this.orderItem.pricePerUnit).toFixed(2);
+    this.orderItem.totalPrice =
+      +(this.orderItem.quantityOrdered * this.orderItem.sellingPricePerUnit).toFixed(2);
     this.orderItem.totalOrderCost =
       +(this.orderItem.quantityOrdered * this.orderItem.buyingPricePerUnit).toFixed(2);
-  }
-  calculateQuantity() {
-    this.orderItem.quantityOrdered =
-      +(this.orderItem.packageQuantity * this.orderItem.unitPerPackage +
-      this.orderItem.looseQuantity).toFixed(2);
-    this.calculateOrder();
   }
   calculateSummary() {
     this.totalPayableAmount =
@@ -320,7 +310,7 @@ export class SalePointComponent implements OnInit {
     if (
       !this.orderItem.productId ||
       !this.orderItem.quantityOrdered ||
-      !this.orderItem.pricePerUnit
+      !this.orderItem.buyingPricePerUnit
     ) {
       return;
     }

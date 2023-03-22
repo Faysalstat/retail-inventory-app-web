@@ -31,6 +31,11 @@ export class ProductService {
     params = params.append('id',productId);
     return this.http.get(ProductUrls.FETCH_PRODUCT_BY_ID,{params:params});
   }
+  public fetchProductEntityBySerial(serial:any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('serial',serial);
+    return this.http.get(ProductUrls.FETCH_PRODUCT_BY_ID,{params:params});
+  }
   public fetchAllPackagingCategory(): Observable<any> {
     return this.http.get(ProductUrls.FETCH_ALL_PACKAGING_CATEGORY);
   }

@@ -12,13 +12,17 @@ import { ProductService } from '../../services/product-service.service';
 export class ProductConfigComponent implements OnInit {
   productAddingForm!: FormGroup;
   categories!: any[];
+  periods!: any[];
   packagingCategories!: any[];
   brandNames!: any[];
+  periodTypes!: any[];
   units!: any[];
   showLoader:boolean = false;
   isEdit:boolean = false;
   product!:any;
   errMsg:string ='';
+  period:number =0;
+  periodType:string = "MONTH"
   constructor(
     private activatedRoute:ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -26,6 +30,10 @@ export class ProductConfigComponent implements OnInit {
     private notificationService: NotificationService,
     private route : Router
     ) {
+      this.periodTypes = [
+        {label:"Month",value:"MONTH"},
+        {label:"Year",value:"YEAR"},
+      ]
      }
 
   ngOnInit(): void {
@@ -37,13 +45,11 @@ export class ProductConfigComponent implements OnInit {
         
       }else{
         this.isEdit = false;
-        console.log("create");
       }
       
       
     });
     this.prepareForm();
-    this.fetchPackagingCategory();
     this.fetchProductCategory();
     this.fetchUnitType();
     this.fetchBrandName();
@@ -69,13 +75,10 @@ export class ProductConfigComponent implements OnInit {
       productCode: ['',[Validators.required]],
       productName: ['',[Validators.required]],
       productCategory: ['',[Validators.required]],
-      unitType: ['',[Validators.required]],
       quantity: [0],
       brandName:['',[Validators.required]],
-      costPricePerUnit: [0],
-      sellingPricePerUnit: [0],
-      packagingCategory:['',[Validators.required]],
-      unitPerPackage:[0]
+      mrpPerUnit: [0],
+      warrantyPeriod:[0]
     });
   }
   
@@ -133,13 +136,10 @@ export class ProductConfigComponent implements OnInit {
       productCode: this.product.productCode || "",
       productName: this.product.productName || "",
       productCategory: this.product.productCategory || "",
-      unitType: this.product.unitType || "",
       quantity:this.product.quantity || "",
       brandName:this.product.brandName|| "",
-      costPricePerUnit:this.product.costPricePerUnit|| "",
-      sellingPricePerUnit:this.product.sellingPricePerUnit|| "",
-      packagingCategory:this.product.packagingCategory|| "",
-      unitPerPackage:this.product.unitPerPackage|| "",
+      mrpPerUnit:this.product.mrpPerUnit || 0,
+      warrantyPeriod:this.product.warrantyPeriod || 0,
     });
   }
 
