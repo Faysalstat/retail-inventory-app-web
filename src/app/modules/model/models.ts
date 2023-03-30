@@ -114,7 +114,7 @@ export class OrderIssueDomain {
   previousBalance!:number;
   totalPayableAmount!: number;
   totalPaidAmount!: number;
-  duePayment!: number;
+  duePayment: number = 0;
   rebate!:number;
   chargeReason!:string;
   extraCharge!:number;

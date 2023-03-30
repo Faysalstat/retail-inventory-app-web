@@ -193,11 +193,10 @@ export class AddStockComponent implements OnInit {
     this.orderItem.pricePerUnit = this.selectedProduct.costPricePerUnit;
     this.orderItem.unitPerPackage = this.selectedProduct.unitPerPackage;
     this.unitType = this.selectedProduct.unitType;
-    console.log(this.selectedProduct);
   }
   calculateOrder() {
     this.orderItem.totalOrderPrice =
-      this.orderItem.quantityOrdered * this.orderItem.pricePerUnit;
+      +(Number(this.orderItem.quantityOrdered * this.orderItem.pricePerUnit).toFixed(2));
   }
   addSupplyOrder() {
     if (

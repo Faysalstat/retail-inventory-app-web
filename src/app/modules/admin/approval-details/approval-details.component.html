@@ -63,7 +63,7 @@
         <div *ngIf="isStock" class="col-md-6">
             <table class="table">
                 <thead>
-                    <tr>
+                    <tr style="background-color:#7498fc;">
                         <th>Total Bill:</th>
                         <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.totalPrice || 0}} BDT</td>
                     </tr>
@@ -105,11 +105,11 @@
                         <th style="text-align:left;">Discount:</th>
                         <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.rebate || 0}} BDT</td>
                     </tr>
-                    <tr>
+                    <tr style="background-color:#7498fc;">
                         <th style="text-align:left;">Total Payable Bill:</th>
                         <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.totalPayableAmount || 0}} BDT</td>
                     </tr>
-                    <tr>
+                    <tr style="background-color:#7498fc;">
                         <th style="text-align:left;">Total Paid:</th>
                         <td style="text-align:right;font-weight: bold;"> {{invoiceDetails?.totalPaidAmount || 0}} BDT</td>
                     </tr>

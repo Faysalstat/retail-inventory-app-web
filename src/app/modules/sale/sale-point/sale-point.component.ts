@@ -50,6 +50,7 @@ export class SalePointComponent implements OnInit {
   totalPrice: number = 0;
   previousBalance: number = 0;
   totalPayableAmount: number = 0;
+  totalDueAmount: number = 0;
   balanceTitle: string = 'Balance';
   comment: string = '';
   isApprovalNeeded: boolean = true;
@@ -60,7 +61,7 @@ export class SalePointComponent implements OnInit {
   balanceType: string = 'Payable';
   productCode: string = '';
   toWords = new ToWords();
-  isLengthError:boolean = false;
+  isLengthError: boolean = false;
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -143,18 +144,23 @@ export class SalePointComponent implements OnInit {
       chargeReason: [formData.chargeReason],
     });
     this.saleInvoiceIssueForm.get('duePayment')?.disable();
-    this.saleInvoiceIssueForm.get('totalPaidAmount')?.valueChanges.subscribe((data)=>{
-      this.saleInvoiceIssueForm.get('duePayment')?.setValue((
-        this.totalPayableAmount-data
-      ))
+    this.saleInvoiceIssueForm.get('duePayment')?.valueChanges.subscribe((data) => {
+      this.totalDueAmount = data;
     })
+    this.saleInvoiceIssueForm
+      .get('totalPaidAmount')
+      ?.valueChanges.subscribe((data) => {
+        this.saleInvoiceIssueForm
+          .get('duePayment')
+          ?.setValue(this.totalPayableAmount - data);
+      });
   }
   searchCustomer() {
-    if(this.person.contactNo.length<11){
-      this.isLengthError =true;
+    if (this.person.contactNo.length < 11) {
+      this.isLengthError = true;
       return;
-    }else{
-      this.isLengthError =false;
+    } else {
+      this.isLengthError = false;
     }
     this.showLoader = true;
     this.clientService.getClientByContactNo(this.person.contactNo).subscribe({
@@ -167,7 +173,6 @@ export class SalePointComponent implements OnInit {
             2000
           );
           this.person = res.body;
-          console.log(res.body);
           if (res.body.customer) {
             this.customer = res.body.customer;
             this.account = this.customer.account;
@@ -196,7 +201,6 @@ export class SalePointComponent implements OnInit {
       },
       error: (err) => {
         this.isCustomerExist = false;
-        console.log(err.message);
         this.notificationService.showMessage(
           'ERROR!',
           'Customer Found Failed' + err.message,
@@ -293,26 +297,33 @@ export class SalePointComponent implements OnInit {
     this.orderItem.quantity = this.selectedProduct.quantity;
     this.unitType = this.selectedProduct.unitType;
     this.availableStock = this.selectedProduct.quantity;
-
   }
   calculateOrder() {
-    this.orderItem.totalOrderPrice =
-      +(this.orderItem.quantityOrdered * this.orderItem.pricePerUnit).toFixed(2);
-    this.orderItem.totalOrderCost =
-      +(this.orderItem.quantityOrdered * this.orderItem.buyingPricePerUnit).toFixed(2);
+    this.orderItem.totalOrderPrice = +(
+      this.orderItem.quantityOrdered * this.orderItem.pricePerUnit
+    ).toFixed(2);
+    this.orderItem.totalOrderCost = +(
+      this.orderItem.quantityOrdered * this.orderItem.buyingPricePerUnit
+    ).toFixed(2);
   }
   calculateQuantity() {
-    this.orderItem.quantityOrdered =
-      +(this.orderItem.packageQuantity * this.orderItem.unitPerPackage +
-      this.orderItem.looseQuantity).toFixed(2);
+    this.orderItem.quantityOrdered = +(
+      this.orderItem.packageQuantity * this.orderItem.unitPerPackage +
+      this.orderItem.looseQuantity
+    ).toFixed(2);
     this.calculateOrder();
   }
   calculateSummary() {
-    this.totalPayableAmount =
-      +(this.totalPrice -
+    this.totalPayableAmount = +(
+      this.totalPrice -
       this.previousBalance -
       this.saleInvoiceIssueForm.get('rebate')?.value +
-      this.saleInvoiceIssueForm.get('extraCharge')?.value).toFixed(2);
+      this.saleInvoiceIssueForm.get('extraCharge')?.value
+    ).toFixed(2);
+    this.saleInvoiceIssueForm
+      .get('duePayment')
+      ?.setValue(this.totalPayableAmount - (this.saleInvoiceIssueForm
+        .get('totalPaidAmount')?.value || 0));
   }
   // testing
 
@@ -339,10 +350,14 @@ export class SalePointComponent implements OnInit {
     this.saleInvoiceIssueForm.get('productCode')?.setValue('');
     this.totalPrice = totalPrice;
     this.totalPayableAmount = this.totalPrice - this.previousBalance;
+
     if (this.totalPayableAmount < 0) {
       this.balanceType = 'Return';
     } else {
       this.balanceType = 'Payable';
+      this.saleInvoiceIssueForm
+        .get('duePayment')
+        ?.setValue(this.totalPayableAmount);
     }
   }
   calculateTotalPrice() {
@@ -353,7 +368,6 @@ export class SalePointComponent implements OnInit {
     this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
   }
   submitOrder() {
-    
     if (!this.saleInvoiceIssueForm.valid) {
       this.notificationService.showMessage(
         'INVALID FORM!',
@@ -389,7 +403,8 @@ export class SalePointComponent implements OnInit {
             500
           );
           // this.downloadInvoice();
-          this.route.navigate(['/sale/sale-invoice-list']);
+          // this.route.navigate(['/sale/sale-invoice-list']);
+          window.location.reload();
         },
         error: (err) => {
           this.notificationService.showMessage(
@@ -399,9 +414,9 @@ export class SalePointComponent implements OnInit {
             500
           );
         },
-        complete:()=>{
+        complete: () => {
           this.showLoader = false;
-        }
+        },
       });
     } else {
       this.showLoader = true;
@@ -415,7 +430,8 @@ export class SalePointComponent implements OnInit {
             'OK',
             500
           );
-          this.route.navigate(['/sale/sale-invoice-list']);
+          // this.route.navigate(['/sale/sale-invoice-list']);
+          window.location.reload();
         },
         error: (err) => {
           this.notificationService.showMessage(
@@ -425,9 +441,9 @@ export class SalePointComponent implements OnInit {
             500
           );
         },
-        complete:()=>{
+        complete: () => {
           this.showLoader = false;
-        }
+        },
       });
     }
   }
@@ -469,7 +485,9 @@ export class SalePointComponent implements OnInit {
       totalPrice: this.totalPrice,
       previousBalance: this.previousBalance,
       totalPayableAmount: this.totalPayableAmount,
-      totalPayableAmountInWords: this.toWords.convert(Math.abs(this.totalPayableAmount)),
+      totalPayableAmountInWords: this.toWords.convert(
+        Math.abs(this.totalPayableAmount)
+      ),
       totalPaid: this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
       discount: this.saleInvoiceIssueForm.get('rebate')?.value,
       orders: orders,

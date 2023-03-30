@@ -214,10 +214,11 @@ export class EditSaleInvoiceComponent implements OnInit {
     let orders: any[] = [];
     let index = 1;
     this.saleOrders.forEach((elem: any) => {
+      console.log(elem)
       let orderRow = [];
       orderRow.push(index);
       orderRow.push(elem.product.productName);
-      orderRow.push(elem.product.sellingPricePerUnit);
+      orderRow.push(elem.pricePerUnit);
       orderRow.push(elem.packageQuantity);
       orderRow.push(elem.looseQuantity);
       orderRow.push(elem.quantityOrdered + ' ' + elem.product.unitType);
