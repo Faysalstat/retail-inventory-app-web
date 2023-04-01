@@ -16,6 +16,7 @@ export class ProfitCalculationComponent implements OnInit {
   totalExpense = 0;
   totalExtraCharge = 0;
   queryBody!:any;
+  showLoader:boolean = false;
   constructor(
     private clientService: ClientService,
     private notificationService: NotificationService,
@@ -35,9 +36,9 @@ export class ProfitCalculationComponent implements OnInit {
     const params: Map<string, any> = new Map();
     params.set("fromDate",this.queryBody.fromDate);
     params.set("toDate",this.queryBody.toDate);
+    this.showLoader = true;
     this.clientService.getAccountHistoryForProfitCalculation(params).subscribe({
       next:(res)=>{
-        console.log(res);
         this.totalIncome=0;
         this.totalExpense=0;
         this.totalExtraCharge=0;
@@ -45,16 +46,24 @@ export class ProfitCalculationComponent implements OnInit {
         this.extraChargeAccountHistoryList = res.body.extraChargeAccountHistories;
         this.expenseAccountHistoryList = res.body.expenseAccountHistories;
         this.incomeAccountHistoryList.map((elem)=>{
-          elem.tnxType=='CREDIT'?(this.totalIncome += elem.tnxAmount):(this.totalIncome -= elem.tnxAmount)
+          let tnxAmount = +(Number(elem.tnxAmount).toFixed(2));
+          elem.tnxType=='CREDIT'?(this.totalIncome += tnxAmount):(this.totalIncome -= tnxAmount)
         })
         this.extraChargeAccountHistoryList.map((elem)=>{
-          elem.tnxType=='CREDIT'?(this.totalExtraCharge += elem.tnxAmount):(this.totalExtraCharge -= elem.tnxAmount)
+          let tnxAmount = +(Number(elem.tnxAmount).toFixed(2));
+          elem.tnxType=='CREDIT'?(this.totalExtraCharge += tnxAmount):(this.totalExtraCharge -= tnxAmount)
         })
         this.expenseAccountHistoryList.map((elem)=>{
-          elem.tnxType=='DEBIT'?(this.totalExpense += elem.tnxAmount):(this.totalExpense -= elem.tnxAmount)
+          let tnxAmount = +(Number(elem.tnxAmount).toFixed(2));
+          elem.tnxType=='DEBIT'?(this.totalExpense += tnxAmount):(this.totalExpense -= tnxAmount)
         })
       },
-      error:(err)=>{}
+      error:(err)=>{
+        this.notificationService.showErrorMessage("ERROR","Calculation Data Fetching Failed: Error "+err.message,"Ok",1000);
+      },
+      complete:()=>{
+        this.showLoader = false;
+      }
     })
   }
 

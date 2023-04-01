@@ -1,20 +1,25 @@
 <mat-card class="mt-3">
     <div class="row">
         <h2>Cash Payment:</h2>
+        <!-- <div class="col-md-3">
+            <mat-form-field appearance="outline" class="input-field">
+                <mat-label>Select Expense Type</mat-label>
+                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="expenseReason">
+                    <mat-option *ngFor="let reason of transactionReasons" [value]="reason.value">{{reason?.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> -->
         <div class="col-md-3">
-                <mat-form-field appearance="outline" class="input-field">
-                    <mat-label>Select Expense Type</mat-label>
-                    <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="expenseReason">
-                        <mat-option *ngFor="let reason of transactionReasons" [value]="reason.value">{{reason?.label}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Select Expense Type</mat-label>
+                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="expenseReason" placeholder="Expense Reason" matInput>
+            </mat-form-field>
+        </div>
         <div class="col-md-3">
             <mat-form-field appearance="outline" class="input-field">
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="paymentMethod">
-                    <mat-option *ngFor="let method of paymentMethods"
-                        [value]="method.value">{{method?.label}}
+                    <mat-option *ngFor="let method of paymentMethods" [value]="method.value">{{method?.label}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
