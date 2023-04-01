@@ -89,11 +89,7 @@
                                     <thead>
                                         <tr>
                                             <th>Product Name</th>
-                                            <th> ({{orderItem.productCode}}) {{orderItem.productName}}</th>
-                                        </tr>
-                                        <tr>
-                                            <th>Unit Type</th>
-                                            <th>{{orderItem.unitType}}</th>
+                                            <th> ({{orderItem.productCode || '---'}}) {{orderItem.productName}}</th>
                                         </tr>
                                         <tr>
                                             <th>Stock</th>
@@ -106,26 +102,50 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>Price Rate</th>
-                                            <th>{{orderItem.pricePerUnit}} Taka</th>
+                                            <th>MRP</th>
+                                            <th>{{orderItem.mrpPrice}} Taka</th>
                                         </tr>
                                         <tr>
-                                            <th>Packaging Category</th>
-                                            <th>{{orderItem.packagingCategory}}</th>
+                                            <th>Buying Rate</th>
+                                            <th>{{orderItem.buyingPercentage}} %</th>
                                         </tr>
                                         <tr>
-                                            <th>Unit Per Package</th>
-                                            <th>{{orderItem.unitPerPackage}} {{orderItem.unitType}}</th>
+                                            <th>Buying Price Per Unit</th>
+                                            <th>{{orderItem.buyingPricePerUnit}} Taka</th>
                                         </tr>
                                     </thead>
                                 </table>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-2">
+                        <mat-form-field class="input-field" appearance="outline">
+                            <mat-label>MRP</mat-label>
+                            <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
+                                [(ngModel)]="orderItem.mrpPrice"
+                                placeholder="MRP" matInput>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field class="input-field" appearance="outline">
+                            <mat-label>Selling Rate (%)</mat-label>
+                            <input type="number" pInputText [ngModelOptions]="{standalone:true}"
+                                (change)="calculateSellingPrice()" [(ngModel)]="orderItem.sellingPercentage"
+                                placeholder="Selling Rate" matInput>
+                        </mat-form-field>
+                    </div>
                     <div class="col-md-3">
                         <mat-form-field class="input-field" appearance="outline">
-                            <mat-label>Total Quantity</mat-label>
+                            <mat-label>Selling Price Per Unit</mat-label>
                             <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
+                                (change)="calculateOrder()" [(ngModel)]="orderItem.pricePerUnit"
+                                placeholder="Selling Price Per Unit" matInput>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field class="input-field" appearance="outline">
+                            <mat-label>Order Quantity</mat-label>
+                            <input type="number" pInputText [ngModelOptions]="{standalone:true}" 
                                 (change)="calculateOrder()" [(ngModel)]="orderItem.quantityOrdered"
                                 placeholder="Quantity" matInput>
                         </mat-form-field>
@@ -151,11 +171,8 @@
                                     <th>SN</th>
                                     <th style="width:30% ;">Product Name</th>
                                     <th>Rate</th>
-                                    <th>Package Quantity</th>
-                                    <th>Loose Quantity</th>
                                     <th>Total Quantity</th>
                                     <th>Price</th>
-                                    <!-- <th>Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -167,11 +184,8 @@
                                     <th scope="row">{{i+1}}</th>
                                     <th>{{order.productName}}</th>
                                     <th>{{order.pricePerUnit}}</th>
-                                    <th>{{order.packageQuantity}}</th>
-                                    <th>{{order.looseQuantity}}</th>
-                                    <th>{{order.quantityOrdered}} {{order.unitType}}</th>
+                                    <th>{{order.quantityOrdered}}</th>
                                     <th>{{order.totalOrderPrice}} BDT</th>
-                                    <!-- <th>{{order.totalPrice}}</th> -->
                                 </tr>
                             </tbody>
                         </table>

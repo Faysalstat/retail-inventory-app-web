@@ -127,7 +127,6 @@ export class SalePointComponent implements OnInit {
       doNo: [formData.doNo],
       invoiceNo: [formData.invoiceNo],
       customerId: [formData.customerId, [Validators.required]],
-      // accountId:[formData.accountId,[Validators.required]],
       orders: [formData.orders, [Validators.required]],
       productName: [formData.productName],
       productCode: [formData.productCode],
@@ -221,8 +220,7 @@ export class SalePointComponent implements OnInit {
       personName: this.person.personName,
       contactNo: this.person.contactNo,
       personAddress: this.person.personAddress,
-      shopName: this.customer.shopName,
-      // regNo: this.customer.regNo
+      shopName: this.customer.shopName
     };
     params.set('client', customerModel);
 
@@ -250,7 +248,6 @@ export class SalePointComponent implements OnInit {
         this.filteredOptions = res.body;
         this.filteredCodeOptions = res.body;
         this.productList = res.body;
-        // this.notificationService.showMessage("SUCCESS!","Product gets Successfully","OK",1000);
       },
       error: (err) => {
         this.notificationService.showMessage(
@@ -290,8 +287,9 @@ export class SalePointComponent implements OnInit {
     this.orderItem.productCode = this.selectedProduct.productCode;
     this.orderItem.productName = this.selectedProduct.productName;
     this.orderItem.unitType = this.selectedProduct.unitType;
-    this.orderItem.packagingCategory = this.selectedProduct.packagingCategory;
-    this.orderItem.unitPerPackage = this.selectedProduct.unitPerPackage;
+    this.orderItem.mrpPrice = this.selectedProduct.mrpPrice;
+    this.orderItem.buyingPercentage = this.selectedProduct.buyingPercentage;
+    this.orderItem.sellingPercentage = this.selectedProduct.sellingPercentage;
     this.orderItem.pricePerUnit = this.selectedProduct.sellingPricePerUnit;
     this.orderItem.buyingPricePerUnit = this.selectedProduct.costPricePerUnit;
     this.orderItem.quantity = this.selectedProduct.quantity;
@@ -501,5 +499,8 @@ export class SalePointComponent implements OnInit {
 
   showPositive(number: any) {
     return Math.abs(Number(number));
+  }
+  calculateSellingPrice(){
+    this.orderItem.pricePerUnit = this.orderItem.mrpPrice*(1-(this.orderItem.sellingPercentage/100));
   }
 }
