@@ -7,7 +7,7 @@ import { ProductService } from '../../services/product-service.service';
 @Component({
   selector: 'app-product-config',
   templateUrl: './product-config.component.html',
-  styleUrls: ['./product-config.component.css']
+  styleUrls: ['./product-config.component.css'],
 })
 export class ProductConfigComponent implements OnInit {
   productAddingForm!: FormGroup;
@@ -15,32 +15,28 @@ export class ProductConfigComponent implements OnInit {
   packagingCategories!: any[];
   brandNames!: any[];
   units!: any[];
-  showLoader:boolean = false;
-  isEdit:boolean = false;
-  product!:any;
-  errMsg:string ='';
+  showLoader: boolean = false;
+  isEdit: boolean = false;
+  product!: any;
+  errMsg: string = '';
   constructor(
-    private activatedRoute:ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private productService: ProductService,
     private notificationService: NotificationService,
-    private route : Router
-    ) {
-     }
+    private route: Router
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((parameter) => {
-      if(parameter['id']){
+      if (parameter['id']) {
         let id = parameter['id'];
         this.isEdit = true;
         this.fetchProductById(id);
-        
-      }else{
+      } else {
         this.isEdit = false;
-        console.log("create");
+        console.log('create');
       }
-      
-      
     });
     this.prepareForm();
     this.fetchPackagingCategory();
@@ -48,183 +44,277 @@ export class ProductConfigComponent implements OnInit {
     this.fetchUnitType();
     this.fetchBrandName();
   }
-  fetchProductById(id:any){
+  fetchProductById(id: any) {
     this.productService.fetchProductById(id).subscribe({
-      next:(res)=>{
+      next: (res) => {
         console.log(res);
-        if(res.body){
+        if (res.body) {
           this.product = res.body;
-          this.notificationService.showMessage("SUCCESS","Product Found","OK",300);
+          this.notificationService.showMessage(
+            'SUCCESS',
+            'Product Found',
+            'OK',
+            300
+          );
           this.setFormValue();
           this.productAddingForm.get('productCode')?.disable();
         }
       },
-      error:(err)=>{
-        this.notificationService.showMessage("ERROR","Error Occured","OK",300);
-      }
-    })
+      error: (err) => {
+        this.notificationService.showMessage(
+          'ERROR',
+          'Error Occured',
+          'OK',
+          300
+        );
+      },
+    });
   }
   prepareForm() {
     this.productAddingForm = this.formBuilder.group({
-      productCode: ['',[Validators.required]],
-      productName: ['',[Validators.required]],
-      productCategory: ['',[Validators.required]],
-      unitType: ['',[Validators.required]],
+      productCode: ['', [Validators.required]],
+      productName: ['', [Validators.required]],
       quantity: [0],
       brandName:['',[Validators.required]],
       costPricePerUnit: [0],
       sellingPricePerUnit: [0],
-      packagingCategory:['',[Validators.required]],
-      unitPerPackage:[0]
+      mrpPrice: [0, [Validators.required]],
+      buyingPercentage: [0, [Validators.required]],
+      sellingPercentage: [0, [Validators.required]],
     });
+    this.productAddingForm.get('mrpPrice')?.valueChanges.subscribe((data) => {
+      this.productAddingForm
+        .get('costPricePerUnit')
+        ?.setValue(
+          data -
+            data * (this.productAddingForm.get('buyingPercentage')?.value / 100)
+        );
+      this.productAddingForm
+        .get('sellingPricePerUnit')
+        ?.setValue(
+          data -
+            data *
+              (this.productAddingForm.get('sellingPercentage')?.value / 100)
+        );
+    });
+    this.productAddingForm
+      .get('sellingPercentage')
+      ?.valueChanges.subscribe((data) => {
+        this.productAddingForm
+          .get('sellingPricePerUnit')
+          ?.setValue(
+            this.productAddingForm
+              .get('mrpPrice')
+              ?.value*(
+                1 - (data / 100)
+              )
+          );
+      });
+    this.productAddingForm
+      .get('buyingPercentage')
+      ?.valueChanges.subscribe((data) => {
+        this.productAddingForm
+          .get('costPricePerUnit')
+          ?.setValue(
+            this.productAddingForm
+              .get('mrpPrice')
+              ?.value*(
+                1 - (data / 100)
+              )
+          );
+      });
   }
-  
-  fetchPackagingCategory(){
+
+  fetchPackagingCategory() {
     this.packagingCategories = [{ label: 'Select category', value: '' }];
     this.productService.fetchAllPackagingCategory().subscribe({
-      next:(res)=>{
+      next: (res) => {
         let categories = res.body;
-        if(res.body){
-          categories.map((elem:any)=>{
-            let category = { label: elem.key, value: elem.value }
+        if (res.body) {
+          categories.map((elem: any) => {
+            let category = { label: elem.key, value: elem.value };
             this.packagingCategories.push(category);
-        })
+          });
         }
       },
-      error:(err)=>{
-        this.notificationService.showMessage("FAILED!","Packaging Category Fetching Failed","OK",1000);
-      }
-    })
+      error: (err) => {
+        this.notificationService.showMessage(
+          'FAILED!',
+          'Packaging Category Fetching Failed',
+          'OK',
+          1000
+        );
+      },
+    });
   }
   addProduct() {
     if (this.productAddingForm.invalid) {
-      this.notificationService.showErrorMessage("INVALID FORM","Please Input Required Fields","OK",600);
+      this.notificationService.showErrorMessage(
+        'INVALID FORM',
+        'Please Input Required Fields',
+        'OK',
+        600
+      );
       return;
     }
     this.showLoader = true;
     let productModel = this.productAddingForm.value;
     productModel.isEdit = this.isEdit;
-    const params:Map<string,any> = new Map();
-    params.set("product",productModel);
+    const params: Map<string, any> = new Map();
+    params.set('product', productModel);
     console.log(productModel);
     this.productService.addProduct(params).subscribe({
-      next:(res)=>{
-        if(res.isUpdated){
+      next: (res) => {
+        if (res.isUpdated) {
           this.productAddingForm.reset();
-          this.notificationService.showMessage("SUCCESS!","Product Added Successfuly","OK",1000);
-        }else{
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            'Product Added Successfuly',
+            'OK',
+            1000
+          );
+        } else {
           this.productAddingForm.reset();
-          this.notificationService.showMessage("SUCCESS!","Product Updated Successfuly","OK",1000);
-          this.product = res.body
+          this.notificationService.showMessage(
+            'SUCCESS!',
+            'Product Updated Successfuly',
+            'OK',
+            1000
+          );
+          this.product = res.body;
         }
         // this.route.navigate(["/admin/product-list"]);
       },
-      error:(err)=>{
-        this.notificationService.showMessage("FAILED!","Product Add Failed","OK",1000);
+      error: (err) => {
+        this.notificationService.showMessage(
+          'FAILED!',
+          'Product Add Failed',
+          'OK',
+          1000
+        );
       },
-      complete:()=>{
+      complete: () => {
         this.showLoader = false;
-      }
-    })
+      },
+    });
   }
-  setFormValue(){
+  setFormValue() {
     this.productAddingForm = this.formBuilder.group({
       id: this.product.id,
-      productCode: this.product.productCode || "",
-      productName: this.product.productName || "",
-      productCategory: this.product.productCategory || "",
-      unitType: this.product.unitType || "",
-      quantity:this.product.quantity || "",
-      brandName:this.product.brandName|| "",
-      costPricePerUnit:this.product.costPricePerUnit|| "",
-      sellingPricePerUnit:this.product.sellingPricePerUnit|| "",
-      packagingCategory:this.product.packagingCategory|| "",
-      unitPerPackage:this.product.unitPerPackage|| "",
+      productCode: this.product.productCode || '',
+      productName: this.product.productName || '',
+      // productCategory: this.product.productCategory || '',
+      // unitType: this.product.unitType || '',
+      quantity: this.product.quantity || 0,
+      brandName: this.product.brandName || '',
+      costPricePerUnit: this.product.costPricePerUnit || 0,
+      sellingPricePerUnit: this.product.sellingPricePerUnit || 0,
+      // packagingCategory: this.product.packagingCategory || '',
+      // unitPerPackage: this.product.unitPerPackage || '',
+      mrpPrice: this.product.mrpPrice || 0,
+      buyingPercentage: this.product.buyingPercentage || 0,
+      sellingPercentage: this.product.sellingPercentage || 0,
     });
   }
 
-  fetchProductCategory(){
+  fetchProductCategory() {
     this.categories = [{ label: 'Select Category', value: '' }];
     this.productService.fetchAllProductCategory().subscribe({
-      next:(res)=>{
-        if(res.body){
+      next: (res) => {
+        if (res.body) {
           let categoryList = res.body;
-          categoryList.map((elem:any)=>{
-            let option = {label:elem.key,value: elem.value};
+          categoryList.map((elem: any) => {
+            let option = { label: elem.key, value: elem.value };
             this.categories.push(option);
-          })
-        }else{
-          this.notificationService.showErrorMessage("ERROR","No Product Category Found","OK",500);
+          });
+        } else {
+          this.notificationService.showErrorMessage(
+            'ERROR',
+            'No Product Category Found',
+            'OK',
+            500
+          );
         }
-      }
-    })
+      },
+    });
   }
 
-  fetchUnitType(){
+  fetchUnitType() {
     this.units = [{ label: 'Select Unit Type', value: '' }];
     this.productService.fetchAllUnitType().subscribe({
-      next:(res)=>{
-        if(res.body){
+      next: (res) => {
+        if (res.body) {
           let unitList = res.body;
-          unitList.map((elem:any)=>{
-            let option = {label:elem.key,value: elem.value};
+          unitList.map((elem: any) => {
+            let option = { label: elem.key, value: elem.value };
             this.units.push(option);
-          })
-        }else{
-          this.notificationService.showErrorMessage("ERROR","No Unit Type Found","OK",500);
+          });
+        } else {
+          this.notificationService.showErrorMessage(
+            'ERROR',
+            'No Unit Type Found',
+            'OK',
+            500
+          );
         }
-      }
-    })
+      },
+    });
   }
-  checkDuplicateProduct(){
+  checkDuplicateProduct() {
     const params: Map<string, any> = new Map();
-    params.set("code",this.productAddingForm.get('productCode')?.value);
-    params.set("name",'');
-    if(!this.isEdit){
+    params.set('code', this.productAddingForm.get('productCode')?.value);
+    params.set('name', '');
+    if (!this.isEdit) {
       this.productService.fetchProductByCode(params).subscribe({
-        next:(res)=>{
-          if(res.isExist){
+        next: (res) => {
+          if (res.isExist) {
             this.productAddingForm.get('productName')?.disable();
-            this.productAddingForm.get('productCategory')?.disable();
-            this.productAddingForm.get('unitType')?.disable();
+            // this.productAddingForm.get('productCategory')?.disable();
+            // this.productAddingForm.get('unitType')?.disable();
             this.productAddingForm.get('quantity')?.disable();
             this.productAddingForm.get('brandName')?.disable();
             this.productAddingForm.get('costPricePerUnit')?.disable();
             this.productAddingForm.get('sellingPricePerUnit')?.disable();
-            this.productAddingForm.get('packagingCategory')?.disable();
-            this.productAddingForm.get('unitPerPackage')?.disable();
-            this.errMsg = "**This Product Already Exits"
-          }else{
+            this.productAddingForm.get('mrpPrice')?.disable();
+            this.productAddingForm.get('buyingPercentage')?.disable();
+            this.productAddingForm.get('sellingPercentage')?.disable();
+            this.errMsg = '**This Product Already Exits';
+          } else {
             this.productAddingForm.get('productName')?.enable();
-            this.productAddingForm.get('productCategory')?.enable();
-            this.productAddingForm.get('unitType')?.enable();
+            // this.productAddingForm.get('productCategory')?.enable();
+            // this.productAddingForm.get('unitType')?.enable();
             this.productAddingForm.get('quantity')?.enable();
             this.productAddingForm.get('brandName')?.enable();
             this.productAddingForm.get('costPricePerUnit')?.enable();
             this.productAddingForm.get('sellingPricePerUnit')?.enable();
-            this.productAddingForm.get('packagingCategory')?.enable();
-            this.productAddingForm.get('unitPerPackage')?.enable();
-            this.errMsg = ""
+            this.productAddingForm.get('mrpPrice')?.enable();
+            this.productAddingForm.get('sellingPercentage')?.enable();
+            this.productAddingForm.get('buyingPercentage')?.enable();
+            this.errMsg = '';
           }
-        }
-      })
+        },
+      });
     }
   }
-  fetchBrandName(){
+  fetchBrandName() {
     this.brandNames = [{ label: 'Select Brand Name', value: '' }];
     this.productService.fetchAllBrandName().subscribe({
-      next:(res)=>{
-        if(res.body){
+      next: (res) => {
+        if (res.body) {
           let brandNames = res.body;
-          brandNames.map((elem:any)=>{
-            let option = {label:elem.key,value: elem.value};
+          brandNames.map((elem: any) => {
+            let option = { label: elem.key, value: elem.value };
             this.brandNames.push(option);
-          })
-        }else{
-          this.notificationService.showErrorMessage("ERROR","No Brand Name Found","OK",500);
+          });
+        } else {
+          this.notificationService.showErrorMessage(
+            'ERROR',
+            'No Brand Name Found',
+            'OK',
+            500
+          );
         }
-      }
-    })
+      },
+    });
   }
 }
-

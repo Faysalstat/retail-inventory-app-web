@@ -80,38 +80,29 @@
             <div class="row">
                 <div class="col-md-2">
                     <mat-form-field class="input-field" appearance="outline">
-                        <mat-label>Buying Price Rate</mat-label>
-                        <input pInputText [ngModelOptions]="{standalone:true}" (change)="calculateOrder()"
+                        <mat-label>MRP</mat-label>
+                        <input pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
+                            [(ngModel)]="selectedProduct.mrpPrice" placeholder="MRP" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field class="input-field" appearance="outline">
+                        <mat-label>Buying Rate (%)</mat-label>
+                        <input pInputText [ngModelOptions]="{standalone:true}" (change)="calculateBuyingPrice()"
+                            [(ngModel)]="orderItem.buyingPercentage" placeholder="Buying Rate (%)" matInput>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-3">
+                    <mat-form-field class="input-field" appearance="outline">
+                        <mat-label>Buying Price</mat-label>
+                        <input pInputText [ngModelOptions]="{standalone:true}" [disabled]="true" (change)="calculateOrder()"
                             [(ngModel)]="orderItem.pricePerUnit" placeholder="Selling Price" matInput>
                     </mat-form-field>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <mat-form-field class="input-field" appearance="outline">
-                        <mat-label>Unit Per Package</mat-label>
-                        <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
-                            [(ngModel)]="orderItem.unitPerPackage" placeholder="Quantity/Pakage" matInput>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-2">
-                    <mat-form-field class="input-field" appearance="outline">
-                        <mat-label>Package Quantity</mat-label>
-                        <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
-                            (change)="calculateQuantity()" [(ngModel)]="orderItem.packageQuantity"
-                            placeholder="Quantity" matInput>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-2">
-                    <mat-form-field class="input-field" appearance="outline">
-                        <mat-label>Loose Quantity</mat-label>
-                        <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
-                            (change)="calculateQuantity()" [(ngModel)]="orderItem.looseQuantity" placeholder="Quantity"
-                            matInput>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-2">
-                    <mat-form-field class="input-field" appearance="outline">
-                        <mat-label>Total Quantity</mat-label>
-                        <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
+                        <mat-label>Quantity</mat-label>
+                        <input type="number" pInputText [ngModelOptions]="{standalone:true}"
                             (change)="calculateOrder()" [(ngModel)]="orderItem.quantityOrdered" placeholder="Quantity"
                             matInput>
                     </mat-form-field>
@@ -137,8 +128,6 @@
                                 <th>SN</th>
                                 <th>Product Name</th>
                                 <th>Rate</th>
-                                <th>Package</th>
-                                <th>Loose</th>
                                 <th>Total Quantity</th>
                                 <th>Total Price</th>
                                 <!-- <th>Action</th> -->
@@ -149,16 +138,13 @@
                                 <th scope="row">{{i+1}}</th>
                                 <th>{{order.productName}}</th>
                                 <th>{{order.pricePerUnit}}</th>
-                                <th>{{order.packageQuantity}}</th>
-                                <th>{{order.looseQuantity}}</th>
                                 <th>{{order.quantityOrdered}}</th>
                                 <th>{{order.totalOrderPrice}}</th>
-                                <!-- <th>{{order.totalPrice}}</th> -->
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="5"></th>
+                                <th colspan="3"></th>
                                 <th>Total</th>
                                 <th>{{totalPrice}} BDT</th>
                             </tr>

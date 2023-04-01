@@ -307,11 +307,7 @@ export class SalePointComponent implements OnInit {
     ).toFixed(2);
   }
   calculateQuantity() {
-    this.orderItem.quantityOrdered = +(
-      this.orderItem.packageQuantity * this.orderItem.unitPerPackage +
-      this.orderItem.looseQuantity
-    ).toFixed(2);
-    this.calculateOrder();
+        this.calculateOrder();
   }
   calculateSummary() {
     this.totalPayableAmount = +(

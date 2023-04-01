@@ -11,7 +11,7 @@
                   [(ngModel)]="brandName" matInput>
               </mat-form-field>
         </div>
-        <div class="col-md-3">
+        <!-- <div class="col-md-3">
             <mat-form-field appearance="outline" class="input-field">
                 <mat-label>Product Category</mat-label>
                 <mat-select (selectionChange)="fetchAllProducts()" [ngModelOptions]="{standalone:true}"
@@ -20,7 +20,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-        </div>
+        </div> -->
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Product Code</mat-label>
@@ -44,7 +44,6 @@
                         <th>Code</th>
                         <th>Product Name</th>
                         <th>Brand Name</th>
-                        <th>Package Qnt</th>
                         <th>Quantity</th>
                         <th>Buying Price</th>
                         <th>Selliing Price</th>
@@ -56,8 +55,7 @@
                         <th>{{product?.productCode}}</th>
                         <th>{{product?.productName}}</th>
                         <th>{{product?.brandName}}</th>
-                        <th>{{packProduct(product)}}</th>
-                        <th>{{(product?.quantity - product?.quantitySold)||0}} {{product?.unitType}}</th>
+                        <th>{{(product?.quantity - product?.quantitySold)||0}}</th>
                         <th>{{product?.costPricePerUnit || 0}} BDT</th>
                         <th>{{product?.sellingPricePerUnit || 0}} BDT</th>
                     </tr>

@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppAuthGuard } from '../app-auth.guard';
-import { CashAuthGuard } from '../cash/cash-auth.guard';
-import { AddCustomerComponent } from '../comps/add-customer/add-customer.component';
-import { AddSupplyerComponent } from '../comps/add-supplyer/add-supplyer.component';
+import { AddCustomerComponent } from './add-customer/add-customer.component';
+import { AddSupplyerComponent } from './add-supplyer/add-supplyer.component';
 import { ClientAuthGuard } from './client-auth.guard';
 import { ClientDetailsComponent } from './client-details/client-details.component';
-import { ClientListComponent } from './client-list/client-list.component';
 import { ClientComponent } from './client.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { CustomerComponent } from './customer/customer.component';

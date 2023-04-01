@@ -1,48 +1,47 @@
 export class Person {
   id!: number;
-  customer!:Customer;
+  customer!: Customer;
   personName!: string;
   contactNo!: string;
   personAddress!: string;
   email!: string;
-  fatherName!:string;
-  nId!:string;
+  fatherName!: string;
+  nId!: string;
 }
 export class Customer {
   id!: number;
   person!: Person;
-  account!:Account;
+  account!: Account;
   shopName!: string;
-  shopAddress!:string;
+  shopAddress!: string;
 }
 
 export class Supplyer {
   id!: number;
   person!: Person;
-  account!:Account;
-  code!:string;
+  account!: Account;
+  code!: string;
   companyName!: string;
   brand!: string;
   shopName!: string;
-  regNo!:string;
-  website!:string;
+  regNo!: string;
+  website!: string;
 }
 export class Employee {
   id!: number;
   person!: Person;
-  account!:Account;
+  account!: Account;
   employeeId!: string;
-  designation!:string;
-  role!:string;
+  designation!: string;
+  role!: string;
   joiningDate: Date = new Date();
 }
 export class LoanClient {
   id!: number;
-  account!:LoanAccount[];
+  account!: LoanAccount[];
   clientName!: string;
   clientDisc!: string;
-  
-};
+}
 export class LoanAccount {
   id!: number;
   balance!: number;
@@ -51,15 +50,15 @@ export class LoanAccount {
   receiveDate!: Date;
   returnDate!: Date;
   period!: number;
-  remark!: string
+  remark!: string;
 }
 export class Account {
   id!: number;
   balance: number = 0;
-  due: number=0;
+  due: number = 0;
   amountToPay!: number;
   accountType!: number;
-  accountHistory:any[]=[];
+  accountHistory: any[] = [];
 }
 export class Product {
   id!: number;
@@ -67,8 +66,11 @@ export class Product {
   productCode!: string;
   unitType!: string;
   quantity!: number;
-  costPricePerUnit!: number;
-  sellingPricePerUnit!: number;
+  mrpPrice: number = 0;
+  buyingPercentage: number = 0;
+  sellingPercentage: number = 0;
+  costPricePerUnit: number = 0;
+  sellingPricePerUnit: number = 0;
   packagingCategory!: string;
   unitPerPackage!: number;
 }
@@ -80,54 +82,55 @@ export class OrderItem {
   unitType!: string;
   packagingCategory!: string;
   unitPerPackage: number = 0;
-  packageQuantity: number = 0;
-  looseQuantity: number = 0;
+  mrpPrice: number =0;
+  buyingPercentage: number=0;
+  sellingPercentage: number=0;
   quantityOrdered: number = 0;
   pricePerUnit: number = 0;
   buyingPricePerUnit: number = 0;
-  totalOrderPrice!: number;
-  totalOrderCost!: number;
-  deliveredQuantity!:number;
-  deliverySchedules!:ScehduleDelivery[];
-  quantity:number = 0;
-  quantityReturned:number =0;
+  totalOrderPrice: number = 0;
+  totalOrderCost: number = 0;
+  deliveredQuantity: number = 0;
+  deliverySchedules!: ScehduleDelivery[];
+  quantity: number = 0;
+  quantityReturned: number = 0;
 }
-export class ScehduleDelivery{
-  id!:number;
-  deliverableQuantity!:number;
+export class ScehduleDelivery {
+  id!: number;
+  deliverableQuantity!: number;
   scheduledDate: Date = new Date();
   deliveryStatus!: string;
   state!: string;
-  orderId!:number;
+  orderId!: number;
 }
 
 export class OrderIssueDomain {
   id!: number;
   doNo!: string;
-  invoiceNo!:string;
+  invoiceNo!: string;
   customerId!: number;
   accountId!: number;
-  productName!:string;
-  productCode!:string;
+  productName!: string;
+  productCode!: string;
   orders!: OrderItem[];
   totalPrice!: number;
-  previousBalance!:number;
+  previousBalance!: number;
   totalPayableAmount!: number;
   totalPaidAmount!: number;
   duePayment: number = 0;
-  rebate!:number;
-  chargeReason!:string;
-  extraCharge!:number;
-  paymentMethod!:string;
+  rebate!: number;
+  chargeReason!: string;
+  extraCharge!: number;
+  paymentMethod!: string;
   comment!: string;
 }
 export class SupplyIssueDomain {
   id!: number;
   supplyerId!: number;
-  productName!:string;
-  productCode!:string;
+  productName!: string;
+  productCode!: string;
   orders!: OrderItem[];
-  schedules!:ScehduleDelivery[];
+  schedules!: ScehduleDelivery[];
   totalPrice!: number;
   amountPaid!: number;
   duePayment!: number;
@@ -135,7 +138,7 @@ export class SupplyIssueDomain {
   newPayment!: number;
   comment!: string;
 }
- 
+
 export class ClientIssueModel {
   companyName!: string;
   shopName!: string;
@@ -144,52 +147,50 @@ export class ClientIssueModel {
   brandName!: string;
   contactNo!: string;
   website!: string;
-  personName!:string;
-  personAddress!:string;
-  email!:string;
-
+  personName!: string;
+  personAddress!: string;
+  email!: string;
 }
 
-export class User{
-  userName:string='';
-  password:string = '';
-  userRole:string ='';
+export class User {
+  userName: string = '';
+  password: string = '';
+  userRole: string = '';
 }
-export class UserModel{
-  id!:number;
-  personId!:number;
+export class UserModel {
+  id!: number;
+  personId!: number;
   personName!: string;
   contactNo!: string;
   personAddress!: string;
   email!: string;
-  userName!:string;
-  password!:string;
-  userRole!:string;
+  userName!: string;
+  password!: string;
+  userRole!: string;
 }
-export enum Roles{
+export enum Roles {
   ADMIN = 'ADMIN',
   MANAGER = 'MANAGER',
   SALER = 'SALER',
-  DEVELOPER = 'DEVELOPER'
+  DEVELOPER = 'DEVELOPER',
 }
-export enum Tasks{
-  CREATE_INVOICE="CREATE_INVOICE",
-  UPDATE_INVOICE= "UPDATE_INVOICE",
-  CREATE_SUPPLY= "CREATE_SUPPLY",
-  UPDATE_SUPPLY= "UPDATE_SUPPLY",
-  CASH_HANDOVER = "CASH_HANDOVER",
+export enum Tasks {
+  CREATE_INVOICE = 'CREATE_INVOICE',
+  UPDATE_INVOICE = 'UPDATE_INVOICE',
+  CREATE_SUPPLY = 'CREATE_SUPPLY',
+  UPDATE_SUPPLY = 'UPDATE_SUPPLY',
+  CASH_HANDOVER = 'CASH_HANDOVER',
   // CASH_PAYMENT = "CASH_PAYMENT",
-  PAYMENT_TRANSACTION = "PAYMENT_TRANSACTION",
-  DEPOSIT_TRANSACTION = "DEPOSIT_TRANSACTION",
-  CREATE_LOAN = "CREATE_LOAN",
-  EXPENSE_TRANSACTION = "EXPENSE_TRANSACTION",
-  SALARY_TRANSACTION = "SALARY_TRANSACTION",
+  PAYMENT_TRANSACTION = 'PAYMENT_TRANSACTION',
+  DEPOSIT_TRANSACTION = 'DEPOSIT_TRANSACTION',
+  CREATE_LOAN = 'CREATE_LOAN',
+  EXPENSE_TRANSACTION = 'EXPENSE_TRANSACTION',
+  SALARY_TRANSACTION = 'SALARY_TRANSACTION',
   // SALARY_TRANSACTION = "SALARY_TRANSACTION",
 }
 
-
-export enum COFIGS{
-  STOCK_APPROVAL_NEEDED = "STOCK_APPROVAL_NEEDED",
-  SALE_APPROVAL_NEEDED = "SALE_APPROVAL_NEEDED",
-  TRANSACTION_APPROVAL_NEEDED = "TRANSACTION_APPROVAL_NEEDED"
+export enum COFIGS {
+  STOCK_APPROVAL_NEEDED = 'STOCK_APPROVAL_NEEDED',
+  SALE_APPROVAL_NEEDED = 'SALE_APPROVAL_NEEDED',
+  TRANSACTION_APPROVAL_NEEDED = 'TRANSACTION_APPROVAL_NEEDED',
 }

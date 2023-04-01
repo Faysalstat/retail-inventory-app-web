@@ -190,8 +190,9 @@ export class AddStockComponent implements OnInit {
     this.orderItem.productName = this.selectedProduct.productName;
     this.orderItem.productCode = this.selectedProduct.productCode;
     this.orderItem.unitType = this.selectedProduct.unitType;
+    this.orderItem.mrpPrice = this.selectedProduct.mrpPrice;
+    this.orderItem.buyingPercentage = this.selectedProduct.buyingPercentage;
     this.orderItem.pricePerUnit = this.selectedProduct.costPricePerUnit;
-    this.orderItem.unitPerPackage = this.selectedProduct.unitPerPackage;
     this.unitType = this.selectedProduct.unitType;
   }
   calculateOrder() {
@@ -314,7 +315,7 @@ export class AddStockComponent implements OnInit {
     
   }
   calculateQuantity() {
-    this.orderItem.quantityOrdered = (this.orderItem.packageQuantity * this.orderItem.unitPerPackage) + this.orderItem.looseQuantity;
+    // this.orderItem.quantityOrdered = (this.orderItem.packageQuantity * this.orderItem.unitPerPackage) + this.orderItem.looseQuantity;
     this.calculateOrder();
   }
 
@@ -375,5 +376,8 @@ export class AddStockComponent implements OnInit {
       '/' +
       newDate.getFullYear()
     );
+  }
+  calculateBuyingPrice(){
+    this.orderItem.pricePerUnit = this.orderItem.mrpPrice*(1-(this.orderItem.buyingPercentage/100));
   }
 }

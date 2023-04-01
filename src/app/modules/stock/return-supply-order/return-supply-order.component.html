@@ -25,22 +25,6 @@
         </div>
         <div class="col-md-2">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Package Quantity</mat-label>
-                <input type="number" pInputText [ngModelOptions]="{standalone:true}"  
-                    (change)="calculateQuantity()" [(ngModel)]="selectedReturnItem.packageQuantity"
-                    placeholder="Quantity" matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-2">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Loose Quantity</mat-label>
-                <input type="number" pInputText [ngModelOptions]="{standalone:true}"  
-                    (change)="calculateQuantity()" [(ngModel)]="selectedReturnItem.looseQuantity"
-                    placeholder="Quantity" matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-2">
-            <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Total Quantity</mat-label>
                 <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
                     (change)="calculateOrder()" [(ngModel)]="selectedReturnItem.quantityReturned"
@@ -70,8 +54,6 @@
                         <th>SN</th>
                         <th style="width:30% ;">Product Name</th>
                         <th>Rate</th>
-                        <th>Package Quantity</th>
-                        <th>Loose Quantity</th>
                         <th>Total Quantity</th>
                         <th>Price</th>
                         <!-- <th>Action</th> -->
@@ -86,9 +68,7 @@
                         <th scope="row">{{i+1}}</th>
                         <th>{{order.productName}}</th>
                         <th>{{order.pricePerUnit}}</th>
-                        <th>{{order.packageQuantity}}</th>
-                        <th>{{order.looseQuantity}}</th>
-                        <th>{{order.quantityReturned}} {{order.unitType}}</th>
+                        <th>{{order.quantityReturned}}</th>
                         <th>{{order.totalOrderPrice}} BDT</th>
                         <!-- <th>{{order.totalPrice}}</th> -->
                     </tr>

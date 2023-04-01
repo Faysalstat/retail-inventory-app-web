@@ -106,10 +106,6 @@ export class ReturnOrderComponent implements OnInit {
   }
 
   calculateQuantity() {
-    this.selectedReturnItem.quantityReturned =
-      this.selectedReturnItem.packageQuantity *
-        this.selectedReturnItem.unitPerPackage +
-      this.selectedReturnItem.looseQuantity;
     this.calculateOrder();
   }
   calculateOrder() {

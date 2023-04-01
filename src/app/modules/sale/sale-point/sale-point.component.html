@@ -124,22 +124,6 @@
                     </div>
                     <div class="col-md-3">
                         <mat-form-field class="input-field" appearance="outline">
-                            <mat-label>Package Quantity</mat-label>
-                            <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
-                                (change)="calculateQuantity()" [(ngModel)]="orderItem.packageQuantity"
-                                placeholder="Quantity" matInput>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-3">
-                        <mat-form-field class="input-field" appearance="outline">
-                            <mat-label>Loose Quantity</mat-label>
-                            <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
-                                (change)="calculateQuantity()" [(ngModel)]="orderItem.looseQuantity"
-                                placeholder="Quantity" matInput>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-3">
-                        <mat-form-field class="input-field" appearance="outline">
                             <mat-label>Total Quantity</mat-label>
                             <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
                                 (change)="calculateOrder()" [(ngModel)]="orderItem.quantityOrdered"

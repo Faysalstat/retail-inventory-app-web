@@ -9,7 +9,6 @@ import { PageLoaderComponent } from './page-loader/page-loader.component';
 import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { AddSupplyerComponent } from './add-supplyer/add-supplyer.component';
 import { MenuBarComponent } from './menu-bar/menu-bar.component';
-import { PointOfSaleComponent } from './point-of-sale/point-of-sale.component';
 import { AddTnxReasonComponent } from './add-tnx-reason/add-tnx-reason.component';
 import { ProductCategoryComponent } from './product-category/product-category.component';
 import { UnitTypeComponent } from './unit-type/unit-type.component';
@@ -31,7 +30,7 @@ import { AccountHistoryComponent } from './account-history/account-history.compo
 import { CashWithdrawalComponent } from './cash-withdrawal/cash-withdrawal.component';
 
 const components = [AddProductComponent,AddPersonComponent,PageLoaderComponent,
-  AddCustomerComponent,AddSupplyerComponent,MenuBarComponent,PointOfSaleComponent,
+  AddCustomerComponent,AddSupplyerComponent,MenuBarComponent,
   AddTnxReasonComponent,ProductCategoryComponent,UnitTypeComponent,AddPackagingCategoryComponent,
   ExpenseComponent,PayrollComponent,DepositComponent,AddEmployeeComponent,SalaryExpenseComponent,VisualDashboardComponent,
   CanvasJSChart,AddAssetsComponent,AddLoanDetailsComponent,AddBrandNameComponent,ProfitReportComponent,AddLoanAccComponent,

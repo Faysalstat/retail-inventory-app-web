@@ -16,19 +16,19 @@
         <div class="col-md-3">
             <h2>Total Returned: <span>{{product?.quantityReturn || 0}}</span></h2>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Product Code</mat-label>
                 <input formControlName="productCode" (change)="checkDuplicateProduct()" placeholder="Product Code" matInput>
             </mat-form-field>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Product Name</mat-label>
                 <input formControlName="productName" placeholder="Product Name" matInput>
             </mat-form-field>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Brand Name</mat-label>
                 <mat-select formControlName="brandName">
@@ -37,47 +37,32 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-md-4">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Product Category</mat-label>
-                <mat-select formControlName="productCategory">
-                    <mat-option *ngFor="let cat of categories" [value]="cat.value">{{cat?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Unit Type</mat-label>
-                <mat-select formControlName="unitType">
-                    <mat-option *ngFor="let unit of units" [value]="unit.value">{{unit?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <div class="col-md-4">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Packaging Category</mat-label>
-                <mat-select formControlName="packagingCategory">
-                    <mat-option *ngFor="let unit of packagingCategories" [value]="unit.value">{{unit?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Unit Per Package</mat-label>
-                <input type="number" formControlName="unitPerPackage" placeholder="Unit Per Package" matInput>
+                <mat-label>MRP</mat-label>
+                <input type="number" formControlName="mrpPrice" placeholder="MRP (BDT)" matInput>
             </mat-form-field>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Buying Percentage (%)</mat-label>
+                <input type="number" formControlName="buyingPercentage" placeholder="Buying Percentage (%)" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Buying Price</mat-label>
                 <input type="number" formControlName="costPricePerUnit" placeholder="Buying Price" matInput>
             </mat-form-field>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Selling Percentage (%)</mat-label>
+                <input type="number" formControlName="sellingPercentage" placeholder="Selling Percentage (%)" matInput>
+            </mat-form-field>
+        </div>
+        
+        <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Selling Price</mat-label>
                 <input type="number" type="number" formControlName="sellingPricePerUnit" placeholder="Selling Price"
