@@ -8,11 +8,13 @@ import {MenuItem} from 'primeng/api';
 })
 export class AdminComponent implements OnInit {
   items!: MenuItem[];
+  userProfile!:any;
   constructor(
     private router: Router
   ) { }
 
   ngOnInit(): void {
+    this.userProfile = localStorage.getItem('username');
     this.items = [
       {
           label: 'Product',
