@@ -128,10 +128,10 @@ body {
 
 .main-menu {
   background: #2c2c2e;
-  /* top: 0; */
+  top: 0;
   bottom: 0;
   left: 0;
-  height: 90%;
+  height: 100%;
   position: fixed;
   z-index: 1;
   overflow-x: hidden;
