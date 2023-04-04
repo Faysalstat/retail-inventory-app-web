@@ -15,7 +15,7 @@ export class TreansactionReportComponent implements OnInit {
   pageSizeOptions: number[] = [100,500,1000];
   transactionList:any[] = [];
   transactionListExportable:any[] = [];
-  transactionType!:any[];
+  transactionCategories!:any[];
   tnxTypes!:any[];
   query!: any;
   constructor(
@@ -28,9 +28,10 @@ export class TreansactionReportComponent implements OnInit {
       tnxType:"",
       fromDate: new Date('1/1/2023'),
       toDate: new Date(),
-      voucherNo:''
+      voucherNo:'',
+      tnxCat:''
     }
-    this.transactionType = [
+    this.transactionCategories = [
       {label:'All Category', value:''},
       {label:'Income', value:'INCOME'},
       {label:'Expense', value:'EXPENSE'},
@@ -54,7 +55,7 @@ export class TreansactionReportComponent implements OnInit {
     params.set('voucherNo',this.query.voucherNo || '');
     params.set('fromDate',this.query.fromDate);
     params.set('toDate',this.query.toDate);
-    params.set('transactionCategory','');
+    params.set('transactionCategory',this.query.tnxCat);
     this.reportService.fetchTransactionRecord(params).subscribe({
       next:(res)=>{
         this.transactionListExportable = [];

@@ -22,6 +22,15 @@
         </div>
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
+              <mat-label>Tnx Category</mat-label>
+              <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchTransactionRecord()" 
+              [(ngModel)]="query.tnxCat">
+                <mat-option *ngFor="let cat of transactionCategories" [value]="cat.value">{{cat?.label}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Voucher No:</mat-label>
                 <input   (change)="fetchTransactionRecord()" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="query.voucherNo" placeholder="Contact No." matInput>
                
