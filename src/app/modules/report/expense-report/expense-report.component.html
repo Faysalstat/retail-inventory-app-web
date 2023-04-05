@@ -3,32 +3,6 @@
         <div class="col-md-12">
             <h2>Transaction Report</h2>
         </div>
-        <!-- <div class="col-md-3">
-            <mat-form-field class="input-field" appearance="outline">
-              <mat-label>Tnx Category</mat-label>
-              <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchTransactionRecord()" [(ngModel)]="query.transactionType">
-                <mat-option *ngFor="let category of transactionType" [value]="category.value">{{category?.label}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-        </div> -->
-
-        <div class="col-md-3">
-            <mat-form-field class="input-field" appearance="outline">
-              <mat-label>Tnx Type</mat-label>
-              <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchTransactionRecord()" [(ngModel)]="query.tnxType">
-                <mat-option *ngFor="let type of tnxTypes" [value]="type.value">{{type?.label}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-3">
-            <mat-form-field class="input-field" appearance="outline">
-              <mat-label>Tnx Category</mat-label>
-              <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchTransactionRecord()" 
-              [(ngModel)]="query.tnxCat">
-                <mat-option *ngFor="let cat of transactionCategories" [value]="cat.value">{{cat?.label}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-        </div>
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Voucher No:</mat-label>
@@ -65,14 +39,12 @@
             <table class="table table-stripe mt-4 ">
                 <thead>
                     <th style="width:5%;">SN</th>
-                    <th style="width:10%;">Tnx</th>
-                    <th style="width:10%;">Tnx Reason</th>
-                    <th style="width:10%;">Account Type</th>
-                    <th style="width:10%;">Credit</th>
-                    <th style="width:10%;">Debit</th>
+                    <th style="width:30%;">Expense Reason</th>
+                    <th style="width:10%;text-align: center;">Account</th>
+                    <th style="width:10%;">Amount</th>
                     <th style="width:10%;text-align: center;">Voucher</th>
                     <th style="width:10%;">Tnx Date</th>
-                    <th style="width:40%;">Refferense</th>
+                    <th style="width:30%;">Refferense</th>
                 </thead>
                 <tbody>
                     <tr *ngIf="transactionList.length==0">
@@ -82,10 +54,9 @@
                     </tr>
                     <tr *ngFor="let tnx of transactionList; index as i">
                         <td>{{i+offset+1}}</td>
-                        <td>{{tnx.transactionCategory}}</td>
                         <td>{{tnx.transactionReason}}</td>
                         <td>{{tnx.account.accountType}}</td>
-                        <td>{{tnx.isDebit==0?tnx.amount:0}}</td>
+                        <!-- <td>{{tnx.isDebit==0?tnx.amount:0}}</td> -->
                         <td>{{tnx.isDebit==1?tnx.amount:0}}</td>
                         <td>{{tnx.voucherNo}}</td>
                         <td>{{tnx.transactionDate}}</td>
