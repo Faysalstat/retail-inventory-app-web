@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
     params.set("user",user);
     this.authService.signIn(params).subscribe({
       next:(res)=>{
+        console.log(res)
         if(res.isSuccess){
           localStorage.setItem('token', res.body.token);
           localStorage.setItem('userId', res.body.userid);
@@ -50,11 +51,12 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('userRole',res.body.userRole);
           this.router.navigate(["/home"]);
         }else{
-          this.notificationService.showErrorMessage("ERROR!",res.message,"OK",2000)
+          this.notificationService.showMessage("ERROR!","Authentication Failed " + res.message,"OK",2000);
+          
         }
       },
       error:(err)=>{
-        this.notificationService.showMessage("ERROR!","Authentication Failed " + err.message,"OK",2000);
+        this.notificationService.showErrorMessage("ERROR!",err.message,"OK",2000)
       },
       complete: ()=>{}
     })

@@ -15,6 +15,8 @@ import { LoanReportComponent } from './loan-report/loan-report.component';
 import { AccountHistoryReportComponent } from './account-history-report/account-history-report.component';
 import { DrawingReportComponent } from './drawing-report/drawing-report.component';
 import { ExpenseReportComponent } from './expense-report/expense-report.component';
+import { StockSaleReportComponent } from './stock-sale-report/stock-sale-report.component';
+import { StockSupplyReportComponent } from './stock-supply-report/stock-supply-report.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { ExpenseReportComponent } from './expense-report/expense-report.componen
     LoanReportComponent,
     AccountHistoryReportComponent,
     DrawingReportComponent,
-    ExpenseReportComponent
+    ExpenseReportComponent,
+    StockSaleReportComponent,
+    StockSupplyReportComponent
   ],
   imports: [
     CommonModule,

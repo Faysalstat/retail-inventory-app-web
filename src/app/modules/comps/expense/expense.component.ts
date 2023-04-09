@@ -43,7 +43,7 @@ export class ExpenseComponent implements OnInit {
   ngOnInit(): void {
     this.userName = localStorage.getItem('username');
     this.fetchTransactionReasons();
-    this.getConfig(COFIGS.TRANSACTION_APPROVAL_NEEDED);
+    this.getConfig(COFIGS.EXPENSE_APPROVAL_NEEDED);
   }
   getConfig(configname: any) {
     this.inventoryService.getConfigByName(configname).subscribe({

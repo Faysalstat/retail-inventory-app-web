@@ -68,6 +68,7 @@ export const ReportUrls = {
   DASHBORAD_ENTITY_SUMMARY : BASE_URL + "/report/getentitysummary",  
   PROFIT_REPORT_SUMMARY : BASE_URL + "/report/getprofitreport",  
   VISUAL_SUMMARY : BASE_URL + "/report/getvisualsummary",  
+  STOCK_SALE_REPORT : BASE_URL + "/report/getstocksalereport",  
   
 }
 export const ConfigUrls = {

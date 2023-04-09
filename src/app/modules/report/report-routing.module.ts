@@ -12,6 +12,7 @@ import { SupplyReportComponent } from './supply-report/supply-report.component';
 import { TreansactionReportComponent } from './treansaction-report/treansaction-report.component';
 import { ExpenseReportComponent } from './expense-report/expense-report.component';
 import { DrawingReportComponent } from './drawing-report/drawing-report.component';
+import { StockSaleReportComponent } from './stock-sale-report/stock-sale-report.component';
 
 const routes: Routes = [{
   path: '', component: ReportComponent,canActivate:[AppAuthGuard],canActivateChild:[ReportAuthGuard],
@@ -21,6 +22,7 @@ const routes: Routes = [{
       {path: 'loan-report', component: LoanReportComponent},
       {path: 'sales-report', component: SalesReportComponent},
       {path: 'stock-report', component: StockReportComponent},
+      {path: 'stock-sale-report', component: StockSaleReportComponent},
       {path: 'supply-report', component: SupplyReportComponent},
       {path: 'profit-report', component: ProfitReportComponent},
       {path: 'expense-report', component: ExpenseReportComponent},

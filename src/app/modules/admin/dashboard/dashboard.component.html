@@ -63,7 +63,15 @@
                 <h2>{{dashboardSummary?.totalPurchase|| 0}} BDT</h2>
             </mat-card>
         </div>
-
+        <div class="col-md-3">
+            <mat-card class="sum-box mt-2">
+                <h4>Todays Expense</h4>
+                <h2>{{dashboardSummary?.todaysExpense || 0}} BDT</h2>
+                <hr>
+                <h4>Total Expense</h4>
+                <h2>{{dashboardSummary?.totalExpense|| 0}} BDT</h2>
+            </mat-card>
+        </div>
         <div class="col-md-3">
             <mat-card class="sum-box mt-2">
                 <h4>Total Due From Customer</h4>
@@ -83,6 +91,8 @@
             </mat-card>
         </div>
         <div class="col-md-12 mt-5">
+            <hr>
+            <h2>Entities</h2>
             <hr>
             <table class="table table-striped" style="text-align:center">
                 <thead>
