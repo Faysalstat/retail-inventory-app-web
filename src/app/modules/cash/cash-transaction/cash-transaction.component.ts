@@ -217,7 +217,7 @@ export class CashTransactionComponent implements OnInit {
             'OK',
             500
           );
-          this.downloadMemo();
+          this.downloadMemo(res.bod);
           this.route.navigate(['/cash/transaction-list']);
         },
         error: (err) => {
@@ -238,7 +238,7 @@ export class CashTransactionComponent implements OnInit {
       params.set('payment', transactionModel);
       this.inventoryService.doPaymentTransaction(params).subscribe({
         next: (res) => {
-          this.downloadMemo();
+          this.downloadMemo(res.voucherNo);
           this.notificationService.showMessage(
             'SUCCESS!',
             'Payment Successful',
@@ -304,7 +304,7 @@ export class CashTransactionComponent implements OnInit {
       newDate.getFullYear()
     );
   }
-  downloadMemo() {
+  downloadMemo(voucher:any) {
     let data: any[] = [];
     let index = 1;
     let tnxAmount = this.cashTransactionForm.get('cashAmount')?.value;
@@ -326,7 +326,7 @@ export class CashTransactionComponent implements OnInit {
     }
     data.push(['1',tnxDate,this.cashTransactionForm.get('paymentMethod')?.value,debitAmount,creditAmount])
     let model = {
-      voucher: "",
+      voucher: voucher,
       issuedBy: localStorage.getItem('personName'),
       customer: this.customer,
       supplier:this.supplier,

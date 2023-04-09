@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
     this.showLoader = true;
     this.reportService.fetchDashboardSummary().subscribe({
       next:(res)=>{
+        console.log(res)
         this.dashboardSummary = res.body;
       },
       error:(err)=>{
