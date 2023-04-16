@@ -104,4 +104,14 @@ export class ReportServiceService {
     return this.http.get(ReportUrls.STOCK_SALE_REPORT,{params:params});
   }
 
+  public fetchStockSupplyReport(queryParams:any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('offset',queryParams.offset);
+    params = params.append('limit',queryParams.limit);
+    params = params.append('productCode',queryParams.productCode.trim());
+    params = params.append('fromDate',queryParams.fromDate);
+    params = params.append('toDate',queryParams.toDate);
+    return this.http.get(ReportUrls.STOCK_SUPPLY_REPORT,{params:params});
+  }
+
 }

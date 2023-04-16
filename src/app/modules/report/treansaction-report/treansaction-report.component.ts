@@ -18,6 +18,8 @@ export class TreansactionReportComponent implements OnInit {
   transactionCategories!:any[];
   tnxTypes!:any[];
   query!: any;
+  totalDebit = 0;
+  totalCredit = 0;
   constructor(
     private reportService: ReportServiceService,
     private notificationService:NotificationService,
@@ -58,6 +60,9 @@ export class TreansactionReportComponent implements OnInit {
     params.set('transactionCategory',this.query.tnxCat);
     this.reportService.fetchTransactionRecord(params).subscribe({
       next:(res)=>{
+        console.log(res);
+        this.totalDebit = 0;
+        this.totalCredit = 0;
         this.transactionListExportable = [];
         this.transactionList= res.body.data;
         this.length = res.body.size;
@@ -65,12 +70,14 @@ export class TreansactionReportComponent implements OnInit {
           let item = {
             TNX_TYPE:elem.transactionType,
             TNX_REASON:elem.transactionReason,
-            DEBIT: elem.income,
-            CREDIT: elem.expense,
+            DEBIT: elem.isDebit==1?elem.amount:0,
+            CREDIT: elem.isDebit==0?elem.amount:0,
             TNX_DATE:elem.transactionDate,
             REMARK:elem.refference,
           };
           this.transactionListExportable.push(item);
+          this.totalDebit += (elem.isDebit==1?elem.amount:0);
+          this.totalCredit += (elem.isDebit==0?elem.amount:0);
         })
       },
       error:(err)=>{

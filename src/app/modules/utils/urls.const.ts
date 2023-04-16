@@ -69,6 +69,7 @@ export const ReportUrls = {
   PROFIT_REPORT_SUMMARY : BASE_URL + "/report/getprofitreport",  
   VISUAL_SUMMARY : BASE_URL + "/report/getvisualsummary",  
   STOCK_SALE_REPORT : BASE_URL + "/report/getstocksalereport",  
+  STOCK_SUPPLY_REPORT : BASE_URL + "/report/getstocksupplyreport",  
 }
 export const ConfigUrls = {
   ADD_CONFIG : BASE_URL + "/config/addconfig",

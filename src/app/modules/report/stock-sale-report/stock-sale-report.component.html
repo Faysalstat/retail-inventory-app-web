@@ -67,11 +67,11 @@
               <td>{{product?.productCode}}</td>
               <td>{{product?.productName}}</td>
               <td>{{product?.stockQuantity}}</td>
-              <td>{{product?.quantityOrdered}}</td>
-              <td>{{product?.quantityDelivered}}</td>
-              <td>{{product?.quantityPending}}</td>
-              <td>{{product?.quantityReturned}}</td>
-              <td>{{product?.quantityDamaged}}</td>
+              <td>{{product?.quantityOrdered || 0}}</td>
+              <td>{{product?.quantityDelivered || 0}}</td>
+              <td>{{product?.quantityPending || 0}}</td>
+              <td>{{product?.quantityReturned || 0}}</td>
+              <td>{{product?.quantityDamaged || 0}}</td>
             </tr>
           </tbody>
         </table>

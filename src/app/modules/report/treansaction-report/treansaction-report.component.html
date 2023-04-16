@@ -60,6 +60,22 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-12">
+            <table class="table table-stripe">
+                <thead>
+                    <tr>
+                        <th>Total Debit</th>
+                        <th>Total Debit</th>
+                        
+                    </tr>
+                    <tr>
+                        <td>{{totalDebit}} BDT</td>
+                        <td>{{totalCredit}} BDT</td>
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
         <div class="col-md-12 overflow-auto mt-3">
 
             <table class="table table-stripe mt-4 ">
@@ -76,7 +92,7 @@
                 </thead>
                 <tbody>
                     <tr *ngIf="transactionList.length==0">
-                        <td colspan="7" style="font-weight:bold ; ">
+                        <td colspan="9" style="font-weight:bold ; ">
                             No Transaction Found!!
                         </td>
                     </tr>
@@ -102,6 +118,7 @@
                 </mat-paginator>
             </div>
         </div>
+
     </div>
 
 </mat-card>
