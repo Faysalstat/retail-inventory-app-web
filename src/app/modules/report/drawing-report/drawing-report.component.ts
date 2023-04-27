@@ -58,6 +58,7 @@ export class DrawingReportComponent implements OnInit {
     params.set('transactionCategory',this.query.tnxCat);
     this.reportService.fetchTransactionRecord(params).subscribe({
       next:(res)=>{
+        console.log(res.body.data)
         this.transactionListExportable = [];
         this.transactionList= res.body.data;
         this.length = res.body.size;

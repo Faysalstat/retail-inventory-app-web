@@ -94,7 +94,7 @@ export class CashApprovalDetailsComponent implements OnInit {
         next:(res)=>{
           this.showLoader = false;
           this.notificationService.showMessage("SUCCESS!","Payment Successful","OK",400);
-          this.downloadMemo();
+          this.downloadMemo(res.voucherNo);
           this.router.navigate(['/admin/task-list']);
         },
         error:(err)=>{
@@ -192,7 +192,7 @@ export class CashApprovalDetailsComponent implements OnInit {
       newDate.getFullYear()
     );
   }
-  downloadMemo() {
+  downloadMemo(voucherNo:string) {
     let data: any[] = [];
     let index = 1;
     let tnxAmount = this.taskDetail.cashAmount;
@@ -214,7 +214,7 @@ export class CashApprovalDetailsComponent implements OnInit {
     }
     data.push(['1',tnxDate,this.taskDetail.paymentMethod,debitAmount,creditAmount])
     let model = {
-      voucher: "",
+      voucher: voucherNo || "",
       issuedBy: this.taskDetail.issuedBy,
       customer: this.taskDetail.customer,
       supplier:this.taskDetail.supplier,

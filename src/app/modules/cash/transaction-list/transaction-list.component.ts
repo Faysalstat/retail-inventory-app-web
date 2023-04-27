@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ExcelExportService } from '../../services/excel-export.service';
 import { NotificationService } from '../../services/notification-service.service';
 import { ReportServiceService } from '../../services/report-service.service';
+import { ToWords } from 'to-words';
+import { PdfMakeService } from '../../services/pdf-make.service';
+import { ClientService } from '../../services/client.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -20,10 +23,14 @@ export class TransactionListComponent implements OnInit {
   query!: any;
   totalDebitAmount = 0;
   totalCreditAmount = 0;
+  toWords = new ToWords();
+  showLoader:boolean = false;
   constructor(
     private reportService: ReportServiceService,
     private notificationService:NotificationService,
-    private excelExportServie :ExcelExportService
+    private excelExportServie :ExcelExportService,
+    private pdfMakeService: PdfMakeService,
+    private clientService: ClientService
   ) { 
     this.query = {
       transactionType:"",
@@ -56,9 +63,10 @@ export class TransactionListComponent implements OnInit {
     params.set('voucherNo',this.query.voucherNo);
     params.set('fromDate',this.query.fromDate);
     params.set('toDate',this.query.toDate);
-    params.set('transactionCategory','');
+    params.set('transactionCategory','CASH_TRANSACTION');
     this.reportService.fetchTransactionRecord(params).subscribe({
       next:(res)=>{
+        console.log(res.body.data)
         this.transactionListExportable = [];
         this.transactionList= res.body.data;
         this.length = res.body.size;
@@ -91,5 +99,57 @@ export class TransactionListComponent implements OnInit {
     this.pageSize = event.pageSize;
     this.offset = this.pageSize * event.pageIndex;
     this.fetchTransactionRecord();
+  }
+  downloadMemo(tnxModel:any){
+    let data: any[] = [];
+    let tnxAmount = tnxModel.amount;
+    let tnxDate = this.applyFilter(new Date());
+    let debitAmount = (tnxModel.isDebit==1?tnxModel.amount:0);
+    let creditAmount = (tnxModel.isDebit==0?tnxModel.amount:0);
+    data.push(['1',tnxDate,tnxModel.paymentMethod,debitAmount,creditAmount]);
+    const params: Map<string, any> = new Map();
+    params.set("accountId",tnxModel.accountNo);
+    this.showLoader = true;
+    this.clientService.getClientByAccountId(params).subscribe({
+      next:(res)=>{
+        let model = {
+          voucher: tnxModel.voucherNo || "",
+          issuedBy: tnxModel.issuedBy,
+          customer: res.body.customer,
+          supplier: res.body.supplyer,
+          tnxDate: this.applyFilter(new Date()),
+          clientName: res.body.customer?.person.personName || res.body.supplyer?.person.personName,
+          tnxAmount: tnxAmount,
+          tnxType: tnxModel.transactionType,
+          tnxAmountInWords: this.toWords.convert(
+            tnxAmount || 0
+          ),
+          data:data
+        };
+        if(tnxModel.transactionReason == "RETURN_TO_CUSTOMER" || tnxModel.transactionReason == "CUSTOMER_PAYMENT"){
+          this.pdfMakeService.downloadCustomerPaymentInvoice(model);
+        }else if(tnxModel.transactionReason == "PAYMENT_TO_SUPPLIER" || tnxModel.transactionReason == "RETURN_FROM_SUPPLIER"){
+          this.pdfMakeService.downloadSupplyerPaymentInvoice(model);
+        }
+      },
+      error:(err)=>{
+        console.log(err.message);
+        this.notificationService.showErrorMessage("ERROR",err.message,"OK",500);
+      },
+      complete:()=>{
+        this.showLoader = false;
+      }
+    })
+    
+  }
+  applyFilter(date: any) {
+    let newDate = new Date(date);
+    return (
+      newDate.getDate() +
+      '/' +
+      (newDate.getMonth() + 1) +
+      '/' +
+      newDate.getFullYear()
+    );
   }
 }

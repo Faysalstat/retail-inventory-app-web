@@ -494,15 +494,7 @@ export class PdfMakeService {
               fontSize: 20,
               textColor: '#ffffff',
             },
-          },
-          {
-            content: 'Voucher :' + model.voucher || 'N/A',
-            styles: {
-              halign: 'right',
-              fontSize: 20,
-              textColor: '#ffffff',
-            },
-          },
+          }
         ],
       ],
       theme: 'plain',
@@ -510,7 +502,20 @@ export class PdfMakeService {
         fillColor: '#3366ff',
       },
     });
-
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'Voucher :' + model.voucher || 'N/A',
+            styles: {
+              halign: 'left',
+              fontSize: 14,
+            },
+          }
+        ],
+      ],
+      theme: 'plain',
+    });
     autoTable(doc, {
       body: [
         [
@@ -520,7 +525,7 @@ export class PdfMakeService {
               '\n' +
               (model.clientName || '') +
               '\n' +
-              (model.person.contactNo || '') +
+              (model.customer.person.contactNo || '') +
               '\n' +
               (model.customer.shopName || '') +
               '\n' +
@@ -586,6 +591,10 @@ export class PdfMakeService {
       theme: 'striped',
       headStyles: {
         fillColor: '#343a40',
+        halign:'center'
+      },
+      bodyStyles: {
+        halign: 'center',
       },
     });
 
@@ -615,20 +624,27 @@ export class PdfMakeService {
               textColor: '#ffffff',
             },
           },
-          {
-            content: 'Voucher :' + model.voucher || 'N/A',
-            styles: {
-              halign: 'right',
-              fontSize: 20,
-              textColor: '#ffffff',
-            },
-          },
+          
         ],
       ],
       theme: 'plain',
       styles: {
         fillColor: '#3366ff',
       },
+    });
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'Voucher :' + model.voucher || 'N/A',
+            styles: {
+              halign: 'left',
+              fontSize: 14,
+            },
+          }
+        ],
+      ],
+      theme: 'plain',
     });
 
     autoTable(doc, {
@@ -709,6 +725,7 @@ export class PdfMakeService {
       theme: 'striped',
       headStyles: {
         fillColor: '#343a40',
+        halign:'center'
       },
       bodyStyles: {
         halign: 'center',

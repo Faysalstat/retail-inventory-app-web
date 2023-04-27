@@ -217,7 +217,7 @@ export class CashTransactionComponent implements OnInit {
             'OK',
             500
           );
-          this.downloadMemo(res.bod);
+          // this.downloadMemo(res.bod);
           this.route.navigate(['/cash/transaction-list']);
         },
         error: (err) => {
@@ -238,16 +238,14 @@ export class CashTransactionComponent implements OnInit {
       params.set('payment', transactionModel);
       this.inventoryService.doPaymentTransaction(params).subscribe({
         next: (res) => {
-          this.downloadMemo(res.voucherNo);
+          this.downloadMemo(res.voucherNo || '');
           this.notificationService.showMessage(
             'SUCCESS!',
             'Payment Successful',
             'OK',
             400
           );
-          this.cashTransactionForm.reset();
-          this.comment = '';
-          this.account = res.body;
+          this.route.navigate(['/cash/transaction-list']);
           
         },
         error: (err) => {

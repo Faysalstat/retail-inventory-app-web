@@ -51,7 +51,7 @@ export class CashWithdrawalComponent implements OnInit {
         transactionReason: "CASH_WITHDRAWAL",
         paymentMethod: "CASH",
         cashAmount: this.amount,
-        receivedBy: this.receivedBy,
+        payingTo: this.receivedBy,
         comment: this.remarks,
         transactionType:"DRAWING",
         issuedBy: localStorage.getItem("username")

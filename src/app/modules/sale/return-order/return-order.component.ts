@@ -19,6 +19,7 @@ export class ReturnOrderComponent implements OnInit {
   returnModel!: any;
   returnOrderList: any[] = [];
   prodMsg:string = '';
+  totalAmount = 0;
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,

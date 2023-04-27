@@ -77,4 +77,10 @@ export class ClientService {
     params = params.append('toDate', queryParams.get('toDate'));
     return this.http.get(AccountUrls.FETCH_ACCOUNT_HISTORY_FOR_PROFIT_CALCULATION, { params: params });
    }
+   public getClientByAccountId(queryParams: Map<string, any>): Observable<any>{
+    let params = new HttpParams();
+    params = params.append('accountId', queryParams.get('accountId'));
+    return this.http.get(ClientUrls.FETCH_CLIENT_BY_ACCOUNT_ID, { params: params });
+   }
+
 }

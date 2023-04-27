@@ -42,6 +42,7 @@
                     <th style="width:10%;">Amount</th>
                     <th style="width:10%;text-align: center;">Voucher</th>
                     <th style="width:10%;">Tnx Date</th>
+                    <th style="width:10%;">Paying To</th>
                     <th style="width:40%;">Refferense</th>
                 </thead>
                 <tbody>
@@ -52,13 +53,12 @@
                     </tr>
                     <tr *ngFor="let tnx of transactionList; index as i">
                         <td>{{i+offset+1}}</td>
-                        <!-- <td>{{tnx.transactionType}}</td> -->
                         <td>{{tnx.transactionReason}}</td>
                         <td>{{tnx.account.accountType}}</td>
-                        <!-- <td>{{tnx.isDebit==0?tnx.amount:0}}</td> -->
                         <td>{{tnx.isDebit==1?tnx.amount:0}}</td>
                         <td>{{tnx.voucherNo}}</td>
                         <td>{{tnx.transactionDate}}</td>
+                        <td>{{tnx.payingTo}}</td>
                         <td>{{tnx.refference}}</td>
                     </tr>
                 </tbody>
