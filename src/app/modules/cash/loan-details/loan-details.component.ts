@@ -106,7 +106,7 @@ export class LoanDetailsComponent implements OnInit {
           );
         },
         complete:()=>{
-          this.showLoader = true;
+          this.showLoader = false;
         }
       });
     } else {
