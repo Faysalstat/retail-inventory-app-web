@@ -49,6 +49,10 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('username', res.body.username);
           localStorage.setItem('personName', res.body.personName);
           localStorage.setItem('userRole',res.body.userRole);
+          localStorage.setItem('clientId',res.body.clientId);
+          localStorage.setItem('shopName',res.body.shopName);
+          localStorage.setItem('shopAddress',res.body.shopAddress);
+          localStorage.setItem('shopContactNo',res.body.shopContactNo);
           this.router.navigate(["/home"]);
         }else{
           this.notificationService.showMessage("ERROR!","Authentication Failed " + res.message,"OK",2000);

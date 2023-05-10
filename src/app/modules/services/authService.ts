@@ -25,7 +25,10 @@ export class AuthService {
     return this.http.get(ConfigUrls.GET_ROLE_WISE_MENU, { params: params });
   }
   public addUser(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(AuthenticationUrls.ADD_USER, queryParams.get('user'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let userModel = queryParams.get('user');
+    userModel.clientId = clientId;
+    return this.http.post(AuthenticationUrls.ADD_USER,userModel);
   }
   public checkExistingUser(userName: any): Observable<any> {
     let params = new HttpParams();
@@ -33,8 +36,10 @@ export class AuthService {
     return this.http.get(AuthenticationUrls.CHECK_EXISTING_USER, { params: params });
   }
   public getAllUser(username: any): Observable<any> {
+    let clientId = localStorage.getItem('clientId') || "";
     let params = new HttpParams();
     params = params.append('username', username);
+    params = params.append('clientId', clientId);
     return this.http.get(AuthenticationUrls.GET_ALL_USER, { params: params });
   }
   public isLoggedIn(token:any):Promise<any>{

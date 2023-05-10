@@ -20,49 +20,40 @@ export class PdfMakeService {
     return this.http.get(ConfigUrls.GET_CONFIG, { params: params });
   }
   public async downloadSaleInvoice(invoice: any) {
-    this.getConfigByName(COFIGS.SHOP_NAME).subscribe({
-      next: async (res) => {
-        invoice.shopName = res.body.value;
-        const doc = new jsPDF();
-        await this.buildSalePage(doc, invoice);
-        doc.addPage();
-        await this.buildSalePage(doc, invoice);
-        return doc.save('invoice_' + invoice.invoiceId || 'Printing_Copy');
-      },
-      error: (err) => {},
-    });
+    invoice.shopName = localStorage.getItem('shopName');
+    invoice.shopAddress = localStorage.getItem('shopAddress');
+    invoice.shopContactNo = localStorage.getItem('shopContactNo');
+    const doc = new jsPDF();
+    await this.buildSalePage(doc, invoice);
+    doc.addPage();
+    await this.buildSalePage(doc, invoice);
+    return doc.save('invoice_' + invoice.invoiceId || 'Printing_Copy');
   }
   public async downloadSupplyInvoice(invoice: any) {
-    this.getConfigByName(COFIGS.SHOP_NAME).subscribe({
-      next: async (res) => {
-        invoice.shopName = res.body.value;
+    invoice.shopName = localStorage.getItem('shopName');
+    invoice.shopAddress = localStorage.getItem('shopAddress');
+    invoice.shopContactNo = localStorage.getItem('shopContactNo');
         const doc = new jsPDF();
         await this.buildSupplyPage(doc, invoice);
         doc.addPage();
         await this.buildSupplyPage(doc, invoice);
         return doc.save('invoice_' + invoice.invoiceId || 'Printing_Copy');
-      },
-    });
   }
   public async downloadCustomerPaymentInvoice(model: any) {
-    this.getConfigByName(COFIGS.SHOP_NAME).subscribe({
-      next: async (res) => {
-        model.shopName = res.body.value;
-        const doc = new jsPDF();
-        await this.buildCustomerPaymentPage(doc, model);
-        return doc.save('Voucher_' + model.voucher || 'Printing_Copy');
-      },
-    });
+    model.shopName = localStorage.getItem('shopName');
+    model.shopAddress = localStorage.getItem('shopAddress');
+    model.shopContactNo = localStorage.getItem('shopContactNo');
+    const doc = new jsPDF();
+    await this.buildCustomerPaymentPage(doc, model);
+    return doc.save('Voucher_' + model.voucher || 'Printing_Copy');
   }
   public async downloadSupplyerPaymentInvoice(model: any) {
-    this.getConfigByName(COFIGS.SHOP_NAME).subscribe({
-      next: async (res) => {
-        model.shopName = res.body.value;
-        const doc = new jsPDF();
-        await this.buildSupplierPaymentPage(doc, model);
-        return doc.save('Voucher_' + model.voucher || 'Printing_Copy');
-      },
-    });
+    model.shopName = localStorage.getItem('shopName');
+    model.shopAddress = localStorage.getItem('shopAddress');
+    model.shopContactNo = localStorage.getItem('shopContactNo');
+    const doc = new jsPDF();
+    await this.buildSupplierPaymentPage(doc, model);
+    return doc.save('Voucher_' + model.voucher || 'Printing_Copy');
   }
   async buildSalePage(doc: any, invoice: any) {
     autoTable(doc, {
@@ -113,9 +104,9 @@ export class PdfMakeService {
           {
             content:
               'From:' +
-              '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
-              '\nMob: 01315635068' +
+              '\n'+invoice.shopName +
+              '\n'+invoice.shopAddress +
+              '\nMob: '+invoice.shopContactNo+
               '\n' +
               'Date: ' +
               invoice.tnxDate,
@@ -337,9 +328,10 @@ export class PdfMakeService {
           {
             content:
               'Billed TO:' +
-              '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
-              '\n' +
+              '\n'+invoice.shopName +
+              '\n'+invoice.shopAddress +
+              '\nMob: '+invoice.shopContactNo+
+              '\n'+
               'Date: ' +
               invoice.tnxDate,
             styles: {
@@ -537,8 +529,9 @@ export class PdfMakeService {
           {
             content:
               'Received By:' +
-              '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
+              '\n'+model.shopName +
+              '\n'+model.shopAddress +
+              '\nMob: '+model.shopContactNo+
               '\n' +
               'Date: ' +
               model.tnxDate,
@@ -653,8 +646,9 @@ export class PdfMakeService {
           {
             content:
               'Paid By:' +
-              '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
+              '\n'+model.shopName +
+              '\n'+model.shopAddress +
+              '\nMob: '+model.shopContactNo+
               '\n' +
               'Date: ' +
               model.tnxDate,

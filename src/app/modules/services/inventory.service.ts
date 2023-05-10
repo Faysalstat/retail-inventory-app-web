@@ -11,24 +11,42 @@ export class InventoryService {
   constructor(private http: HttpClient) {}
 
   public issueSalesOrder(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(InventoryUrls.ISSUE_SALES_ORDER, queryParams.get('invoice'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('invoice');
+    requestModel.clientId = clientId;
+    return this.http.post(InventoryUrls.ISSUE_SALES_ORDER,requestModel);
   }
   public issueBuyOrder(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(InventoryUrls.ISSUE_SUPPLY_ORDER, queryParams.get('order'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('order');
+    requestModel.clientId = clientId;
+    return this.http.post(InventoryUrls.ISSUE_SUPPLY_ORDER,requestModel);
   }
 
   public doNewPaymentTransaction(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(InventoryUrls.ISSUE_DO_PAYMENT, queryParams.get('payment'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('payment');
+    requestModel.clientId = clientId;
+    return this.http.post(InventoryUrls.ISSUE_DO_PAYMENT,requestModel);
   }
   public issueSupplyOrderDelievery(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(InventoryUrls.DO_SUPPLY_ORDER_DELIVERY, queryParams.get('delivery'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('delivery');
+    requestModel.clientId = clientId;
+    return this.http.post(InventoryUrls.DO_SUPPLY_ORDER_DELIVERY,requestModel);
   }
   public updateSupplyInvoice(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(InventoryUrls.UPDATE_SUPPLY_INVOICE, queryParams.get('invoice'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('invoice');
+    requestModel.clientId = clientId;
+    return this.http.post(InventoryUrls.UPDATE_SUPPLY_INVOICE,requestModel);
   }
 
   public updateSaleInvoice(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(InventoryUrls.UPDATE_SALE_INVOICE, queryParams.get('invoice'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('invoice');
+    requestModel.clientId = clientId;
+    return this.http.post(InventoryUrls.UPDATE_SALE_INVOICE,requestModel);
   }
   public fetchAllSupplyInvoice(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
@@ -77,10 +95,16 @@ export class InventoryService {
 
 
   public sendToApproval(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(ApprovalUrls.SEND_TO_APPROVAL, queryParams.get('approval'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('approval');
+    requestModel.clientId = clientId;
+    return this.http.post(ApprovalUrls.SEND_TO_APPROVAL,requestModel);
   }
   public declineApproval(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(ApprovalUrls.DECLINE_APPROVE_TASK, queryParams.get('task'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('task');
+    requestModel.clientId = clientId;
+    return this.http.post(ApprovalUrls.DECLINE_APPROVE_TASK,requestModel);
   }
   public fetchTaskList(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
@@ -95,14 +119,23 @@ export class InventoryService {
 
   // Transactions 
   public doPaymentTransaction(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(TransactionUrls.DO_PAYMENT_TRANSACTION, queryParams.get('payment'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('payment');
+    requestModel.clientId = clientId;
+    return this.http.post(TransactionUrls.DO_PAYMENT_TRANSACTION,requestModel);
   }
 
   public issueSaleOrderReturn(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(InventoryUrls.ISSUE_SALE_ORDER_RETURN, queryParams.get('return'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('return');
+    requestModel.clientId = clientId;
+    return this.http.post(InventoryUrls.ISSUE_SALE_ORDER_RETURN,requestModel);
   }
   public issueSupplyOrderReturn(queryParams: Map<string, any>): Observable<any> {
-    return this.http.post(InventoryUrls.ISSUE_SUPPLY_ORDER_RETURN, queryParams.get('return'));
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('return');
+    requestModel.clientId = clientId;
+    return this.http.post(InventoryUrls.ISSUE_SUPPLY_ORDER_RETURN,requestModel);
   }
 }
 
