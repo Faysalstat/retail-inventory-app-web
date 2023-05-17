@@ -2,7 +2,7 @@
 // const BASE_URL = 'https://shopongroup.com/api';
 // const BASE_URL = 'https://uat.shopongroup.com/api';
 // const BASE_URL = 'https://sep.shopongroup.com/api';
-const BASE_URL = "https://demov2.exeyezone.com/api";
+const BASE_URL = "https://app.jerinenterprise.store/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',

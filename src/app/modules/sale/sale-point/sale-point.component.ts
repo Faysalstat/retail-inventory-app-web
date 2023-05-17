@@ -142,7 +142,7 @@ export class SalePointComponent implements OnInit {
       extraCharge: [formData.extraCharge],
       chargeReason: [formData.chargeReason],
     });
-    this.saleInvoiceIssueForm.get('duePayment')?.disable();
+    // this.saleInvoiceIssueForm.get('duePayment')?.disable();
     this.saleInvoiceIssueForm.get('duePayment')?.valueChanges.subscribe((data) => {
       this.totalDueAmount = data;
     })
