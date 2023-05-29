@@ -341,11 +341,12 @@ export class AddStockComponent implements OnInit {
     this.orderList.forEach((elem: any) => {
       let orderRow = [];
       orderRow.push(index);
+      orderRow.push(elem.productCode);
       orderRow.push(elem.productName);
       orderRow.push(elem.pricePerUnit);
       orderRow.push(elem.packageQuantity);
       orderRow.push(elem.looseQuantity);
-      orderRow.push(elem.quantityOrdered + ' ' + elem.unitType);
+      orderRow.push(elem.quantityOrdered + ' ' + (elem.unitType || ""));
       orderRow.push(elem.totalOrderPrice);
       index++;
       orders.push(orderRow);

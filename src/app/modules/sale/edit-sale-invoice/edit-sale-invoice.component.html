@@ -106,7 +106,7 @@
                         <tr *ngFor="let order of saleOrders; index as i">
                             <td scope="row">{{i+1}}</td>
                             <td>{{order?.orderNo}}</td>
-                            <td>{{order?.product?.productName}}</td>
+                            <td>({{order?.product?.productCode}}){{order?.product?.productName}}</td>
                             <td>{{order?.pricePerUnit}}</td>
                             <td>{{order?.quantityOrdered || 0}}</td>
                             <td>{{order?.quantityDelivered}}</td>

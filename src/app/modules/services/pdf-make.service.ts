@@ -113,9 +113,9 @@ export class PdfMakeService {
           {
             content:
               'From:' +
-              '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
-              '\nMob: 01315635068' +
+              '\n'+invoice.shopName+
+              '\nBRTC Shopping Complex, Bogura' +
+              // '\nMob: 01315635068' +
               '\n' +
               'Date: ' +
               invoice.tnxDate,
@@ -167,6 +167,7 @@ export class PdfMakeService {
       head: [
         [
           'SN',
+          'Code',
           'Product Name',
           'Rate',
           'Package QNT',
@@ -337,8 +338,8 @@ export class PdfMakeService {
           {
             content:
               'Billed TO:' +
-              '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
+              '\n'+invoice.shopName+
+              '\nBRTC Shopping Complex, Bogura' +
               '\n' +
               'Date: ' +
               invoice.tnxDate,
@@ -406,6 +407,7 @@ export class PdfMakeService {
       head: [
         [
           'SN',
+          'Code',
           'Product Name',
           'Rate',
           'Package QNT',
@@ -532,8 +534,8 @@ export class PdfMakeService {
           {
             content:
               'Received By:' +
-              '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
+              '\n'+model.shopName+
+              '\nBRTC Shopping Complex, Bogura' +
               '\n' +
               'Date: ' +
               model.tnxDate,
@@ -608,7 +610,7 @@ export class PdfMakeService {
       body: [
         [
           {
-            content: 'Shopon Enterprise',
+            content: model.shopName,
             styles: {
               halign: 'left',
               fontSize: 20,
@@ -637,8 +639,8 @@ export class PdfMakeService {
           {
             content:
               'Paid By:' +
-              '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
+              '\n'+model.shopName +
+              '\nBRTC Shopping Complex' +
               '\n' +
               'Date: ' +
               model.tnxDate,

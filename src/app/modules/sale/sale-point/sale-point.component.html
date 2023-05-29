@@ -169,6 +169,7 @@
                             <thead>
                                 <tr>
                                     <th>SN</th>
+                                    <th style="width:10% ;">Code</th>
                                     <th style="width:30% ;">Product Name</th>
                                     <th>Rate</th>
                                     <th>Total Quantity</th>
@@ -182,6 +183,7 @@
                                 </tr>
                                 <tr *ngFor="let order of orderList; index as i">
                                     <th scope="row">{{i+1}}</th>
+                                    <th>{{order.productCode}}</th>
                                     <th>{{order.productName}}</th>
                                     <th>{{order.pricePerUnit}}</th>
                                     <th>{{order.quantityOrdered}}</th>
