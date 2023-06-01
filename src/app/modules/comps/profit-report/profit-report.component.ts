@@ -45,17 +45,17 @@ export class ProfitReportComponent implements OnInit {
         this.profitSummary = res.body;
         this.profitList = res.body.invoiceList;
         this.profitList.map((elem) => {
-          this.totalIncome += Number(elem.profitFromSale);
-          this.totalDiscount += Number(elem.discount);
-          this.totalExtraCharge += Number(elem.extraCharge);
+          this.totalIncome += (+Number(elem.profitFromSale).toFixed(2));
+          this.totalDiscount += (+Number(elem.discount).toFixed(2));
+          this.totalExtraCharge += (+Number(elem.extraCharge).toFixed(2));
           
         });
         this.totalProfit = this.totalIncome - this.totalDiscount;
         let totalProfitFromSale =
-          this.profitSummary.totalSellingPrice -
+          +Number(this.profitSummary.totalSellingPrice -
           this.profitSummary.totalBuyingPrice -
           this.profitSummary.totalDiscountGiven +
-          this.profitSummary.totalExtraChargeTaken;
+          this.profitSummary.totalExtraChargeTaken).toFixed(2);
         if (totalProfitFromSale < 0) {
           this.isProfit = false;
         } else {

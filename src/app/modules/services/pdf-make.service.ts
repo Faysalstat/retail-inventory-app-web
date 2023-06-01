@@ -114,7 +114,7 @@ export class PdfMakeService {
             content:
               'From:' +
               '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
+              '\nVushipotti, Namajgor, Bogura' +
               '\nMob: 01315635068' +
               '\n' +
               'Date: ' +
@@ -338,7 +338,7 @@ export class PdfMakeService {
             content:
               'Billed TO:' +
               '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
+              '\nVushipotti, Namajgor, Bogura' +
               '\n' +
               'Date: ' +
               invoice.tnxDate,
@@ -538,7 +538,7 @@ export class PdfMakeService {
             content:
               'Received By:' +
               '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
+              '\nVushipotti, Namajgor, Bogura' +
               '\n' +
               'Date: ' +
               model.tnxDate,
@@ -654,7 +654,7 @@ export class PdfMakeService {
             content:
               'Paid By:' +
               '\nShopon Enterprise' +
-              '\nTin Potti, Bogura' +
+              '\nVushipotti, Namajgor, Bogura' +
               '\n' +
               'Date: ' +
               model.tnxDate,
