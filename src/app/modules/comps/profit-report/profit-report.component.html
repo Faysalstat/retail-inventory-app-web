@@ -73,10 +73,10 @@
                         </thead>
                         <tbody>
                             <tr class="table-Info">
-                                <th>{{totalIncome}}</th>
-                                <th>{{totalDiscount}}</th>
-                                <th>{{totalExtraCharge}}</th>
-                                <th>{{totalProfit}}</th>
+                                <th>{{totalIncome.toFixed(2)}}</th>
+                                <th>{{totalDiscount.toFixed(2)}}</th>
+                                <th>{{totalExtraCharge.toFixed(2)}}</th>
+                                <th>{{totalProfit.toFixed(2)}}</th>
                             </tr>
                         </tbody>
                     </table>
@@ -102,10 +102,10 @@
                     <tr *ngFor="let model of profitList; index as i">
                         <td>{{i+1}}</td>
                         <td>{{model?.invoiceNo}}</td>
-                        <td>{{model?.profitFromSale}}</td>
-                        <td>{{model?.discount}}</td>
-                        <td>{{model?.extraCharge}}</td>
-                        <td>{{model?.profitFromSale - model?.discount}}</td>
+                        <td>{{model?.profitFromSale.toFixed(2)}}</td>
+                        <td>{{model?.discount.toFixed(2)}}</td>
+                        <td>{{model?.extraCharge.toFixed(2)}}</td>
+                        <td>{{(model?.profitFromSale - model?.discount).toFixed(2)}}</td>
                         <td>{{model?.date}}</td>
                     </tr>
                 </tbody>

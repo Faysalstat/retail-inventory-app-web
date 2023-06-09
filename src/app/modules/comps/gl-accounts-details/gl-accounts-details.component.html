@@ -10,7 +10,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td *ngFor="let gl of parentGLList">{{gl.balance}}</td>
+                        <td *ngFor="let gl of parentGLList">{{gl.balance.toFixed(2)}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -26,7 +26,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td *ngFor="let gl of childGLList">{{gl.balance}}</td>
+                        <td *ngFor="let gl of childGLList">{{gl.balance.toFixed(2)}}</td>
                     </tr>
                 </tbody>
             </table>
