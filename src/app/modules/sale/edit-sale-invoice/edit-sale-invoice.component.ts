@@ -217,7 +217,7 @@ export class EditSaleInvoiceComponent implements OnInit {
       console.log(elem)
       let orderRow = [];
       orderRow.push(index);
-      orderRow.push(elem.productCode);
+      orderRow.push(elem.product.productCode);
       orderRow.push(elem.product.productName);
       orderRow.push(elem.pricePerUnit);
       orderRow.push(elem.packageQuantity);

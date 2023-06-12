@@ -246,7 +246,7 @@ export class EditInvoiceComponent implements OnInit {
     this.supplyOrders.forEach((elem: any) => {
       let orderRow = [];
       orderRow.push(index);
-      orderRow.push(elem.productCode);
+      orderRow.push(elem.product.productCode);
       orderRow.push(elem.product.productName);
       orderRow.push(elem.pricePerUnit);
       orderRow.push(elem.packageQuantity);
