@@ -48,6 +48,27 @@
                     </mat-form-field>
                 </div>
                 <div class="col-md-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Quantity Ordered</th>
+                                <td>{{productToReturn?.quantityOrdered || 0}}</td>
+                                <th>Quantity Delivered</th>
+                                <td>{{productToReturn?.quantityDelivered || 0}}</td>
+                                <th>Quantity Returned</th>
+                                <td>{{productToReturn?.quantityReturned || 0}}</td>
+                                
+                                
+                            </tr>
+                            <tr>
+                                <th>Available:</th>
+                                <th>{{(productToReturn?.quantityDelivered || 0)-(productToReturn?.quantityReturned || 0)}}</th>
+                            </tr>
+                        </thead>
+                    
+                    </table>
+                </div>
+                <div class="col-md-12">
                     <div class="input-field">
                         <button (click)="addOrder()" mat-raised-button color="warn">Add
                             Product</button>
@@ -104,4 +125,5 @@
         </div>
 
     </mat-card>
+    <app-page-loader *ngIf="showLoader"></app-page-loader>
 </div>

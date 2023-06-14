@@ -99,7 +99,6 @@ export class ApprovalDetailsComponent implements OnInit {
         params.set('order', this.invoiceDetails);
         this.inventoryService.issueBuyOrder(params).subscribe({
           next: (res) => {
-            this.showLoader  = false;
             this.downloadSupplyInvoice(res.body.invoiceNo);
             this.notificationService.showMessage(
               'SUCCESS!',
@@ -111,8 +110,6 @@ export class ApprovalDetailsComponent implements OnInit {
             this.router.navigate(['/admin/task-list']);
           },
           error: (err) => {
-            this.showLoader  = false;
-            console.log(err);
             this.notificationService.showMessage(
               'ERROR!',
               'Invoice Not Created',
@@ -120,6 +117,9 @@ export class ApprovalDetailsComponent implements OnInit {
               500
             );
           },
+          complete:()=>{
+            this.showLoader  = false;
+          }
         });
       }else{
         params.set('invoice', this.invoiceDetails);

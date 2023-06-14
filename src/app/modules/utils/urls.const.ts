@@ -1,5 +1,5 @@
-// const BASE_URL = 'https://demo.vatasolution.me/api';
-const BASE_URL = 'https://sc.shopongroup.com/api';
+const BASE_URL = 'https://retail.vatasolution.me/api';
+// const BASE_URL = 'https://std.shopongroup.com/api';
 // const BASE_URL = 'https://shopongroup.com/api';
 // const BASE_URL = 'https://demov1.exeyezone.com/api';
 // const BASE_URL = "http://localhost:3000/api";
