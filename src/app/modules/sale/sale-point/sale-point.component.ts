@@ -62,6 +62,7 @@ export class SalePointComponent implements OnInit {
   productCode: string = '';
   toWords = new ToWords();
   isLengthError: boolean = false;
+  customerBalanceStatus: string = "Due";
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -146,6 +147,11 @@ export class SalePointComponent implements OnInit {
     // this.saleInvoiceIssueForm.get('duePayment')?.disable();
     this.saleInvoiceIssueForm.get('duePayment')?.valueChanges.subscribe((data) => {
       this.totalDueAmount = data;
+      if(data<0){
+        this.customerBalanceStatus = "Balance";
+      }else{
+        this.customerBalanceStatus = "Due";
+      }
     })
     this.saleInvoiceIssueForm
       .get('totalPaidAmount')
@@ -391,6 +397,7 @@ export class SalePointComponent implements OnInit {
         createdBy: this.userName,
         taskType: Tasks.CREATE_INVOICE,
         status: 'OPEN',
+        state: 'OPEN'
       };
       const params: Map<string, any> = new Map();
       params.set('approval', approvalModel);

@@ -104,17 +104,17 @@ export class ApprovalDetailsComponent implements OnInit {
               'SUCCESS!',
               'Invoice Created',
               'OK',
-              500
+              2000
             );
             
             this.router.navigate(['/admin/task-list']);
           },
           error: (err) => {
             this.notificationService.showMessage(
-              'ERROR!',
+              'ERROR!' + err.message,
               'Invoice Not Created',
               'OK',
-              500
+              2000
             );
           },
           complete:()=>{
@@ -126,13 +126,18 @@ export class ApprovalDetailsComponent implements OnInit {
         this.inventoryService.issueSalesOrder(params).subscribe({
           next:(res)=>{
             this.showLoader  = false;
-            this.notificationService.showMessage("SUCCESS","Order Placed Successfully","OK",300);
-            this.downloadSaleInvoice(res.body.invoiceNo);
-            this.router.navigate(['/admin/task-list']);
+            if(res.isSuccess){
+              this.notificationService.showMessage("SUCCESS",res.message,"OK",2000);
+              this.downloadSaleInvoice(res.body.invoiceNo);
+              this.router.navigate(['/admin/task-list']);
+            }else{
+              this.notificationService.showMessage("ERROR","Order Placed Failed" + res.message,"OK",2000);
+            }
+            
           },
           error:(err)=>{
             this.showLoader  = false;
-            this.notificationService.showMessage("ERROR","Order Placed Failed","OK",300);
+            this.notificationService.showMessage("ERROR","Order Placed Failed" + err.message,"OK",2000);
           }
         })
       }
