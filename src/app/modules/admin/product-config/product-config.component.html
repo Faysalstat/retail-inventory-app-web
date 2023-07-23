@@ -40,13 +40,13 @@
         <div class="col-md-2">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>MRP</mat-label>
-                <input type="number" formControlName="mrpPrice" placeholder="MRP (BDT)" matInput>
+                <input type="number" formControlName="mrpPrice" (change)="calculateBuyingPriceAndSellingPrice()" placeholder="MRP (BDT)" matInput>
             </mat-form-field>
         </div>
         <div class="col-md-2">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Buying Percentage (%)</mat-label>
-                <input type="number" formControlName="buyingPercentage" placeholder="Buying Percentage (%)" matInput>
+                <input type="number" formControlName="buyingPercentage" (change)="calculateBuyingPriceAndSellingPrice()" placeholder="Buying Percentage (%)" matInput>
             </mat-form-field>
         </div>
         <div class="col-md-3">
@@ -58,7 +58,7 @@
         <div class="col-md-2">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Selling Percentage (%)</mat-label>
-                <input type="number" formControlName="sellingPercentage" placeholder="Selling Percentage (%)" matInput>
+                <input type="number" formControlName="sellingPercentage" (change)="calculateBuyingPriceAndSellingPrice()" placeholder="Selling Percentage (%)" matInput>
             </mat-form-field>
         </div>
         

@@ -82,49 +82,24 @@ export class ProductConfigComponent implements OnInit {
       buyingPercentage: [0, [Validators.required]],
       sellingPercentage: [0, [Validators.required]],
     });
-    this.productAddingForm.get('mrpPrice')?.valueChanges.subscribe((data) => {
-      this.productAddingForm
+      }
+  calculateBuyingPriceAndSellingPrice(){
+    let mrp = this.productAddingForm.get('mrpPrice')?.value;
+    let buyingPercentage = this.productAddingForm.get('buyingPercentage')?.value;
+    let sellingPercentage = this.productAddingForm.get('sellingPercentage')?.value;
+    this.productAddingForm
         .get('costPricePerUnit')
         ?.setValue(
-          data -
-            data * (this.productAddingForm.get('buyingPercentage')?.value / 100)
+          mrp -
+          mrp * (buyingPercentage / 100)
         );
       this.productAddingForm
         .get('sellingPricePerUnit')
         ?.setValue(
-          data -
-            data *
-              (this.productAddingForm.get('sellingPercentage')?.value / 100)
+          mrp -
+          mrp *(sellingPercentage / 100)
         );
-    });
-    this.productAddingForm
-      .get('sellingPercentage')
-      ?.valueChanges.subscribe((data) => {
-        this.productAddingForm
-          .get('sellingPricePerUnit')
-          ?.setValue(
-            this.productAddingForm
-              .get('mrpPrice')
-              ?.value*(
-                1 - (data / 100)
-              )
-          );
-      });
-    this.productAddingForm
-      .get('buyingPercentage')
-      ?.valueChanges.subscribe((data) => {
-        this.productAddingForm
-          .get('costPricePerUnit')
-          ?.setValue(
-            this.productAddingForm
-              .get('mrpPrice')
-              ?.value*(
-                1 - (data / 100)
-              )
-          );
-      });
   }
-
   fetchPackagingCategory() {
     this.packagingCategories = [{ label: 'Select category', value: '' }];
     this.productService.fetchAllPackagingCategory().subscribe({
@@ -166,10 +141,10 @@ export class ProductConfigComponent implements OnInit {
     this.productService.addProduct(params).subscribe({
       next: (res) => {
         if (res.isUpdated) {
-          this.productAddingForm.reset();
+          // this.productAddingForm.reset();
           this.notificationService.showMessage(
             'SUCCESS!',
-            'Product Added Successfuly',
+            'Product Updated Successfuly',
             'OK',
             1000
           );
@@ -177,7 +152,7 @@ export class ProductConfigComponent implements OnInit {
           this.productAddingForm.reset();
           this.notificationService.showMessage(
             'SUCCESS!',
-            'Product Updated Successfuly',
+            'Product Added Successfuly',
             'OK',
             1000
           );

@@ -41,10 +41,12 @@ export class AddCustomerComponent implements OnInit {
     });
   }
   searchCustomer() {
-    if(this.person.contactNo.length<11){
+    if(!this.person.contactNo || this.person.contactNo.length<11){
       this.isLengthError =true;
+      this.errMsg = "Please provide valid Mobile No."
       return;
     }else{
+      this.errMsg = ""
       this.isLengthError =false;
     }
     this.showLoader  = true;
@@ -94,6 +96,15 @@ export class AddCustomerComponent implements OnInit {
     });
   }
   addCustomer() {
+    if(!this.customer.shopName || !this.person.personName || !this.person.contactNo || this.person.contactNo.length<11){
+      this.isLengthError =true;
+      // this.errMsg = "Please provide valid Mobile No."
+      this.notificationService.showMessage("WARNING!","Form Invalid, Add Person Information","OK",1000);
+      return;
+    }else{
+      this.errMsg = ""
+      this.isLengthError =false;
+    }
     this.showLoader = true;
     const params: Map<string, any> = new Map();
     let customerModel = {

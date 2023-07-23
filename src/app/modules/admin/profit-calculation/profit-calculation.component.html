@@ -26,19 +26,19 @@
     </div>
     <div class="row">
         <div class="col-md-4">
-            <h2>Total Income: <span>{{totalIncome}} BDT</span></h2>
+            <h2>Total Income: <span>{{totalIncome.toFixed(2)}} BDT</span></h2>
         </div>
         <div class="col-md-4">
-            <h2>Total Expense: <span>{{totalExpense}} BDT</span></h2>
+            <h2>Total Expense: <span>{{totalExpense.toFixed(2)}} BDT</span></h2>
         </div>
         <div class="col-md-4">
-            <h2>Total Extra Charge: <span>{{totalExtraCharge}} BDT</span></h2>
+            <h2>Total Extra Charge: <span>{{totalExtraCharge.toFixed(2)}} BDT</span></h2>
         </div>
         <div class="col-md-12">
             <h4>Profit = total Income from Sale + Total Extra Charge - Total Expense</h4>
         </div>
         <div class="col-md-12">
-            <h2>Profit = {{totalIncome + totalExtraCharge - totalExpense}} BDT</h2>
+            <h2>Profit = {{(totalIncome + totalExtraCharge - totalExpense).toFixed(2)}} BDT</h2>
         </div>
     </div>
 </mat-card>
