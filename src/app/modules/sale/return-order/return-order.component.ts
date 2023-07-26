@@ -20,6 +20,8 @@ export class ReturnOrderComponent implements OnInit {
   returnOrderList: any[] = [];
   prodMsg:string = '';
   totalAmount = 0;
+  productToReturn:any;
+  showLoader: boolean = false;
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
@@ -89,6 +91,8 @@ export class ReturnOrderComponent implements OnInit {
   }
   onSelectReturnOrder(event: any) {
     let selectedProduct = event.source.value.product;
+    console.log(event.source.value);
+    this.productToReturn = event.source.value;
     this.selectedReturnItem.id = event.source.value.id;
     this.selectedReturnItem.productId = selectedProduct.id;
     this.selectedReturnItem.productCode = selectedProduct.productCode;
@@ -122,6 +126,7 @@ export class ReturnOrderComponent implements OnInit {
       this.selectedReturnItem.buyingPricePerUnit;
   }
   receiveReturn() {
+    this.showLoader = true;
     this.returnModel.invoiceId = this.saleInvoice.id;
     this.returnModel.orders = this.returnOrderList;
     this.returnModel.returnType = this.selectedReturnCondition;
@@ -136,6 +141,9 @@ export class ReturnOrderComponent implements OnInit {
       error: (err) => {
         this.notificationService.showErrorMessage("ERROR","Order Returned Failed","OK",500);
       },
+      complete:()=>{
+        this.showLoader = false;
+      }
     });
   }
 }

@@ -49,12 +49,13 @@ export class InventoryService {
     return this.http.post(InventoryUrls.UPDATE_SALE_INVOICE,requestModel);
   }
   public fetchAllSupplyInvoice(queryParams: Map<string, any>): Observable<any> {
+    let clientId = localStorage.getItem('clientId') || "";
     let params = new HttpParams();
     params = params.append('offset',queryParams.get('query').offset);
     params = params.append('limit',queryParams.get('query').limit);
     params = params.append('code',queryParams.get('query').code.trim());
     params = params.append('invoiceNo',queryParams.get('query').invoiceNo.trim());
-    // params = params.append('doNo',queryParams.get('query').doNo);
+    params = params.append('clientId',clientId);
     // params = params.append('isDue',queryParams.get('query').isDue);
     params = params.append('fromDate',queryParams.get('query').fromDate);
     params = params.append('toDate',queryParams.get('query').toDate);
@@ -95,10 +96,11 @@ export class InventoryService {
 
 
   public sendToApproval(queryParams: Map<string, any>): Observable<any> {
+    let approvale = queryParams.get('approval');
+    approvale.state = 'OPEN';
     let clientId = localStorage.getItem('clientId') || "";
-    let requestModel =  queryParams.get('approval');
-    requestModel.clientId = clientId;
-    return this.http.post(ApprovalUrls.SEND_TO_APPROVAL,requestModel);
+    approvale.clientId = clientId;
+    return this.http.post(ApprovalUrls.SEND_TO_APPROVAL, approvale);
   }
   public declineApproval(queryParams: Map<string, any>): Observable<any> {
     let clientId = localStorage.getItem('clientId') || "";
