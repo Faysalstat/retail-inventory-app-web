@@ -10,13 +10,19 @@ import { CompsModule } from '../comps/comps.module';
 import { SupplyInvoiceListComponent } from './supply-invoice-list/supply-invoice-list.component';
 import { EditInvoiceComponent } from './edit-invoice/edit-invoice.component';
 import { ReturnSupplyOrderComponent } from './return-supply-order/return-supply-order.component';
+import { AddStockSupplylessComponent } from './add-stock-supplyless/add-stock-supplyless.component';
+import { AddStockQuantityComponent } from './add-stock-quantity/add-stock-quantity.component';
+import { StockHistoryListComponent } from './stock-history-list/stock-history-list.component';
 @NgModule({
   declarations: [
     StockComponent,
     AddStockComponent,
     SupplyInvoiceListComponent,
     EditInvoiceComponent,
-    ReturnSupplyOrderComponent
+    ReturnSupplyOrderComponent,
+    AddStockSupplylessComponent,
+    AddStockQuantityComponent,
+    StockHistoryListComponent
   ],
   imports: [
     CommonModule,

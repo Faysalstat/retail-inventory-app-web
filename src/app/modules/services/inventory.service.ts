@@ -114,8 +114,8 @@ export class InventoryService {
     return this.http.post(ApprovalUrls.DECLINE_APPROVE_TASK,requestModel);
   }
   public fetchTaskList(queryParams: Map<string, any>): Observable<any> {
-    let clientId = localStorage.getItem('clientId') || "";
     let params = new HttpParams();
+    let clientId = localStorage.getItem('clientId') || "";
     params = params.append('clientId',clientId);
     return this.http.get(ApprovalUrls.GET_TASK_LIST,{params:params});
   }
@@ -145,6 +145,29 @@ export class InventoryService {
     let requestModel =  queryParams.get('return');
     requestModel.clientId = clientId;
     return this.http.post(InventoryUrls.ISSUE_SUPPLY_ORDER_RETURN,requestModel);
+  }
+
+  public updateStockQuantity(queryParams: Map<string, any>): Observable<any> {
+    let clientId = localStorage.getItem('clientId') || "";
+    let requestModel =  queryParams.get('product');
+    requestModel.clientId = clientId;
+    return this.http.post(InventoryUrls.UPDATE_STOCK_QUANTITY,requestModel);
+  }
+
+  public updateStock(queryParams: Map<string, any>): Observable<any> {
+    let clientId = localStorage.getItem('clientId') || "";
+    let stockModel =  queryParams.get('stockModel');
+    stockModel.clientId = clientId;
+    return this.http.post(InventoryUrls.UPDATE_STOCK_QUANTITY,stockModel);
+  }
+
+  public fetchStockModificationHistory(queryParams: Map<string, any>): Observable<any> {
+    let params = new HttpParams();
+    let clientId = localStorage.getItem('clientId') || "";
+    params = params.append('clientId',clientId);
+    params = params.append('updateType',queryParams.get('query').updateType.trim());
+    // params = params.append('invoiceNo',queryParams.get('query').invoiceNo.trim());
+    return this.http.get(InventoryUrls.FETCH_STOCK_MODIFICATION_HISTORY,{params:params});
   }
 }
 

@@ -74,7 +74,6 @@ export class ProductConfigComponent implements OnInit {
       brandName:['',[Validators.required]],
       costPricePerUnit: [0],
       sellingPricePerUnit: [0],
-      packagingCategory:['',[Validators.required]],
       unitPerPackage:[0]
     });
   }

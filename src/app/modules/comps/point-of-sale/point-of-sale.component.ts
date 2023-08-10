@@ -358,7 +358,7 @@ export class PointOfSaleComponent implements OnInit {
         orderRow.push(index);
         orderRow.push(elem.productName);
         orderRow.push(elem.pricePerUnit);
-        orderRow.push(elem.quantityOrdered + ' ' + elem.unitType);
+        orderRow.push(elem.quantityOrdered + '' + elem.unitType);
         orderRow.push(elem.totalOrderPrice);
         index++;
         orders.push(orderRow);
@@ -366,8 +366,8 @@ export class PointOfSaleComponent implements OnInit {
       let invoiceModel = {
         doNo: '5853',
         invoiceId: 'INV#0001',
-        customerName: this.person.personName,
-        customerAddress: this.person.personAddress,
+        customerName: this.person.personName || "N/A",
+        customerAddress: this.person.personAddress || "N/A",
         totalPrice: this.totalPrice,
         previousBalance: this.previousBalance,
         totalPayableAmount: this.totalPayableAmount,

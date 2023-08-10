@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
         this.cashGlBalance = res.body.balance;
       },
       error:(err)=>{
-        this.notificationService.showErrorMessage("ERROR","Cash GL NOT FOUND","OK",500);
+        this.notificationService.showErrorMessage("ERROR","Cash GL NOT FOUND","OK",1000);
       }
     });
 
@@ -74,7 +74,7 @@ export class DashboardComponent implements OnInit {
         this.assetBalance = res.body.balance;
       },
       error:(err)=>{
-        this.notificationService.showErrorMessage("ERROR","Asset GL NOT FOUND","OK",500);
+        this.notificationService.showErrorMessage("ERROR","Asset GL NOT FOUND","OK",1000);
       }
     })
 

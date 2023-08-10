@@ -219,9 +219,7 @@ export class EditSaleInvoiceComponent implements OnInit {
       orderRow.push(index);
       orderRow.push(elem.product.productName);
       orderRow.push(elem.pricePerUnit);
-      orderRow.push(elem.packageQuantity);
-      orderRow.push(elem.looseQuantity);
-      orderRow.push(elem.quantityOrdered + ' ' + elem.product.unitType);
+      orderRow.push(elem.quantityOrdered + '' + elem.product.unitType);
       orderRow.push(elem.totalPrice);
       index++;
       orders.push(orderRow);
@@ -232,8 +230,8 @@ export class EditSaleInvoiceComponent implements OnInit {
       issuedBy: this.saleInvoice.issuedBy,
       customer: this.customer,
       tnxDate: this.applyFilter(new Date()),
-      customerName: this.customer.person.personName,
-      customerAddress: this.customer.person.personAddress,
+      customerName: this.customer?this.customer.person.personName:"N/A",
+      customerAddress: this.customer?this.customer.person.personAddress:"N/A",
       totalPrice: this.saleInvoice.totalPrice,
       previousBalance: this.saleInvoice.previousBalance,
       totalPayableAmount: this.saleInvoice.totalPayableAmount || 0,

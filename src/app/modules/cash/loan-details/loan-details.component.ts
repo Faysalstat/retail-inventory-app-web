@@ -62,6 +62,7 @@ export class LoanDetailsComponent implements OnInit {
     this.reportService.fetchLoanDetails(id).subscribe({
       next: (res) => {
         this.loanAccount = res.body;
+        console.log(res.body)
         this.comment = this.loanAccount.remark;
         this.accountId = this.loanAccount.account.id;
       },
@@ -78,6 +79,7 @@ export class LoanDetailsComponent implements OnInit {
   payInstallment() {
     this.showLoader = true;
     this.installmentModel.loanAccount = this.loanAccount.account.id;
+    this.installmentModel.transactionType = this.loanAccount.transactionType;
     if (this.isApprovalNeeded) {
       let approvalModel = {
         payload: JSON.stringify(this.installmentModel),

@@ -1,0 +1,54 @@
+<mat-card>
+    <h1>Supply Invoice List:</h1>
+    <div class="row">
+        <!-- filters -->
+        <div class="col-md-2">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Update Type</mat-label>
+                <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="getStockHistoryList()"
+                    [(ngModel)]="updateType">
+                    <mat-option value="">All</mat-option>
+                    <mat-option value="ADDED">Added</mat-option>
+                    <mat-option value="DAMAGED">Damaged</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="md-col-12" style="overflow-x:auto;">
+            <table class="table  table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">SN</th>
+                        <th scope="col">Product</th>
+                        <th scope="col">Update Type</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="historyList.length==0">
+                        <td colspan="9" style="font-weight:bold ; ">
+                            No Due Payment Pending!!
+                        </td>
+                    </tr>
+                    <tr class="row-hover" *ngFor="let history of historyList; index as i">
+                        <td scope="row">{{i+1}}</td>
+                        <td>{{history?.product?.productName}}</td>
+                        <td>{{history?.updateType}}</td>
+                        <td>{{history?.quantity}}</td>
+                        <td>{{applyFilter(history?.modifyDate)}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6"></div>
+        <!-- <div class="col-md-6">
+            <div style="float:right ;font-size: 16px;">
+                <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChange($event)" aria-label="Select page">
+                </mat-paginator>
+            </div>
+        </div> -->
+    </div>
+</mat-card>

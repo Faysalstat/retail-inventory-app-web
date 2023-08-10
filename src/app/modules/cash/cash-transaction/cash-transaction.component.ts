@@ -17,9 +17,9 @@ import { TransactionService } from '../../services/transaction.service';
 export class CashTransactionComponent implements OnInit {
   types: any[] = [];
   cashTransactionForm!: FormGroup;
-  isSupplier: boolean = true;
-  isCustomer: boolean = false;
-  selectedType: string = 'SUPPLIER';
+  isSupplier: boolean = false;
+  isCustomer: boolean = true;
+  selectedType: string = 'CUSTOMER';
   contactNo: string = '';
   code: string = '';
   person: Person = new Person();
@@ -77,9 +77,9 @@ export class CashTransactionComponent implements OnInit {
   }
   prepareForm() {
     this.cashTransactionForm = this.formBuilder.group({
-      transactionType: ['PAYMENT',[Validators.required]],
+      transactionType: ['RECEIVE',[Validators.required]],
       transactionReason: [''],
-      clientType: ['SUPPLIER'],
+      clientType: ['CUSTOMER'],
       accountId: [''],
       cashAmount: ['',[Validators.required]],
       paymentMethod: ['CASH'],

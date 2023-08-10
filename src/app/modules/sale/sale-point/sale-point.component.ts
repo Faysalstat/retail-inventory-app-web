@@ -34,7 +34,8 @@ export class SalePointComponent implements OnInit {
   productFindForm!: FormGroup;
   isEdit: boolean = false;
   isCustomerExist: boolean = false;
-  customer!: Customer;
+  isWalkingCustomer: boolean = true;
+  customer: Customer = new Customer();
   account: Account = new Account();
   selectedProduct = new Product();
   orderItem!: OrderItem;
@@ -62,7 +63,8 @@ export class SalePointComponent implements OnInit {
   productCode: string = '';
   toWords = new ToWords();
   isLengthError: boolean = false;
-  customerBalanceStatus: string = "Due";
+  customerBalanceStatus: string = 'Due';
+  customerType: string = 'Walk-IN Customer';
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -127,7 +129,7 @@ export class SalePointComponent implements OnInit {
       id: [formData.id],
       doNo: [formData.doNo],
       invoiceNo: [formData.invoiceNo],
-      customerId: [formData.customerId, [Validators.required]],
+      customerId: [formData.customerId],
       // accountId:[formData.accountId,[Validators.required]],
       orders: [formData.orders, [Validators.required]],
       productName: [formData.productName],
@@ -145,14 +147,16 @@ export class SalePointComponent implements OnInit {
       chargeReason: [formData.chargeReason],
     });
     // this.saleInvoiceIssueForm.get('duePayment')?.disable();
-    this.saleInvoiceIssueForm.get('duePayment')?.valueChanges.subscribe((data) => {
-      this.totalDueAmount = data;
-      if(data<0){
-        this.customerBalanceStatus = "Balance";
-      }else{
-        this.customerBalanceStatus = "Due";
-      }
-    })
+    this.saleInvoiceIssueForm
+      .get('duePayment')
+      ?.valueChanges.subscribe((data) => {
+        this.totalDueAmount = data;
+        if (data < 0) {
+          this.customerBalanceStatus = 'Balance';
+        } else {
+          this.customerBalanceStatus = 'Due';
+        }
+      });
     this.saleInvoiceIssueForm
       .get('totalPaidAmount')
       ?.valueChanges.subscribe((data) => {
@@ -326,10 +330,17 @@ export class SalePointComponent implements OnInit {
       this.saleInvoiceIssueForm.get('rebate')?.value +
       this.saleInvoiceIssueForm.get('extraCharge')?.value
     ).toFixed(2);
-    this.saleInvoiceIssueForm
+    if(this.isWalkingCustomer){
+      this.saleInvoiceIssueForm.get('totalPaidAmount')?.setValue(this.totalPayableAmount);
+    }else{
+      this.saleInvoiceIssueForm
       .get('duePayment')
-      ?.setValue(this.totalPayableAmount - (this.saleInvoiceIssueForm
-        .get('totalPaidAmount')?.value || 0));
+      ?.setValue(
+        this.totalPayableAmount -
+          (this.saleInvoiceIssueForm.get('totalPaidAmount')?.value || 0)
+      );
+    }
+    
   }
   // testing
 
@@ -351,20 +362,25 @@ export class SalePointComponent implements OnInit {
     });
     this.saleInvoiceIssueForm.get('orders')?.setValue(this.orderList);
     this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+    
     this.saleInvoiceIssueForm.get('totalCost')?.setValue(totalCost);
     this.saleInvoiceIssueForm.get('productName')?.setValue('');
     this.saleInvoiceIssueForm.get('productCode')?.setValue('');
     this.totalPrice = totalPrice;
     this.totalPayableAmount = this.totalPrice - this.previousBalance;
-
-    if (this.totalPayableAmount < 0) {
-      this.balanceType = 'Return';
-    } else {
-      this.balanceType = 'Payable';
-      this.saleInvoiceIssueForm
-        .get('duePayment')
-        ?.setValue(this.totalPayableAmount);
+    if(this.isWalkingCustomer){
+      this.saleInvoiceIssueForm.get('totalPaidAmount')?.setValue(this.totalPayableAmount);
+    }else{
+      if (this.totalPayableAmount < 0) {
+        this.balanceType = 'Return';
+      } else {
+        this.balanceType = 'Payable';
+        this.saleInvoiceIssueForm
+          .get('duePayment')
+          ?.setValue(this.totalPayableAmount);
+      }
     }
+    
   }
   calculateTotalPrice() {
     let totalPrice = 0;
@@ -390,6 +406,7 @@ export class SalePointComponent implements OnInit {
     orderIssueModel.totalPayableAmount = this.totalPayableAmount;
     orderIssueModel.previousBalance = this.account.balance;
     orderIssueModel.issuedBy = this.userName;
+    orderIssueModel.isWalkingCustomer = this.isWalkingCustomer;
     const params: Map<string, any> = new Map();
     if (this.isApprovalNeeded) {
       let approvalModel = {
@@ -397,7 +414,7 @@ export class SalePointComponent implements OnInit {
         createdBy: this.userName,
         taskType: Tasks.CREATE_INVOICE,
         status: 'OPEN',
-        state: 'OPEN'
+        state: 'OPEN',
       };
       const params: Map<string, any> = new Map();
       params.set('approval', approvalModel);
@@ -430,7 +447,7 @@ export class SalePointComponent implements OnInit {
       params.set('invoice', orderIssueModel);
       this.inventoryService.issueSalesOrder(params).subscribe({
         next: (res) => {
-          this.downloadInvoice();
+          this.downloadInvoice(res.body.invoiceNo);
           this.notificationService.showMessage(
             'SUCCESS!',
             'Invoice Created',
@@ -465,7 +482,7 @@ export class SalePointComponent implements OnInit {
     );
   }
 
-  downloadInvoice() {
+  downloadInvoice(invoiceId:string) {
     let orders: any[] = [];
     let index = 1;
     this.customer.person = this.person;
@@ -474,21 +491,19 @@ export class SalePointComponent implements OnInit {
       orderRow.push(index);
       orderRow.push(elem.productName);
       orderRow.push(elem.pricePerUnit);
-      orderRow.push(elem.packageQuantity);
-      orderRow.push(elem.looseQuantity);
-      orderRow.push(elem.quantityOrdered + ' ' + elem.unitType);
+      orderRow.push(elem.quantityOrdered + '' + elem.unitType);
       orderRow.push(elem.totalOrderPrice);
       index++;
       orders.push(orderRow);
     });
     let invoiceModel = {
       doNo: '',
-      invoiceId: 'N/A',
+      invoiceId: invoiceId,
       issuedBy: localStorage.getItem('personName'),
       customer: this.customer,
       tnxDate: this.applyFilter(new Date()),
-      customerName: this.person.personName,
-      customerAddress: this.person.personAddress,
+      customerName: this.person.personName || "N/A",
+      customerAddress: this.person.personAddress|| "N/A",
       totalPrice: this.totalPrice,
       previousBalance: this.previousBalance,
       totalPayableAmount: this.totalPayableAmount,
@@ -512,5 +527,26 @@ export class SalePointComponent implements OnInit {
 
   showPositive(number: any) {
     return Math.abs(Number(number));
+  }
+
+  customerTypeChnaged(event: any) {
+    console.log(this.saleInvoiceIssueForm);
+    this.isCustomerExist = event.checked;
+    if (event.checked) {
+      this.customerType = 'Walk-IN Customer';
+      // Clear all validators
+      this.saleInvoiceIssueForm.get('customerId')?.clearValidators();
+      // Reset the value
+      this.saleInvoiceIssueForm.reset();
+    } else {
+      this.customerType = 'Old Customer';
+      this.saleInvoiceIssueForm
+        .get('customerId')
+        ?.setValidators([Validators.required]);
+      // Reset the value
+      this.saleInvoiceIssueForm.reset();
+    }
+    // Update the form control's validation and value state
+    this.saleInvoiceIssueForm.updateValueAndValidity();
   }
 }

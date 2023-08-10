@@ -1,18 +1,17 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Route, Router } from '@angular/router';
-import { COFIGS, Tasks } from '../../model/models';
-import { ClientService } from '../../services/client.service';
-import { InventoryService } from '../../services/inventory.service';
+import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../../services/notification-service.service';
 import { TransactionService } from '../../services/transaction.service';
+import { InventoryService } from '../../services/inventory.service';
+import { ClientService } from '../../services/client.service';
+import { Router } from '@angular/router';
+import { COFIGS, Tasks } from '../../model/models';
 
 @Component({
-  selector: 'app-add-loan-details',
-  templateUrl: './add-loan-details.component.html',
-  styleUrls: ['./add-loan-details.component.css']
+  selector: 'app-loan-client',
+  templateUrl: './loan-client.component.html',
+  styleUrls: ['./loan-client.component.css']
 })
-export class AddLoanDetailsComponent implements OnInit {
-  @Output() loanEvent = new EventEmitter<string>();
+export class LoanClientComponent implements OnInit {
   depositAmount!: number;
   clientType: string='BANK_LOAN';
   selectedClient:any = null;
@@ -76,7 +75,7 @@ export class AddLoanDetailsComponent implements OnInit {
         'INVALID',
         'Input All Data',
         'OK',
-        1000
+        400
       );
       return;
     }
@@ -85,7 +84,7 @@ export class AddLoanDetailsComponent implements OnInit {
       transactionType: "LOAN",
       tnxType:this.tnxType,
       clientType: this.clientType,
-      loanClientId: this.selectedClient.id,
+      clientId: this.selectedClient.id,
       cashAmount: this.depositAmount,
       comment: this.comment,
       issuedBy: localStorage.getItem("username"),
@@ -133,7 +132,6 @@ export class AddLoanDetailsComponent implements OnInit {
             this.comment = '';
             this.paymentMethod = 'CASH'
             this.interestRate = 0;
-            this.loanEvent.emit('Balance Changed');
             this.notificationService.showMessage(
               'Success!',
               'Payment Complete',

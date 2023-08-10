@@ -11,6 +11,7 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
 import { ExpensesComponent } from './expenses/expenses.component';
 import { LoanListComponent } from './loan-list/loan-list.component';
 import { LoanDetailsComponent } from './loan-details/loan-details.component';
+import { DepositComponent } from './deposit/deposit.component';
 
 
 
@@ -21,7 +22,8 @@ import { LoanDetailsComponent } from './loan-details/loan-details.component';
     TransactionListComponent,
     ExpensesComponent,
     LoanListComponent,
-    LoanDetailsComponent
+    LoanDetailsComponent,
+    DepositComponent
   ],
   imports: [
     CommonModule,

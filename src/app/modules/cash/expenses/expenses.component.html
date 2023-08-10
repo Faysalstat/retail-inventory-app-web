@@ -1,6 +1,9 @@
 <mat-card>
     <h2>Cash Transactions</h2>
     <mat-tab-group class="mt-4">
+        <!-- <mat-tab label="DEPOSIT">
+            <app-deposit (loanEvent)="updateBalance($event)" ></app-deposit>
+        </mat-tab> -->
         <mat-tab label="LOAN MANAGEMENT">
             <app-add-loan-details (loanEvent)="updateBalance($event)" ></app-add-loan-details>
         </mat-tab>

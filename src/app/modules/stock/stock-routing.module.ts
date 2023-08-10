@@ -10,13 +10,16 @@ import { ReturnSupplyOrderComponent } from './return-supply-order/return-supply-
 import { StockAuthGuard } from './stock-auth.guard';
 import { StockComponent } from './stock.component';
 import { SupplyInvoiceListComponent } from './supply-invoice-list/supply-invoice-list.component';
+import { AddStockSupplylessComponent } from './add-stock-supplyless/add-stock-supplyless.component';
+import { AddStockQuantityComponent } from './add-stock-quantity/add-stock-quantity.component';
+import { StockHistoryListComponent } from './stock-history-list/stock-history-list.component';
 
 const routes: Routes = [{
   path: '', component: StockComponent,canActivate:[AppAuthGuard],canActivateChild:[StockAuthGuard],
   children: [
-      {path: '', component: AddStockComponent},
-      {path: 'create-supply', component: AddStockComponent},
-      {path: 'supply-invoice-list', component: SupplyInvoiceListComponent},
+      {path: '', component: AddStockSupplylessComponent},
+      {path: 'create-supply', component: AddStockSupplylessComponent},
+      {path: 'supply-invoice-list', component: StockHistoryListComponent},
       {path: 'edit-supply-invoice/:id', component: EditInvoiceComponent},
       {path: 'product-stock', component: ProductManagementComponent},
       {path: 'product-detail/:id', component: ProductConfigComponent},

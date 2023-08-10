@@ -25,8 +25,8 @@ export class PdfMakeService {
     invoice.shopContactNo = localStorage.getItem('shopContactNo');
     const doc = new jsPDF();
     await this.buildSalePage(doc, invoice);
-    doc.addPage();
-    await this.buildSalePage(doc, invoice);
+    // doc.addPage();
+    // await this.buildSalePage(doc, invoice);
     return doc.save('invoice_' + invoice.invoiceId || 'Printing_Copy');
   }
   public async downloadSupplyInvoice(invoice: any) {
@@ -90,13 +90,13 @@ export class PdfMakeService {
             content:
               'Billed to:' +
               '\n' +
-              (invoice.customerName || '') +
+              (invoice?.customerName || '') +
               '\n' +
-              (invoice.customer.person.contactNo || '') +
+              (invoice?.customer?.person?.contactNo || '') +
               '\n' +
-              (invoice.customer.shopName || '') +
+              (invoice?.customer?.shopName || '') +
               '\n' +
-              (invoice.customer.shopAddress || ''),
+              (invoice?.customer?.shopAddress || ''),
             styles: {
               halign: 'left',
             },
@@ -160,15 +160,15 @@ export class PdfMakeService {
           'SN',
           'Product Name',
           'Rate',
-          'Package QNT',
-          'Loose QNT',
           'Total QNT',
-          'Total Price (BDT)',
+          'Total Price (BDT)'
         ],
       ],
+      columnStyles: { 0: { halign: 'center'},1: { halign: 'center'},2: { halign: 'center'},3: { halign: 'center'}, 4: { halign: 'center'} },
       body: invoice.orders,
       theme: 'striped',
       headStyles: {
+        halign: 'center',
         fillColor: '#343a40',
       },
     });
@@ -180,12 +180,14 @@ export class PdfMakeService {
             content: 'Subtotal:',
             styles: {
               halign: 'right',
+              fontSize: 14,
             },
           },
           {
             content: invoice.totalPrice + ' BDT',
             styles: {
               halign: 'right',
+              fontSize: 14,
             },
           },
         ],
@@ -277,7 +279,7 @@ export class PdfMakeService {
           },
         ],
       ],
-      theme: 'plain',
+      theme: 'grid'
     });
 
     autoTable(doc, {

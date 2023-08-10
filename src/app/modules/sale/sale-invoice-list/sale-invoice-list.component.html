@@ -90,9 +90,9 @@
             <tr class="row-hover" *ngFor="let invoice of saleInvoiceList; index as i" (click)="viewInvoice(invoice)">
               <th scope="row">{{i+offset+1}}</th>
               <td>{{invoice.invoiceNo}}</td>
-              <td>{{invoice.customer.person.personName}}</td>
-              <td>{{invoice.customer.person.contactNo}}</td>
-              <td>{{invoice.customer.shopName}}</td>
+              <td>{{invoice.customer?.person?.personName || ""}}</td>
+              <td>{{invoice.customer?.person?.contactNo || ""}}</td>
+              <td>{{invoice.customer?.shopName || ""}}</td>
               <td>{{invoice.totalPrice}}</td>
               <td>{{invoice.totalPaidAmount}}</td>
               <td>{{invoice.deliveryStatus}}</td>

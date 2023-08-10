@@ -92,14 +92,14 @@
                             <th>Quantity Delivered</th>
                             <th>Delivery Pending</th>
                             <th>Quantity Retured</th>
-                            <th>Status</th>
+                            <!-- <th>Status</th>
                             <th style="text-align: center;">
                                 <mat-checkbox (change)="$event ? masterToggle() : null"
                                     [checked]="selection.hasValue() && isAllSelected()"
                                     [indeterminate]="selection.hasValue() && !isAllSelected()">
                                 </mat-checkbox>
 
-                            </th>
+                            </th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -112,23 +112,23 @@
                             <td>{{order?.quantityDelivered}}</td>
                             <td>{{order?.qunatityDeliveryPending}}</td>
                             <td>{{order?.quantityReturned || 0}}</td>
-                            <td>{{order?.deliveryStatus}}</td>
+                            <!-- <td>{{order?.deliveryStatus}}</td>
                             <td style="text-align: center;">
                                 <mat-checkbox *ngIf="order.deliveryStatus =='PENDING'"
                                     (click)="$event.stopPropagation()"
                                     (change)="$event ? selection.toggle(order) : null"
                                     [checked]="selection.isSelected(order)">
                                 </mat-checkbox>
-                            </td>
+                            </td> -->
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <td colspan="8"></td>
                             <td><button *ngIf="saleInvoice?.deliveryStatus!='DELIVERED'" mat-raised-button color="warn" (click)="deliverAll()">Deliver All</button></td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="7" rowspan="4">
+                            <th colspan="6" rowspan="4">
                                 <div class="row">
                                     <div class="col-md-10">
                                         <mat-form-field class="input-field" appearance="outline">

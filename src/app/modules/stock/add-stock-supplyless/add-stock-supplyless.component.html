@@ -1,0 +1,83 @@
+<mat-card>
+    <div class="row">
+        <h2 style="font-weight:bold;">
+            <mat-icon>shopping_cart</mat-icon> STOCK UPDATE
+        </h2>
+        <div class="col-md-3">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Code</mat-label>
+                <input type="text" matInput [ngModelOptions]="{standalone:true}" [(ngModel)]="productCode"
+                    (keyup)="onProductCodeInput($event)" [matAutocomplete]="autoCode">
+                <mat-autocomplete (optionSelected)="productSelected($event)" #autoCode="matAutocomplete">
+                    <mat-option *ngFor="let product of filteredOptions" [value]="product">
+                        {{product.productCode}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="col-md-9">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Select Product</mat-label>
+                <input type="text" matInput [ngModelOptions]="{standalone:true}" [(ngModel)]="productName"
+                    (keyup)="onProductNameInput($event)" [matAutocomplete]="auto">
+                <mat-autocomplete (optionSelected)="productSelected($event)" #auto="matAutocomplete">
+                    <mat-option *ngFor="let product of filteredOptions" [value]="product">
+                        {{product.productName}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </div>
+        <div class="col-md-12">
+            <div class="row" style="padding:0 5px ;">
+                <div class="col-md-6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th> ({{selectedProduct.productCode}}) {{selectedProduct.productName}}</th>
+                            </tr>
+                            <tr>
+                                <th>Total QNT</th>
+                                <th>{{selectedProduct.quantity}}</th>
+                            </tr>
+                            <tr>
+                                <th>Total Damaged QNT</th>
+                                <th>{{selectedProduct.quantityDamaged}}</th>
+                            </tr>
+                            <tr>
+                                <th>Unit Type</th>
+                                <th>{{selectedProduct.unitType}}</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Action Type</mat-label>
+                <mat-select [ngModelOptions]="{standalone:true}"
+                [(ngModel)]="updateType">
+                    <mat-option *ngFor="let action of actions" [value]="action.value">{{action?.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Quantity</mat-label>
+                <input type="number" pInputText [ngModelOptions]="{standalone:true}"
+                    [(ngModel)]="quantity" placeholder="Quantity" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-9">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Remarks:</mat-label>
+                <textarea type="text" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="remark"
+                    matInput></textarea>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <button (click)="updateStock()" mat-raised-button color="warn">Update Stock</button>
+        </div>
+    </div>

@@ -19,6 +19,7 @@ export class ReportServiceService {
     params = params.append('transactionCategory',queryParams.get('transactionCategory').trim());
     params = params.append('fromDate',queryParams.get('fromDate'));
     params = params.append('toDate',queryParams.get('toDate'));
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ReportUrls.TRANSACTION_REPORT,{params:params});
   }
 
@@ -29,6 +30,7 @@ export class ReportServiceService {
     params = params.append('tnxType',queryParams.get('tnxType'));
     // params = params.append('isCredit',queryParams.get('isCredit'));
     // params = params.append('isDebit',queryParams.get('isDebit'));
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ReportUrls.ACCOUNT_HISTORY_REPORT,{params:params});
   }
 
@@ -42,6 +44,7 @@ export class ReportServiceService {
     params = params.append('productCode',queryParams.productCode.trim());
     params = params.append('fromDate',queryParams.fromDate);
     params = params.append('toDate',queryParams.toDate);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ReportUrls.SALE_ORDER_REPORT,{params:params});
   }
 
@@ -55,19 +58,23 @@ export class ReportServiceService {
     params = params.append('productCode',queryParams.productCode.trim());
     params = params.append('fromDate',queryParams.fromDate);
     params = params.append('toDate',queryParams.toDate);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ReportUrls.SUPPLY_ORDER_REPORT,{params:params});
   }
   public fetchStockListRecord(): Observable<any> {
     let params = new HttpParams();
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ReportUrls.STOCK_REPORT,{params:params});
   }
   public fetchDashboardSummary(): Observable<any> {
     let params = new HttpParams();
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ReportUrls.DASHBORAD_SUMMARY,{params:params});
   }
 
   public fetchEntitySummary(): Observable<any> {
     let params = new HttpParams();
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ReportUrls.DASHBORAD_ENTITY_SUMMARY,{params:params});
   }
 
@@ -78,21 +85,26 @@ export class ReportServiceService {
     params = params.append('fromDate',queryParams.get('query').fromDate);
     params = params.append('toDate',queryParams.get('query').toDate);
     params = params.append('invoiceNo',queryParams.get('query').invoiceNo.trim());
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ReportUrls.PROFIT_REPORT_SUMMARY,{params:params});
   }
 
   public fetchLoanList(): Observable<any>{
     let params = new HttpParams();
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(AccountUrls.FETCH_ALL_LOAN,{params:params});
   }
 
   public fetchLoanDetails(id:any): Observable<any>{
     let params = new HttpParams();
     params = params.append('loanAccountId',id);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(AccountUrls.FETCH_LOAN_DETAILS_BY_ID,{params:params});
   }
   public fetchVisualDetails(): Observable<any>{
-    return this.http.get(ReportUrls.VISUAL_SUMMARY);
+    let params = new HttpParams();
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
+    return this.http.get(ReportUrls.VISUAL_SUMMARY,{params:params});
   }
   public fetchStockSaleReport(queryParams:any): Observable<any> {
     let params = new HttpParams();
@@ -101,6 +113,7 @@ export class ReportServiceService {
     params = params.append('productCode',queryParams.productCode.trim());
     params = params.append('fromDate',queryParams.fromDate);
     params = params.append('toDate',queryParams.toDate);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ReportUrls.STOCK_SALE_REPORT,{params:params});
   }
 
@@ -111,6 +124,7 @@ export class ReportServiceService {
     params = params.append('productCode',queryParams.productCode.trim());
     params = params.append('fromDate',queryParams.fromDate);
     params = params.append('toDate',queryParams.toDate);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ReportUrls.STOCK_SUPPLY_REPORT,{params:params});
   }
 

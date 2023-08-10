@@ -15,16 +15,24 @@ export class AdminService {
 
   public getModules(roleName:any): Observable<any> {
     let params = new HttpParams();
+    let clientId = localStorage.getItem('clientId') || "";
     params = params.append('roleName', roleName);
+    params = params.append('clientId',clientId);
     return this.http.get(ConfigUrls.GET_ROLE_WISE_MENU, { params: params });
   }
 
   public getGlBalanceByType(glType:any): Observable<any> {
     let params = new HttpParams();
+    let clientId = localStorage.getItem('clientId') || "";
+    params = params.append('clientId', clientId);
     params = params.append('glType', glType);
+    
     return this.http.get(AccountUrls.FETCH_GL_DETAILS_BY_TYPE, { params: params });
   }
   public getGlList(): Observable<any> {
-    return this.http.get(AccountUrls.FETCH_GL_ACCOUNTS);
+    let params = new HttpParams();
+    let clientId = localStorage.getItem('clientId') || "";
+    params = params.append('clientId', clientId);
+    return this.http.get(AccountUrls.FETCH_GL_ACCOUNTS, { params: params });
   }
 }

@@ -7,15 +7,15 @@
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Brand Name</mat-label>
-                <input placeholder="Brand Name" pInputText (change)="fetchAllProducts()" [ngModelOptions]="{standalone:true}"
-                  [(ngModel)]="brandName" matInput>
-              </mat-form-field>
+                <input placeholder="Brand Name" pInputText (change)="fetchAllProducts()"
+                    [ngModelOptions]="{standalone:true}" [(ngModel)]="brandName" matInput>
+            </mat-form-field>
         </div>
         <div class="col-md-3">
             <mat-form-field appearance="outline" class="input-field">
                 <mat-label>Product Category</mat-label>
                 <mat-select (selectionChange)="fetchAllProducts()" [ngModelOptions]="{standalone:true}"
-                [(ngModel)]="categoryName">
+                    [(ngModel)]="categoryName">
                     <mat-option *ngFor="let cat of categories" [value]="cat.value">{{cat?.label}}
                     </mat-option>
                 </mat-select>
@@ -24,9 +24,9 @@
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Product Code</mat-label>
-                <input placeholder="Product Code" pInputText (change)="fetchAllProducts()" [ngModelOptions]="{standalone:true}"
-                  [(ngModel)]="code" matInput>
-              </mat-form-field>
+                <input placeholder="Product Code" pInputText (change)="fetchAllProducts()"
+                    [ngModelOptions]="{standalone:true}" [(ngModel)]="code" matInput>
+            </mat-form-field>
         </div>
         <div class="col-md-3">
             <button mat-raised-button (click)="refreshFilter()" color="warn">
@@ -37,29 +37,38 @@
     </div>
     <div class=" row">
         <div class="col-md-12">
-            <table class="table" >
+            <table class="table">
                 <thead>
                     <tr>
                         <th>SN</th>
                         <th>Code</th>
                         <th>Product Name</th>
                         <th>Brand Name</th>
-                        <th>Package Qnt</th>
                         <th>Quantity</th>
-                        <!-- <th>Buying Price</th> -->
                         <th>Selliing Price</th>
+                        <th>New Quantity</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="row-hover" *ngFor="let product of productList; index as i" (click)="onselectProduct(product)">
+                    <tr class="row-hover" *ngFor="let product of productList; index as i">
                         <th scope="row">{{i+offset+1}}</th>
                         <th>{{product?.productCode}}</th>
                         <th>{{product?.productName}}</th>
                         <th>{{product?.brandName}}</th>
-                        <th>{{packProduct(product)}}</th>
                         <th>{{(product?.quantity - product?.quantitySold)||0}} {{product?.unitType}}</th>
-                        <!-- <th>{{product?.costPricePerUnit || 0}} BDT</th> -->
                         <th>{{product?.sellingPricePerUnit || 0}} BDT</th>
+                        <th>
+                            <mat-form-field class="input-field" appearance="fill">
+                                <input  placeholder="Quantity" [ngModelOptions]="{standalone:true}"
+                                    [(ngModel)]="product.newQuantity" matInput>
+                            </mat-form-field>
+                        </th>
+                        <th>
+                            <button style="margin-top: 5px;" mat-raised-button (click)="updateStock(product,i)" color="primary">
+                                Update
+                            </button>
+                        </th>
                     </tr>
                 </tbody>
             </table>

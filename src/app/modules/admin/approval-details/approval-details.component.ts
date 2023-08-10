@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToWords } from 'to-words';
-import { Tasks } from '../../model/models';
+import { Person, Tasks } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
@@ -26,6 +26,7 @@ export class ApprovalDetailsComponent implements OnInit {
   dueAmount:number = 0;
   userName:any;
   toWords = new ToWords();
+  isWalkingCustomer:boolean = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private inventoryService: InventoryService,
@@ -52,8 +53,12 @@ export class ApprovalDetailsComponent implements OnInit {
           this.taskDetail = res.body;
           this.invoiceDetails = res.body.payload;
           this.comment = this.invoiceDetails.comment;
+          this.isWalkingCustomer = this.invoiceDetails.isWalkingCustomer;
           this.taskType = res.body.taskType;
-          this.fetchClientById(res.body);
+          if(!res.body.isWalkingCustomer){
+            this.fetchClientById(res.body);
+          }
+          
         },
       });
     });
@@ -178,15 +183,13 @@ export class ApprovalDetailsComponent implements OnInit {
   downloadSaleInvoice(invoiceNo:any) {
     let orders: any[] = [];
     let index = 1;
-    let person = this.customer.person;
+    let person = this.customer.person || new Person();
     this.invoiceDetails.orders.forEach((elem: any) => {
       let orderRow = [];
       orderRow.push(index);
       orderRow.push(elem.productName);
       orderRow.push(elem.pricePerUnit);
-      orderRow.push(elem.packageQuantity);
-      orderRow.push(elem.looseQuantity);
-      orderRow.push(elem.quantityOrdered + ' ' + elem.unitType);
+      orderRow.push(elem.quantityOrdered + '' + elem.unitType);
       orderRow.push(elem.totalOrderPrice);
       index++;
       orders.push(orderRow);

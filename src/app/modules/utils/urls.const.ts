@@ -3,8 +3,8 @@
 // const BASE_URL = 'https://retail.vatasolution.me/api';
 // const BASE_URL = 'https://sep.shopongroup.com/api';
 // const BASE_URL = 'https://shopongroup.com/api';
-// const BASE_URL = 'https://demov1.exeyezone.com/api';
-const BASE_URL = "http://localhost:3000/api";
+const BASE_URL = 'https://somadhan.store/api';
+// const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
@@ -55,9 +55,11 @@ export const InventoryUrls = {
   FETCH_SALE_ORDER_LIST : BASE_URL + "/sales/getallinvoice",
   FETCH_SUPPLY_ORDER_BY_ID : BASE_URL + "/supply/getinvoicebyid",
   FETCH_SALE_ORDER_BY_ID : BASE_URL + "/sales/getinvoicebyid",
+  FETCH_STOCK_MODIFICATION_HISTORY : BASE_URL + "/supply/getstockhistory",
   ISSUE_DO_PAYMENT : BASE_URL + "/sales/dopayment",
   ISSUE_SALE_ORDER_RETURN : BASE_URL + "/sales/dosaleorderreturn",
   ISSUE_SUPPLY_ORDER_RETURN : BASE_URL + "/sales/dosupplyorderreturn",
+  UPDATE_STOCK_QUANTITY : BASE_URL + "/supply/updatestockquantity",
 
 }
 

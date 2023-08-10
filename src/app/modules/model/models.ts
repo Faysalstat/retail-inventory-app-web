@@ -67,6 +67,7 @@ export class Product {
   productCode!: string;
   unitType!: string;
   quantity!: number;
+  quantityDamaged!: number;
   costPricePerUnit!: number;
   sellingPricePerUnit!: number;
   packagingCategory!: string;
@@ -166,6 +167,14 @@ export class UserModel{
   password!:string;
   userRole!:string;
 }
+export class StockUpdateModel{
+  id!:number;
+  productId!:number;
+  quantityAdded: number = 0;
+  quantityDamaged: number = 0;
+  date: Date = new Date();
+  remark!:string;
+}
 export enum Roles{
   ADMIN = 'ADMIN',
   MANAGER = 'MANAGER',
@@ -195,3 +204,5 @@ export enum COFIGS{
   EXPENSE_APPROVAL_NEEDED = "EXPENSE_APPROVAL_NEEDED",
   SHOP_NAME = "SHOP_NAME"
 }
+
+export const CLIENT_ID = 1;

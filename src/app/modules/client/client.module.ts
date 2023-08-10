@@ -12,6 +12,7 @@ import { CustomerComponent } from './customer/customer.component';
 import { ClientDetailsComponent } from './client-details/client-details.component';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { SupplyerDetailsComponent } from './supplyer-details/supplyer-details.component';
+import { LoanClientComponent } from './loan-client/loan-client.component';
 
 
 
@@ -23,7 +24,8 @@ import { SupplyerDetailsComponent } from './supplyer-details/supplyer-details.co
     CustomerComponent,
     ClientDetailsComponent,
     CustomerDetailsComponent,
-    SupplyerDetailsComponent
+    SupplyerDetailsComponent,
+    LoanClientComponent
   ],
   imports: [
     CommonModule,
