@@ -65,6 +65,8 @@ export class SalePointComponent implements OnInit {
   isLengthError: boolean = false;
   customerBalanceStatus: string = 'Due';
   customerType: string = 'Walk-IN Customer';
+  previewDetails:any;
+  showPreview:boolean = false;
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -345,11 +347,27 @@ export class SalePointComponent implements OnInit {
   // testing
 
   addOrder() {
+    
     if (
       !this.orderItem.productId ||
       !this.orderItem.quantityOrdered ||
       !this.orderItem.pricePerUnit
     ) {
+      this.notificationService.showMessage(
+        'Invalid!',
+        'Put All Data',
+        'OK',
+        1000
+      );
+      return;
+    }
+    if(!this.orderItem.quantity || this.orderItem.quantity==0 || this.orderItem.quantity < this.orderItem.quantityOrdered){
+      this.notificationService.showMessage(
+        'Insufficient Stock!',
+        'Change order quantity or add Stock',
+        'OK',
+        1000
+      );
       return;
     }
     this.orderList.push(this.orderItem);
@@ -358,16 +376,14 @@ export class SalePointComponent implements OnInit {
     let totalCost = 0;
     this.orderList.map((elem) => {
       totalPrice += elem.totalOrderPrice;
-      totalCost += elem.totalOrderCost;
     });
     this.saleInvoiceIssueForm.get('orders')?.setValue(this.orderList);
     this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
     
-    this.saleInvoiceIssueForm.get('totalCost')?.setValue(totalCost);
     this.saleInvoiceIssueForm.get('productName')?.setValue('');
     this.saleInvoiceIssueForm.get('productCode')?.setValue('');
     this.totalPrice = totalPrice;
-    this.totalPayableAmount = this.totalPrice - this.previousBalance;
+    this.calculateSummary();
     if(this.isWalkingCustomer){
       this.saleInvoiceIssueForm.get('totalPaidAmount')?.setValue(this.totalPayableAmount);
     }else{
@@ -389,23 +405,29 @@ export class SalePointComponent implements OnInit {
     });
     this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
   }
-  submitOrder() {
-    if (!this.saleInvoiceIssueForm.valid) {
+  submitOrder(event:any) {
+    this.showPreview = false;
+    if(event=="APPROVED"){
+
+    }else{
       this.notificationService.showMessage(
-        'INVALID FORM!',
-        'Please Input all fields',
+        'Canceled',
+        'Check Again!!',
         'OK',
         1000
       );
       return;
     }
+    
     this.showLoader = true;
+    
     let orderIssueModel = this.saleInvoiceIssueForm.value;
     orderIssueModel.accountId = this.account.id;
     orderIssueModel.comment = this.comment;
     orderIssueModel.totalPayableAmount = this.totalPayableAmount;
     orderIssueModel.previousBalance = this.account.balance;
     orderIssueModel.issuedBy = this.userName;
+    orderIssueModel.customerName = this.person.personName || "N/A";
     orderIssueModel.isWalkingCustomer = this.isWalkingCustomer;
     const params: Map<string, any> = new Map();
     if (this.isApprovalNeeded) {
@@ -424,7 +446,7 @@ export class SalePointComponent implements OnInit {
             'SUCCESS!',
             'Approval Sent',
             'OK',
-            500
+            1000
           );
           // this.downloadInvoice();
           // this.route.navigate(['/sale/sale-invoice-list']);
@@ -435,7 +457,7 @@ export class SalePointComponent implements OnInit {
             'Failed!',
             'Approval Sending Failed. ' + err.message,
             'OK',
-            500
+            1000
           );
         },
         complete: () => {
@@ -452,7 +474,7 @@ export class SalePointComponent implements OnInit {
             'SUCCESS!',
             'Invoice Created',
             'OK',
-            500
+            1000
           );
           // this.route.navigate(['/sale/sale-invoice-list']);
           window.location.reload();
@@ -462,7 +484,7 @@ export class SalePointComponent implements OnInit {
             'ERROR!',
             'Invoice Not Created',
             'OK',
-            500
+            1000
           );
         },
         complete: () => {
@@ -548,5 +570,66 @@ export class SalePointComponent implements OnInit {
     }
     // Update the form control's validation and value state
     this.saleInvoiceIssueForm.updateValueAndValidity();
+  }
+  preview(){
+    if (!this.saleInvoiceIssueForm.valid) {
+      this.notificationService.showMessage(
+        'INVALID FORM!',
+        'Please Input all fields',
+        'OK',
+        1000
+      );
+      return;
+    }
+    let previewModel = {
+      issuedBy :localStorage.getItem('personName'),
+      isWalkingCustomer : this.isWalkingCustomer,
+      customerName : this.person.personName || "N/A",
+      shopName : this.customer.shopName || "N/A",
+      contactNo : this.customer.shopAddress || "N/A",
+      personAddress : this.person.personAddress  || "N/A",
+      totalPrice : this.totalPrice,
+      previousBalance : this.previousBalance,
+      chargeReason : (this.saleInvoiceIssueForm.get('chargeReason')?.value != ''
+      ? this.saleInvoiceIssueForm.get('chargeReason')?.value
+      : 'Extra Charge'),
+      extraCharge : this.saleInvoiceIssueForm.get('extraCharge')?.value,
+      rebate : this.saleInvoiceIssueForm.get('rebate')?.value,
+      totalPayableAmount : this.totalPayableAmount,
+      totalPaidAmount : this.saleInvoiceIssueForm.get('totalPaidAmount')?.value,
+      duePayment : this.totalDueAmount,
+      orders : this.orderList,
+      comment : this.comment,
+      paymentMethod : this.saleInvoiceIssueForm.get('paymentMethod')?.value,
+    }
+    this.previewDetails = previewModel;
+    
+    this.showPreview = true;
+    
+
+  }
+  removeOrder(index:any){
+    let removedOrder = this.orderList[index];
+    this.orderList.splice(index,1);
+    let totalPrice = 0;
+    this.orderList.map((elem) => {
+      totalPrice += elem.totalOrderPrice;
+    });
+    this.saleInvoiceIssueForm.get('orders')?.setValue(this.orderList);
+    this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+    this.totalPrice = totalPrice;
+    this.calculateSummary();
+    if(this.isWalkingCustomer){
+      this.saleInvoiceIssueForm.get('totalPaidAmount')?.setValue(this.totalPayableAmount);
+    }else{
+      if (this.totalPayableAmount < 0) {
+        this.balanceType = 'Return';
+      } else {
+        this.balanceType = 'Payable';
+        this.saleInvoiceIssueForm
+          .get('duePayment')
+          ?.setValue(this.totalPayableAmount);
+      }
+    }
   }
 }

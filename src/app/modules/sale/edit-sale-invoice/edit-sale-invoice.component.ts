@@ -230,11 +230,12 @@ export class EditSaleInvoiceComponent implements OnInit {
       issuedBy: this.saleInvoice.issuedBy,
       customer: this.customer,
       tnxDate: this.applyFilter(new Date()),
-      customerName: this.customer?this.customer.person.personName:"N/A",
+      customerName: this.customer?this.customer.person.personName:this.saleInvoice.customerName,
       customerAddress: this.customer?this.customer.person.personAddress:"N/A",
       totalPrice: this.saleInvoice.totalPrice,
       previousBalance: this.saleInvoice.previousBalance,
       totalPayableAmount: this.saleInvoice.totalPayableAmount || 0,
+      totalReturnedAmount: this.saleInvoice.totalReturnedAmount || 0,
       totalPayableAmountInWords: this.toWords.convert(
         this.saleInvoice.totalPayableAmount || 0
       ),

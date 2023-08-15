@@ -2,33 +2,20 @@
 <mat-card class="mt-5">
     <div class="row">
         <h1>Loan:</h1>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Transaction Type:</mat-label>
-                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="tnxType">
-                    <mat-option value='RECEIVE'>Receive</mat-option>
-                    <mat-option value='GIVEN'>Payment</mat-option>
-                </mat-select>
+                <mat-label>Client Name:</mat-label>
+                <input pInputText [ngModelOptions]="{standalone:true}" 
+                    [(ngModel)]="clientName" placeholder="Client Name" matInput>
             </mat-form-field>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-8">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Amount: </mat-label>
-                <input type="number" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="depositAmount"
-                     placeholder="00" matInput>
+                <mat-label>Client Disc:</mat-label>
+                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="clientDisc"
+                    placeholder="Client Disc" matInput>
             </mat-form-field>
         </div>
-        
-        <!-- <div class="col-md-3">
-            <mat-form-field appearance="outline" class="input-field">
-                <mat-label>Source:</mat-label>
-                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="depositType">
-                    <mat-option *ngFor="let type of types" [value]="type.value">{{type?.label}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div> -->
-        
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Client Type:</mat-label>
@@ -40,12 +27,22 @@
         </div>
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Received From: </mat-label>
-                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedClient">
-                    <mat-option *ngFor="let client of clients" [value]="client.value">{{client.label}}</mat-option>
+                <mat-label>Transaction Type:</mat-label>
+                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="tnxType">
+                    <mat-option value='GIVEN'>Payment</mat-option>
+                    <mat-option value='RECEIVE'>Receive</mat-option>
+                    
                 </mat-select>
             </mat-form-field>
         </div>
+        <div class="col-md-3">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Amount: </mat-label>
+                <input type="number"  pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="depositAmount"
+                     placeholder="00" matInput>
+            </mat-form-field>
+        </div>
+        
         <div class="col-md-3">
             <mat-form-field appearance="outline" class="input-field">
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="paymentMethod">

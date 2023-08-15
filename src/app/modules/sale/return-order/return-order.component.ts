@@ -83,8 +83,8 @@ export class ReturnOrderComponent implements OnInit {
   }
 
   addOrder() {
+    console.log(this.selectedReturnItem)
     this.returnOrderList.push(this.selectedReturnItem);
-    this.returnModel.totalCostPrice += this.selectedReturnItem.totalOrderCost;
     this.returnModel.totalSellPrice += this.selectedReturnItem.totalOrderPrice;
     this.selectedReturnItem = new OrderItem();
     this.selectedProduct = {};
@@ -98,14 +98,7 @@ export class ReturnOrderComponent implements OnInit {
     this.selectedReturnItem.productCode = selectedProduct.productCode;
     this.selectedReturnItem.productName = selectedProduct.productName;
     this.selectedReturnItem.unitType = selectedProduct.unitType;
-    this.selectedReturnItem.packagingCategory =
-      selectedProduct.packagingCategory;
-    this.selectedReturnItem.unitPerPackage =
-      selectedProduct.unitPerPackage;
-    this.selectedReturnItem.pricePerUnit =
-      selectedProduct.sellingPricePerUnit;
-    this.selectedReturnItem.buyingPricePerUnit =
-      selectedProduct.costPricePerUnit;
+    this.selectedReturnItem.pricePerUnit = event.source.value.pricePerUnit;
     this.selectedReturnItem.quantity = selectedProduct.quantity;
     // this.selectedReturnItem.quantityReturne
   }
@@ -130,7 +123,7 @@ export class ReturnOrderComponent implements OnInit {
     this.returnModel.invoiceId = this.saleInvoice.id;
     this.returnModel.orders = this.returnOrderList;
     this.returnModel.returnType = this.selectedReturnCondition;
-    this.returnModel.cusAcc = this.saleInvoice.customer.account.id;
+    // this.returnModel.cusAcc = this.saleInvoice.customer.account.id;
     const params: Map<string, any> = new Map();
     params.set('return', this.returnModel);
     this.inventoryService.issueSaleOrderReturn(params).subscribe({

@@ -28,7 +28,9 @@ export class AddLoanDetailsComponent implements OnInit {
   isApprovalNeeded: boolean = false;
   isSubmitted: boolean = false;
   showLoader = false;
-  tnxType:string = "RECEIVE";
+  tnxType:string = "GIVEN";
+  clientName!:string;
+  clientDisc!:string;
   constructor(
     private notificationService: NotificationService,
     private transactionService: TransactionService,
@@ -71,7 +73,7 @@ export class AddLoanDetailsComponent implements OnInit {
   fetchDepositTypes() {}
   submit() {
     
-    if (!this.clientType || !this.selectedClient || !this.depositAmount) {
+    if (!this.clientType || !this.clientName || !this.depositAmount) {
       this.notificationService.showErrorMessage(
         'INVALID',
         'Input All Data',
@@ -85,7 +87,8 @@ export class AddLoanDetailsComponent implements OnInit {
       transactionType: "LOAN",
       tnxType:this.tnxType,
       clientType: this.clientType,
-      loanClientId: this.selectedClient.id,
+      clientName:this.clientName,
+      clientDisc:this.clientDisc,
       cashAmount: this.depositAmount,
       comment: this.comment,
       issuedBy: localStorage.getItem("username"),
@@ -109,7 +112,7 @@ export class AddLoanDetailsComponent implements OnInit {
             'SUCCESS!',
             'Approval Sent',
             'OK',
-            500
+            1000
           );
           this.route.navigate(['/cash/transaction-list']);
         },
@@ -118,7 +121,7 @@ export class AddLoanDetailsComponent implements OnInit {
             'Failed!',
             'Approval Sending Failed. ' + err.message,
             'OK',
-            500
+            1000
           );
         },
       });
@@ -129,6 +132,8 @@ export class AddLoanDetailsComponent implements OnInit {
         next: (res) => {
           if (res.isSuccess) {
             this.isSubmitted = false;
+            this.clientName="";
+            this.clientDisc="";
             this.depositAmount = 0;
             this.comment = '';
             this.paymentMethod = 'CASH'
@@ -138,14 +143,14 @@ export class AddLoanDetailsComponent implements OnInit {
               'Success!',
               'Payment Complete',
               'OK',
-              500
+              1000
             );
           } else {
             this.notificationService.showErrorMessage(
               'ERROR!',
               res.message,
               'OK',
-              500
+              1000
             );
           }
         },

@@ -34,4 +34,20 @@ public showNotFoundErrorMessage(msg:string,timer:number){
     timer: timer
   });
 }
+
+public showConfirmationMessage(title:string,msg:string,confirmMsg:string,callback:any){
+  Swal.fire({
+    title: title,
+    text: msg,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: confirmMsg
+  }).then((result) => {
+    if (result.isConfirmed) {
+      callback();
+    }
+  })
+}
 }

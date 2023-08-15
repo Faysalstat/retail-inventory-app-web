@@ -19,6 +19,7 @@ export class ProductConfigComponent implements OnInit {
   isEdit:boolean = false;
   product!:any;
   errMsg:string ='';
+  isProductExist:boolean = false;
   constructor(
     private activatedRoute:ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -183,6 +184,7 @@ export class ProductConfigComponent implements OnInit {
       this.productService.fetchProductByCode(params).subscribe({
         next:(res)=>{
           if(res.isExist){
+            this.isProductExist = true;
             this.productAddingForm.get('productName')?.disable();
             this.productAddingForm.get('productCategory')?.disable();
             this.productAddingForm.get('unitType')?.disable();
@@ -194,6 +196,7 @@ export class ProductConfigComponent implements OnInit {
             this.productAddingForm.get('unitPerPackage')?.disable();
             this.errMsg = "**This Product Already Exits"
           }else{
+            this.isProductExist = false;
             this.productAddingForm.get('productName')?.enable();
             this.productAddingForm.get('productCategory')?.enable();
             this.productAddingForm.get('unitType')?.enable();

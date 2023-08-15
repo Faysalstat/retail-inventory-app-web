@@ -2,7 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToWords } from 'to-words';
-import { Account, COFIGS, Customer, Person, Supplyer, Tasks } from '../../model/models';
+import {
+  Account,
+  COFIGS,
+  Customer,
+  Person,
+  Supplyer,
+  Tasks,
+} from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
@@ -37,6 +44,7 @@ export class CashTransactionComponent implements OnInit {
   isOther: boolean = false;
   showLoader: boolean = false;
   toWords = new ToWords();
+  transactionDate = new Date();
   constructor(
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
@@ -77,11 +85,11 @@ export class CashTransactionComponent implements OnInit {
   }
   prepareForm() {
     this.cashTransactionForm = this.formBuilder.group({
-      transactionType: ['RECEIVE',[Validators.required]],
+      transactionType: ['RECEIVE', [Validators.required]],
       transactionReason: [''],
       clientType: ['CUSTOMER'],
       accountId: [''],
-      cashAmount: ['',[Validators.required]],
+      cashAmount: ['', [Validators.required]],
       paymentMethod: ['CASH'],
       isReturn: [false],
     });
@@ -92,16 +100,15 @@ export class CashTransactionComponent implements OnInit {
       this.isCustomer = true;
       this.isSupplier = false;
       this.cashTransactionForm.get('transactionType')?.setValue('RECEIVE');
-      
-    this.cashTransactionForm.get('clientType')?.setValue(this.selectedType);
+
+      this.cashTransactionForm.get('clientType')?.setValue(this.selectedType);
     } else if (this.selectedType == 'SUPPLIER') {
       this.isCustomer = false;
       this.isSupplier = true;
       this.cashTransactionForm.get('transactionType')?.setValue('PAYMENT');
-      
-    this.cashTransactionForm.get('clientType')?.setValue(this.selectedType);
-    }
-    else if(this.selectedType == 'OTHER') {
+
+      this.cashTransactionForm.get('clientType')?.setValue(this.selectedType);
+    } else if (this.selectedType == 'OTHER') {
       this.isOther = true;
     }
   }
@@ -146,9 +153,9 @@ export class CashTransactionComponent implements OnInit {
           );
           this.isClientFound = false;
         },
-        complete:()=>{
+        complete: () => {
           this.showLoader = false;
-        }
+        },
       });
     } else if (this.selectedType == 'SUPPLIER') {
       params.set('id', '');
@@ -181,88 +188,102 @@ export class CashTransactionComponent implements OnInit {
             200
           );
         },
-        complete:()=>{
+        complete: () => {
           this.showLoader = false;
-        }
+        },
       });
     }
   }
-
   submitTransaction() {
-    if(this.cashTransactionForm.invalid){
-      return;
-    }
-    this.showLoader = true;
-    let transactionModel = this.cashTransactionForm.value;
-    transactionModel.issuedBy =this.userName;
-    transactionModel.comment = this.comment;
-    transactionModel.person = this.person;
-    transactionModel.account = this.account;
-    transactionModel.customer = this.customer;
-    transactionModel.supplier = this.supplier; 
-    if (this.isApprovalNeeded) {
-      let approvalModel = {
-        payload: JSON.stringify(transactionModel),
-        createdBy: this.userName,
-        taskType: Tasks.PAYMENT_TRANSACTION,
-        status: 'OPEN',
-      };
-      const params: Map<string, any> = new Map();
-      params.set('approval', approvalModel);
-      this.inventoryService.sendToApproval(params).subscribe({
-        next: (res) => {
-          this.notificationService.showMessage(
-            'SUCCESS!',
-            'Approval Sent',
-            'OK',
-            500
-          );
-          // this.downloadMemo(res.bod);
-          this.route.navigate(['/cash/transaction-list']);
-        },
-        error: (err) => {
-          this.notificationService.showMessage(
-            'Failed!',
-            'Approval Sending Failed. ' + err.message,
-            'OK',
-            500
-          );
-        },
-        complete:()=>{
-          this.showLoader = false;
+    let msg = this.cashTransactionForm.controls['cashAmount'].value;
+    let fullMsg =
+      msg +
+      ' BDT ' +
+      (this.isReturn ? ' Return To ' : ' Receive From ') +
+      this.person.personName;
+    console.log(fullMsg);
+    this.notificationService.showConfirmationMessage(
+      'Are you Sure?',
+      fullMsg,
+      'Confirm',
+      () => {
+        if (this.cashTransactionForm.invalid) {
+          return;
         }
-      });
-    } else {
-      this.showLoader = true;
-      const params: Map<string, any> = new Map();
-      params.set('payment', transactionModel);
-      this.inventoryService.doPaymentTransaction(params).subscribe({
-        next: (res) => {
-          this.downloadMemo(res.voucherNo || '');
-          this.notificationService.showMessage(
-            'SUCCESS!',
-            'Payment Successful',
-            'OK',
-            400
-          );
-          this.route.navigate(['/cash/transaction-list']);
-          
-        },
-        error: (err) => {
-          this.notificationService.showMessage(
-            'ERROR!',
-            'Payment FAILED',
-            'OK',
-            200
-          );
-          this.isTnxDone = false;
-        },
-        complete:()=>{
-          this.showLoader = false;
+        this.showLoader = true;
+        let transactionModel = this.cashTransactionForm.value;
+        transactionModel.issuedBy = this.userName;
+        transactionModel.comment = this.comment;
+        transactionModel.person = this.person;
+        transactionModel.account = this.account;
+        transactionModel.customer = this.customer;
+        transactionModel.supplier = this.supplier;
+        transactionModel.transactionDate = this.transactionDate;
+        if (this.isApprovalNeeded) {
+          let approvalModel = {
+            payload: JSON.stringify(transactionModel),
+            createdBy: this.userName,
+            taskType: Tasks.PAYMENT_TRANSACTION,
+            status: 'OPEN',
+          };
+          const params: Map<string, any> = new Map();
+          params.set('approval', approvalModel);
+          this.inventoryService.sendToApproval(params).subscribe({
+            next: (res) => {
+              this.notificationService.showMessage(
+                'SUCCESS!',
+                'Approval Sent',
+                'OK',
+                500
+              );
+              // this.downloadMemo(res.bod);
+              this.route.navigate(['/cash/transaction-list']);
+            },
+            error: (err) => {
+              this.notificationService.showMessage(
+                'Failed!',
+                'Approval Sending Failed. ' + err.message,
+                'OK',
+                500
+              );
+            },
+            complete: () => {
+              this.showLoader = false;
+            },
+          });
+        } else {
+          this.showLoader = true;
+          const params: Map<string, any> = new Map();
+          params.set('payment', transactionModel);
+          this.inventoryService.doPaymentTransaction(params).subscribe({
+            next: (res) => {
+              this.downloadMemo(res.voucherNo || '');
+              this.notificationService.showMessage(
+                'SUCCESS!',
+                'Payment Successful',
+                'OK',
+                400
+              );
+              this.route.navigate(['/cash/transaction-list']);
+            },
+            error: (err) => {
+              this.notificationService.showMessage(
+                'ERROR!',
+                'Payment FAILED',
+                'OK',
+                200
+              );
+              this.isTnxDone = false;
+            },
+            complete: () => {
+              this.showLoader = false;
+            },
+          });
         }
-      });
-    }
+      }
+    );
   }
+  submit() {}
 
   fetchTransactionReasons() {
     this.transactionReasons = [
@@ -283,14 +304,13 @@ export class CashTransactionComponent implements OnInit {
 
   onChangeIsReturn(ev: any) {
     this.isReturn = ev.checked ? true : false;
-    if(this.isReturn){
+    if (this.isReturn) {
       this.cashTransactionForm.get('transactionType')?.setValue('RETURN');
-    }else if(this.isCustomer){
+    } else if (this.isCustomer) {
       this.cashTransactionForm.get('transactionType')?.setValue('RECEIVE');
-    }else{
+    } else {
       this.cashTransactionForm.get('transactionType')?.setValue('PAYMENT');
     }
-    
   }
   applyFilter(date: any) {
     let newDate = new Date(date);
@@ -302,45 +322,53 @@ export class CashTransactionComponent implements OnInit {
       newDate.getFullYear()
     );
   }
-  downloadMemo(voucher:any) {
+  downloadMemo(voucher: any) {
     let data: any[] = [];
     let index = 1;
     let tnxAmount = this.cashTransactionForm.get('cashAmount')?.value;
     let tnxDate = this.applyFilter(new Date());
     let debitAmount = 0;
     let creditAmount = 0;
-    if (this.selectedType == 'CUSTOMER'){
-      if(!this.isReturn){
+    if (this.selectedType == 'CUSTOMER') {
+      if (!this.isReturn) {
         debitAmount = tnxAmount;
-      }else{
+      } else {
         creditAmount = tnxAmount;
       }
-    } else if(this.selectedType == 'SUPPLIER'){
-      if(!this.isReturn){
+    } else if (this.selectedType == 'SUPPLIER') {
+      if (!this.isReturn) {
         creditAmount = tnxAmount;
-      }else{
+      } else {
         debitAmount = tnxAmount;
       }
     }
-    data.push(['1',tnxDate,this.cashTransactionForm.get('paymentMethod')?.value,debitAmount,creditAmount])
+    data.push([
+      '1',
+      tnxDate,
+      this.cashTransactionForm.get('paymentMethod')?.value,
+      debitAmount,
+      creditAmount,
+    ]);
     let model = {
       voucher: voucher,
       issuedBy: localStorage.getItem('personName'),
       customer: this.customer,
-      supplier:this.supplier,
+      supplier: this.supplier,
       person: this.person,
       tnxDate: this.applyFilter(new Date()),
-      clientName: this.isCustomer?this.person.personName:this.supplier.person.personName,
+      clientName: this.isCustomer
+        ? this.person.personName
+        : this.supplier.person.personName,
       tnxAmount: this.cashTransactionForm.get('cashAmount')?.value,
       tnxType: this.cashTransactionForm.get('transactionType')?.value,
       tnxAmountInWords: this.toWords.convert(
         this.cashTransactionForm.get('cashAmount')?.value || 0
       ),
-      data:data
+      data: data,
     };
-    if(this.isCustomer){
+    if (this.isCustomer) {
       this.pdfMakeService.downloadCustomerPaymentInvoice(model);
-    }else if(this.isSupplier){
+    } else if (this.isSupplier) {
       this.pdfMakeService.downloadSupplyerPaymentInvoice(model);
     }
   }

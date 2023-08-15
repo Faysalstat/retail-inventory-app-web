@@ -27,6 +27,7 @@ export class LoanDetailsComponent implements OnInit {
   id:any;
   accountId!:any;
   showLoader: boolean = false;
+  disableButton:boolean = false;
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
@@ -78,7 +79,8 @@ export class LoanDetailsComponent implements OnInit {
   }
   payInstallment() {
     this.showLoader = true;
-    this.installmentModel.loanAccount = this.loanAccount.account.id;
+    this.installmentModel.loanAccount = this.loanAccount.id;
+    this.installmentModel.account = this.loanAccount.account.id;
     this.installmentModel.transactionType = this.loanAccount.transactionType;
     if (this.isApprovalNeeded) {
       let approvalModel = {
@@ -95,7 +97,7 @@ export class LoanDetailsComponent implements OnInit {
             'SUCCESS!',
             'Approval Sent',
             'OK',
-            500
+            1000
           );
           this.route.navigate(['/cash/transaction-list']);
         },
@@ -104,7 +106,7 @@ export class LoanDetailsComponent implements OnInit {
             'Failed!',
             'Approval Sending Failed. ' + err.message,
             'OK',
-            500
+            1000
           );
         },
         complete:()=>{
@@ -116,11 +118,12 @@ export class LoanDetailsComponent implements OnInit {
       params.set('installment', this.installmentModel);
       this.transactionService.payInstallment(params).subscribe({
         next: (res) => {
+          this.showLoader = false;
           this.notificationService.showMessage(
             'SUCCESS',
             'PAYMENT SUCCESSFULL',
-            '5K',
-            200
+            'OK',
+            1000
           );
           this.installmentModel = {
             installMentAmount: 0,
@@ -132,17 +135,27 @@ export class LoanDetailsComponent implements OnInit {
           this.fetchDetailsBID(this.id);
         },
         error:(err)=>{
-          this.notificationService.showMessage(
-            'SUCCESS',
+          this.showLoader = false;
+          this.notificationService.showErrorMessage(
+            'ERROR',
             'PAYMENT Failed '+err.message,
             '5K',
-            200
+            1000
           );
         },
         complete:()=>{
           this.showLoader = false;
         }
       });
+    }
+  }
+  checkAvailableBalance(){
+    if(this.installmentModel.installmentAmount>this.loanAccount.account?.balance){
+      this.notificationService.showErrorMessage("Invalid Amount",
+      "Installment Amount is Greater Than Available Amount","Close",3000);
+      this.disableButton = true;
+    }else{
+      this.disableButton = false;
     }
   }
 }

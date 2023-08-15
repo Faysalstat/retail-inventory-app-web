@@ -67,7 +67,9 @@ export class Product {
   productCode!: string;
   unitType!: string;
   quantity!: number;
+  quantitySold!: number;
   quantityDamaged!: number;
+  quantityReturn!: number;
   costPricePerUnit!: number;
   sellingPricePerUnit!: number;
   packagingCategory!: string;

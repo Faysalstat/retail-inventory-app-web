@@ -9,6 +9,8 @@ import { SaleInvoiceListComponent } from './sale-invoice-list/sale-invoice-list.
 import { EditSaleInvoiceComponent } from './edit-sale-invoice/edit-sale-invoice.component';
 import { SaleComponent } from './sale.component';
 import { ReturnOrderComponent } from './return-order/return-order.component';
+import { PreviewComponent } from './preview/preview.component';
+import { TestpreviewComponent } from './testpreview/testpreview.component';
 
 
 
@@ -18,7 +20,9 @@ import { ReturnOrderComponent } from './return-order/return-order.component';
     SaleInvoiceListComponent,
     EditSaleInvoiceComponent,
     SaleComponent,
-    ReturnOrderComponent
+    ReturnOrderComponent,
+    PreviewComponent,
+    TestpreviewComponent
   ],
   imports: [
     CommonModule,

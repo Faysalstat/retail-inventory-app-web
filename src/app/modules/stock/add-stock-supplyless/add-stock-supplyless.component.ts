@@ -40,6 +40,7 @@ export class AddStockSupplylessComponent implements OnInit {
   ) {
     this.actions = [
       {label:"ADD STOCK", value:"ADDED"},
+      {label:"RETURN", value:"RETURN"},
       {label:"DAMAGED", value:"DAMAGED"}
     ]
   }

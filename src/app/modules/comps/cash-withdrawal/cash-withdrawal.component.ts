@@ -46,7 +46,13 @@ export class CashWithdrawalComponent implements OnInit {
     });
   }
   submit(){
-    this.showLoader = true;
+    let fullMsg = this.amount + ' BDT will be Withdrawn from Cash';
+    this.notificationService.showConfirmationMessage(
+      'Are you Sure?',
+      fullMsg,
+      'Confirm',
+      () => {
+        this.showLoader = true;
     let drawingModel = {
         transactionReason: "CASH_WITHDRAWAL",
         paymentMethod: "CASH",
@@ -71,7 +77,7 @@ export class CashWithdrawalComponent implements OnInit {
             'SUCCESS!',
             'Approval Sent',
             'OK',
-            500
+            1000
           );
           this.route.navigate(['/cash/transaction-list']);
         },
@@ -80,7 +86,7 @@ export class CashWithdrawalComponent implements OnInit {
             'Failed!',
             'Approval Sending Failed. ' + err.message,
             'OK',
-            500
+            1000
           );
         },
       });
@@ -95,9 +101,9 @@ export class CashWithdrawalComponent implements OnInit {
             this.receivedBy = "";
             this.remarks ="";
             this.withdrawalEvent.emit("Balance Changed");
-            this.notificationService.showMessage("Success!","Transaction Complete","OK",500);
+            this.notificationService.showMessage("Success!","Transaction Complete","OK",1000);
           }else{
-            this.notificationService.showErrorMessage("ERROR!",data.message,"OK",500);
+            this.notificationService.showErrorMessage("ERROR!",data.message,"OK",1000);
           }
         },
         error:(err)=>{
@@ -107,6 +113,8 @@ export class CashWithdrawalComponent implements OnInit {
         }
       })
     }
+      })
+    
     }
 
 }

@@ -16,7 +16,7 @@
             [(ngModel)]="queryBody.contactNo" placeholder="Contact" matInput>
         </mat-form-field>
       </div>
-      <div class="col-md-2">
+      <!-- <div class="col-md-2">
         <mat-form-field class="input-field" appearance="outline">
           <mat-label>Delivery Status</mat-label>
           <mat-select [ngModelOptions]="{standalone:true}" (selectionChange)="fetchSaleInvoices()"
@@ -25,7 +25,7 @@
             <mat-option value="PENDING">Pending</mat-option>
           </mat-select>
         </mat-form-field>
-      </div>
+      </div> -->
 
       <div class="col-md-2">
         <mat-form-field class="input-field" appearance="outline">
@@ -60,10 +60,10 @@
           <mat-icon>refresh</mat-icon>
         </button>
       </div>
-      <div class="col-md-2">
+      <!-- <div class="col-md-2">
         <button style="margin: 10px; float: left;" (click)="export()" mat-raised-button color="warn">
           <mat-icon>output</mat-icon> Export</button>
-      </div>
+      </div> -->
     </div>
     <div class="row">
       <div class="md-col-12" style="overflow-x:auto;">
@@ -77,7 +77,7 @@
               <th scope="col">Shop Name</th>
               <th scope="col">Total Bill</th>
               <th scope="col">Paid</th>
-              <th scope="col">Delivery Status</th>
+              <!-- <th scope="col">Delivery Status</th> -->
               <th scope="col">Date</th>
             </tr>
           </thead>
@@ -90,12 +90,12 @@
             <tr class="row-hover" *ngFor="let invoice of saleInvoiceList; index as i" (click)="viewInvoice(invoice)">
               <th scope="row">{{i+offset+1}}</th>
               <td>{{invoice.invoiceNo}}</td>
-              <td>{{invoice.customer?.person?.personName || ""}}</td>
+              <td>{{invoice.customer?.person?.personName || invoice.customerName}}</td>
               <td>{{invoice.customer?.person?.contactNo || ""}}</td>
               <td>{{invoice.customer?.shopName || ""}}</td>
               <td>{{invoice.totalPrice}}</td>
               <td>{{invoice.totalPaidAmount}}</td>
-              <td>{{invoice.deliveryStatus}}</td>
+              <!-- <td>{{invoice.deliveryStatus}}</td> -->
               <td>{{invoice.purchaseDate}}</td>
             </tr>
           </tbody>

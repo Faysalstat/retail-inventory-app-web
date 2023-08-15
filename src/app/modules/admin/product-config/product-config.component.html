@@ -5,7 +5,7 @@
 <form [formGroup]="productAddingForm">
     <div class="row">
         <div class="col-md-3">
-            <h2>Total Stock: <span>{{product?.quantity - product?.quantitySold}}</span></h2>
+            <h2>Total Stock: <span>{{product?.quantity}}</span></h2>
         </div>
         <div class="col-md-3">
             <h2>Total Sold: <span>{{product?.quantitySold || 0}}</span></h2>
@@ -88,7 +88,7 @@
             <p style="color: red;font-weight: bold;">{{errMsg}}</p>
         </div>
         <div class="col-md-12">
-            <button (click)="addProduct()" mat-raised-button color="warn">{{isEdit?"Update Product":"Add Product"}}</button>
+            <button [disabled]="isProductExist" (click)="addProduct()" mat-raised-button color="warn">{{isEdit?"Update Product":"Add Product"}}</button>
         </div>
     </div>
 </form>

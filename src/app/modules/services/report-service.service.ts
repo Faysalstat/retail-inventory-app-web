@@ -92,6 +92,7 @@ export class ReportServiceService {
   public fetchLoanList(): Observable<any>{
     let params = new HttpParams();
     params = params.append('clientId',localStorage.getItem('clientId') || "");
+    params = params.append('status',"OPEN");
     return this.http.get(AccountUrls.FETCH_ALL_LOAN,{params:params});
   }
 

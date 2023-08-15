@@ -25,24 +25,11 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-md-2">
-                    <mat-form-field class="input-field" appearance="outline">
-                        <mat-label>Package Quantity</mat-label>
-                        <input type="number" pInputText [ngModelOptions]="{standalone:true}" (change)="calculateQuantity()"
-                            [(ngModel)]="selectedReturnItem.packageQuantity" placeholder="Quantity" matInput>
-                    </mat-form-field>
-                </div>
-                <div class="col-md-2">
-                    <mat-form-field class="input-field" appearance="outline">
-                        <mat-label>Loose Quantity</mat-label>
-                        <input type="number" pInputText [ngModelOptions]="{standalone:true}" (change)="calculateQuantity()"
-                            [(ngModel)]="selectedReturnItem.looseQuantity" placeholder="Quantity" matInput>
-                    </mat-form-field>
-                </div>
+                
                 <div class="col-md-2">
                     <mat-form-field class="input-field" appearance="outline">
                         <mat-label>Total Quantity</mat-label>
-                        <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
+                        <input type="number" pInputText [ngModelOptions]="{standalone:true}"
                             (change)="calculateOrder()" [(ngModel)]="selectedReturnItem.quantityReturned"
                             placeholder="Quantity" matInput>
                     </mat-form-field>
@@ -53,14 +40,8 @@
                             <tr>
                                 <th>Quantity Ordered</th>
                                 <td>{{productToReturn?.quantityOrdered || 0}}</td>
-                                <th>Quantity Delivered</th>
-                                <td>{{productToReturn?.quantityDelivered || 0}}</td>
                                 <th>Quantity Returned</th>
                                 <td>{{productToReturn?.quantityReturned || 0}}</td>
-                                
-                                
-                            </tr>
-                            <tr>
                                 <th>Available:</th>
                                 <th>{{(productToReturn?.quantityDelivered || 0)-(productToReturn?.quantityReturned || 0)}}</th>
                             </tr>
@@ -85,11 +66,8 @@
                                 <th>SN</th>
                                 <th style="width:30% ;">Product Name</th>
                                 <th>Rate</th>
-                                <th>Package Quantity</th>
-                                <th>Loose Quantity</th>
-                                <th>Total Quantity</th>
+                                <th>Quantity</th>
                                 <th>Price</th>
-                                <!-- <th>Action</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -101,8 +79,6 @@
                                 <th scope="row">{{i+1}}</th>
                                 <th>{{order.productName}}</th>
                                 <th>{{order.pricePerUnit}}</th>
-                                <th>{{order.packageQuantity}}</th>
-                                <th>{{order.looseQuantity}}</th>
                                 <th>{{order.quantityReturned}} {{order.unitType}}</th>
                                 <th>{{order.totalOrderPrice}} BDT</th>
                                 <!-- <th>{{order.totalPrice}}</th> -->
@@ -110,7 +86,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="6" style="text-align: right;">Total Amount</th>
+                                <th colspan="4" style="text-align: right;">Total Amount</th>
                                 <th>{{returnModel?.totalSellPrice}} BDT</th>
                             </tr>
                         </tfoot>

@@ -1,7 +1,7 @@
 <mat-card>
     <div class="row">
-        <div class="col-md-6">
-            <h2>Loan Details</h2>
+        <div class="col-md-12">
+            <h2>Loan Details <span style="font-weight: bold;float:right">Status: <span [style.color]="(loanAccount.status=='OPEN')?'green':'red'">{{loanAccount.status}}</span></span></h2>
         </div>
         <!-- <div class="col-md-6">
             <button style="margin-top: 10px;" mat-mini-fab (click)="editLoan()"
@@ -17,7 +17,7 @@
                 <tbody>
                     <tr>
                         <th>Client Name</th>
-                        <td>{{loanAccount?.loanClient?.clientName}}</td>
+                        <td>{{loanAccount?.loanClientName}}</td>
                     </tr>
                     <tr>
                         <th>Loan Amount</th>
@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                         <th>Client Disc</th>
-                        <td>{{loanAccount?.loanClient?.clientDisc}}</td>
+                        <td>{{loanAccount?.loanClientDisc}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -75,7 +75,7 @@
         <div class="col-md-3">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Loan Amount: </mat-label>
-                <input type="number" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="installmentModel.installmentAmount"
+                <input type="number" pInputText (change)="checkAvailableBalance()" [ngModelOptions]="{standalone:true}" [(ngModel)]="installmentModel.installmentAmount"
                      placeholder="00" matInput>
             </mat-form-field>
         </div>
@@ -106,7 +106,7 @@
             </mat-form-field>
         </div>
         <div class="col-md-3">
-            <button style="margin: 10px; float: right;" mat-raised-button color="primary"
+            <button style="margin: 10px; float: right;" mat-raised-button color="primary" [disabled]="disableButton"
                (click)="payInstallment()">Submit</button>
         </div>
     </div>

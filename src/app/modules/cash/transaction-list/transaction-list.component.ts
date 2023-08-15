@@ -37,7 +37,8 @@ export class TransactionListComponent implements OnInit {
       tnxType:"",
       fromDate:'',
       toDate:'',
-      voucherNo:''
+      voucherNo:'',
+      
     }
     this.transactionType = [
       {label:'All Category', value:''},

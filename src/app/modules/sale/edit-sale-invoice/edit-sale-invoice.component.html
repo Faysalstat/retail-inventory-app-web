@@ -16,7 +16,7 @@
                     <thead>
                         <tr>
                             <th>Customer :</th>
-                            <td>{{customer?.person?.personName}}</td>
+                            <td>{{customer?.person?.personName || saleInvoice?.customerName}}</td>
                         </tr>
                         <tr>
                             <th>Contact :</th>
@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
                             <th>Balance :</th>
-                            <th>{{customer?.account?.balance}} BDT</th>
+                            <th>{{customer?.account?.balance || 0}} BDT</th>
                         </tr>
                         <tr>
                             <th>Tnx Date:</th>
@@ -88,18 +88,8 @@
                             <th>OrderNo</th>
                             <th>Product Name</th>
                             <th>Price Rate</th>
-                            <th>Total Quantity</th>
-                            <th>Quantity Delivered</th>
-                            <th>Delivery Pending</th>
+                            <th>Quantity Ordered</th>
                             <th>Quantity Retured</th>
-                            <!-- <th>Status</th>
-                            <th style="text-align: center;">
-                                <mat-checkbox (change)="$event ? masterToggle() : null"
-                                    [checked]="selection.hasValue() && isAllSelected()"
-                                    [indeterminate]="selection.hasValue() && !isAllSelected()">
-                                </mat-checkbox>
-
-                            </th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -109,26 +99,12 @@
                             <td>{{order?.product?.productName}}</td>
                             <td>{{order?.pricePerUnit}}</td>
                             <td>{{order?.quantityOrdered || 0}}</td>
-                            <td>{{order?.quantityDelivered}}</td>
-                            <td>{{order?.qunatityDeliveryPending}}</td>
                             <td>{{order?.quantityReturned || 0}}</td>
-                            <!-- <td>{{order?.deliveryStatus}}</td>
-                            <td style="text-align: center;">
-                                <mat-checkbox *ngIf="order.deliveryStatus =='PENDING'"
-                                    (click)="$event.stopPropagation()"
-                                    (change)="$event ? selection.toggle(order) : null"
-                                    [checked]="selection.isSelected(order)">
-                                </mat-checkbox>
-                            </td> -->
                         </tr>
-                        <!-- <tr>
-                            <td colspan="8"></td>
-                            <td><button *ngIf="saleInvoice?.deliveryStatus!='DELIVERED'" mat-raised-button color="warn" (click)="deliverAll()">Deliver All</button></td>
-                        </tr> -->
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="6" rowspan="4">
+                            <th colspan="4" rowspan="4">
                                 <div class="row">
                                     <div class="col-md-10">
                                         <mat-form-field class="input-field" appearance="outline">
@@ -155,6 +131,10 @@
                         <tr>
                             <th>Total Payable Amount:</th>
                             <th>{{saleInvoice?.totalPayableAmount}} BDT</th>
+                        </tr>
+                        <tr *ngIf="saleInvoice?.totalReturnedAmount!=0">
+                            <th>Total Returned Amount:</th>
+                            <th>{{saleInvoice?.totalReturnedAmount}} BDT</th>
                         </tr>
 
                     </tfoot>

@@ -1,0 +1,146 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="modal-loader">
+                <mat-card style="width: 80%;margin: auto;">
+                    <div class="row">
+                        <h2>Sale Order Details</h2>
+                        <h3>Issued By: {{previewDetails?.issuedBy}}</h3>
+                        <div class="col-md-12">
+                            <hr>
+                        </div>
+                        <div *ngIf="!previewDetails.isWalkingCustomer" class="col-md-6" style="overflow-x:auto;">
+                            <table class="table" style="text-align:left ;">
+                                <thead>
+                                    <tr>
+                                        <th>Customer Name:</th>
+                                        <td> {{previewDetails.customerName}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Shop Name:</th>
+                                        <td> {{previewDetails?.shopName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Contact No:</th>
+                                        <td> {{previewDetails?.contactNo}} </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Address:</th>
+                                        <td> {{previewDetails?.personAddress}} </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div *ngIf="previewDetails.isWalkingCustomer" class="col-md-6" style="overflow-x:auto;">
+                            <table class="table" style="text-align:left ;">
+                                <thead>
+                                    <tr>
+                                        <th>Customer Name:</th>
+                                        <td> {{previewDetails.customerName}} </td>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table" style="text-align:right ;">
+                                <thead>
+                                    <tr>
+                                        <th style="text-align:left;">Total Bill:</th>
+                                        <td style="text-align:right;font-weight: bold;">{{previewDetails?.totalPrice ||
+                                            0}} BDT</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;">Previous Balance:</th>
+                                        <td style="text-align:right;font-weight: bold;">
+                                            {{previewDetails?.previousBalance || 0}} BDT</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;">Extra Charge: ({{previewDetails?.chargeReason}})
+                                        </th>
+                                        <td style="text-align:right;font-weight: bold;"> {{previewDetails?.extraCharge
+                                            || 0}} BDT</td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <th style="text-align:left;">Charge Reason:</th>
+                                        <td style="text-align:right;"> </td>
+                                    </tr> -->
+                                    <tr>
+                                        <th style="text-align:left;">Discount:</th>
+                                        <td style="text-align:right;font-weight: bold;"> {{previewDetails?.rebate || 0}}
+                                            BDT</td>
+                                    </tr>
+                                    <tr style="background-color:#7498fc;">
+                                        <th style="text-align:left;">Total Payable Bill:</th>
+                                        <td style="text-align:right;font-weight: bold;">
+                                            {{previewDetails?.totalPayableAmount || 0}} BDT</td>
+                                    </tr>
+                                    <tr style="background-color:#7498fc;">
+                                        <th style="text-align:left;">Total Paid:</th>
+                                        <td style="text-align:right;font-weight: bold;">
+                                            {{previewDetails?.totalPaidAmount || 0}} BDT</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left;">Due:</th>
+                                        <td style="text-align:right;font-weight: bold;"> {{previewDetails?.duePayment ||
+                                            0}} BDT</td>
+                                    </tr>
+
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="col-md-12">
+                            
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <hr>
+                            <h2>Comment:</h2>
+                            <h3>{{previewDetails.comment}}</h3>
+                            <hr>
+                            <h2>Order Details</h2>
+                        <div class="col-md-12">
+                            <hr>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Product Name</th>
+                                        <th>Rate</th>
+                                        <th>Package</th>
+                                        <th>Loose</th>
+                                        <th>Total Quantity</th>
+                                        <th>Total Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let order of previewDetails?.orders; index as i">
+                                        <th scope="row">{{i+1}}</th>
+                                        <th>{{order.productName}}</th>
+                                        <th>{{order.pricePerUnit}}</th>
+                                        <th>{{order.packageQuantity}}</th>
+                                        <th>{{order.looseQuantity}}</th>
+                                        <th>{{order.quantityOrdered}}</th>
+                                        <th>{{order.totalOrderPrice || 0}} BDT</th>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="5"></th>
+                                        <th>Total</th>
+                                        <th>{{previewDetails?.totalPrice || 0}} BDT</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                       
+                        <div class="col-md-12">
+                            <button style="float:right ; margin-left: 10px;" (click)="confirm('APPROVED')" mat-raised-button color="primary">Confirm</button>
+                            <button style="float:right ; margin-left: 10px;" (click)="confirm('DECLINED')" mat-raised-button color="warn">Cancel</button>
+                        </div>
+                    </div>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</div>

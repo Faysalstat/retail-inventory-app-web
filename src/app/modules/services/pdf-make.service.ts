@@ -278,6 +278,20 @@ export class PdfMakeService {
             },
           },
         ],
+        [
+          {
+            content: invoice.totalReturnedAmount != 0 ? '(Product Return) Returned Amount' : '',
+            styles: {
+              halign: 'right',
+            },
+          },
+          {
+            content: Math.abs(invoice.totalReturnedAmount) + ' BDT',
+            styles: {
+              halign: 'right',
+            },
+          },
+        ],
       ],
       theme: 'grid'
     });
@@ -581,7 +595,7 @@ export class PdfMakeService {
     });
 
     autoTable(doc, {
-      head: [['SN', 'Date', 'Payment Method', 'Debit (BDT)', 'Credit (BDT)']],
+      head: [['SN', 'Date', 'Payment Method', 'Cash Out (BDT)', 'Cash In (BDT)']],
       body: model.data,
       theme: 'striped',
       headStyles: {
