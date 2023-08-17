@@ -175,6 +175,15 @@ export class PdfMakeService {
           'Total Price (BDT)',
         ],
       ],
+      columnStyles: {
+        0: { halign: 'center' },
+        1: { halign: 'center' },
+        2: { halign: 'center' },
+        3: { halign: 'center' },
+        4: { halign: 'center' },
+        5: { halign: 'center' },
+        6: { halign: 'center' }
+      },
       body: invoice.orders,
       theme: 'striped',
       headStyles: {
@@ -494,7 +503,7 @@ export class PdfMakeService {
               fontSize: 20,
               textColor: '#ffffff',
             },
-          }
+          },
         ],
       ],
       theme: 'plain',
@@ -511,7 +520,7 @@ export class PdfMakeService {
               halign: 'left',
               fontSize: 14,
             },
-          }
+          },
         ],
       ],
       theme: 'plain',
@@ -591,7 +600,7 @@ export class PdfMakeService {
       theme: 'striped',
       headStyles: {
         fillColor: '#343a40',
-        halign:'center'
+        halign: 'center',
       },
       bodyStyles: {
         halign: 'center',
@@ -624,7 +633,6 @@ export class PdfMakeService {
               textColor: '#ffffff',
             },
           },
-          
         ],
       ],
       theme: 'plain',
@@ -641,7 +649,7 @@ export class PdfMakeService {
               halign: 'left',
               fontSize: 14,
             },
-          }
+          },
         ],
       ],
       theme: 'plain',
@@ -725,7 +733,7 @@ export class PdfMakeService {
       theme: 'striped',
       headStyles: {
         fillColor: '#343a40',
-        halign:'center'
+        halign: 'center',
       },
       bodyStyles: {
         halign: 'center',
@@ -747,5 +755,3 @@ export class PdfMakeService {
     });
   }
 }
-
-
