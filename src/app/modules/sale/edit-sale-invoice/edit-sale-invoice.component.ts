@@ -221,7 +221,7 @@ export class EditSaleInvoiceComponent implements OnInit {
       orderRow.push(elem.pricePerUnit);
       orderRow.push(elem.packageQuantity);
       orderRow.push(elem.looseQuantity);
-      orderRow.push(elem.quantityOrdered + ' ' + elem.product.unitType);
+      orderRow.push(elem.quantityOrdered + ' ' + (elem.product.unitType).trim());
       orderRow.push(elem.totalPrice);
       index++;
       orders.push(orderRow);
