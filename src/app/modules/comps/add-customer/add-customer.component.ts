@@ -121,6 +121,8 @@ export class AddCustomerComponent implements OnInit {
           'OK',
           1000
         );
+        this.person = new Person();
+        this.customer = new Customer();
       },
       error:(err)=>{
         this.notificationService.showErrorMessage(

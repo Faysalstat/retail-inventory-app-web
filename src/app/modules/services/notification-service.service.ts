@@ -12,7 +12,7 @@ export class NotificationService {
       title: title,
       text: msg,
       confirmButtonText: close,
-      timer: timer
+      timer: 2000
     });
   }
   public showErrorMessage(title:string,msg:string,close:string,timer:number){
@@ -21,7 +21,7 @@ export class NotificationService {
         text: msg,
         confirmButtonText: close,
         icon: "error",
-        timer: timer
+        timer: 2000
       });
 }
 
@@ -31,7 +31,7 @@ public showNotFoundErrorMessage(msg:string,timer:number){
     text: msg + " Not Found",
     confirmButtonText: "OK",
     icon: "error",
-    timer: timer
+    timer: 2000
   });
 }
 }

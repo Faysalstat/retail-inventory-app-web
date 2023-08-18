@@ -37,6 +37,7 @@ export class CashTransactionComponent implements OnInit {
   isOther: boolean = false;
   showLoader: boolean = false;
   toWords = new ToWords();
+  transactionDate = new Date();
   constructor(
     private formBuilder: FormBuilder,
     private notificationService: NotificationService,
@@ -200,6 +201,7 @@ export class CashTransactionComponent implements OnInit {
     transactionModel.account = this.account;
     transactionModel.customer = this.customer;
     transactionModel.supplier = this.supplier; 
+    transactionModel.tnxDate = this.transactionDate;
     if (this.isApprovalNeeded) {
       let approvalModel = {
         payload: JSON.stringify(transactionModel),

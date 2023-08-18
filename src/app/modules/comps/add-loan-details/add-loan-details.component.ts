@@ -83,7 +83,7 @@ export class AddLoanDetailsComponent implements OnInit {
     let loanModel = {
       transactionType: "LOAN",
       clientType: this.clientType,
-      clientId: this.selectedClient.id,
+      loanClientId: this.selectedClient.id,
       cashAmount: this.depositAmount,
       comment: this.comment,
       issuedBy: localStorage.getItem("username"),

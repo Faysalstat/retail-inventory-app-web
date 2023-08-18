@@ -35,6 +35,15 @@
                     <input   (change)="searchCustomer()" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="code" placeholder="Code" matInput>
                 </mat-form-field>
             </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Tnx Date</mat-label>
+                    <input matInput [matDatepicker]="tnxDatePicker"
+                        [ngModelOptions]="{standalone:true}" [(ngModel)]="transactionDate">
+                    <mat-datepicker-toggle matSuffix [for]="tnxDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #tnxDatePicker></mat-datepicker>
+                </mat-form-field>
+            </div>
         </div>
         <div class="row">
             <div *ngIf="isClientFound" class="col-md-6">
@@ -107,10 +116,10 @@
             <div  class="col-md-2">
                 <mat-slide-toggle color="primary" formControlName="isReturn" (change)="onChangeIsReturn($event)">
                     <ng-container *ngIf="isReturn; else doreturn">
-                        Return
+                        {{isCustomer?"Cash Payment":"Cash Receive"}}
                     </ng-container>
                     <ng-template #doreturn>
-                        Payment
+                        {{isCustomer?"Cash Receive":"Cash Payment"}}
                     </ng-template>
                 </mat-slide-toggle>
             </div>

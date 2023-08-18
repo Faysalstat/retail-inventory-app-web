@@ -229,7 +229,7 @@ export class EditSaleInvoiceComponent implements OnInit {
     let invoiceModel = {
       doNo: '',
       invoiceId: this.saleInvoice.invoiceNo,
-      issuedBy: this.saleInvoice.issuedBy,
+      issuedBy: localStorage.getItem('personName'),
       customer: this.customer,
       tnxDate: this.applyFilter(new Date()),
       customerName: this.customer.person.personName,

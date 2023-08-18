@@ -18,6 +18,7 @@ export class ClientService {
   public getClientByContactNo(contactNo: string): Observable<any> {
     let params = new HttpParams();
     params = params.append('contactNo', contactNo);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ClientUrls.FETCH_CLIENT_BY_CONTACT_NO, { params: params });
   }
   public getAllClient(queryParams: Map<string, any>): Observable<any> {
@@ -54,6 +55,7 @@ export class ClientService {
   public getPersonById(id:any): Observable<any> {
     let params = new HttpParams();
     params = params.append('id', id);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ClientUrls.FETCH_PERSON_BY_ID, { params: params });
   }
   public updateClient(queryParams: Map<string, any>): Observable<any> {

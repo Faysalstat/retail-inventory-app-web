@@ -110,12 +110,14 @@ export class ProductConfigComponent implements OnInit {
     this.productService.addProduct(params).subscribe({
       next:(res)=>{
         if(res.isUpdated){
-          this.productAddingForm.reset();
+          // this.productAddingForm.reset();
           this.notificationService.showMessage("SUCCESS!","Product Added Successfuly","OK",1000);
         }else{
           this.productAddingForm.reset();
           this.notificationService.showMessage("SUCCESS!","Product Updated Successfuly","OK",1000);
-          this.product = res.body
+          console.log(res.body);
+          this.product = res.body;
+          this.showLoader = false;
         }
         // this.route.navigate(["/admin/product-list"]);
       },

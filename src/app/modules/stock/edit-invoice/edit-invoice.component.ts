@@ -258,7 +258,7 @@ export class EditInvoiceComponent implements OnInit {
     let invoiceModel = {
       doNo: '',
       invoiceId: this.supplyInvoice.invoiceNo,
-      issuedBy: this.supplyInvoice.issuedBy,
+      issuedBy: localStorage.getItem('personName'),
       supplyer: this.supplyer,
       tnxDate: this.supplyInvoice.purchaseDate,
       supplierName: this.supplyer.person.personName,

@@ -66,13 +66,13 @@ export class InventoryService {
   public fetchSupplyInvoiceById(invoiceId:any): Observable<any> {
     let params = new HttpParams();
     params = params.append('invoiceId',invoiceId);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(InventoryUrls.FETCH_SUPPLY_ORDER_BY_ID,{params:params});
   }
 
   // sale 
   public fetchAllSaleInvoice(queryParams: Map<string, any>): Observable<any> {
     let params = new HttpParams();
-    let clientId = localStorage.getItem('clientId') || "";
     params = params.append('offset',queryParams.get('query').offset);
     params = params.append('limit',queryParams.get('query').limit);
     params = params.append('contactNo',queryParams.get('query').contactNo.trim());
@@ -81,12 +81,13 @@ export class InventoryService {
     params = params.append('fromDate',queryParams.get('query').fromDate);
     params = params.append('toDate',queryParams.get('query').toDate);
     params = params.append('deliveryStatus',queryParams.get('query').deliveryStatus.trim());
-    params = params.append('clientId',clientId);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(InventoryUrls.FETCH_SALE_ORDER_LIST,{params:params});
   }
   public fetchSaleInvoiceById(invoiceId:any): Observable<any> {
     let params = new HttpParams();
     params = params.append('invoiceId',invoiceId);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(InventoryUrls.FETCH_SALE_ORDER_BY_ID,{params:params});
   }
 
@@ -122,6 +123,7 @@ export class InventoryService {
   public fetchTaskById(id:any): Observable<any> {
     let params = new HttpParams();
     params = params.append("taskId",id);
+    params = params.append('clientId',localStorage.getItem('clientId') || "");
     return this.http.get(ApprovalUrls.GET_TASK_BY_ID,{params:params});
   }
 

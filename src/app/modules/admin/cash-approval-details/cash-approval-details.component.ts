@@ -215,7 +215,7 @@ export class CashApprovalDetailsComponent implements OnInit {
     data.push(['1',tnxDate,this.taskDetail.paymentMethod,debitAmount,creditAmount])
     let model = {
       voucher: voucherNo || "",
-      issuedBy: this.taskDetail.issuedBy,
+      issuedBy: localStorage.getItem('personName'),
       customer: this.taskDetail.customer,
       supplier:this.taskDetail.supplier,
       tnxDate: this.applyFilter(new Date()),

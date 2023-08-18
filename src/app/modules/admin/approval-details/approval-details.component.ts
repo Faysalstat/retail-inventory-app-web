@@ -235,7 +235,7 @@ export class ApprovalDetailsComponent implements OnInit {
     let invoiceModel = {
       doNo: '',
       invoiceId: inoviceNo,
-      issuedBy: this.userName,
+      issuedBy: localStorage.getItem('personName'),
       supplyer: this.supplyer,
       tnxDate: this.applyFilter(new Date()),
       supplierName: person.personName,

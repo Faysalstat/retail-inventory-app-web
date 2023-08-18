@@ -56,31 +56,37 @@ export class PdfMakeService {
     return doc.save('Voucher_' + model.voucher || 'Printing_Copy');
   }
   async buildSalePage(doc: any, invoice: any) {
+    doc.addImage("assets/img/company.png", "PNG",10, 10, 15, 15);
+    doc.line(10, 30, 200, 30);
     autoTable(doc, {
+      margin: { top:12,left:5 },
       body: [
         [
           {
             content: invoice.shopName,
             styles: {
-              halign: 'left',
+              halign: 'center',
               fontSize: 20,
-              textColor: '#ffffff',
             },
-          },
+          }
+        ]
+      ],
+      theme: 'plain',
+      
+    });
+    autoTable(doc, {
+      body: [
+        [
           {
             content: 'Invoice :' + invoice.invoiceId || 'N/A',
             styles: {
               halign: 'right',
-              fontSize: 20,
-              textColor: '#ffffff',
+              fontSize: 16,
             },
-          },
-        ],
+          }
+        ]
       ],
       theme: 'plain',
-      styles: {
-        fillColor: '#3366ff',
-      },
     });
 
     autoTable(doc, {
@@ -304,31 +310,37 @@ export class PdfMakeService {
     });
   }
   async buildSupplyPage(doc: any, invoice: any) {
+    doc.addImage("assets/img/company.png", "PNG",10, 10, 15, 15);
+    doc.line(10, 30, 200, 30);
     autoTable(doc, {
+      margin: { top:12,left:5 },
       body: [
         [
           {
             content: invoice.shopName,
             styles: {
-              halign: 'left',
+              halign: 'center',
               fontSize: 20,
-              textColor: '#ffffff',
             },
-          },
+          }
+        ]
+      ],
+      theme: 'plain',
+      
+    });
+    autoTable(doc, {
+      body: [
+        [
           {
             content: 'Invoice :' + invoice.invoiceId || 'N/A',
             styles: {
               halign: 'right',
-              fontSize: 20,
-              textColor: '#ffffff',
+              fontSize: 16,
             },
-          },
-        ],
+          }
+        ]
       ],
       theme: 'plain',
-      styles: {
-        fillColor: '#3366ff',
-      },
     });
 
     autoTable(doc, {
@@ -336,7 +348,7 @@ export class PdfMakeService {
         [
           {
             content:
-              'Billed TO:' +
+              'Billed To:' +
               '\n'+invoice.shopName +
               '\n'+invoice.shopAddress +
               '\nMob: '+invoice.shopContactNo+
@@ -432,7 +444,7 @@ export class PdfMakeService {
             },
           },
           {
-            content: invoice.totalPrice + ' BDT',
+            content: invoice.totalPrice || 0 + ' BDT',
             styles: {
               halign: 'right',
             },
@@ -446,7 +458,7 @@ export class PdfMakeService {
             },
           },
           {
-            content: invoice.discount + ' BDT',
+            content: invoice.discount || 0 + ' BDT',
             styles: {
               halign: 'right',
             },
@@ -460,7 +472,7 @@ export class PdfMakeService {
             },
           },
           {
-            content: invoice.totalPayableAmount + ' BDT',
+            content: invoice.totalPayableAmount || 0 + ' BDT',
             styles: {
               halign: 'right',
             },
@@ -485,23 +497,37 @@ export class PdfMakeService {
     });
   }
   async buildCustomerPaymentPage(doc: any, model: any) {
+    doc.addImage("assets/img/company.png", "PNG",10, 10, 15, 15);
+    doc.line(10, 30, 200, 30);
     autoTable(doc, {
+      margin: { top:12,left:5 },
       body: [
         [
           {
             content: model.shopName,
             styles: {
-              halign: 'left',
+              halign: 'center',
               fontSize: 20,
-              textColor: '#ffffff',
             },
-          },
-        ],
+          }
+        ]
       ],
       theme: 'plain',
-      styles: {
-        fillColor: '#3366ff',
-      },
+      
+    });
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'Invoice :' + model.invoiceId || 'N/A',
+            styles: {
+              halign: 'right',
+              fontSize: 16,
+            },
+          }
+        ]
+      ],
+      theme: 'plain',
     });
     autoTable(doc, {
       body: [
@@ -615,23 +641,37 @@ export class PdfMakeService {
     });
   }
   async buildSupplierPaymentPage(doc: any, model: any) {
+    doc.addImage("assets/img/company.png", "PNG",10, 10, 15, 15);
+    doc.line(10, 30, 200, 30);
+    autoTable(doc, {
+      margin: { top:12,left:5 },
+      body: [
+        [
+          {
+            content: model.shopName,
+            styles: {
+              halign: 'center',
+              fontSize: 20,
+            },
+          }
+        ]
+      ],
+      theme: 'plain',
+      
+    });
     autoTable(doc, {
       body: [
         [
           {
-            content: 'Shopon Enterprise',
+            content: 'Invoice :' + model.invoiceId || 'N/A',
             styles: {
-              halign: 'left',
-              fontSize: 20,
-              textColor: '#ffffff',
+              halign: 'right',
+              fontSize: 16,
             },
-          },
-        ],
+          }
+        ]
       ],
       theme: 'plain',
-      styles: {
-        fillColor: '#3366ff',
-      },
     });
     autoTable(doc, {
       body: [
