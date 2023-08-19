@@ -504,4 +504,25 @@ export class SalePointComponent implements OnInit {
   calculateSellingPrice(){
     this.orderItem.pricePerUnit = this.orderItem.mrpPrice*(1-(this.orderItem.sellingPercentage/100));
   }
+  removeOrder(index:any){
+    let removedOrder = this.orderList[index];
+    this.orderList.splice(index,1);
+    let totalPrice = 0;
+    this.orderList.map((elem) => {
+      totalPrice += elem.totalOrderPrice;
+    });
+    this.saleInvoiceIssueForm.get('orders')?.setValue(this.orderList);
+    this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+    this.totalPrice = totalPrice;
+    this.calculateSummary();
+      if (this.totalPayableAmount < 0) {
+        this.balanceType = 'Return';
+      } else {
+        this.balanceType = 'Payable';
+        this.saleInvoiceIssueForm
+          .get('duePayment')
+          ?.setValue(this.totalPayableAmount);
+      }
+    
+  }
 }
