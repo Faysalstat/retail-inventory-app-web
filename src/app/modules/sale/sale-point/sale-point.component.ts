@@ -82,10 +82,10 @@ export class SalePointComponent implements OnInit {
     this.orderList = [];
     this.prepareInvoiceIssueForm(null);
     this.paymentMethods = [
-      { label: 'Select Payment Method', value: '' },
+      { label: 'CASH', value: 'CASH' },
       { label: 'BANK', value: 'BANK' },
       { label: 'BKASH', value: 'BKASH' },
-      { label: 'CASH', value: 'CASH' },
+      
     ];
   }
 
@@ -143,7 +143,7 @@ export class SalePointComponent implements OnInit {
       totalPaidAmount: [formData.totalPaidAmount],
       duePayment: [formData.duePayment],
       rebate: [formData.rebate],
-      paymentMethod: [formData.paymentMethod || 'CASH'],
+      paymentMethod: ['CASH'],
       comment: [formData.comment],
       extraCharge: [formData.extraCharge],
       chargeReason: [formData.chargeReason],

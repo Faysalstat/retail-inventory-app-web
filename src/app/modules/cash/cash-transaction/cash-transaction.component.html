@@ -62,8 +62,8 @@
                             <td>{{person.personAddress}}</td>
                         </tr>
                         <tr>
-                            <th>Balance:</th>
-                            <td style="font-weight:bolder;">{{account.balance}} BDT</td>
+                            <th>{{(account.balance<0?"Due:":"Balance:")}}</th>
+                            <td style="font-weight:bolder;">{{-account.balance}} BDT</td>
                         </tr>
                     </tbody>
                 </table>

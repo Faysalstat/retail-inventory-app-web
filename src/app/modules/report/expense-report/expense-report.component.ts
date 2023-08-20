@@ -25,7 +25,7 @@ export class ExpenseReportComponent implements OnInit {
   ) { 
     this.query = {
       transactionType:"",
-      tnxType:"DEBIT",
+      tnxType:"CREDIT",
       fromDate: new Date('1/1/2023'),
       toDate: new Date(),
       voucherNo:'',

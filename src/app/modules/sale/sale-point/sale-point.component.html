@@ -12,7 +12,7 @@
         <mat-slide-toggle [(ngModel)]="isWalkingCustomer" (change)="customerTypeChnaged($event)">{{customerType}}</mat-slide-toggle>
 
         </h3>
-        <div class="col-md-6">
+        <div *ngIf="isWalkingCustomer" class="col-md-6">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Customer Name:</mat-label>
                 <input [ngModelOptions]="{standalone:true}" [(ngModel)]="person.personName"
