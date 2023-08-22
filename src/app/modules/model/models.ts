@@ -66,6 +66,9 @@ export class Product {
   productCode!: string;
   unitType!: string;
   quantity!: number;
+  quantitySold!: number;
+  quantityReturn!: number;
+  quantityDamaged!: number;
   mrpPrice: number = 0;
   buyingPercentage: number = 0;
   sellingPercentage: number = 0;
