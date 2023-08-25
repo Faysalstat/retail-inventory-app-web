@@ -2,3 +2,8 @@
     cursor: pointer;
     font-weight: bold;
 }
+
+
+::ng-deep .mat-raised-button{
+    margin: 10px;
+  }

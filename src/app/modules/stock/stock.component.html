@@ -1,39 +1,22 @@
-<!-- <div class="container-fluid">
-    <mat-card>
-        <div class="row">
-            <div class="col-md-2">
-                <div class="fixd">
-                    <div class="list-group side-nav mt-2">
-                        <a routerLink="/stock" class="list-group-item list-group-item-action">ADD STOCK</a>
-                        <a routerLink="supply-invoice-list" class="list-group-item list-group-item-action">Invoice List</a>
-                        <a routerLink="" class="list-group-item list-group-item-action">Third item</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="rounded">
-                    <router-outlet></router-outlet>
-                </div>
-            </div>
-        </div>
-    </mat-card>
-</div> -->
-
-<div class="row">
-    <div class="col-md-2">
-        <nav class="main-menu bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <button style="color: white;font-size:20px;" mat-icon-button  data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+</nav>
+<div class="offcanvas offcanvas-start" style="width: 327px;" id="offcanvas">
+    <div class="offcanvas-header bg-dark">
+        <a style="color: #FFF;" class="navbar-brand"  data-bs-dismiss="offcanvas" routerLink="/home"><i class="fa fa-home"></i>Home Page</a>
+        <button mat-mini-fab color="warn" data-bs-dismiss="offcanvas">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <nav class="side-nav bg-dark">
             <ul>
-                <li>
-                    <a routerLink="/home">
-                        <i class="fa fa-home"></i>
-                        <span class="nav-text">
-                            Home
-                        </span>
-                    </a>
-        
-                </li>
                 <li class="has-subnav">
-                    <a routerLink="create-supply">
+                    <a data-bs-dismiss="offcanvas" routerLink="create-supply">
                         <i class="fa fa-list"></i>
                         <span class="nav-text">
                             Add Stock
@@ -41,7 +24,7 @@
                     </a>
                 </li>
                 <li class="has-subnav">
-                    <a routerLink="supply-invoice-list">
+                    <a data-bs-dismiss="offcanvas" routerLink="supply-invoice-list">
                         <i class="fa fa-plus-square"></i>
                         <span class="nav-text">
                             Invoice List
@@ -49,7 +32,7 @@
                     </a>
                 </li>
                 <li>
-                    <a routerLink="product-stock">
+                    <a data-bs-dismiss="offcanvas" routerLink="product-stock">
                         <i class="fa fa-table"></i>
                         <span class="nav-text">
                             Product Stock
@@ -57,7 +40,7 @@
                     </a>
                 </li>
                 <li class="has-subnav">
-                    <a routerLink="supplyer-list">
+                    <a data-bs-dismiss="offcanvas" routerLink="supplyer-list">
                         <i class="fa fa-list"></i>
                         <span class="nav-text">
                             Supplyer List
@@ -67,11 +50,10 @@
             </ul>
         </nav>
     </div>
-    <div class="col-md-10">
-        <div class="container-fluid">
-            <router-outlet></router-outlet>
-        </div>
-    </div>
 </div>
+<div class="container-fluid mt-3">
+    <router-outlet></router-outlet>
+</div>
+
 
 

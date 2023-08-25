@@ -16,7 +16,7 @@
     <div class="row" style="margin-top: 100px;">
         <div *ngFor="let item of menuItems" class="col-md-4">
             <a [routerLink]=[item.route]>
-                <mat-card id="menu-card" style="margin:20px;background-color:#d7faec;">
+                <mat-card id="menu-card" style="margin:20px;background-color:#f55142;">
                     <img class="img-center" [src]="'assets/img/icons/'+[item?.imgUrl]" width="100" height="100">
                     <h2 class="menu-label">{{item?.title}}</h2>
                 </mat-card>

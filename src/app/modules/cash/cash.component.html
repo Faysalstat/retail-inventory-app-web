@@ -1,42 +1,46 @@
-<div class="row">
-    <div class="col-md-2">
-        <nav class="main-menu bg-dark">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <button style="color: white;font-size:20px;" mat-icon-button  data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+</nav>
+<div class="offcanvas offcanvas-start" style="width: 327px;" id="offcanvas">
+    <div class="offcanvas-header bg-dark">
+        <a style="color: #FFF;" class="navbar-brand" data-bs-dismiss="offcanvas" routerLink="/home"><i class="fa fa-home"></i>Home Page</a>
+        <button mat-mini-fab color="warn" data-bs-dismiss="offcanvas">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <nav class="side-nav bg-dark">
             <ul>
-                <li>
-                    <a routerLink="/home">
-                        <i class="fa fa-home"></i>
-                        <span class="nav-text">
-                            Home
-                        </span>
-                    </a>
-        
-                </li>
-                <li class="has-subnav">
-                    <a routerLink="cash-transaction">
+                <li >
+                    <a data-bs-dismiss="offcanvas" routerLink="cash-transaction">
                         <i class="fa fa-list"></i>
                         <span class="nav-text">
                             Cash
                         </span>
                     </a>
                 </li>
-                <li class="has-subnav">
-                    <a routerLink="expenses">
+                <li >
+                    <a data-bs-dismiss="offcanvas" routerLink="expenses">
                         <i class="fa fa-plus-square"></i>
                         <span class="nav-text">
                             Expense
                         </span>
                     </a>
                 </li>
-                <li class="has-subnav">
-                    <a routerLink="transaction-list">
+                <li >
+                    <a data-bs-dismiss="offcanvas" routerLink="transaction-list">
                         <i class="fa fa-list"></i>
                         <span class="nav-text">
                             Transaction List
                         </span>
                     </a>
                 </li>
-                <li class="has-subnav">
-                    <a routerLink="loan-list">
+                <li >
+                    <a data-bs-dismiss="offcanvas" routerLink="loan-list">
                         <i class="fa fa-list"></i>
                         <span class="nav-text">
                             Loan List
@@ -46,32 +50,8 @@
             </ul>
         </nav>
     </div>
-    <div class="col-md-10">
-        <div class="container-fluid">
-            <router-outlet></router-outlet>
-        </div>
-    </div>
 </div>
-
-
-
-<!-- <div class="container-fluid">
-    <mat-card style="height:800px; overflow:scroll">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="list-group side-nav mt-2" style="position:sticky;">
-                    <a routerLink="/cash" class="list-group-item list-group-item-action">Cash Dashboard</a>
-                    <a routerLink="cash-transaction" class="list-group-item list-group-item-action">Cash</a>
-                    <a routerLink="add-expense" class="list-group-item list-group-item-action">Expense</a>
-                    <a routerLink="add-supplyer" class="list-group-item list-group-item-action">Expense</a>
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="rounded">
-                    <router-outlet></router-outlet>
-                </div>
-            </div>
-        </div>
-    </mat-card>
-</div> -->
+<div class="container-fluid mt-3">
+    <router-outlet></router-outlet>
+</div>
 

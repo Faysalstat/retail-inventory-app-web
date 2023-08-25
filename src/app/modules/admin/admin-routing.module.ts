@@ -29,7 +29,7 @@ const routes: Routes = [{
         {path: 'add-config', component: ConfigurationSettingComponent},
         {path: 'add-asset', component: AddAssetsComponent},
         {path: 'add-user', component: AddUserComponent},
-        {path: 'add-loan-acc', component: AddLoanAccComponent},
+        {path: 'add-loan-client', component: AddLoanAccComponent},
         {path: 'add-employee', component: AddEmployeePanelComponent},
         {path: 'employee-list', component: EmployeeManagementComponent},
         {path: 'task-list', component: TaskListComponent},

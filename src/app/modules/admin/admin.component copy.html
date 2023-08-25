@@ -1,21 +1,17 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <div class="container-fluid">
-        <button style="color: white;font-size:20px;" mat-icon-button  data-bs-toggle="offcanvas" data-bs-target="#offcanvas">
-            <mat-icon>menu</mat-icon>
-        </button>
-    </div>
-</nav>
-<div class="offcanvas offcanvas-start" style="width: 327px;" id="offcanvas">
-    <div class="offcanvas-header bg-dark">
-        <a style="color: #FFF;" class="navbar-brand" routerLink="/home"><i class="fa fa-home"></i>Home Page</a>
-        <button mat-mini-fab color="warn" data-bs-dismiss="offcanvas">
-            <mat-icon>close</mat-icon>
-        </button>
-    </div>
-    <div class="offcanvas-body">
-        <nav class="side-nav bg-dark">
+<div class="row">
+    <div class="col-md-2">
+        <nav class="main-menu bg-dark">
             <ul>
-                <li >
+                <li>
+                    <a routerLink="/home">
+                        <i class="fa fa-home"></i>
+                        <span class="nav-text">
+                            Home
+                        </span>
+                    </a>
+        
+                </li>
+                <li class="has-subnav">
                     <a routerLink="dashboard">
                         <i class="fa fa-list"></i>
                         <span class="nav-text">
@@ -23,7 +19,7 @@
                         </span>
                     </a>
                 </li>
-                <li >
+                <li class="has-subnav">
                     <a routerLink="task-list">
                         <i class="fa fa-list"></i>
                         <span class="nav-text">
@@ -31,7 +27,7 @@
                         </span>
                     </a>
                 </li>
-                <li >
+                <li class="has-subnav">
                     <a routerLink="assets">
                         <i class="fa fa-plus-square"></i>
                         <span class="nav-text">
@@ -39,7 +35,7 @@
                         </span>
                     </a>
                 </li>
-                <li >
+                <li class="has-subnav">
                     <a routerLink="add-product">
                         <i class="fa fa-plus-square"></i>
                         <span class="nav-text">
@@ -47,7 +43,7 @@
                         </span>
                     </a>
                 </li>
-            <li >
+            <li class="has-subnav">
                 <a routerLink="add-config">
                     <i class="fa fa-plus-square"></i>
                     <span class="nav-text">
@@ -55,7 +51,7 @@
                     </span>
                 </a>
             </li>
-                <li >
+                <li class="has-subnav">
                     <a routerLink="product-stock">
                         <i class="fa fa-plus-square"></i>
                         <span class="nav-text">
@@ -63,7 +59,7 @@
                         </span>
                     </a>
                 </li>
-                <li >
+                <li class="has-subnav">
                     <a routerLink="add-user">
                         <i class="fa fa-plus-square"></i>
                         <span class="nav-text">
@@ -71,7 +67,7 @@
                         </span>
                     </a>
                 </li>
-                <li >
+                <li class="has-subnav">
                     <a routerLink="add-asset">
                         <i class="fa fa-plus-square"></i>
                         <span class="nav-text">
@@ -79,7 +75,7 @@
                         </span>
                     </a>
                 </li>
-                <li >
+                <li class="has-subnav">
                     <a routerLink="add-employee">
                         <i class="fa fa-plus-square"></i>
                         <span class="nav-text">
@@ -87,7 +83,7 @@
                         </span>
                     </a>
                 </li>
-                <li >
+                <li class="has-subnav">
                     <a routerLink="add-loan-acc">
                         <i class="fa fa-plus-square"></i>
                         <span class="nav-text">
@@ -95,7 +91,7 @@
                         </span>
                     </a>
                 </li>
-                <li >
+                <li class="has-subnav">
                     <a routerLink="employee-list">
                         <i class="fa fa-list"></i>
                         <span class="nav-text">
@@ -103,7 +99,7 @@
                         </span>
                     </a>
                 </li>
-                <li >
+                <li class="has-subnav">
                     <a routerLink="profit-calculation">
                         <i class="fa fa-list"></i>
                         <span class="nav-text">
@@ -114,7 +110,7 @@
                 <!-- <li>
                     <button mat-raised-button color="warn" (click)="logout()">Log Out</button>
                 </li> -->
-                <!-- <li >
+                <!-- <li class="has-subnav">
                     <a href="#">
                         <i class="fa fa-folder-open"></i>
                         <span class="nav-text">
@@ -166,7 +162,10 @@
             </ul>
         </nav>
     </div>
-</div>
-<div class="container-fluid mt-3">
-    <router-outlet></router-outlet>
+    <div class="col-md-10">
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
 </div>
