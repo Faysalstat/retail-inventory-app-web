@@ -1,0 +1,191 @@
+/* Start Vertical Navigation */
+.vnav {
+    position: fixed;
+    max-width: 305px;
+    width: 100%;
+    height: calc(100% - 56px);
+    top: 56px;
+    background: #2e2e38;
+    z-index: 999;
+    overflow-y: auto;
+}
+
+.vnav-items {
+    display: block;
+}
+
+.vnav-item,
+.vnav-item-sub li a {
+    font-size: 16px;
+    color: #c4c4cd;
+}
+
+.vnav-item svg {
+    fill: #c4c4cd;
+}
+
+.vnav-item {
+    display: flex;
+    min-height: 56px;
+    align-items: center;
+    border-left: 3px solid transparent;
+}
+
+.vnav-item span {
+    width: 53px;
+    text-align: center;
+    display: block;
+}
+
+.vnav-item h3 {
+    font-size: 16px;
+    line-height: 25px;
+    font-weight: normal;
+    padding: 0;
+    margin: 0;
+}
+
+.vnav-item i {
+    display: block;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.vnav-item i.right-arrow {
+    display: block;
+}
+
+.vnav-item i.down-arrow {
+    display: none;
+}
+
+.vnav-items.active .vnav-item i.right-arrow {
+    display: none;
+}
+
+.vnav-items.active .vnav-item i.down-arrow {
+    display: block;
+}
+
+.vnav-items:hover .vnav-item,
+.vnav-items.active .vnav-item {
+    background: #1A1A24;
+    color: #fff;
+    cursor: pointer;
+    border-left: 3px solid #FFE600;
+}
+
+.vnav-items:hover .vnav-item svg,
+.vnav-items.active .vnav-item svg {
+    fill: #fff;
+}
+
+.vnav-item-sub {
+    list-style: none;
+    display: none;
+    background: #23232F;
+}
+
+.vnav-items.active .vnav-item-sub {
+    display: block;
+}
+
+.vnav-item-sub li h3 {
+    display: none;
+}
+
+.vnav-item-sub li a {
+    display: flex;
+    min-height: 56px;
+    align-items: center;
+    color: #c4c4cd;
+    text-decoration: none;
+    padding-left: 53px;
+}
+
+.vnav-item-sub li:hover a,
+.vnav-item-sub li.active a {
+    background: #1A1A24;
+    color: #FFE600;
+}
+
+.vnav-hamburger {
+    background: none;
+    border: none;
+    box-shadow: none;
+    width: 56px;
+    height: 56px;
+    text-align: center;
+}
+
+.vnav-hamburger svg {
+    fill: #c4c4cd;
+}
+
+.vnav-hamburger:hover,
+.vnav-hamburger.selected {
+    background: #23232F;
+    cursor: pointer;
+}
+
+.vnav-hamburger:hover svg .vnav-hamburger.selected svg {
+    fill: #fff;
+}
+
+/* Start Vertical Navigation collapse */
+.vnav-collapse {
+    width: 56px;
+    overflow-y: hidden;
+}
+
+.vnav-collapse .vnav-items {
+    display: flex;
+}
+
+.vnav-collapse .vnav-item {
+    display: flex;
+    width: 56px;
+    height: 56px;
+    align-items: center;
+    border-left: 3px solid transparent;
+    overflow: hidden;
+}
+
+.vnav-collapse .vnav-item h3,
+.vnav-collapse .vnav-item i {
+    display: none !important;
+}
+
+.vnav-collapse .vnav-items .vnav-item-sub {
+    background: #23232F;
+    position: fixed;
+    width: 168px;
+    left: 56px;
+    z-index: 999;
+    max-height: -moz-available;
+    max-height: -webkit-fill-available;
+    max-height: fill-available;
+    overflow-y: auto;
+}
+
+.vnav-collapse .vnav-items .vnav-item-sub li h3 {
+    display: block;
+    background: #1A1A24;
+    font-size: 16px;
+    color: #fff;
+    line-height: 56px;
+    font-weight: normal;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: 0;
+}
+
+.vnav-collapse .vnav-items .vnav-item-sub li a {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* .vnav-collapse .vnav-items:hover .vnav-item-sub, */
+.vnav-collapse .vnav-items.active .vnav-item-sub {
+    display: block;
+}
