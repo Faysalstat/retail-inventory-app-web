@@ -1,92 +1,184 @@
-<div class="area"></div>
-<nav class="main-menu">
-    <ul>
-        <li>
-            <a href="http://justinfarrow.com">
-                <i class="fa fa-home fa-2x"></i>
-                <span class="nav-text">
-                    Dashboard
-                </span>
-            </a>
+<!-- Start Vertical Navigation -->
+<div id="vnav" class="vnav" [class.vnav-collapse]="isNavbarCollapsed" #toggleMenu>
 
-        </li>
-        <li class="has-subnav">
-            <a href="#">
-                <i class="fa fa-laptop fa-2x"></i>
-                <span class="nav-text">
-                    Stars Components
-                </span>
-            </a>
+  <div *hasAccess="''; path:'Home'; permission:'Menu'" id="menuHomePage" class="vnav-items"
+    [ngClass]="{'active' : isHomeActive}" routerLinkActive="active">
+    <div class="vnav-item" (click)="onToggleHomeMenu()" >
+      <span>
+        <svg width="24" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 17V11H12V17H17V9H20L10 0L0 9H3V17H8Z" fill=""/>
+        </svg>
 
-        </li>
-        <li class="has-subnav">
-            <a href="#">
-                <i class="fa fa-list fa-2x"></i>
-                <span class="nav-text">
-                    Forms
-                </span>
-            </a>
-
-        </li>
-        <li class="has-subnav">
-            <a href="#">
-                <i class="fa fa-folder-open fa-2x"></i>
-                <span class="nav-text">
-                    Pages
-                </span>
-            </a>
-
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-bar-chart-o fa-2x"></i>
-                <span class="nav-text">
-                    Graphs and Statistics
-                </span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-font fa-2x"></i>
-                <span class="nav-text">
-                    Quotes
-                </span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-table fa-2x"></i>
-                <span class="nav-text">
-                    Tables
-                </span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-map-marker fa-2x"></i>
-                <span class="nav-text">
-                    Maps
-                </span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <i class="fa fa-info fa-2x"></i>
-                <span class="nav-text">
-                    Documentation
-                </span>
-            </a>
-        </li>
+      </span>
+      <h3>Home Page</h3>
+      <i class="right-arrow">
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M9.09 16.34L13.67 11.75L9.09 7.16L10.5 5.75L16.5 11.75L10.5 17.75L9.09 16.34Z" fill="" />
+        </svg>
+      </i>
+      <i class="down-arrow">
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M7.91 8.59009L12.5 13.1701L17.09 8.59009L18.5 10.0001L12.5 16.0001L6.5 10.0001L7.91 8.59009Z" fill="" />
+        </svg>
+      </i>
+    </div>
+    <ul class="vnav-item-sub">
+      <li routerLinkActive="active">
+        <a (click)="onSelectMenu('/')">Home Page</a>
+      </li>
+<!--      <li routerLinkActive="active">-->
+<!--        <a (click)="onSelectMenu('/admin-panel/home/governance-structure')">EY Governance Structure</a>-->
+<!--      </li>-->
+<!--      <li routerLinkActive="active">-->
+<!--        <a (click)="onSelectMenu('/admin-panel/home/organiztion-structure')">EY Organization Structure - -->
+<!--          RACI Matrix</a></li>-->
+<!--      <li routerLinkActive="active">-->
+<!--        <a (click)="onSelectMenu('/admin-panel/home/materiality-matrix')">EY Materiality Matrix</a></li>-->
+<!--      <li routerLinkActive="active">-->
+<!--        <a (click)="onSelectMenu('/admin-panel/home/goals-targets')">EY Goals & Targets</a></li>-->
+<!--      <li routerLinkActive="active">-->
+<!--        <a (click)="onSelectMenu('/admin-panel/home/calendar')">EY Calendar - Upcoming Events &-->
+<!--          Submissions </a></li>-->
     </ul>
-
-    <ul class="logout">
-        <li>
-            <a href="#">
-                <i class="fa fa-power-off fa-2x"></i>
-                <span class="nav-text">
-                    Logout
-                </span>
-            </a>
-        </li>
+  </div>
+  <div *hasAccess="''; path:'Setup'; permission:'Menu'" id="menuSetup" class="vnav-items"
+    [ngClass]="{'active' : isSetupActive}" routerLinkActive="active">
+    <div class="vnav-item" (click)="onToggleSetupMenu()">
+      <span>
+        <svg width="24" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M12.4997 8.4998C10.5697 8.4998 8.99957 10.0699 8.99957 11.9999C8.99957 13.9299 10.5697 15.5 12.4997 15.5C14.4296 15.5 15.9998 13.9299 15.9998 11.9999C15.9998 10.0699 14.4296 8.4998 12.4997 8.4998ZM14.5004 21.9998H10.4999C10.2504 21.9998 10.0399 21.8195 10.0103 21.5804L9.62957 18.9299C9.0354 18.6859 8.46683 18.3559 7.94027 17.9498L5.44997 18.9497C5.39472 18.9699 5.3362 18.9801 5.27603 18.9801C5.09161 18.9801 4.92445 18.8843 4.83977 18.7301L2.83997 15.2696C2.71967 15.0489 2.77002 14.7798 2.95967 14.6297L5.07017 12.98C5.02216 12.6002 4.99997 12.2885 4.99997 11.9999C4.99997 11.7101 5.02228 11.3987 5.07017 11.0198L2.95967 9.3701C2.76324 9.21463 2.7129 8.94552 2.83997 8.7302L4.83977 5.2697C4.92587 5.11292 5.08987 5.01552 5.26777 5.01552C5.32993 5.01552 5.39123 5.02715 5.44997 5.0501L7.94027 6.05C8.5077 5.62418 9.06059 5.30355 9.62957 5.0699L10.0103 2.4203C10.0399 2.1807 10.2504 2 10.4999 2H14.5004C14.7499 2 14.9603 2.18069 14.99 2.4203L15.3698 5.0699C15.9597 5.31179 16.5286 5.6418 17.06 6.05L19.5503 5.0501C19.6055 5.02994 19.664 5.01973 19.7242 5.01973C19.9087 5.01973 20.0755 5.11551 20.1596 5.2697L22.1603 8.7302C22.2804 8.9506 22.2297 9.21971 22.0397 9.3701L19.9301 11.0198C19.965 11.3022 20.0003 11.6404 20.0003 11.9999C20.0003 12.363 19.9648 12.6991 19.9301 12.98L22.0397 14.6297C22.2297 14.7801 22.2804 15.0492 22.1603 15.2696L20.1596 18.7301C20.0741 18.8869 19.9103 18.9843 19.7321 18.9843C19.67 18.9843 19.6088 18.9727 19.5503 18.9497L17.06 17.9498C16.493 18.3755 15.9398 18.6962 15.3698 18.9299L14.99 21.5804C14.9603 21.8195 14.7498 21.9998 14.5004 21.9998Z"
+            fill="" />
+        </svg>
+      </span>
+      <h3>Setup</h3>
+      <i class="right-arrow">
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M9.09 16.34L13.67 11.75L9.09 7.16L10.5 5.75L16.5 11.75L10.5 17.75L9.09 16.34Z" fill="" />
+        </svg>
+      </i>
+      <i class="down-arrow">
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M7.91 8.59009L12.5 13.1701L17.09 8.59009L18.5 10.0001L12.5 16.0001L6.5 10.0001L7.91 8.59009Z" fill="" />
+        </svg>
+      </i>
+    </div>
+    <ul class="vnav-item-sub">
+      <li>
+        <h3>Setup</h3>
+      </li>
+      <!-- <li *hasAccess="''; path:'Api'; permission:'Menu'" routerLinkActive="active">
+        <a routerLink="admin/docs">API</a>
+      </li>
+      <li *hasAccess="''; path:'Organization'; permission:'Menu'" routerLinkActive="active">
+        <a routerLink="/setup/organization">Organization</a>
+      </li> -->
+      <li *hasAccess="''; path:'Api'; permission:'Menu'" routerLinkActive="active">
+        <a (click)="onSelectMenu('/admin/docs')">API</a>
+      </li>
+      <li *hasAccess="''; path:'Organization'; permission:'Menu'" routerLinkActive="active">
+        <a (click)="onSelectMenu('/setup/organization')">Organization</a>
+      </li>
+      <li *hasAccess="''; path:'Company'; permission:'Menu'" routerLinkActive="active">
+        <a (click)="onSelectMenu('/setup/company')">Company</a>
+      </li>
+      <li >
+        <a (click)="onSelectMenu('/remote')">Remote</a>
+      </li>
+      <li *hasAccess="''; path:'EY Data'; permission:'Menu'" routerLinkActive="active">
+        <a (click)="onSelectMenu('/setup/data')">Data</a>
+      </li>
+    
+      <li *hasAccess="''; path:'User'; permission:'Menu'" routerLinkActive="active">
+        <a (click)="onSelectMenu('/setup/user')">User</a>
+      </li>
+      <!-- <li *hasAccess="''; path:'EY Data'; permission:'Menu'" routerLinkActive="active">
+        <a routerLink="/setup/data">Data</a>
+      </li>
+      <li *hasAccess="''; path:'User'; permission:'Menu'" routerLinkActive="active">
+        <a routerLink="/setup/user">User</a>
+      </li> -->
+<!--      <li routerLinkActive="active"><a routerLink="/setup/standards">Standards</a></li>-->
+<!--      <li routerLinkActive="active"><a routerLink="/setup/policies">Policies</a></li>-->
     </ul>
-</nav>
+  </div>
+  <div *hasAccess="''; path:'Data'; permission:'Menu'" id="menuData" class="vnav-items"
+    [ngClass]="{'active' : isDataActive}" routerLinkActive="active">
+    <div class="vnav-item" (click)="onToggleDataMenu()">
+      <span>
+        <svg width="16" height="27" viewBox="0 0 22 29" fill="" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M21.875 4.06322V6.60271C21.875 8.84067 16.9759 10.6659 10.9375 10.6659C4.89907 10.6659 0 8.84067 0 6.60271V4.06322C0 1.82526 4.89907 0 10.9375 0C16.9759 0 21.875 1.82526 21.875 4.06322ZM21.875 9.7771V15.491C21.875 17.7289 16.9759 19.5542 10.9375 19.5542C4.89907 19.5542 0 17.7289 0 15.491V9.7771C2.34985 11.6183 6.65078 12.4754 10.9375 12.4754C15.2242 12.4754 19.5251 11.6183 21.875 9.7771ZM21.875 18.6654V24.3793C21.875 26.6172 16.9759 28.4425 10.9375 28.4425C4.89907 28.4425 0 26.6172 0 24.3793V18.6654C2.34985 20.5065 6.65078 21.3636 10.9375 21.3636C15.2242 21.3636 19.5251 20.5065 21.875 18.6654Z"
+            fill="" />
+        </svg>
+      </span>
+      <h3>Data</h3>
+      <i class="right-arrow">
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M9.09 16.34L13.67 11.75L9.09 7.16L10.5 5.75L16.5 11.75L10.5 17.75L9.09 16.34Z" fill="" />
+        </svg>
+      </i>
+      <i class="down-arrow">
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M7.91 8.59009L12.5 13.1701L17.09 8.59009L18.5 10.0001L12.5 16.0001L6.5 10.0001L7.91 8.59009Z" fill="" />
+        </svg>
+      </i>
+    </div>
+    <ul class="vnav-item-sub">
+      <li>
+        <h3>Data</h3>
+      </li>
+      <!--      <li routerLinkActive="active" ><a routerLink="/data/activity-data">Activity Data</a></li>-->
+      <li *hasAccess="''; path:'Activity Data'; permission:'Menu'" routerLinkActive="active">
+        <a (click)="onSelectMenu('/data/actual-data/uploaded-reference-data/scope-wise')">Activity Data</a></li>
+      <li *hasAccess="''; path:'Data Upload'; permission:'Menu'" routerLinkActive="active">
+        <a (click)="onSelectMenu('/data/connections')">Data Upload</a></li>
+    
+   </ul>
+  </div>
+  <div *hasAccess="''; path:'Report'; permission:'Menu'" id="menuReportAnalytics" class="vnav-items"
+    [ngClass]="{'active' : isReportActive}" routerLinkActive="active">
+    <div class="vnav-item" (click)="onToggleReportMenu()">
+      <span>
+        <svg width="21" height="27" viewBox="0 0 25 27" fill="" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M24.2552 15.0578H13.3503L20.6127 23.3203C20.8903 23.6361 21.3471 23.6617 21.6325 23.3558C23.4109 21.4496 24.6343 18.8798 24.9932 15.991C25.0548 15.4964 24.694 15.0578 24.2552 15.0578ZM23.5277 11.6697C23.149 5.4238 18.762 0.432716 13.2722 0.00189062C12.853 -0.0310487 12.5001 0.37102 12.5001 0.848901V12.5481H22.7836C23.2037 12.5481 23.5566 12.1466 23.5277 11.6697ZM10.2942 15.0578V2.65115C10.2942 2.15183 9.90865 1.7414 9.47437 1.81146C3.9978 2.69193 -0.188319 8.13528 0.00653426 14.6588C0.206902 21.3586 5.27721 26.8526 11.1688 26.7685C13.4849 26.7355 15.6251 25.8864 17.3848 24.4664C17.7478 24.1736 17.7717 23.5655 17.4569 23.2074L10.2942 15.0578Z"
+            fill="" />
+        </svg>
+      </span>
+      <h3>Reports &amp; Analytics</h3>
+      <i class="right-arrow">
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M9.09 16.34L13.67 11.75L9.09 7.16L10.5 5.75L16.5 11.75L10.5 17.75L9.09 16.34Z" fill="" />
+        </svg>
+      </i>
+      <i class="down-arrow">
+        <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M7.91 8.59009L12.5 13.1701L17.09 8.59009L18.5 10.0001L12.5 16.0001L6.5 10.0001L7.91 8.59009Z" fill="" />
+        </svg>
+      </i>
+    </div>
+    <ul class="vnav-item-sub">
+
+      <li><a *hasAccess="''; path:'Report Dashboard'; permission:'Menu'" (click)="onRedirectToReportDashboard()">Dashboard</a>
+      </li>
+
+      <!-- <li><a href="http://localhost:8020/analytics/login/keycloak?next=http://localhost:8020/analytics/dashboard/list">Dashboard</a></li> -->
+      <li><a *hasAccess="''; path:'Report List'; permission:'Menu'" (click)="onRedirectToReportChart()">Reports</a></li>
+<!--      <li>-->
+<!--        <a routerLink="/report/poc">POC</a>-->
+<!--      </li>-->
+    </ul>
+  </div>
+
+  
+  <!-- end new menu -->
+</div>
