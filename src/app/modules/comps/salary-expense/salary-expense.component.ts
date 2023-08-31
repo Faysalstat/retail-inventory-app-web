@@ -92,7 +92,7 @@ export class SalaryExpenseComponent implements OnInit {
   submit(){
     this.isSubmitted = true;
     if(!this.employee.id || !this.amount ){
-      this.notificationService.showErrorMessage("INVALID","Input All Data","OK",200);
+      this.notificationService.showErrorMessage("INVALID","Input All Data","OK",2000);
       return;
     }
     let expenseModel = {
@@ -147,9 +147,9 @@ export class SalaryExpenseComponent implements OnInit {
             this.employee = new Employee()
             this.remarks ="";
             this.salaryEvent.emit("Balance Changed");
-            this.notificationService.showMessage("Success!","Payment Complete","OK",500);
+            this.notificationService.showMessage("Success!","Payment Complete","OK",2000);
           }else{
-            this.notificationService.showErrorMessage("ERROR!",data.message,"OK",500);
+            this.notificationService.showErrorMessage("ERROR!",data.message,"OK",2000);
           }
         },
         error:(err)=>{

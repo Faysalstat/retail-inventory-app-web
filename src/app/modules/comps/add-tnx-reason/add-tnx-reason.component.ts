@@ -30,7 +30,7 @@ export class AddTnxReasonComponent implements OnInit {
       next:(res)=>{
         if(res.body){
           this.tnxReason = '';
-          this.notificationService.showMessage("SUCCESS",res.message,"OK",500);
+          this.notificationService.showMessage("SUCCESS",res.message,"OK",2000);
           this.fetchTransactionReasons();
         }
       }
@@ -50,11 +50,11 @@ export class AddTnxReasonComponent implements OnInit {
       next:(res)=>{
         if(res.isSuccess){
           console.log("Successfully Deleted");
-          this.notificationService.showErrorMessage("SUCCESS","Deleted Item","Ok",500);
+          this.notificationService.showErrorMessage("SUCCESS","Deleted Item","Ok",2000);
           this.fetchTransactionReasons();
         }else{
           
-          this.notificationService.showErrorMessage("ERROR","Deletion Failed","Ok",500);
+          this.notificationService.showErrorMessage("ERROR","Deletion Failed","Ok",2000);
         }
       }
     })

@@ -38,7 +38,7 @@ export class AddAssetsComponent implements OnInit {
     this.showLoader = true;
     if(this.assetAddingForm.invalid){
       this.showLoader = false;
-      this.notificationService.showErrorMessage("INVALID FORM","INVALID FORM","OK",300);
+      this.notificationService.showErrorMessage("INVALID FORM","INVALID FORM","OK",2000);
       return;
     }
     let assetModel = this.assetAddingForm.value;

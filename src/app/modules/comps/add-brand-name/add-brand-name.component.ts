@@ -30,7 +30,7 @@ export class AddBrandNameComponent implements OnInit {
       next:(res)=>{
         if(res.body){
           this.brandName = '';
-          this.notificationService.showMessage("SUCCESS",res.message,"OK",500);
+          this.notificationService.showMessage("SUCCESS",res.message,"OK",2000);
           this.fetchBrandNames();
         }
       }
@@ -43,7 +43,7 @@ export class AddBrandNameComponent implements OnInit {
           this.brandNames = res.body;
           
         }else{
-          this.notificationService.showErrorMessage("ERROR","No Unit Type Found","OK",500);
+          this.notificationService.showErrorMessage("ERROR","No Unit Type Found","OK",2000);
         }
       }
     })
@@ -53,11 +53,11 @@ export class AddBrandNameComponent implements OnInit {
       next:(res)=>{
         if(res.isSuccess){
           console.log("Successfully Deleted");
-          this.notificationService.showErrorMessage("SUCCESS","Deleted Item","Ok",500);
+          this.notificationService.showErrorMessage("SUCCESS","Deleted Item","Ok",2000);
           this.fetchBrandNames();
         }else{
           
-          this.notificationService.showErrorMessage("ERROR","Deletion Failed","Ok",500);
+          this.notificationService.showErrorMessage("ERROR","Deletion Failed","Ok",2000);
         }
       }
     })

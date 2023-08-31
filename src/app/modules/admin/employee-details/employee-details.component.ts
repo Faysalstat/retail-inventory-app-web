@@ -54,7 +54,7 @@ export class EmployeeDetailsComponent implements OnInit {
         }
       },
       error:(err)=>{
-        this.notificationService.showNotFoundErrorMessage("Person",200);
+        this.notificationService.showNotFoundErrorMessage("Not Found. Error: "+err.message,2000);
       },
       complete:()=>{
         this.showLoader = false;

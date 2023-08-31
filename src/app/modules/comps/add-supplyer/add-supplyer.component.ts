@@ -81,10 +81,10 @@ export class AddSupplyerComponent implements OnInit {
 addSupplyer(){
   if (this.supplyerAddingForm.invalid ) {
     if(!this.person.contactNo || this.person.contactNo!='' || this.person.personName!='' ){
-      this.notificationService.showMessage("WARNING!","Form Invalid, Add Person Information","OK",1000);
+      this.notificationService.showMessage("WARNING!","Form Invalid, Add Person Information","OK",2000);
       return;
     }
-    this.notificationService.showMessage("WARNING!","Form Invalid","OK",1000);
+    this.notificationService.showMessage("WARNING!","Form Invalid","OK",2000);
     return;
   }
   this.showLoader = true;
@@ -105,10 +105,10 @@ addSupplyer(){
     next:(res)=>{
       this.supplyerAddingForm.reset();
       this.person  = new Person();
-      this.notificationService.showMessage("SUCCESS!","Supplyer Add Successful","OK",1000);
+      this.notificationService.showMessage("SUCCESS!","Supplyer Add Successful","OK",2000);
     },
     error:(err)=>{
-      this.notificationService.showMessage("FAILED!","Supplyer Add Failed "+err.message,"OK",1000);
+      this.notificationService.showMessage("FAILED!","Supplyer Add Failed "+err.message,"OK",2000);
     },
     complete:()=>{
       this.showLoader = false;

@@ -78,7 +78,7 @@ export class AccountHistoryComponent implements OnInit {
             BALANCE:this.openingBalance
           });
         }else{
-          this.notificationService.showErrorMessage("ERROR",res.message,"OK",200);
+          this.notificationService.showErrorMessage("ERROR",res.message,"OK",2000);
         }
       }
     })

@@ -93,8 +93,8 @@
               <td>{{invoice.customer.person.personName}}</td>
               <td>{{invoice.customer.person.contactNo}}</td>
               <td>{{invoice.customer.shopName}}</td>
-              <td>{{invoice.totalPrice}}</td>
-              <td>{{invoice.totalPaidAmount}}</td>
+              <td>{{invoice.totalPrice.toFixed(2)}}</td>
+              <td>{{invoice.totalPaidAmount.toFixed(2)}}</td>
               <td>{{invoice.deliveryStatus}}</td>
               <td>{{invoice.purchaseDate}}</td>
             </tr>

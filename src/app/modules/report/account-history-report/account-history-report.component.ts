@@ -166,7 +166,7 @@ export class AccountHistoryReportComponent implements OnInit {
             this.accountHistoryExportable.push(item);
           });
         }else{
-          this.notificationService.showErrorMessage("ERROR",res.message,"OK",200);
+          this.notificationService.showErrorMessage("ERROR",res.message,"OK",2000);
         }
       }
     })

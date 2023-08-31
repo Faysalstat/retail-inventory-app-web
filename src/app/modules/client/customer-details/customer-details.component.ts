@@ -72,13 +72,13 @@ export class CustomerDetailsComponent implements OnInit {
     this.clientService.updateClient(params).subscribe({
       next:(res)=>{
         if(res.isSuccess){
-          this.notificationService.showMessage("SUCCESS",res.message,"OK",300);
+          this.notificationService.showMessage("SUCCESS",res.message,"OK",2000);
         }else{
-          this.notificationService.showErrorMessage("ERROR",res.message,"OK",300);
+          this.notificationService.showErrorMessage("ERROR",res.message,"OK",2000);
         }
       },
       error:(err)=>{
-        this.notificationService.showErrorMessage("ERROR",err.message,"OK",300);
+        this.notificationService.showErrorMessage("ERROR",err.message,"OK",2000);
       }
     })
     

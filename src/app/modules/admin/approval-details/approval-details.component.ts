@@ -105,7 +105,7 @@ export class ApprovalDetailsComponent implements OnInit {
               'SUCCESS!',
               'Invoice Created',
               'OK',
-              500
+              2000
             );
             
             this.router.navigate(['/admin/task-list']);
@@ -117,7 +117,7 @@ export class ApprovalDetailsComponent implements OnInit {
               'ERROR!',
               'Invoice Not Created',
               'OK',
-              500
+              2000
             );
           },
         });
@@ -126,13 +126,13 @@ export class ApprovalDetailsComponent implements OnInit {
         this.inventoryService.issueSalesOrder(params).subscribe({
           next:(res)=>{
             this.showLoader  = false;
-            this.notificationService.showMessage("SUCCESS","Order Placed Successfully","OK",300);
+            this.notificationService.showMessage("SUCCESS","Order Placed Successfully","OK",2000);
             this.downloadSaleInvoice(res.body.invoiceNo);
             this.router.navigate(['/admin/task-list']);
           },
           error:(err)=>{
             this.showLoader  = false;
-            this.notificationService.showMessage("ERROR","Order Placed Failed","OK",300);
+            this.notificationService.showMessage("ERROR","Order Placed Failed "+ err.message,"OK",2000);
           }
         })
       }
@@ -149,12 +149,12 @@ export class ApprovalDetailsComponent implements OnInit {
     this.inventoryService.declineApproval(params).subscribe({
       next:(res)=>{
         this.showLoader  = false;
-        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500);
+        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",2000);
         this.router.navigate(['/admin/task-list']);
       },
       error:(err)=>{
         this.showLoader  = false;
-        this.notificationService.showErrorMessage("Warning","Deletion Failed","Ok",500);
+        this.notificationService.showErrorMessage("Warning","Deletion Failed","Ok",2000);
       }
     })
   }
@@ -180,8 +180,8 @@ export class ApprovalDetailsComponent implements OnInit {
       orderRow.push(elem.productCode);
       orderRow.push(elem.productName);
       orderRow.push(elem.pricePerUnit);
-      orderRow.push(elem.packageQuantity);
-      orderRow.push(elem.looseQuantity);
+      // orderRow.push(elem.packageQuantity);
+      // orderRow.push(elem.looseQuantity);
       orderRow.push(elem.quantityOrdered + ' ' + (elem.unitType || ""));
       orderRow.push(elem.totalOrderPrice);
       index++;

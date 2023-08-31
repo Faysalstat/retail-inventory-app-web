@@ -59,7 +59,7 @@ export class ProfitCalculationComponent implements OnInit {
         })
       },
       error:(err)=>{
-        this.notificationService.showErrorMessage("ERROR","Calculation Data Fetching Failed: Error "+err.message,"Ok",1000);
+        this.notificationService.showErrorMessage("ERROR","Calculation Data Fetching Failed: Error "+err.message,"Ok",2000);
       },
       complete:()=>{
         this.showLoader = false;

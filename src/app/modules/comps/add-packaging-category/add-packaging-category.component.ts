@@ -32,13 +32,13 @@ export class AddPackagingCategoryComponent implements OnInit {
       next:(res)=>{
         if(res.body){
           this.category = '';
-          this.notificationService.showMessage("SUCCESS",res.message,"OK",500);
+          this.notificationService.showMessage("SUCCESS",res.message,"OK",2000);
           this.fetchPackagingCategory();
           this.showLoader = false;
         }
       },
       error:(err)=>{
-        this.notificationService.showErrorMessage("ERROR",err.message,"OK",500);
+        this.notificationService.showErrorMessage("ERROR",err.message,"OK",2000);
       },
       complete:()=>{
         this.showLoader = false;
@@ -53,7 +53,7 @@ export class AddPackagingCategoryComponent implements OnInit {
           this.category = '';
           this.categories = res.body;
         }else{
-          this.notificationService.showErrorMessage("ERROR","No Packaging Category Found","OK",500);
+          this.notificationService.showErrorMessage("ERROR","No Packaging Category Found","OK",2000);
         }
       }
     })
@@ -63,11 +63,11 @@ export class AddPackagingCategoryComponent implements OnInit {
       next:(res)=>{
         if(res.isSuccess){
           console.log("Successfully Deleted");
-          this.notificationService.showErrorMessage("SUCCESS","Deleted Item","Ok",500);
+          this.notificationService.showErrorMessage("SUCCESS","Deleted Item","Ok",2000);
           this.fetchPackagingCategory();
         }else{
           
-          this.notificationService.showErrorMessage("ERROR","Deletion Failed","Ok",500);
+          this.notificationService.showErrorMessage("ERROR","Deletion Failed","Ok",2000);
         }
       }
     })

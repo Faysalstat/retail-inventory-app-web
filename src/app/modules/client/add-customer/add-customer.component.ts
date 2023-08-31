@@ -99,7 +99,7 @@ export class AddCustomerComponent implements OnInit {
     if(!this.customer.shopName || !this.person.personName || !this.person.contactNo || this.person.contactNo.length<11){
       this.isLengthError =true;
       // this.errMsg = "Please provide valid Mobile No."
-      this.notificationService.showMessage("WARNING!","Form Invalid, Add Person Information","OK",1000);
+      this.notificationService.showMessage("WARNING!","Form Invalid, Add Person Information","OK",2000);
       return;
     }else{
       this.errMsg = ""

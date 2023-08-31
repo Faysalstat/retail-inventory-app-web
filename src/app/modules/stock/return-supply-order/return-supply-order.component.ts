@@ -123,11 +123,11 @@ export class ReturnSupplyOrderComponent implements OnInit {
     params.set('return', this.returnModel);
     this.inventoryService.issueSupplyOrderReturn(params).subscribe({
       next: (res) => {
-        this.notificationService.showMessage("SUCCESS","Order Successfully Returned","OK",500);
+        this.notificationService.showMessage("SUCCESS","Order Successfully Returned","OK",2000);
         this.route.navigate(["/supply/edit-supply-invoice",this.supplyInvoice.id]);
       },
       error: (err) => {
-        this.notificationService.showErrorMessage("ERROR","Order Returned Failed","OK",200);
+        this.notificationService.showErrorMessage("ERROR","Order Returned Failed","OK",2000);
       },
     });
   }

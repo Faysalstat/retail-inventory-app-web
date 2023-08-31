@@ -170,8 +170,6 @@ export class PdfMakeService {
           'Code',
           'Product Name',
           'Rate',
-          'Package QNT',
-          'Loose QNT',
           'Total QNT',
           'Total Price (BDT)',
         ],

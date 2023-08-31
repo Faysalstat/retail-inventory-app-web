@@ -76,7 +76,7 @@ export class ExpenseComponent implements OnInit {
   submit(){
     this.isSubmitted = true;
     if(!this.expenseReason || this.expenseReason=='' || !this.amount ){
-      this.notificationService.showErrorMessage("INVALID","Input All Data","OK",200);
+      this.notificationService.showErrorMessage("INVALID","Input All Data","OK",2000);
       return;
     }
     let expenseModel = {
@@ -130,9 +130,9 @@ export class ExpenseComponent implements OnInit {
             this.remarks ="";
             this.expenseReason = "";
             this.expenseEvent.emit("Balance Changed");
-            this.notificationService.showMessage("Success!","Payment Complete","OK",500);
+            this.notificationService.showMessage("Success!","Payment Complete","OK",2000);
           }else{
-            this.notificationService.showErrorMessage("ERROR!",data.message,"OK",500);
+            this.notificationService.showErrorMessage("ERROR!",data.message,"OK",2000);
           }
         },
         error:(err)=>{

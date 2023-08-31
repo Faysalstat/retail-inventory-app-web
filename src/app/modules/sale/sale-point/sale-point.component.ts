@@ -462,8 +462,8 @@ export class SalePointComponent implements OnInit {
       orderRow.push(elem.productCode);
       orderRow.push(elem.productName);
       orderRow.push(elem.pricePerUnit);
-      orderRow.push(elem.packageQuantity);
-      orderRow.push(elem.looseQuantity);
+      // orderRow.push(elem.packageQuantity);
+      // orderRow.push(elem.looseQuantity);
       orderRow.push(elem.quantityOrdered + ' ' + (elem.unitType || ""));
       orderRow.push(elem.totalOrderPrice);
       index++;

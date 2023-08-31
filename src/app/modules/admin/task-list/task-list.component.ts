@@ -29,7 +29,7 @@ export class TaskListComponent implements OnInit {
         
       },
       error:(err)=>{
-        this.notificationService.showMessage("ERROR","Task List Fetch Failed. Error: "+ err.message,"OK",500);
+        this.notificationService.showMessage("ERROR","Task List Fetch Failed. Error: "+ err.message,"OK",2000);
       }
     })
   }
@@ -55,10 +55,10 @@ export class TaskListComponent implements OnInit {
     params.set("task",task)
     this.inventoryService.declineApproval(params).subscribe({
       next:(res)=>{
-        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500);
+        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",2000);
       },
       error:(err)=>{
-        this.notificationService.showErrorMessage("Warning","Deletion Failed","Ok",500);
+        this.notificationService.showErrorMessage("Warning","Deletion Failed Error: "+err.message,"Ok",2000);
       },
       complete:()=>{
         this.fetchAllTaskList();

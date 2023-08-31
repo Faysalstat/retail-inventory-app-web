@@ -138,7 +138,7 @@ export class AddUserComponent implements OnInit {
         this.userList = res.body;
       },
       error:(err)=>{
-        this.notificationService.showErrorMessage("ERROR",err.message,"OK",300);
+        this.notificationService.showErrorMessage("ERROR",err.message,"OK",2000);
       }
     })
   }

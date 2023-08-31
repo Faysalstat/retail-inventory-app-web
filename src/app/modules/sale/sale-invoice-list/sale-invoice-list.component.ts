@@ -51,7 +51,7 @@ export class SaleInvoiceListComponent implements OnInit {
         })
       },
       error:(err)=>{
-        this.notificationService.showErrorMessage("ERROR",err.message,"OK",300);
+        this.notificationService.showErrorMessage("ERROR",err.message,"OK",2000);
       }
     })
   }

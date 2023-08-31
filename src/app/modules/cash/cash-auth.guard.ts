@@ -32,10 +32,10 @@ export class CashAuthGuard implements CanActivateChild {
     if (authenticated.body.userRole == 'ADMIN' || authenticated.body.userRole == 'MANAGER') {
       console.log('Welcome to admin panel');
     }else if (authenticated.body.userRole == 'SALER') {
-      this.notificationService.showErrorMessage("WARNING!!","You Are Not Permited To Access Cash Panel","OK",1000);
+      this.notificationService.showErrorMessage("WARNING!!","You Are Not Permited To Access Cash Panel","OK",2000);
       this.router.navigate(['home']);
     } else {
-      this.notificationService.showErrorMessage("WARNING!!","You Are Not Logged In","OK",1000);
+      this.notificationService.showErrorMessage("WARNING!!","You Are Not Logged In","OK",2000);
       console.log('You are not permited to admin panel');
       this.router.navigate(['auth']);
     }

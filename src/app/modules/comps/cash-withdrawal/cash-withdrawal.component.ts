@@ -95,9 +95,9 @@ export class CashWithdrawalComponent implements OnInit {
             this.receivedBy = "";
             this.remarks ="";
             this.withdrawalEvent.emit("Balance Changed");
-            this.notificationService.showMessage("Success!","Transaction Complete","OK",500);
+            this.notificationService.showMessage("Success!","Transaction Complete","OK",2000);
           }else{
-            this.notificationService.showErrorMessage("ERROR!",data.message,"OK",500);
+            this.notificationService.showErrorMessage("ERROR!",data.message,"OK",2000);
           }
         },
         error:(err)=>{

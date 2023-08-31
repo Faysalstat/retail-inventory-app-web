@@ -41,7 +41,7 @@ export class ProductManagementComponent implements OnInit {
             this.categories.push(option);
           })
         }else{
-          this.notificationService.showErrorMessage("ERROR","No Product Category Found","OK",500);
+          this.notificationService.showErrorMessage("ERROR","No Product Category Found","OK",2000);
         }
       }
     })

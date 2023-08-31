@@ -69,12 +69,12 @@ export class CashApprovalDetailsComponent implements OnInit {
     this.inventoryService.declineApproval(params).subscribe({
       next:(res)=>{
         this.showLoader = false;
-        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500);
+        this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",2000);
         this.router.navigate(['/admin/task-list']);
       },
       error:(err)=>{
         this.showLoader = false;
-        this.notificationService.showErrorMessage("Warning","Deletion Failed","Ok",500);
+        this.notificationService.showErrorMessage("Warning","Deletion Failed","Ok",2000);
       },
       complete:()=>{
         this.showLoader = false;
@@ -93,13 +93,13 @@ export class CashApprovalDetailsComponent implements OnInit {
       this.inventoryService.doPaymentTransaction(params).subscribe({
         next:(res)=>{
           this.showLoader = false;
-          this.notificationService.showMessage("SUCCESS!","Payment Successful","OK",400);
+          this.notificationService.showMessage("SUCCESS!","Payment Successful","OK",2000);
           this.downloadMemo();
           this.router.navigate(['/admin/task-list']);
         },
         error:(err)=>{
           this.showLoader = false;
-          this.notificationService.showMessage("ERROR!","Payment FAILED","OK",200);
+          this.notificationService.showMessage("ERROR!","Payment FAILED","OK",2000);
         },
         complete:()=>{
           this.showLoader = false;
@@ -117,7 +117,7 @@ export class CashApprovalDetailsComponent implements OnInit {
               'Success!',
               'Payment Complete',
               'OK',
-              500
+              2000
             );
             this.router.navigate(['/admin/task-list']);
           } else {
@@ -126,7 +126,7 @@ export class CashApprovalDetailsComponent implements OnInit {
               'ERROR!',
               res.message,
               'OK',
-              500
+              2000
             );
           }
         },
@@ -154,7 +154,7 @@ export class CashApprovalDetailsComponent implements OnInit {
               'Success!',
               'Payment Complete',
               'OK',
-              500
+              2000
             );
             this.router.navigate(['/admin/task-list']);
           } else {
@@ -162,7 +162,7 @@ export class CashApprovalDetailsComponent implements OnInit {
               'ERROR!',
               res.message,
               'OK',
-              500
+              2000
             );
           }
         },
