@@ -12,6 +12,7 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { HttpClientModule } from '@angular/common/http';
 import * as CanvasJSAngularChart from '../assets/canvas/canvasjs.angular.component';
 import { CompsModule } from './modules/comps/comps.module';
+import { AppLayoutModule } from './modules/layout/app.layout.module';
 var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
 
 @NgModule({
@@ -26,7 +27,8 @@ var CanvasJSChart = CanvasJSAngularChart.CanvasJSChart;
     PanelMenuModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    CompsModule
+    CompsModule,
+    AppLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

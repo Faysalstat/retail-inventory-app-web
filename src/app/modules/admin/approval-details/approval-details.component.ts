@@ -165,7 +165,9 @@ export class ApprovalDetailsComponent implements OnInit {
   }
 
   applyFilter(date: any) {
-    let newDate = new Date(date);
+    // let newDate = new Date(date);
+    console.log(date);
+    let newDate = date;
     return (
       newDate.getDate() +
       '/' +
