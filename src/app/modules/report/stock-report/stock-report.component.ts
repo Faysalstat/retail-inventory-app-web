@@ -15,7 +15,7 @@ export class StockReportComponent implements OnInit {
   offset: number = 0;
   limit = 5;
   length = 100;
-  pageSize = 10;
+  pageSize = 1000;
   pageSizeOptions: number[] = [100, 500, 1000];
   productList!: any[];
   productListExportable!: any[];

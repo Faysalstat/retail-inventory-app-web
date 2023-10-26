@@ -15,7 +15,7 @@ export class SaleInvoiceListComponent implements OnInit {
   saleInvoiceList:any[] = [];
   offset = 0;
   length = 100;
-  pageSize = 10;
+  pageSize = 1000;
   pageSizeOptions: number[] = [5, 10, 25, 100,500,1000];
   queryBody:any;
   userList:any[] = [];
