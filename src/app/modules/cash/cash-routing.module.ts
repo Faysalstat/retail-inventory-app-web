@@ -10,7 +10,7 @@ import { LoanListComponent } from './loan-list/loan-list.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 const routes: Routes = [{
-    path: '', component: CashComponent,canActivate:[AppAuthGuard],canActivateChild:[CashAuthGuard],
+    path: '', component: CashComponent,canActivate:[CashAuthGuard],
     children: [
         {path: '', component: CashTransactionComponent},
         {path: 'cash-transaction', component: CashTransactionComponent},

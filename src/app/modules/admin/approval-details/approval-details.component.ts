@@ -107,7 +107,7 @@ export class ApprovalDetailsComponent implements OnInit {
               2000
             );
             
-            this.router.navigate(['/admin/task-list']);
+            this.router.navigate(['/layout/admin/task-list']);
           },
           error: (err) => {
             this.notificationService.showMessage(
@@ -129,7 +129,7 @@ export class ApprovalDetailsComponent implements OnInit {
             if(res.isSuccess){
               this.notificationService.showMessage("SUCCESS",res.message,"OK",2000);
               this.downloadSaleInvoice(res.body.invoiceNo);
-              this.router.navigate(['/admin/task-list']);
+              this.router.navigate(['/layout/admin/task-list']);
             }else{
               this.notificationService.showMessage("ERROR","Order Placed Failed" + res.message,"OK",2000);
             }
@@ -155,7 +155,7 @@ export class ApprovalDetailsComponent implements OnInit {
       next:(res)=>{
         this.showLoader  = false;
         this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500);
-        this.router.navigate(['/admin/task-list']);
+        this.router.navigate(['/layout/admin/task-list']);
       },
       error:(err)=>{
         this.showLoader  = false;

@@ -70,7 +70,7 @@ export class CashApprovalDetailsComponent implements OnInit {
       next:(res)=>{
         this.showLoader = false;
         this.notificationService.showMessage("SUCCESSFULL","Approval Deleted","OK",500);
-        this.router.navigate(['/admin/task-list']);
+        this.router.navigate(['/layout/admin/task-list']);
       },
       error:(err)=>{
         this.showLoader = false;
@@ -95,7 +95,7 @@ export class CashApprovalDetailsComponent implements OnInit {
           this.showLoader = false;
           this.notificationService.showMessage("SUCCESS!","Payment Successful","OK",400);
           this.downloadMemo(res.voucherNo);
-          this.router.navigate(['/admin/task-list']);
+          this.router.navigate(['/layout/admin/task-list']);
         },
         error:(err)=>{
           this.showLoader = false;
@@ -119,7 +119,7 @@ export class CashApprovalDetailsComponent implements OnInit {
               'OK',
               500
             );
-            this.router.navigate(['/admin/task-list']);
+            this.router.navigate(['/layout/admin/task-list']);
           } else {
             this.showLoader = false;
             this.notificationService.showErrorMessage(
@@ -156,7 +156,7 @@ export class CashApprovalDetailsComponent implements OnInit {
               'OK',
               500
             );
-            this.router.navigate(['/admin/task-list']);
+            this.router.navigate(['/layout/admin/task-list']);
           } else {
             this.notificationService.showErrorMessage(
               'ERROR!',

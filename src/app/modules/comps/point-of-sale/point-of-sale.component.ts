@@ -314,7 +314,7 @@ export class PointOfSaleComponent implements OnInit {
               'OK',
               500
             );
-          this.route.navigate(["/sale/sale-invoice-list"]);
+          this.route.navigate(["/layout/sale/sale-invoice-list"]);
           },
           error: (err) => {
             this.notificationService.showMessage(
@@ -336,7 +336,7 @@ export class PointOfSaleComponent implements OnInit {
               'OK',
               500
             );
-            this.route.navigate(['/sale/sale-invoice-list']);
+            this.route.navigate(['/layout/sale/sale-invoice-list']);
           },
           error: (err) => {
             console.log(err);

@@ -12,7 +12,7 @@ import { StockComponent } from './stock.component';
 import { SupplyInvoiceListComponent } from './supply-invoice-list/supply-invoice-list.component';
 
 const routes: Routes = [{
-  path: '', component: StockComponent,canActivate:[AppAuthGuard],canActivateChild:[StockAuthGuard],
+  path: '', component: StockComponent,canActivate:[StockAuthGuard],
   children: [
       {path: '', component: AddStockComponent},
       {path: 'create-supply', component: AddStockComponent},

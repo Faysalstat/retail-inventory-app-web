@@ -220,7 +220,7 @@ export class CashTransactionComponent implements OnInit {
             500
           );
           // this.downloadMemo(res.bod);
-          this.route.navigate(['/cash/transaction-list']);
+          this.route.navigate(['/layout/cash/transaction-list']);
         },
         error: (err) => {
           this.notificationService.showMessage(
@@ -247,7 +247,7 @@ export class CashTransactionComponent implements OnInit {
             'OK',
             400
           );
-          this.route.navigate(['/cash/transaction-list']);
+          this.route.navigate(['/layout/cash/transaction-list']);
           
         },
         error: (err) => {

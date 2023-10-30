@@ -26,6 +26,6 @@ export class LoanListComponent implements OnInit {
   }
 
   viewDetails(id:any){
-    this.route.navigate(["cash/loan-details",id]);
+    this.route.navigate(["/layout/cash/loan-details",id]);
   }
 }

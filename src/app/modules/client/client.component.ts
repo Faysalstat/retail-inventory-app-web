@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-client',
@@ -7,11 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClientComponent implements OnInit {
   menuItems:any[] = [];
-  constructor() {
-    this.menuItems = [
-      {label:"Client List",route:"client-list"}
-    ]
-   }
+  constructor(
+    private sharedService:SharedService
+  ) {
+    this.sharedService.setParam("CLIENT");
+  }
+
 
   ngOnInit(): void {
   }

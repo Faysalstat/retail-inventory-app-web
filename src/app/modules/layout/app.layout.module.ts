@@ -17,16 +17,16 @@ import { AppFooterComponent } from './app.footer.component';
 import { AppConfigModule } from './config/config.module';
 import { AppSidebarComponent } from "./app.sidebar.component";
 import { AppLayoutComponent } from "./app.layout.component";
-
+const comps = [
+    AppMenuitemComponent,
+    AppTopBarComponent,
+    AppFooterComponent,
+    AppMenuComponent,
+    AppSidebarComponent,
+    AppLayoutComponent,
+]
 @NgModule({
-    declarations: [
-        AppMenuitemComponent,
-        AppTopBarComponent,
-        AppFooterComponent,
-        AppMenuComponent,
-        AppSidebarComponent,
-        AppLayoutComponent,
-    ],
+    declarations: comps,
     imports: [
         BrowserModule,
         FormsModule,
@@ -41,6 +41,6 @@ import { AppLayoutComponent } from "./app.layout.component";
         RouterModule,
         AppConfigModule
     ],
-    exports: [AppLayoutComponent]
+    exports: [comps]
 })
 export class AppLayoutModule { }

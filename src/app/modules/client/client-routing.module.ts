@@ -14,7 +14,7 @@ import { SupplyerDetailsComponent } from './supplyer-details/supplyer-details.co
 import { SupplyerComponent } from './supplyer/supplyer.component';
 
 const routes: Routes = [{
-    path: '', component: ClientComponent,canActivate:[AppAuthGuard],canActivateChild:[ClientAuthGuard],
+    path: '', component: ClientComponent,canActivate:[ClientAuthGuard],
     children: [
         {path: '', component: CustomerComponent},
         {path: 'customer-list', component: CustomerComponent},

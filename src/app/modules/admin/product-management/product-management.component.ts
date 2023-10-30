@@ -70,7 +70,7 @@ export class ProductManagementComponent implements OnInit {
     this.fetchAllProducts();
   }
   onselectProduct(product:any){
-    this.route.navigate(["/supply/product-detail",product.id]);
+    this.route.navigate(["/layout/supply/product-detail",product.id]);
   }
   packProduct(product:any){
     let packQnt ="";

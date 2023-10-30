@@ -7,13 +7,13 @@ import { NotificationService } from '../services/notification-service.service';
 @Injectable({
   providedIn: 'root'
 })
-export class StockAuthGuard implements CanActivateChild {
+export class StockAuthGuard implements CanActivate {
   constructor(
     private router: Router,
     private authService: AuthService,
     private notificationService: NotificationService
   ){}
-  canActivateChild(
+  canActivate(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ):

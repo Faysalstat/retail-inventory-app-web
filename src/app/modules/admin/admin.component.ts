@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {MenuItem} from 'primeng/api';
+import { SharedService } from '../services/shared.service';
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -9,8 +10,11 @@ import {MenuItem} from 'primeng/api';
 export class AdminComponent implements OnInit {
   items!: MenuItem[];
   constructor(
-    private router: Router
-  ) { }
+    private sharedService:SharedService,
+    private router:Router
+  ) {
+    this.sharedService.setParam("ADMIN");
+  }
 
   ngOnInit(): void {
     this.items = [

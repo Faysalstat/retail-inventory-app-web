@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'app-stock',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StockComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private sharedService:SharedService
+  ) {
+    this.sharedService.setParam("SUPPLY");
+  }
 
   ngOnInit(): void {
   }

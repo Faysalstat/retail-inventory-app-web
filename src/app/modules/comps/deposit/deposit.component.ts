@@ -96,7 +96,7 @@ export class DepositComponent implements OnInit {
             'OK',
             500
           );
-          this.route.navigate(['/cash/transaction-list']);
+          this.route.navigate(['/layout/cash/transaction-list']);
         },
         error: (err) => {
           this.notificationService.showMessage(

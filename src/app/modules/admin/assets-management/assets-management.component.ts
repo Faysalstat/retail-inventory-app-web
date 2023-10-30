@@ -20,12 +20,15 @@ export class AssetsManagementComponent implements OnInit {
     this.fetchAssets();
   }
   fetchAssets(){
+    this.showLoader = true;
     this.assetService.getAllAssets(null).subscribe({
       next:(res)=>{
-        this.assetsList = res.body
+        this.assetsList = res.body;
+        this.showLoader = false;
       },
       error:(err)=>{
         console.log(err.message)
+        this.showLoader = false;
       }
     })
   }

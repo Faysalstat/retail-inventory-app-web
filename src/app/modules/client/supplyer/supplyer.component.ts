@@ -48,7 +48,7 @@ this.queryBody = {
     if(localStorage.getItem("userRole")=="SALER"){
       return;
     }
-    this.route.navigate(["client/supplyer-details",id]);
+    this.route.navigate(["layout/client/supplyer-details",id]);
   }
   refresh(){
     this.queryBody.code  ='';

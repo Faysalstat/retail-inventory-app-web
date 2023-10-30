@@ -268,7 +268,7 @@ export class AddStockComponent implements OnInit {
             500
           );
           // this.downloadInvoice();
-          this.route.navigate(['/supply/supply-invoice-list']);
+          this.route.navigate(['/layout/supply/supply-invoice-list']);
         },
         error:(err)=>{
           this.notificationService.showMessage(
@@ -295,7 +295,7 @@ export class AddStockComponent implements OnInit {
             500
           );
           // this.downloadInvoice();
-          this.route.navigate(['/supply/supply-invoice-list']);
+          this.route.navigate(['/layout/supply/supply-invoice-list']);
         },
         error: (err) => {
           console.log(err);
