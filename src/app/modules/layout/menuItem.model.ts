@@ -1,3 +1,11 @@
+const MODULES = { label: 'Modules', icon: 'pi pi-fw pi-home', items:[
+  {label:'Admin', icon:'pi pi-fw pi-briefcase', routerLink:['/layout/admin'],activeIgnor:true},
+  {label:'Sale', icon:'pi pi-fw pi-briefcase', routerLink:['/layout/sale'],activeIgnor:true},
+  {label:'Cash', icon:'pi pi-fw pi-briefcase', routerLink:['/layout/cash'],activeIgnor:true},
+  {label:'Client', icon:'pi pi-fw pi-briefcase', routerLink:['/layout/client'],activeIgnor:true},
+  {label:'Supply', icon:'pi pi-fw pi-briefcase', routerLink:['/layout/supply'],activeIgnor:true},
+  {label:'Reports', icon:'pi pi-fw pi-briefcase', routerLink:['/layout/reports'],activeIgnor:true},
+] };
 export const MENUITEM = [
   {
     label: 'Home',
@@ -103,7 +111,7 @@ export const SALEMENUITEM = [
   {
     label: 'Home',
     items: [
-      { label: 'Modules', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
+      MODULES
     ],
   },
   {
@@ -148,7 +156,7 @@ export const ADMINMENUITEM = [
   {
     label: 'Home',
     items: [
-      { label: 'Modules', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
+      MODULES,
       { label: 'Dashboard', icon: 'pi pi-fw pi-th-large', routerLink: ['/layout/admin/dashboard'] },
       { label: 'My Task', icon: 'pi pi-fw pi-check-square', routerLink: ['/layout/admin/task-list'] },
     ],
@@ -196,7 +204,7 @@ export const SUPPLYMENUITEM = [
   {
     label: 'Home',
     items: [
-      { label: 'Modules', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
+      MODULES
     ],
   },
   {
@@ -246,7 +254,7 @@ export const CLIENTMENUITEM = [
   {
     label: 'Home',
     items: [
-      { label: 'Modules', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
+      MODULES
     ],
   },
   {
@@ -291,7 +299,7 @@ export const CASHMENUITEM = [
   {
     label: 'Home',
     items: [
-      { label: 'Modules', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
+      MODULES
     ],
   },
   {
@@ -341,7 +349,7 @@ export const REPORTMENUITEM = [
   {
     label: 'Home',
     items: [
-      { label: 'Modules', icon: 'pi pi-fw pi-home', routerLink: ['/home'] },
+      MODULES
     ],
   },
   {
@@ -355,45 +363,51 @@ export const REPORTMENUITEM = [
       {
         label: 'Account Report',
         icon: 'pi pi-fw pi-file-pdf',
-        routerLink: ['/layout/reports/cash-transaction'],
+        routerLink: ['/layout/reports/account-history-report'],
       },
       {
         label: 'Expense Report',
         icon: 'pi pi-fw pi-file-pdf',
-        routerLink: ['/layout/reports/cash-transaction'],
+        routerLink: ['/layout/reports/expense-report'],
       },
       {
         label: 'Drawing Report',
         icon: 'pi pi-fw pi-file-pdf',
-        routerLink: ['/layout/reports/cash-transaction'],
+        routerLink: ['/layout/reports/drawing-report'],
       },
       {
         label: 'Loan Report',
         icon: 'pi pi-fw pi-file-pdf',
-        routerLink: ['/layout/reports/cash-transaction'],
+        routerLink: ['/layout/reports/loan-report'],
       },
       {
         label: 'Stock Sales Report',
         icon: 'pi pi-fw pi-file-pdf',
-        routerLink: ['/layout/reports/cash-transaction'],
+        routerLink: ['/layout/reports/stock-sale-report'],
       },
       {
         label: 'Stock Supply Report',
         icon: 'pi pi-fw pi-file-pdf',
-        routerLink: ['/layout/reports/cash-transaction'],
+        routerLink: ['/layout/reports/stock-supply-report'],
+      },
+      {
+        label: 'Sale Report',
+        icon: 'pi pi-fw pi-file-pdf',
+        routerLink: ['/layout/reports/sale-report'],
       },
       {
         label: 'Stock Report',
         icon: 'pi pi-fw pi-file-pdf',
-        routerLink: ['/layout/reports/cash-transaction'],
+        routerLink: ['/layout/reports/stock-report'],
       },
       {
         label: 'Profit Report',
         icon: 'pi pi-fw pi-file-pdf',
-        routerLink: ['/layout/reports/cash-transaction'],
+        routerLink: ['/layout/reports/profit-report'],
       },
     ]
   },
+
   {
     label: 'Need Help?',
     items: [
