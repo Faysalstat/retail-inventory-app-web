@@ -42,7 +42,7 @@
                 </mat-form-field>
             </div>
             <div class="col-md-3">
-                <mat-form-field appearance="outline">
+                <mat-form-field class="input-field" appearance="outline">
                     <mat-label>From Date</mat-label>
                     <input matInput [matDatepicker]="fromDatePicker" (dateInput)="fetchAccountHistory()"
                         [ngModelOptions]="{standalone:true}" [(ngModel)]="queryBody.fromDate">
@@ -51,7 +51,7 @@
                 </mat-form-field>
             </div>
             <div class="col-md-3">
-                <mat-form-field appearance="outline">
+                <mat-form-field class="input-field" appearance="outline">
                     <mat-label>To Date</mat-label>
                     <input matInput [matDatepicker]="toDatePicker" (dateInput)="fetchAccountHistory()"
                         [ngModelOptions]="{standalone:true}" [(ngModel)]="queryBody.toDate">

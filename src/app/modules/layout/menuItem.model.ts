@@ -390,11 +390,11 @@ export const REPORTMENUITEM = [
         icon: 'pi pi-fw pi-file-pdf',
         routerLink: ['/layout/reports/stock-supply-report'],
       },
-      {
-        label: 'Sale Report',
-        icon: 'pi pi-fw pi-file-pdf',
-        routerLink: ['/layout/reports/sale-report'],
-      },
+      // {
+      //   label: 'Sale Report',
+      //   icon: 'pi pi-fw pi-file-pdf',
+      //   routerLink: ['/layout/reports/sales-report'],
+      // },
       {
         label: 'Stock Report',
         icon: 'pi pi-fw pi-file-pdf',
