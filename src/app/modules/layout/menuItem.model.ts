@@ -159,6 +159,7 @@ export const ADMINMENUITEM = [
       MODULES,
       { label: 'Dashboard', icon: 'pi pi-fw pi-th-large', routerLink: ['/layout/admin/dashboard'] },
       { label: 'My Task', icon: 'pi pi-fw pi-check-square', routerLink: ['/layout/admin/task-list'] },
+      { label: 'Config Setup', icon: 'pi pi-fw pi-cog', routerLink: ['/layout/admin/add-config'] },
     ],
   },
   {
@@ -180,7 +181,8 @@ export const ADMINMENUITEM = [
           { label: 'Product Stock', icon: 'pi pi-fw pi-list', routerLink: ['/layout/admin/product-stock'] },
           { label: 'Add Products', icon: 'pi pi-fw pi-plus-circle', routerLink: ['/layout/admin/add-product'] },
         ]
-      }
+      },
+      { label: 'Loan Client', icon: 'pi pi-fw pi-plus-circle', routerLink: ['/layout/admin/add-loan-client'] },
     ]
   },
   {
@@ -306,12 +308,12 @@ export const CASHMENUITEM = [
     label: 'Cash Module',
     items: [
       {
-        label: 'Cash Transaction',
+        label: 'Cash Payments',
         icon: 'pi pi-fw pi-wallet',
         routerLink: ['/layout/cash/cash-transaction'],
       },
       {
-        label: 'Add Expense',
+        label: 'Transactions',
         icon: 'pi pi-fw pi-sort-amount-down',
         routerLink: ['/layout/cash/expenses'],
       },
