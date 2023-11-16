@@ -107,7 +107,6 @@ export class AddStockComponent implements OnInit {
     this.clientService.getSupplyerByCode(params).subscribe({
       next: (res) => {
         if (res.body) {
-          console.log(res.body);
           this.notificationService.showMessage(
             'SUCCESS!',
             res.message,
@@ -135,7 +134,7 @@ export class AddStockComponent implements OnInit {
       },
       error: (err) => {
         this.isSupplyerExist = false;
-        console.log(err.message);
+        this.showLoader = false;
         this.notificationService.showMessage(
           'ERROR!',
           'Supplier Found Failed' + err.message,
