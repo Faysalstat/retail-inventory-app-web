@@ -182,7 +182,23 @@ export const ADMINMENUITEM = [
           { label: 'Add Products', icon: 'pi pi-fw pi-plus-circle', routerLink: ['/layout/admin/add-product'] },
         ]
       },
+      
       { label: 'Loan Client', icon: 'pi pi-fw pi-plus-circle', routerLink: ['/layout/admin/add-loan-client'] },
+      {
+        label: 'Employee',
+        icon: 'pi pi-fw pi-user',
+        items:[
+          { label: 'Employee List', icon: 'pi pi-fw pi-list', routerLink: ['/layout/admin/employee-list'] },
+          { label: 'Add Employee', icon: 'pi pi-fw pi-plus-circle', routerLink: ['/layout/admin/add-employee'] },
+        ]
+      },
+      {
+        label: 'Users',
+        icon: 'pi pi-fw pi-user',
+        items:[
+          { label: 'Add Users', icon: 'pi pi-fw pi-plus-circle', routerLink: ['/layout/admin/add-user'] },
+        ]
+      },
     ]
   },
   {

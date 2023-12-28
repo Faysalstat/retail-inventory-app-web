@@ -3,7 +3,8 @@
 }
 tr, th{
     padding: 3px;
-    margin:2px
+    margin:2px;
+    vertical-align: middle;
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-wrapper ,.mat-form-field-flex{

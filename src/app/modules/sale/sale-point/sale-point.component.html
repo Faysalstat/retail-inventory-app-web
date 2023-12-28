@@ -154,6 +154,7 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-12">
+                        <h2 style="color: red;">{{stockMsg}}</h2>
                         <div class="input-field">
                             <button (click)="addOrder()" mat-raised-button color="warn">Add
                                 Order</button>
@@ -171,12 +172,12 @@
                                     <th>Loose Quantity</th>
                                     <th>Total Quantity</th>
                                     <th>Price</th>
-                                    <!-- <th>Action</th> -->
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngIf="orderList.length==0">
-                                    <th colspan="7" style="font-weight:bold;text-align: center;">No Order Added Yet!
+                                    <th colspan="8" style="font-weight:bold;text-align: center;">No Order Added Yet!
                                     </th>
                                 </tr>
                                 <tr *ngFor="let order of orderList; index as i">
@@ -187,7 +188,11 @@
                                     <th>{{order.looseQuantity}}</th>
                                     <th>{{order.quantityOrdered}} {{order.unitType}}</th>
                                     <th>{{order.totalOrderPrice}} BDT</th>
-                                    <!-- <th>{{order.totalPrice}}</th> -->
+                                    <th>
+                                        <button mat-icon-button color="warn" (click)="removeOrder(i)" aria-label="Example icon button with a heart icon">
+                                            <mat-icon>close</mat-icon>
+                                        </button>
+                                    </th>
                                 </tr>
                             </tbody>
                         </table>

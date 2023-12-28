@@ -264,7 +264,7 @@ export class AddStockComponent implements OnInit {
             'SUCCESS!',
             'Approval Sent',
             'OK',
-            500
+            2000
           );
           // this.downloadInvoice();
           this.route.navigate(['/layout/supply/supply-invoice-list']);
@@ -274,8 +274,9 @@ export class AddStockComponent implements OnInit {
             'Failed!',
             'Approval Sending Failed. '+ err.message,
             'OK',
-            500
+            2000
           );
+          this.showLoader = false;
         },
         complete:()=>{
           this.showLoader = false;
@@ -291,7 +292,7 @@ export class AddStockComponent implements OnInit {
             'SUCCESS!',
             'Invoice Created',
             'OK',
-            500
+            2000
           );
           // this.downloadInvoice();
           this.route.navigate(['/layout/supply/supply-invoice-list']);
@@ -302,8 +303,9 @@ export class AddStockComponent implements OnInit {
             'ERROR!',
             'Invoice Not Created',
             'OK',
-            500
+            2000
           );
+          this.showLoader = false;
         },
         complete:()=>{
           this.showLoader = false;
