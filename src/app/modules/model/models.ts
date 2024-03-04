@@ -162,8 +162,8 @@ export class UserModel{
   contactNo!: string;
   personAddress!: string;
   email!: string;
-  userName!:string;
-  password!:string;
+  loginUserName!:string;
+  loginUserPassword!:string;
   userRole!:string;
 }
 export enum Roles{

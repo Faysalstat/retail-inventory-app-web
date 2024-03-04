@@ -12,11 +12,8 @@ import { TransactionService } from '../../services/transaction.service';
   styleUrls: ['./add-loan-details.component.css']
 })
 export class AddLoanDetailsComponent implements OnInit {
-  @Output() loanEvent = new EventEmitter<string>();
   depositAmount!: number;
   clientType: string='BANK_LOAN';
-  selectedClient:any = null;
-  clients!:any;
   receivedDate: Date= new Date();
   returnDate!: Date ;
   paymentMethod: string='CASH';
@@ -28,6 +25,8 @@ export class AddLoanDetailsComponent implements OnInit {
   isApprovalNeeded: boolean = false;
   isSubmitted: boolean = false;
   showLoader = false;
+  clientName!:string;
+  clientDisc!:string;
   constructor(
     private notificationService: NotificationService,
     private transactionService: TransactionService,
@@ -52,9 +51,7 @@ export class AddLoanDetailsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.userName = localStorage.getItem('username');
-    this.fetchDepositTypes();
     this.getConfig(COFIGS.TRANSACTION_APPROVAL_NEEDED);
-    this.fetchAllLoanAcc();
   }
   getConfig(configname: any) {
     this.inventoryService.getConfigByName(configname).subscribe({
@@ -67,10 +64,10 @@ export class AddLoanDetailsComponent implements OnInit {
       },
     });
   }
-  fetchDepositTypes() {}
+
   submit() {
     
-    if (!this.clientType || !this.selectedClient || !this.depositAmount) {
+    if (!this.clientType || !this.clientName || !this.depositAmount) {
       this.notificationService.showErrorMessage(
         'INVALID',
         'Input All Data',
@@ -83,10 +80,11 @@ export class AddLoanDetailsComponent implements OnInit {
     let loanModel = {
       transactionType: "LOAN",
       clientType: this.clientType,
-      clientId: this.selectedClient.id,
+      clientName: this.clientName,
+      clientDisc: this.clientDisc,
       cashAmount: this.depositAmount,
       comment: this.comment,
-      issuedBy: localStorage.getItem("username"),
+      issuedBy: localStorage.getItem("personName"),
       interestRate: this.interestRate || 0,
       receivedDate: this.receivedDate,
       returnDate: this.returnDate,
@@ -131,7 +129,7 @@ export class AddLoanDetailsComponent implements OnInit {
             this.comment = '';
             this.paymentMethod = 'CASH'
             this.interestRate = 0;
-            this.loanEvent.emit('Balance Changed');
+            
             this.notificationService.showMessage(
               'Success!',
               'Payment Complete',
@@ -159,23 +157,5 @@ export class AddLoanDetailsComponent implements OnInit {
         },
       });
     }
-  }
-  fetchAllLoanAcc(){
-    const params: Map<string, any> = new Map();
-    params.set("clientType","LOAN_ACC");
-    this.clientService.getAllClient(params).subscribe({
-      next:(res)=>{
-        console.log(res.body);
-        this.clients = [{label:"Select Client",value:null}];
-        let clientList = res.body;
-        clientList.map((elem:any)=>{
-          let clientModel = {label:elem.clientName,value:elem};
-          this.clients.push(clientModel);
-        })
-      },
-      error:(err)=>{
-        console.log(err.message)
-      }
-    })
   }
 }

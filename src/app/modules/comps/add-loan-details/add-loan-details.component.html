@@ -2,7 +2,21 @@
 <mat-card class="mt-5">
     <div class="row">
         <h1>Loan:</h1>
-        <div class="col-md-3">
+        <div class="col-md-4">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Client Name:</mat-label>
+                <input  pInputText [ngModelOptions]="{standalone:true}"
+                    [(ngModel)]="clientName" placeholder="Client Name" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-8">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Client Disc:</mat-label>
+                <input [ngModelOptions]="{standalone:true}" [(ngModel)]="clientDisc"
+                    placeholder="Client Disc" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Amount: </mat-label>
                 <input type="number" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="depositAmount"
@@ -20,7 +34,7 @@
             </mat-form-field>
         </div> -->
         
-        <div class="col-md-3">
+        <div class="col-md-4">
             <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Client Type:</mat-label>
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="clientType">
@@ -29,26 +43,19 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-md-3">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Received From: </mat-label>
-                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="selectedClient">
-                    <mat-option *ngFor="let client of clients" [value]="client.value">{{client.label}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <mat-form-field appearance="outline" class="input-field">
+                <mat-label>Payment Method: </mat-label>
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="paymentMethod">
-                    <mat-label>Payment Method: </mat-label>
+                    
                     <mat-option *ngFor="let method of paymentMethods"
                         [value]="method.value">{{method?.label}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
+        <div class="col-md-4">
+            <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Receive Date:</mat-label>
                 <input matInput [matDatepicker]="rawpicker1" [ngModelOptions]="{standalone:true}"
                     [(ngModel)]="receivedDate">
@@ -56,8 +63,8 @@
                 <mat-datepicker #rawpicker1></mat-datepicker>
             </mat-form-field>
         </div>
-        <div class="col-md-3">
-            <mat-form-field appearance="outline">
+        <div class="col-md-4">
+            <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Return Date:</mat-label>
                 <input matInput [matDatepicker]="rawpicker" [ngModelOptions]="{standalone:true}"
                     [(ngModel)]="returnDate">
@@ -72,6 +79,16 @@
                     matInput></textarea>
             </mat-form-field>
         </div>
+        <!-- <div class="col-md-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Previous Loan:</th>
+                        <th>{{selectedClient.}}</th>
+                    </tr>
+                </thead>
+            </table>
+        </div> -->
         <div class="col-md-12">
              <button style="margin: 10px; float: right;" mat-raised-button color="primary"
                (click)="submit()">Submit</button>

@@ -21,7 +21,7 @@
                             No Loan Found!!
                         </td>
                     </tr>
-                    <tr class="row-hover" *ngFor="let loan of loanList; index as i" (click)="viewDetails(loan.id)">
+                    <tr class="row-hover" *ngFor="let loan of loanList; index as i">
                         <td>{{i+1}}</td>
                         <td>{{loan?.loanClient?.clientName}}</td>
                         <td>{{loan?.loanAmmount}}</td>

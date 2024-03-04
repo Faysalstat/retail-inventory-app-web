@@ -27,6 +27,9 @@ export class AuthService {
   public addUser(queryParams: Map<string, any>): Observable<any> {
     return this.http.post(AuthenticationUrls.ADD_USER, queryParams.get('user'));
   }
+  public updateUser(queryParams: Map<string, any>): Observable<any> {
+    return this.http.post(AuthenticationUrls.UPDATE_USER, queryParams.get('user'));
+  }
   public checkExistingUser(userName: any): Observable<any> {
     let params = new HttpParams();
     params = params.append('userName', userName);

@@ -21,6 +21,9 @@ export class AddUserComponent implements OnInit {
   showLoader: boolean = false;
   userList: any[] = [];
   query!:any;
+  selectedUser!:any;
+  oldPassword!:any;
+  newPassword!:any;
   constructor(
     private formBuilder: FormBuilder,
     private adminService:AdminService,
@@ -51,8 +54,8 @@ export class AddUserComponent implements OnInit {
       email: [formData.email, [Validators.required]],
       contactNo: [formData.contactNo, [Validators.required],],
       personAddress: [formData.personAddress],
-      userName:[formData.username,[Validators.required]],
-      password:[formData.password,[Validators.required]],
+      loginUserName:[formData.loginUserName,[Validators.required]],
+      loginUserPassword:[formData.loginUserPassword,[Validators.required]],
       userRole:[formData.userRole,[Validators.required]],
     });
   }
@@ -73,7 +76,7 @@ export class AddUserComponent implements OnInit {
           this.userForm.get('personId')?.setValue(0);
           this.userForm.get('name')?.enable();
           this.userForm.get('address')?.enable();
-          this.userForm.get('password')?.enable();
+          this.userForm.get('loginUserPassword')?.enable();
           return;
         }
       },
@@ -91,7 +94,7 @@ export class AddUserComponent implements OnInit {
   }
   checkUser(){
     this.showLoader = true;
-    let userName = this.userForm.get('userName')?.value;
+    let userName = this.userForm.get('loginUserName')?.value;
     this.authService.checkExistingUser(userName).subscribe({
       next:(res)=>{
         this.isExist = res.body;
@@ -117,9 +120,7 @@ export class AddUserComponent implements OnInit {
     params.set("user",user);
     this.authService.addUser(params).subscribe({
       next:(res)=>{
-        console.log(res);
-        this.userForm.reset();
-        this.userForm.clearValidators();
+        this.prepareForm(null);
         this.notificationService.showMessage("SUCCESS!","Operation Successfull!","OK",2000);
         this.fetchUserList();
       },
@@ -139,6 +140,29 @@ export class AddUserComponent implements OnInit {
       },
       error:(err)=>{
         this.notificationService.showErrorMessage("ERROR",err.message,"OK",300);
+      }
+    })
+  }
+  onSelectUser(user:any){
+    this.selectedUser = user;
+  }
+  changePassword(){
+    let userModel = {
+      userId:this.selectedUser.id,
+      oldPassword:this.oldPassword,
+      newPassword:this.newPassword
+    }
+    const params:Map<string,any> = new Map();
+    params.set("user",userModel);
+    this.authService.updateUser(params).subscribe({
+      next:(res)=>{
+        this.notificationService.showMessage("SUCCESS!","Operation Successfull!","OK",2000);
+      },
+      error:(err)=>{
+        this.notificationService.showMessage("ERROR!","Operation Failed" + err.message,"OK",2000);
+      },
+      complete: ()=>{
+        this.showLoader = false;
       }
     })
   }

@@ -19,7 +19,7 @@
                     </tr>
                     <tr class="row-hover" *ngFor="let loan of loanList; index as i" (click)="viewDetails(loan.id)">
                         <td>{{i+1}}</td>
-                        <td>{{loan?.loanClient?.clientName}}</td>
+                        <td>{{loan?.clientName}}</td>
                         <td>{{loan?.loanAmmount}}</td>
                         <td>{{loan?.account?.balance}}</td>
                         <td>{{loan?.receiveDate}}</td>

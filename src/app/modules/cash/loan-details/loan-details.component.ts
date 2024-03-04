@@ -19,6 +19,7 @@ export class LoanDetailsComponent implements OnInit {
   comment: string = '';
   showAccountHistory: boolean = false;
   showInstallmentPanel: boolean = false;
+  showAddLoanPanel: boolean = false;
   accountHistory: any[] = [];
   accountHistoryExportable: any[] = [];
   installmentModel: any = {};
@@ -69,14 +70,22 @@ export class LoanDetailsComponent implements OnInit {
   }
   showHistory(event: boolean) {
     this.showAccountHistory = event;
+    this.showAddLoanPanel = false;
     this.showInstallmentPanel = false;
   }
   showInstallment(event: boolean) {
     this.showAccountHistory = false;
+    this.showAddLoanPanel = false;
     this.showInstallmentPanel = event;
   }
-  payInstallment() {
+  showLoanAmount(event: boolean) {
+    this.showAddLoanPanel = event;
+    this.showAccountHistory = false;
+    this.showInstallmentPanel = false;
+  }
+  payInstallment(installmentType:any) {
     this.showLoader = true;
+    this.installmentModel.installmentType = installmentType;
     this.installmentModel.loanAccount = this.loanAccount.account.id;
     if (this.isApprovalNeeded) {
       let approvalModel = {
@@ -117,8 +126,8 @@ export class LoanDetailsComponent implements OnInit {
           this.notificationService.showMessage(
             'SUCCESS',
             'PAYMENT SUCCESSFULL',
-            '5K',
-            200
+            'OK',
+            1000
           );
           this.installmentModel = {
             installMentAmount: 0,

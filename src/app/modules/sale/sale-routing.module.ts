@@ -7,6 +7,7 @@ import { ReturnOrderComponent } from './return-order/return-order.component';
 import { SaleInvoiceListComponent } from './sale-invoice-list/sale-invoice-list.component';
 import { SalePointComponent } from './sale-point/sale-point.component';
 import { SaleComponent } from './sale.component';
+import { CashTransactionComponent } from '../cash/cash-transaction/cash-transaction.component';
 
 const routes: Routes = [{
     path: '', component: SaleComponent,canActivate:[AppAuthGuard],
@@ -17,6 +18,7 @@ const routes: Routes = [{
         {path: 'edit-sale-invoice/:id', component: EditSaleInvoiceComponent},
         {path: 'retun-sale-order/:id', component: ReturnOrderComponent},
         {path: 'customer-list', component: CustomerComponent},
+        {path: 'cash', component: CashTransactionComponent},
         
         ]}
       ]

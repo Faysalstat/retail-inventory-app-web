@@ -8,6 +8,7 @@ import { ExpensesComponent } from './expenses/expenses.component';
 import { LoanDetailsComponent } from './loan-details/loan-details.component';
 import { LoanListComponent } from './loan-list/loan-list.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { AddLoanDetailsComponent } from '../comps/add-loan-details/add-loan-details.component';
 
 const routes: Routes = [{
     path: '', component: CashComponent,canActivate:[AppAuthGuard],canActivateChild:[CashAuthGuard],
@@ -15,6 +16,7 @@ const routes: Routes = [{
         {path: '', component: CashTransactionComponent},
         {path: 'cash-transaction', component: CashTransactionComponent},
         {path: 'expenses', component: ExpensesComponent},
+        {path: 'loan', component: AddLoanDetailsComponent},
         {path: 'transaction-list', component: TransactionListComponent},
         {path: 'loan-list', component: LoanListComponent},
         {path: 'loan-details/:id', component: LoanDetailsComponent},

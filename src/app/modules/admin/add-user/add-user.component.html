@@ -6,7 +6,7 @@
             <div class="col-md-4">
                 <mat-form-field class="input-field" appearance="outline" >
                     <mat-label>Contact No:</mat-label>
-                    <input   (change)="searchCustomer()" pInputText formControlName="contactNo" placeholder="Contact No." matInput>
+                    <input  (change)="searchCustomer()" pInputText formControlName="contactNo" placeholder="Contact No." matInput>
                 </mat-form-field>
             </div>
             <div class="col-md-4">
@@ -33,7 +33,7 @@
             <div class="col-md-4">
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-label>Login ID (username / Email) :</mat-label>
-                    <input (change)="checkUser()"  formControlName="userName" placeholder="User Name" matInput>
+                    <input (change)="checkUser()"  formControlName="loginUserName" placeholder="User Login Name" matInput>
                     <!-- <div *ngIf="isExist" style="color:crimson;">
                         {{message}}
                     </div> -->
@@ -42,7 +42,7 @@
             <div class="col-md-4">
                 <mat-form-field class="input-field" appearance="outline">
                     <mat-label>Password:</mat-label>
-                    <input type="password" formControlName="password" placeholder="password" matInput>
+                    <input formControlName="loginUserPassword" placeholder="User password" matInput>
                 </mat-form-field>
             </div>
                 <div class="col-md-4">
@@ -55,6 +55,7 @@
                 </div>
         </div>
         <button type="submit" (click)="submit()"  mat-raised-button color="primary">Add User</button>
+        
         <p style="color: crimson;font-size:medium;margin-top:10px;">{{message}}</p>
     </form>
 </mat-card>
@@ -67,6 +68,7 @@
                         <th>SN</th>
                         <th>User Name</th>
                         <th>Role</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,10 +76,57 @@
                         <td>{{i+1}}</td>
                         <td>{{user.userName}}</td>
                         <td>{{user.userRole}}</td>
+                        <td>
+                            <button   mat-raised-button color="accent" (click)="onSelectUser(user)" data-bs-toggle="modal" data-bs-target="#myModal">
+                                Change Password
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
-
             </table>
         </div>
     </div>
 </mat-card>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Change Password</h4>
+          <br>
+          <h5 class="modal-title">User Name: {{selectedUser?.userName}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Old Password:</mat-label>
+                    <input type="password" [(ngModel)]="oldPassword" placeholder="old password" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-12">
+                <mat-form-field class="input-field" appearance="outline">
+                    <mat-label>Old Password:</mat-label>
+                    <input type="password" [(ngModel)]="newPassword" placeholder="new password" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-md-12">
+                <button mat-raised-button color="warn" data-bs-dismiss="modal" (click)="changePassword()">Change Password</button>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>

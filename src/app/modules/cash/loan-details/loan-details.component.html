@@ -9,11 +9,7 @@
                 <tbody>
                     <tr>
                         <th>Client Name</th>
-                        <td>{{loanAccount?.loanClient?.clientName}}</td>
-                    </tr>
-                    <tr>
-                        <th>Loan Amount</th>
-                        <td>{{loanAccount?.loanAmmount}} BDT</td>
+                        <td>{{loanAccount?.clientName}}</td>
                     </tr>
                     <tr>
                         <th>Loan Balance</th>
@@ -51,17 +47,18 @@
             </mat-form-field>
         </div>
         <div class="col-md-12">
+            <button style="margin-right: 10px;" mat-raised-button (click)="showLoanAmount(true)" color="accent">Add Loan</button>
             <button style="margin-right: 10px;" mat-raised-button (click)="showInstallment(true)" color="primary">Pay Installment</button>
             <button mat-raised-button (click)="showHistory(true)" color="warn">Show Account History</button>
         </div>
 
     </div>
 </mat-card>
-<mat-card *ngIf="showInstallmentPanel" class="mt-3">
+<mat-card *ngIf="showAddLoanPanel" class="mt-3">
     <app-page-loader *ngIf="showLoader"></app-page-loader>
     <div class="row">
         <div class="col-md-12">
-            <h2>Pay Installment</h2>
+            <h2>Add Loan</h2>
             <hr>
         </div>
         <div class="col-md-3">
@@ -71,13 +68,6 @@
                      placeholder="00" matInput>
             </mat-form-field>
         </div>
-        <!-- <div class="col-md-3">
-            <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Interest Amount: </mat-label>
-                <input type="number" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="installmentModel.interestAmount"
-                     placeholder="00" matInput>
-            </mat-form-field>
-        </div> -->
         <div class="col-md-3">
             <mat-form-field appearance="outline" class="input-field">
                 <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="installmentModel.paymentMethod">
@@ -99,7 +89,47 @@
         </div>
         <div class="col-md-3">
             <button style="margin: 10px; float: right;" mat-raised-button color="primary"
-               (click)="payInstallment()">Submit</button>
+               (click)="payInstallment('LOAN')">Submit</button>
+        </div>
+    </div>
+
+</mat-card>
+<mat-card *ngIf="showInstallmentPanel" class="mt-3">
+    <app-page-loader *ngIf="showLoader"></app-page-loader>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Pay Installment</h2>
+            <hr>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="input-field" appearance="outline">
+                <mat-label>Loan Amount: </mat-label>
+                <input type="number" pInputText [ngModelOptions]="{standalone:true}" [(ngModel)]="installmentModel.installmentAmount"
+                     placeholder="00" matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="outline" class="input-field">
+                <mat-select [ngModelOptions]="{standalone:true}" [(ngModel)]="installmentModel.paymentMethod">
+                    <mat-label>Payment Method: </mat-label>
+                    <mat-option *ngFor="let method of paymentMethods"
+                        [value]="method.value">{{method?.label}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="outline">
+                <mat-label>Payment Date:</mat-label>
+                <input matInput [matDatepicker]="rawpicker1" [ngModelOptions]="{standalone:true}"
+                    [(ngModel)]="installmentModel.payingDate">
+                <mat-datepicker-toggle matSuffix [for]="rawpicker1"></mat-datepicker-toggle>
+                <mat-datepicker #rawpicker1></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <button style="margin: 10px; float: right;" mat-raised-button color="primary"
+               (click)="payInstallment('INSTALLMENT')">Submit</button>
         </div>
     </div>
 
