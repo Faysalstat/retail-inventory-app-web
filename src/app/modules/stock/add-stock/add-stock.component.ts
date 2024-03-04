@@ -49,6 +49,7 @@ export class AddStockComponent implements OnInit {
   subTotalPrice:number = 0;
   comment!:string;
   userName:any;
+  personName:any;
   toWords = new ToWords();
   constructor(
     private route: Router,
@@ -70,6 +71,7 @@ export class AddStockComponent implements OnInit {
     this.fetchProducts();
     this.getConfig(COFIGS.STOCK_APPROVAL_NEEDED);
     this.userName = localStorage.getItem('username');
+    this.personName = localStorage.getItem('personName');
   }
 
   getConfig(configname:any){
@@ -249,7 +251,7 @@ export class AddStockComponent implements OnInit {
     let orderIssueModel = this.supplyInvoiceIssueForm.value;
     orderIssueModel.supplyerId = this.supplyer.id;
     orderIssueModel.comment = this.comment;
-    orderIssueModel.issuedBy = this.userName;
+    orderIssueModel.issuedBy = this.personName;
     if(this.isApprovalNeeded){
       let approvalModel = {
         payload:JSON.stringify(orderIssueModel),
@@ -352,7 +354,7 @@ export class AddStockComponent implements OnInit {
     let invoiceModel = {
       doNo: '',
       invoiceId: 'N/A',
-      issuedBy: this.userName,
+      issuedBy: this.personName,
       supplyer: this.supplyer,
       tnxDate: this.applyFilter(new Date()),
       supplierName: this.person.personName,

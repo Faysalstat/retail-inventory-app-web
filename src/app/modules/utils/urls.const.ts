@@ -1,8 +1,5 @@
-// const BASE_URL = 'https://retail.vatasolution.me/api';
-// const BASE_URL = 'https://sep.shopongroup.com/api';
-// const BASE_URL = 'https://shopongroup.com/api';
-// const BASE_URL = 'https://demov1.exeyezone.com/api';
-const BASE_URL = "http://localhost:3000/api";
+import { environment } from 'src/environments/environment';
+const BASE_URL = environment.apiUrl;
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',

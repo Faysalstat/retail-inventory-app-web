@@ -55,6 +55,7 @@ export class SalePointComponent implements OnInit {
   comment: string = '';
   isApprovalNeeded: boolean = true;
   userName: any;
+  personName: any;
   rebate: number = 0;
   paymentMethods: any[] = [];
   availableStock: number = 0;
@@ -89,6 +90,7 @@ export class SalePointComponent implements OnInit {
     this.fetchProducts();
     this.getConfig(COFIGS.SALE_APPROVAL_NEEDED);
     this.userName = localStorage.getItem('username');
+    this.personName = localStorage.getItem('personName');
     // console.log(this.toWords.convert(1239271392))
   }
 
@@ -389,7 +391,7 @@ export class SalePointComponent implements OnInit {
     orderIssueModel.comment = this.comment;
     orderIssueModel.totalPayableAmount = this.totalPayableAmount;
     orderIssueModel.previousBalance = this.account.balance;
-    orderIssueModel.issuedBy = this.userName;
+    orderIssueModel.issuedBy = this.personName;
     const params: Map<string, any> = new Map();
     if (this.isApprovalNeeded) {
       let approvalModel = {
