@@ -305,8 +305,9 @@ export class AddStockComponent implements OnInit {
             'ERROR!',
             'Invoice Not Created',
             'OK',
-            500
+            2000
           );
+          this.showLoader = false;
         },
         complete:()=>{
           this.showLoader = false;
