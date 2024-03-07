@@ -64,6 +64,17 @@ export class PdfMakeService {
       },
     });
   }
+  public async downloadAccountStatement(statement: any) {
+    this.getConfigByName(COFIGS.SHOP_NAME).subscribe({
+      next: async (res) => {
+        statement.shopName = res.body.value;
+        const doc = new jsPDF();
+        await this.buildAccountStatementReport(doc, statement);
+        return doc.save('invoice_' + 'Printing_Copy');
+      },
+    });
+
+  }
   async buildSalePage(doc: any, invoice: any) {
     autoTable(doc, {
       body: [
@@ -753,5 +764,105 @@ export class PdfMakeService {
       ],
       theme: 'plain',
     });
+  }
+  async buildAccountStatementReport(doc: any, statement: any) {
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: statement.shopName,
+            styles: {
+              halign: 'left',
+              fontSize: 20,
+              textColor: '#ffffff',
+            },
+          }
+        ],
+      ],
+      theme: 'plain',
+      styles: {
+        fillColor: '#3366ff',
+      },
+    });
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content:
+              (statement.clientName || '') +
+              '\n' +
+              (statement.contactNo || '') +
+              '\n' +
+              (statement.address || '') +
+              '\n' +
+              'Reprot from:' +
+              (statement.fromDate || '') +
+              ' to ' +
+              (statement.toDate || '') ,
+            styles: {
+              halign: 'right',
+            },
+          },
+        ],
+      ],
+      theme: 'plain',
+    });
+
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'Total Balance:',
+            styles: {
+              halign: 'right',
+              fontSize: 14,
+            },
+          },
+        ],
+        [
+          {
+            content: statement.balance + ' BDT',
+            styles: {
+              halign: 'right',
+              fontSize: 20,
+              textColor: '#3366ff',
+            },
+          },
+        ]
+       
+      ],
+      theme: 'plain',
+    });
+
+    autoTable(doc, {
+      head: [
+        [
+          'SN',
+          'Date',
+          'Method',
+          'Debit',
+          'Credit',
+          'Closing'
+        ],
+      ],
+      body: statement.data,
+      theme: 'striped',
+      headStyles: {
+        fillColor: '#343a40',
+      },
+    });
+    // autoTable(doc, {
+    //   body: [
+    //     [
+    //       {
+    //         content: 'Issued By ' + invoice.issuedBy,
+    //         styles: {
+    //           halign: 'center',
+    //         },
+    //       },
+    //     ],
+    //   ],
+    //   theme: 'plain',
+    // });
   }
 }

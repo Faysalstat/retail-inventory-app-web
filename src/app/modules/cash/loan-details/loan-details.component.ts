@@ -28,6 +28,7 @@ export class LoanDetailsComponent implements OnInit {
   id:any;
   accountId!:any;
   showLoader: boolean = false;
+  client:any;
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
@@ -65,6 +66,11 @@ export class LoanDetailsComponent implements OnInit {
         this.loanAccount = res.body;
         this.comment = this.loanAccount.remark;
         this.accountId = this.loanAccount.account.id;
+        this.client = {
+          name: this.loanAccount.clientName,
+          contactNo: "",
+          address: ""
+        }
       },
     });
   }

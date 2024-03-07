@@ -176,4 +176,6 @@ export class AccountHistoryReportComponent implements OnInit {
     this.queryBody.accountId = this.selectedGl.id;
     this.fetchAccountHistory();
   }
+
+  
 }
