@@ -68,6 +68,7 @@ export class LoanDetailsComponent implements OnInit {
         this.accountId = this.loanAccount.account.id;
         this.client = {
           name: this.loanAccount.clientName,
+          shopName: this.loanAccount.clientName,
           contactNo: "",
           address: ""
         }

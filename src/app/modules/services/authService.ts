@@ -36,6 +36,7 @@ export class AuthService {
     return this.http.get(AuthenticationUrls.CHECK_EXISTING_USER, { params: params });
   }
   public getAllUser(username: any): Observable<any> {
+    
     let params = new HttpParams();
     params = params.append('username', username);
     return this.http.get(AuthenticationUrls.GET_ALL_USER, { params: params });

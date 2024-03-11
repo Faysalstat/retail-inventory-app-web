@@ -113,5 +113,13 @@ export class ReportServiceService {
     params = params.append('toDate',queryParams.toDate);
     return this.http.get(ReportUrls.STOCK_SUPPLY_REPORT,{params:params});
   }
-
+  public fetchCashCollectionRecordByUser(queryParams: Map<string, any>): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('offset',queryParams.get('offset'));
+    params = params.append('limit',queryParams.get('limit'));
+    params = params.append('issuedBy',queryParams.get('issuedBy').trim());
+    params = params.append('fromDate',queryParams.get('fromDate'));
+    params = params.append('toDate',queryParams.get('toDate'));
+    return this.http.get(ReportUrls.CASH_COLLECTION_BY_USER,{params:params});
+  }
 }

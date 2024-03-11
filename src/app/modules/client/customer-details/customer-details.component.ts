@@ -50,6 +50,7 @@ export class CustomerDetailsComponent implements OnInit {
           this.accountId = this.account.id;
           this.client = {
             name: this.person.personName,
+            shopName: this.customer.shopName,
             contactNo: this.person.contactNo,
             address: this.person.personAddress
           }

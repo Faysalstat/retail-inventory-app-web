@@ -99,6 +99,7 @@ export class AccountHistoryComponent implements OnInit {
     let data:any[] = [];
     let statement = {
       clientName: this.client.name,
+      clientShopName: this.client.shopName,
       contactNo: this.client.contactNo,
       address: this.client.address,
       fromDate: this.applyFilter(this.queryBody.fromDate),

@@ -32,7 +32,7 @@ export class CashTransactionComponent implements OnInit {
   transactionReasons!: any[];
   isTnxDone: boolean = false;
   isApprovalNeeded: boolean = true;
-  userName!: any;
+  personName!: any;
   isReturn: boolean = false;
   isOther: boolean = false;
   showLoader: boolean = false;
@@ -61,7 +61,7 @@ export class CashTransactionComponent implements OnInit {
   ngOnInit(): void {
     this.prepareForm();
     this.fetchTransactionReasons();
-    this.userName = localStorage.getItem('username');
+    this.personName = localStorage.getItem('personName');
     this.getConfig(COFIGS.TRANSACTION_APPROVAL_NEEDED);
   }
   getConfig(configname: any) {
@@ -194,7 +194,7 @@ export class CashTransactionComponent implements OnInit {
     }
     this.showLoader = true;
     let transactionModel = this.cashTransactionForm.value;
-    transactionModel.issuedBy =this.userName;
+    transactionModel.issuedBy =this.personName;
     transactionModel.comment = this.comment;
     transactionModel.person = this.person;
     transactionModel.account = this.account;
@@ -203,7 +203,7 @@ export class CashTransactionComponent implements OnInit {
     if (this.isApprovalNeeded) {
       let approvalModel = {
         payload: JSON.stringify(transactionModel),
-        createdBy: this.userName,
+        createdBy: this.personName,
         taskType: Tasks.PAYMENT_TRANSACTION,
         status: 'OPEN',
       };

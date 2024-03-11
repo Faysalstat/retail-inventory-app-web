@@ -789,18 +789,19 @@ export class PdfMakeService {
         [
           {
             content:
-              (statement.clientName || '') +
+              (statement.clientShopName || '') +
               '\n' +
+              'Mob:' +
               (statement.contactNo || '') +
               '\n' +
               (statement.address || '') +
               '\n' +
-              'Reprot from:' +
+              'Statement Period:' +
               (statement.fromDate || '') +
               ' to ' +
               (statement.toDate || '') ,
             styles: {
-              halign: 'right',
+              halign: 'left',
             },
           },
         ],
@@ -812,7 +813,7 @@ export class PdfMakeService {
       body: [
         [
           {
-            content: 'Total Balance:',
+            content: 'Total Balance',
             styles: {
               halign: 'right',
               fontSize: 14,
@@ -842,7 +843,7 @@ export class PdfMakeService {
           'Method',
           'Debit',
           'Credit',
-          'Closing'
+          'Balance'
         ],
       ],
       body: statement.data,
@@ -851,18 +852,18 @@ export class PdfMakeService {
         fillColor: '#343a40',
       },
     });
-    // autoTable(doc, {
-    //   body: [
-    //     [
-    //       {
-    //         content: 'Issued By ' + invoice.issuedBy,
-    //         styles: {
-    //           halign: 'center',
-    //         },
-    //       },
-    //     ],
-    //   ],
-    //   theme: 'plain',
-    // });
+    autoTable(doc, {
+      body: [
+        [
+          {
+            content: 'This Electronic Statement is invalid without signature',
+            styles: {
+              halign: 'center',
+            },
+          },
+        ],
+      ],
+      theme: 'plain',
+    });
   }
 }

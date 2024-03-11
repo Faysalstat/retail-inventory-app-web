@@ -14,6 +14,7 @@ import { ExpenseReportComponent } from './expense-report/expense-report.componen
 import { DrawingReportComponent } from './drawing-report/drawing-report.component';
 import { StockSaleReportComponent } from './stock-sale-report/stock-sale-report.component';
 import { StockSupplyReportComponent } from './stock-supply-report/stock-supply-report.component';
+import { CashCollectionReportComponent } from './cash-collection-report/cash-collection-report.component';
 
 const routes: Routes = [{
   path: '', component: ReportComponent,canActivate:[AppAuthGuard],canActivateChild:[ReportAuthGuard],
@@ -29,6 +30,7 @@ const routes: Routes = [{
       {path: 'expense-report', component: ExpenseReportComponent},
       {path: 'drawing-report', component: DrawingReportComponent},
       {path: 'account-history-report', component: AccountHistoryReportComponent},
+      {path: 'cash-collection-report', component: CashCollectionReportComponent},
       ]}
     ]
 
