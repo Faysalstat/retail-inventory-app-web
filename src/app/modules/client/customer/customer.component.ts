@@ -47,7 +47,7 @@ export class CustomerComponent implements OnInit {
     if(localStorage.getItem("userRole")=="SALER"){
       return;
     }
-    this.route.navigate(['client/customer-details', id]);
+    this.route.navigate(['layout/client/customer-details', id]);
   }
 
   refresh(){

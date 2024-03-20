@@ -306,7 +306,7 @@ export class EditSaleInvoiceComponent implements OnInit {
   }
   showReturnPanel(ev: boolean) {
     this.isShowReturnPanel = ev;
-    this.route.navigate(["/sale/retun-sale-order",this.saleInvoice.id]);
+    this.route.navigate(["/layout/sale/retun-sale-order",this.saleInvoice.id]);
   }
 
 }

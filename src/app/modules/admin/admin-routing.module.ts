@@ -20,7 +20,7 @@ import { ProfitCalculationComponent } from './profit-calculation/profit-calculat
 import { TaskListComponent } from './task-list/task-list.component';
 
 const routes: Routes = [{
-    path: '', component: AdminComponent,canActivate:[AdminAuthGuard],canActivateChild:[AdminAuthGuard],
+    path: '', component: AdminComponent,canActivate:[AdminAuthGuard],
     children: [
         {path: '', component: DashboardComponent},
         {path: 'dashboard', component: DashboardComponent},

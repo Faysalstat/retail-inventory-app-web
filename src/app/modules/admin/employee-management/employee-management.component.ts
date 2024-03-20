@@ -68,7 +68,7 @@ export class EmployeeManagementComponent implements OnInit {
     });
   }
   viewClient(id: any) {
-    this.route.navigate(['admin/employee-details', id]);
+    this.route.navigate(['layout/admin/employee-details', id]);
   }
 
   refresh(){

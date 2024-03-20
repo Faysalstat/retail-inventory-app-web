@@ -124,7 +124,7 @@ export class AddUserComponent implements OnInit {
         this.fetchUserList();
       },
       error:(err)=>{
-        console.log(err.message);
+        this.showLoader = false;
         this.notificationService.showMessage("ERROR!","Operation Failed" + err.message,"OK",2000);
       },
       complete: ()=>{

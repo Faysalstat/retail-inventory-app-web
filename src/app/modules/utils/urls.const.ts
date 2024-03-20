@@ -1,9 +1,5 @@
-// const BASE_URL = 'https://demo.vatasolution.me/api';
-// const BASE_URL = 'https://std.shopongroup.com/api';
-const BASE_URL = 'https://retail.somadhan.store/api';
-// const BASE_URL = 'https://sep.shopongroup.com/api';
-// const BASE_URL = 'https://shopongroup.com/api';
-// const BASE_URL = 'https://demov1.exeyezone.com/api';
+const BASE_URL = "https://shop.ladiesbazarbd.com/api";
+
 // const BASE_URL = "http://localhost:3000/api";
 
 export const ProductUrls = {

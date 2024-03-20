@@ -107,7 +107,6 @@ export class AddStockComponent implements OnInit {
     this.clientService.getSupplyerByCode(params).subscribe({
       next: (res) => {
         if (res.body) {
-          console.log(res.body);
           this.notificationService.showMessage(
             'SUCCESS!',
             res.message,
@@ -135,7 +134,7 @@ export class AddStockComponent implements OnInit {
       },
       error: (err) => {
         this.isSupplyerExist = false;
-        console.log(err.message);
+        this.showLoader = false;
         this.notificationService.showMessage(
           'ERROR!',
           'Supplier Found Failed' + err.message,
@@ -265,18 +264,19 @@ export class AddStockComponent implements OnInit {
             'SUCCESS!',
             'Approval Sent',
             'OK',
-            500
+            2000
           );
           // this.downloadInvoice();
-          this.route.navigate(['/supply/supply-invoice-list']);
+          this.route.navigate(['/layout/supply/supply-invoice-list']);
         },
         error:(err)=>{
           this.notificationService.showMessage(
             'Failed!',
             'Approval Sending Failed. '+ err.message,
             'OK',
-            500
+            2000
           );
+          this.showLoader = false;
         },
         complete:()=>{
           this.showLoader = false;
@@ -292,10 +292,10 @@ export class AddStockComponent implements OnInit {
             'SUCCESS!',
             'Invoice Created',
             'OK',
-            500
+            2000
           );
           // this.downloadInvoice();
-          this.route.navigate(['/supply/supply-invoice-list']);
+          this.route.navigate(['/layout/supply/supply-invoice-list']);
         },
         error: (err) => {
           console.log(err);
@@ -303,8 +303,9 @@ export class AddStockComponent implements OnInit {
             'ERROR!',
             'Invoice Not Created',
             'OK',
-            500
+            2000
           );
+          this.showLoader = false;
         },
         complete:()=>{
           this.showLoader = false;

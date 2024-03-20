@@ -16,32 +16,32 @@ export class HomeComponent implements OnInit {
       {
         imgUrl:"icon-admin.png",
         title: "ADMIN",
-        route: "/admin"
+        route: "/layout/admin"
       },
       {
         imgUrl:"icon-posh.png",
         title: "POS",
-        route: "/sale"
+        route: "/layout/sale"
       },
       {
         imgUrl:"icon-client.png",
         title: "CLIENT",
-        route: "/client"
+        route: "/layout/client"
       },
       {
         imgUrl:"icon-cash.png",
         title: "CASH",
-        route: "/cash"
+        route: "/layout/cash"
       },
       {
         imgUrl:"icon-stock.png",
         title: "SUPPLY",
-        route: "/supply"
+        route: "/layout/supply"
       },
       {
         imgUrl:"icon-report.png",
         title: "REPORT",
-        route: "/reports"
+        route: "/layout/reports"
       },
     ]
   }

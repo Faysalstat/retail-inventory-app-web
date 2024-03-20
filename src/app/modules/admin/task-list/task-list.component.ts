@@ -38,12 +38,12 @@ export class TaskListComponent implements OnInit {
       task.taskType == Tasks.CREATE_SUPPLY ||
       task.taskType == Tasks.UPDATE_INVOICE ||
       task.taskType == Tasks.UPDATE_SUPPLY){
-        this.router.navigate(["/admin/task-details",task.id]);
+        this.router.navigate(["/layout/admin/task-details",task.id]);
       }else if (task.taskType == Tasks.CREATE_LOAN) {
-        this.router.navigate(["/admin/loan-task-details",task.id]);
+        this.router.navigate(["/layout/admin/loan-task-details",task.id]);
       }
       else{
-          this.router.navigate(["/admin/tnx-task-details",task.id]);
+          this.router.navigate(["/layout/admin/tnx-task-details",task.id]);
         }
     
   }

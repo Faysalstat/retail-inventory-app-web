@@ -63,6 +63,8 @@ export class SalePointComponent implements OnInit {
   toWords = new ToWords();
   isLengthError: boolean = false;
   customerBalanceStatus: string = "Due";
+  isWalkingCustomer:boolean = false;
+  stockMsg = "";
   constructor(
     private route: Router,
     private formBuilder: FormBuilder,
@@ -317,6 +319,7 @@ export class SalePointComponent implements OnInit {
       this.orderItem.packageQuantity * this.orderItem.unitPerPackage +
       this.orderItem.looseQuantity
     ).toFixed(2);
+    this.checkQuantity();
     this.calculateOrder();
   }
   calculateSummary() {
@@ -326,11 +329,19 @@ export class SalePointComponent implements OnInit {
       this.saleInvoiceIssueForm.get('rebate')?.value +
       this.saleInvoiceIssueForm.get('extraCharge')?.value
     ).toFixed(2);
-    this.saleInvoiceIssueForm
+    if(this.isWalkingCustomer){
+      this.saleInvoiceIssueForm.get('totalPaidAmount')?.setValue(this.totalPayableAmount);
+    }else{
+      this.saleInvoiceIssueForm
       .get('duePayment')
-      ?.setValue(this.totalPayableAmount - (this.saleInvoiceIssueForm
-        .get('totalPaidAmount')?.value || 0));
+      ?.setValue(
+        this.totalPayableAmount -
+          (this.saleInvoiceIssueForm.get('totalPaidAmount')?.value || 0)
+      );
+    }
+    
   }
+
   // testing
 
   addOrder() {
@@ -407,7 +418,7 @@ export class SalePointComponent implements OnInit {
             'SUCCESS!',
             'Approval Sent',
             'OK',
-            500
+            2000
           );
           // this.downloadInvoice();
           // this.route.navigate(['/sale/sale-invoice-list']);
@@ -418,8 +429,9 @@ export class SalePointComponent implements OnInit {
             'Failed!',
             'Approval Sending Failed. ' + err.message,
             'OK',
-            500
+            2000
           );
+          this.showLoader = false;
         },
         complete: () => {
           this.showLoader = false;
@@ -435,7 +447,7 @@ export class SalePointComponent implements OnInit {
             'SUCCESS!',
             'Invoice Created',
             'OK',
-            500
+            2000
           );
           // this.route.navigate(['/sale/sale-invoice-list']);
           window.location.reload();
@@ -445,8 +457,9 @@ export class SalePointComponent implements OnInit {
             'ERROR!',
             'Invoice Not Created',
             'OK',
-            500
+            2000
           );
+          this.showLoader = false;
         },
         complete: () => {
           this.showLoader = false;
@@ -512,5 +525,37 @@ export class SalePointComponent implements OnInit {
 
   showPositive(number: any) {
     return Math.abs(Number(number));
+  }
+  removeOrder(index:any){
+    let removedOrder = this.orderList[index];
+    this.orderList.splice(index,1);
+    let totalPrice = 0;
+    this.orderList.map((elem) => {
+      totalPrice += elem.totalOrderPrice;
+    });
+    this.saleInvoiceIssueForm.get('orders')?.setValue(this.orderList);
+    this.saleInvoiceIssueForm.get('totalPrice')?.setValue(totalPrice);
+    this.totalPrice = totalPrice;
+    this.calculateSummary();
+    if(this.isWalkingCustomer){
+      this.saleInvoiceIssueForm.get('totalPaidAmount')?.setValue(this.totalPayableAmount);
+    }else{
+      if (this.totalPayableAmount < 0) {
+        this.balanceType = 'Return';
+      } else {
+        this.balanceType = 'Payable';
+        this.saleInvoiceIssueForm
+          .get('duePayment')
+          ?.setValue(this.totalPayableAmount);
+      }
+    }
+  }
+  checkQuantity(){
+    if(this.orderItem.quantityOrdered > this.availableStock){
+      this.stockMsg = "Warning!! Stock Exceeded."
+      this.notificationService.showErrorMessage("Stock Unavailable","You don't have enough Stock of this Product","OK",2000);
+    }else{
+      this.stockMsg = ""
+    }
   }
 }

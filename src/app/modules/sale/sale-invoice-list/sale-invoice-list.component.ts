@@ -83,7 +83,7 @@ export class SaleInvoiceListComponent implements OnInit {
     this.fetchSaleInvoices();
   }
   viewInvoice(invoice:any){
-    this.route.navigate(["/sale/edit-sale-invoice",invoice.id]);
+    this.route.navigate(["/layout/sale/edit-sale-invoice",invoice.id]);
   }
 
   refresh(){

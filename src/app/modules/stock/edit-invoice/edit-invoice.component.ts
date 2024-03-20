@@ -237,7 +237,7 @@ export class EditInvoiceComponent implements OnInit {
           });
   }
   showReturnPanel(ev: boolean) {
-    this.route.navigate(["/supply/return-supply-order",this.supplyInvoice.id]);
+    this.route.navigate(["/layout/supply/return-supply-order",this.supplyInvoice.id]);
   }
   downloadInvoice() {
     let orders: any[] = [];

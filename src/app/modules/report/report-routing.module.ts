@@ -16,7 +16,7 @@ import { StockSaleReportComponent } from './stock-sale-report/stock-sale-report.
 import { StockSupplyReportComponent } from './stock-supply-report/stock-supply-report.component';
 
 const routes: Routes = [{
-  path: '', component: ReportComponent,canActivate:[AppAuthGuard],canActivateChild:[ReportAuthGuard],
+  path: '', component: ReportComponent,canActivate:[ReportAuthGuard],
   children: [
       {path: '', component: TreansactionReportComponent},
       {path: 'transaction-report', component: TreansactionReportComponent},
