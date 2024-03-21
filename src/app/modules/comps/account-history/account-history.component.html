@@ -18,8 +18,10 @@
         </mat-form-field>
     </div>
     <div class="col-md-2">
-        <button style="margin: 10px; float: left;" (click)="export()" mat-raised-button color="warn">
-            <mat-icon>output</mat-icon> Export</button>
+        <button style="margin: 10px; float: left;" (click)="export('EXCEL')" mat-raised-button color="warn">
+            <mat-icon>output</mat-icon> Export Excell</button>
+        <button style="margin: 10px; float: left;" (click)="export('PDF')" mat-raised-button color="danger">
+            <mat-icon>output</mat-icon> Export PDF</button>
     </div>
 </div>
 <div class="row">

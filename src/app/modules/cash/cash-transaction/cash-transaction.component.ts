@@ -215,17 +215,18 @@ export class CashTransactionComponent implements OnInit {
             'SUCCESS!',
             'Approval Sent',
             'OK',
-            500
+            2000
           );
+          window.location.reload();
           // this.downloadMemo(res.bod);
-          this.route.navigate(['/cash/transaction-list']);
+          // this.route.navigate(['/cash/transaction-list']);
         },
         error: (err) => {
           this.notificationService.showMessage(
             'Failed!',
             'Approval Sending Failed. ' + err.message,
             'OK',
-            500
+            2000
           );
         },
         complete:()=>{
@@ -243,9 +244,9 @@ export class CashTransactionComponent implements OnInit {
             'SUCCESS!',
             'Payment Successful',
             'OK',
-            400
+            2000
           );
-          this.route.navigate(['/cash/transaction-list']);
+          window.location.reload() 
           
         },
         error: (err) => {
@@ -253,7 +254,7 @@ export class CashTransactionComponent implements OnInit {
             'ERROR!',
             'Payment FAILED',
             'OK',
-            200
+            2000
           );
           this.isTnxDone = false;
         },
@@ -343,5 +344,9 @@ export class CashTransactionComponent implements OnInit {
     }else if(this.isSupplier){
       this.pdfMakeService.downloadSupplyerPaymentInvoice(model);
     }
+  }
+
+  initPage(){
+
   }
 }

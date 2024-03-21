@@ -739,7 +739,7 @@ export class PdfMakeService {
     });
 
     autoTable(doc, {
-      head: [['SN', 'Date', 'Payment Method', 'Debit (BDT)', 'Credit (BDT)']],
+      head: [['Date', 'Payment Method', 'Debit (BDT)', 'Credit (BDT)']],
       body: model.data,
       theme: 'striped',
       headStyles: {
@@ -796,7 +796,7 @@ export class PdfMakeService {
               '\n' +
               (statement.address || '') +
               '\n' +
-              'Statement Period:' +
+              'Statement Period: ' +
               (statement.fromDate || '') +
               ' to ' +
               (statement.toDate || '') ,
@@ -838,9 +838,8 @@ export class PdfMakeService {
     autoTable(doc, {
       head: [
         [
-          'SN',
           'Date',
-          'Method',
+          'Particulars',
           'Debit',
           'Credit',
           'Balance'
@@ -856,7 +855,9 @@ export class PdfMakeService {
       body: [
         [
           {
-            content: 'This Electronic Statement is invalid without signature',
+            content: 'This Electronic Statement is invalid without signature'+
+            '\n' +
+            "*** End of The Statement ***",
             styles: {
               halign: 'center',
             },
