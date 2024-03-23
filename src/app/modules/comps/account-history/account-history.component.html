@@ -20,7 +20,9 @@
     <div class="col-md-2">
         <button style="margin: 10px; float: left;" (click)="export('EXCEL')" mat-raised-button color="warn">
             <mat-icon>output</mat-icon> Export Excell</button>
-        <button style="margin: 10px; float: left;" (click)="export('PDF')" mat-raised-button color="danger">
+    </div>
+    <div class="col-md-2">
+        <button style="margin: 10px; float: left;" (click)="export('PDF')" mat-raised-button color="primary">
             <mat-icon>output</mat-icon> Export PDF</button>
     </div>
 </div>
@@ -43,14 +45,14 @@
                 <tr>
                     <th style="text-align: right;" colspan="5"></th>
                     <th>Opening</th>
-                    <td style="text-align: center;">{{openingBalance}}</td>
+                    <td>{{openingBalance}}</td>
                 </tr>
                 <tr *ngIf="accountHistory.length==0">
                     <th style="text-align: center;" colspan="7">No Transaction</th>
                 </tr>
                 <tr *ngFor="let history of accountHistory; index as i">
                     <td>{{i+1}}</td>
-                    <td>{{history?.tnxDate}}</td>
+                    <td>{{applyFilter(history?.tnxDate)}}</td>
                     <td>{{history?.paymentMethod}}</td>
                     <td>{{history?.remark}}</td>
                     <td>{{history?.tnxType == "DEBIT"?history?.tnxAmount:0}}</td>

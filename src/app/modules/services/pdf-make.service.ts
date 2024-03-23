@@ -251,13 +251,13 @@ export class PdfMakeService {
         ],
         [
           {
-            content: invoice.chargeReason + ':',
+            content: invoice.chargeReason || "" + ':',
             styles: {
               halign: 'right',
             },
           },
           {
-            content: invoice.extraCharge + ' BDT',
+            content: invoice.extraCharge ||  + ' BDT',
             styles: {
               halign: 'right',
             },
@@ -766,6 +766,8 @@ export class PdfMakeService {
     });
   }
   async buildAccountStatementReport(doc: any, statement: any) {
+    let debit = (statement.tnxSide=="DEBIT"?'In':'Out');
+    let credit = (statement.tnxSide=="CREDIT"?'In':'Out');
     autoTable(doc, {
       body: [
         [
@@ -849,6 +851,14 @@ export class PdfMakeService {
       theme: 'striped',
       headStyles: {
         fillColor: '#343a40',
+        halign:'right'
+      },
+      columnStyles: {
+        0: { halign: 'right' },
+        1: { halign: 'right' },
+        2: { halign: 'right' },
+        3: { halign: 'right' },
+        4: { halign: 'right' }
       },
     });
     autoTable(doc, {

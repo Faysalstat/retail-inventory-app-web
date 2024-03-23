@@ -48,7 +48,7 @@ export class AccountHistoryComponent implements OnInit {
           this.accountHistory = res.body;
           this.openingBalance = this.accountHistory[0].previousBalance;
           // this.closingBalance =this.calculateBalance(this.accountHistory[this.accountHistory.length - 1])
-          this.closingBalance =this.accountHistory[this.accountHistory.length - 1].previousBalance;
+          
           this.accountHistoryExportable = [];
           let sn = 0;
 
@@ -89,6 +89,7 @@ export class AccountHistoryComponent implements OnInit {
             CREDIT: 'Opening',
             BALANCE: this.openingBalance,
           });
+          this.closingBalance =this.accountHistoryExportable[this.accountHistoryExportable.length - 1].BALANCE;
         } else {
           this.notificationService.showErrorMessage(
             'ERROR',
@@ -114,6 +115,8 @@ export class AccountHistoryComponent implements OnInit {
   downloadReport() {
     let data: any[] = [];
     let statement = {
+      openingBalance:this.openingBalance,
+      tnxSide: this.tnxSide,
       clientName: this.client.name,
       clientShopName: this.client.shopName,
       contactNo: this.client.contactNo,
@@ -126,6 +129,7 @@ export class AccountHistoryComponent implements OnInit {
     let totalDebit = 0;
     let totalCredit = 0;
     let totalBalance = 0;
+    data.push(["","","","Balance Forward",this.openingBalance]);
     this.accountHistory.map((elem, index) => {
       let row = [];
       row.push(this.applyFilter(elem.tnxDate));
@@ -136,8 +140,9 @@ export class AccountHistoryComponent implements OnInit {
       data.push(row);
       totalDebit+= (elem.tnxType == 'DEBIT' ?elem.tnxAmount:0);
       totalCredit+= (elem.tnxType == 'CREDIT' ?elem.tnxAmount:0);
-      totalBalance = this.closingBalance;
+      
     });
+    totalBalance = this.closingBalance;
     data.push(["Total:","",totalDebit,totalCredit,totalBalance])
     statement.data = data;
     statement.balance = this.closingBalance;
