@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormControl,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { map, Observable, startWith } from 'rxjs';
 import { ToWords } from 'to-words';
 import {
   Account,
@@ -30,6 +27,8 @@ import { ProductService } from '../../services/product-service.service';
   styleUrls: ['./sale-point.component.css'],
 })
 export class SalePointComponent implements OnInit {
+  @ViewChild('receiptComponent', { static: false, read: ElementRef }) PrintableReceiptComponent!: ElementRef;
+
   saleInvoiceIssueForm!: FormGroup;
   productFindForm!: FormGroup;
   isEdit: boolean = false;
@@ -65,14 +64,16 @@ export class SalePointComponent implements OnInit {
   customerBalanceStatus: string = "Due";
   isWalkingCustomer:boolean = false;
   stockMsg = "";
+
+
+  showReceipt = true
   constructor(
-    private route: Router,
     private formBuilder: FormBuilder,
     private clientService: ClientService,
     private productService: ProductService,
     private inventoryService: InventoryService,
     private notificationService: NotificationService,
-    private pdfMakeService: PdfMakeService
+    private pdfMakeService: PdfMakeService,
   ) {
     this.customer = new Customer();
     this.customer.person = new Person();
@@ -557,5 +558,12 @@ export class SalePointComponent implements OnInit {
     }else{
       this.stockMsg = ""
     }
+  }
+  printReport() {
+    const printContents = this.PrintableReceiptComponent.nativeElement.innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
   }
 }

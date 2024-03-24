@@ -317,3 +317,21 @@ nav.side-nav li.active>a{
   color: #fff;
   background-color: #04AA6D;
 }
+
+
+/* styles.css */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .print-section, .print-section * {
+    visibility: visible;
+  }
+
+  .print-section {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
