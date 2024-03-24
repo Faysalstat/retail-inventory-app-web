@@ -52,7 +52,7 @@
                 </tr>
                 <tr *ngFor="let history of accountHistory; index as i">
                     <td>{{i+1}}</td>
-                    <td>{{applyFilter(history?.tnxDate)}}</td>
+                    <td>{{moderateDate(history?.tnxDate)}}</td>
                     <td>{{history?.paymentMethod}}</td>
                     <td>{{history?.remark}}</td>
                     <td>{{history?.tnxType == "DEBIT"?history?.tnxAmount:0}}</td>

@@ -129,10 +129,10 @@ export class AccountHistoryComponent implements OnInit {
     let totalDebit = 0;
     let totalCredit = 0;
     let totalBalance = 0;
-    data.push(["","","","Balance Forward",this.openingBalance]);
+    data.push(["","Balance Forward","0","0",this.openingBalance]);
     this.accountHistory.map((elem, index) => {
       let row = [];
-      row.push(this.applyFilter(elem.tnxDate));
+      row.push(this.moderateDate(elem.tnxDate));
       row.push(elem.remark);
       row.push(elem.tnxType == 'DEBIT' ? elem.tnxAmount : 0);
       row.push(elem.tnxType == 'CREDIT' ? elem.tnxAmount : 0);
@@ -164,12 +164,19 @@ export class AccountHistoryComponent implements OnInit {
       'Nov',
       'Dec',
     ];
-    const day = newDate.getDate();
+    const day = newDate.getDate().toString().padStart(2, '0');;
     const monthIndex = newDate.getMonth();
     const year = newDate.getFullYear();
 
     // Format the date as `D-MMM-YYYY`
     return `${day}-${months[monthIndex]}-${year}`;
+  }
+  moderateDate(date:any){
+    let newDate = new Date(date);
+    const day = newDate.getDate().toString().padStart(2, '0');
+    const month = (newDate.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+    const year = newDate.getFullYear();
+    return `${day}/${month}/${year}`;
   }
   calculateBalance(record: any) {
     if (this.tnxSide == 'DEBIT') {
