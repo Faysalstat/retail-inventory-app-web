@@ -1,63 +1,52 @@
 <div class="receipt-body">
     <div class="receipt-container print-section">
-        <h2>ABC STORE</h2>
-        <p>123 Example St, Townsville<br>Tel: (123) 456-7890</p>
+        <h2>{{shopName}}</h2>
+        <p style="font-size:.7em;">{{shopAddress}}<br>Tel: {{shopContactNo}}</p>
         <div class="receipt-info">
-            <p>Date: 2024-03-24    Time: 13:45<br>Order ID: 123456789<br>Cashier: John Doe</p>
+            <p style="font-size: .8 em ;font-weight:400;">Invoice NO: {{receiptModel.invoiceNo}}</p>
+            <p style="font-size:1em ;">{{tnxDate}}</p>
         </div>
-        <!-- <div class="receipt-items">
-            <div class="item-header">
-                <span>Item</span><span>Qty</span><span>Price</span><span>Total</span>
-            </div>
-            <div class="item">
-                <span>Milk 1L</span><span>2</span><span>$2.00</span><span>$4.00</span>
-            </div>
-            <div class="item">
-                <span>Bread Loaf</span><span>1</span><span>$1.50</span><span>$1.50</span>
-            </div>
-            <div class="item">
-                <span>Eggs 12pk</span><span>1</span><span>$3.20</span><span>$3.20</span>
-            </div>
-        </div> -->
+        <div class="customer-info">
+            <p>Name:  {{receiptModel.customerName}}</p>
+            <p>Mob:  {{receiptModel.cutomerContact}}</p>
+        </div>
         <div class="receipt-items">
             <table>
-                <tr>
-                    <th style="width: 40%;text-align: left;">Items</th>
-                    <th>Rate</th>
-                    <th>QTY</th>
-                    <th>Total</th>
+                <tr class="tbl-h">
+                    <th class="tbl-th">Items</th>
+                    <th class="tbl-th">Rate</th>
+                    <!-- <th class="tbl-th">QTY</th> -->
+                    <th class="tbl-th">Total</th>
                 </tr>
-                <tr>
-                    <td>Item 1</td>
-                    <td>250</td>
-                    <td>2</td>
-                    <td>500</td>
-                </tr>
-                <tr>
-                    <td style="width: 40%;text-align: left;">Bread Loaf with a ver very long Name which is really long</td>
-                    <td>250</td>
-                    <td>2</td>
-                    <td>500</td>
+                <tr *ngFor="let order of receiptModel.orders;index as i">
+                    <td style="width: 40%;text-align: left;">{{order.item}}</td>
+                    <td>{{order.rate}} X {{order.qty}}</td>
+                    <!-- <td>{{order.qty}}</td> -->
+                    <td>{{order.total}}</td>
                 </tr>
                 <tr>
                     <td colspan="4" style="border-bottom: 1px solid black;"></td>
                 </tr>
                 <tr>
                     <td colspan="2">Subtotal</td>
-                    <td colspan="2">$8.70</td>
+                    <td colspan="2">{{receiptModel.subTotal}}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Tax (5%)</td>
-                    <td colspan="2">$8.70</td>
+                    <td colspan="2">Tax</td>
+                    <td colspan="2">{{receiptModel.tax}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Discount</td>
+                    <td colspan="2">{{receiptModel.discount}}</td>
                 </tr>
                 <tr>
                     <td colspan="2">Total</td>
-                    <td colspan="2">$8.70</td>
+                    <td colspan="2">{{receiptModel.total}}</td>
                 </tr>
             </table>
         </div>
         <div class="receipt-footer">
-            <p>Payment Type: Cash</p>
+            <p style="font-size: .8em ;text-align: center;">Issued By: {{receiptModel.issuedBy}}</p>
         </div>
     </div>
 </div>

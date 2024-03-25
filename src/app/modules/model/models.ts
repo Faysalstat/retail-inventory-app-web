@@ -67,6 +67,7 @@ export class Product {
   productCode!: string;
   unitType!: string;
   quantity!: number;
+  quantitySold!: number;
   costPricePerUnit!: number;
   sellingPricePerUnit!: number;
   packagingCategory!: string;
@@ -83,6 +84,7 @@ export class OrderItem {
   packageQuantity: number = 0;
   looseQuantity: number = 0;
   quantityOrdered: number = 0;
+  quantitySold: number = 0;
   pricePerUnit: number = 0;
   buyingPricePerUnit: number = 0;
   totalOrderPrice!: number;
@@ -196,3 +198,22 @@ export enum COFIGS{
   SHOP_NAME = "SHOP_NAME"
 }
 export const CLIENT_ID = 1;
+
+export class ReceiptBody {
+  invoiceNo!: string;
+  customerName!: string;
+  cutomerContact!: string;
+  orders!: IOrderBody[];
+  subTotal!: number;
+  tax!: number;
+  discount!: number;
+  total!: number;
+  issuedBy!: string;
+}
+export interface IOrderBody{
+  item:string;
+  rate:number;
+  qty:number;
+  total:number;
+
+}

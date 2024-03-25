@@ -25,28 +25,28 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <mat-form-field class="input-field" appearance="outline">
                         <mat-label>Package Quantity</mat-label>
                         <input type="number" pInputText [ngModelOptions]="{standalone:true}" (change)="calculateQuantity()"
                             [(ngModel)]="selectedReturnItem.packageQuantity" placeholder="Quantity" matInput>
                     </mat-form-field>
-                </div>
+                </div> -->
                 <div class="col-md-2">
                     <mat-form-field class="input-field" appearance="outline">
-                        <mat-label>Loose Quantity</mat-label>
+                        <mat-label>Return Quantity</mat-label>
                         <input type="number" pInputText [ngModelOptions]="{standalone:true}" (change)="calculateQuantity()"
                             [(ngModel)]="selectedReturnItem.looseQuantity" placeholder="Quantity" matInput>
                     </mat-form-field>
                 </div>
-                <div class="col-md-2">
+                <!-- <div class="col-md-2">
                     <mat-form-field class="input-field" appearance="outline">
                         <mat-label>Total Quantity</mat-label>
                         <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
                             (change)="calculateOrder()" [(ngModel)]="selectedReturnItem.quantityReturned"
                             placeholder="Quantity" matInput>
                     </mat-form-field>
-                </div>
+                </div> -->
                 <div class="col-md-12">
                     <table class="table">
                         <thead>
@@ -85,24 +85,24 @@
                                 <th>SN</th>
                                 <th style="width:30% ;">Product Name</th>
                                 <th>Rate</th>
-                                <th>Package Quantity</th>
-                                <th>Loose Quantity</th>
-                                <th>Total Quantity</th>
+                                <!-- <th>Package Quantity</th>
+                                <th>Loose Quantity</th> -->
+                                <th>Return Quantity</th>
                                 <th>Price</th>
                                 <!-- <th>Action</th> -->
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngIf="returnOrderList.length==0">
-                                <th colspan="7" style="font-weight:bold;text-align: center;">No Order Added Yet!
+                                <th colspan="5" style="font-weight:bold;text-align: center;">No Order Added Yet!
                                 </th>
                             </tr>
                             <tr *ngFor="let order of returnOrderList; index as i">
                                 <th scope="row">{{i+1}}</th>
                                 <th>{{order.productName}}</th>
                                 <th>{{order.pricePerUnit}}</th>
-                                <th>{{order.packageQuantity}}</th>
-                                <th>{{order.looseQuantity}}</th>
+                                <!-- <th>{{order.packageQuantity}}</th>
+                                <th>{{order.looseQuantity}}</th> -->
                                 <th>{{order.quantityReturned}} {{order.unitType}}</th>
                                 <th>{{order.totalOrderPrice}} BDT</th>
                                 <!-- <th>{{order.totalPrice}}</th> -->
@@ -110,7 +110,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th colspan="6" style="text-align: right;">Total Amount</th>
+                                <th colspan="4" style="text-align: right;">Total Amount</th>
                                 <th>{{returnModel?.totalSellPrice}} BDT</th>
                             </tr>
                         </tfoot>

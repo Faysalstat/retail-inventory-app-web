@@ -22,15 +22,15 @@
                             <th>Contact :</th>
                             <td>{{customer?.person?.contactNo}}</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th>Shop :</th>
                             <td>{{customer?.shopName}}</td>
-                        </tr>
+                        </tr> -->
 
-                        <tr>
+                        <!-- <tr>
                             <th>Shop Address :</th>
                             <td>{{customer?.shopAddress}}</td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <th>Balance :</th>
                             <th>{{customer?.account?.balance}} BDT</th>
@@ -92,7 +92,7 @@
                             <th>Quantity Delivered</th>
                             <th>Delivery Pending</th>
                             <th>Quantity Retured</th>
-                            <th>Status</th>
+                            <!-- <th>Status</th> -->
                             <th style="text-align: center;">
                                 <mat-checkbox (change)="$event ? masterToggle() : null"
                                     [checked]="selection.hasValue() && isAllSelected()"
@@ -112,7 +112,7 @@
                             <td>{{order?.quantityDelivered}}</td>
                             <td>{{order?.qunatityDeliveryPending}}</td>
                             <td>{{order?.quantityReturned || 0}}</td>
-                            <td>{{order?.deliveryStatus}}</td>
+                            <!-- <td>{{order?.deliveryStatus}}</td> -->
                             <td style="text-align: center;">
                                 <mat-checkbox *ngIf="order.deliveryStatus =='PENDING'"
                                     (click)="$event.stopPropagation()"

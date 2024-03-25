@@ -6,7 +6,7 @@
 }
 
 .receipt-container {
-    width: 300px; /* Adjust based on the thermal printer paper width */
+    width: 250px; /* Adjust based on the thermal printer paper width */
     margin: 0 auto;
     text-align: left;
     font-size: 1.5em;
@@ -20,13 +20,19 @@ h2 {
     text-align: center;
     margin: 0;
 }
-
-.receipt-info, .receipt-items, .receipt-summary, .receipt-footer {
+.tbl-h{
+    border-bottom: 1px dashed #000;
+    
+}
+.tbl-th{
+    text-align: left;
+}
+.receipt-info, .receipt-items, .receipt-summary, .receipt-footer, .customer-info {
     border-top: 1px dashed #000;
     padding-top: 10px;
 }
 
-.receipt-info p, .receipt-footer p {
+.receipt-info p, .receipt-footer p, .customer-info p {
     margin: 5px 0;
 }
 

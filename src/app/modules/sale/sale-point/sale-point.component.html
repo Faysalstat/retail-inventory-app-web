@@ -99,7 +99,7 @@
                                         </tr>
                                         <tr>
                                             <th>Stock</th>
-                                            <th>{{orderItem.quantity}}</th>
+                                            <th>{{orderItem.quantity - orderItem.quantitySold}}</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -124,34 +124,34 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <mat-form-field class="input-field" appearance="outline">
                             <mat-label>Package Quantity</mat-label>
                             <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
                                 (change)="calculateQuantity()" [(ngModel)]="orderItem.packageQuantity"
                                 placeholder="Quantity" matInput>
                         </mat-form-field>
-                    </div>
-                    <div class="col-md-3">
+                    </div> -->
+                    <div class="col-md-4">
                         <mat-form-field class="input-field" appearance="outline">
-                            <mat-label>Loose Quantity</mat-label>
+                            <mat-label>Quantity</mat-label>
                             <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="isEdit"
                                 (change)="calculateQuantity()" [(ngModel)]="orderItem.looseQuantity"
                                 placeholder="Quantity" matInput>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <mat-form-field class="input-field" appearance="outline">
                             <mat-label>Total Quantity</mat-label>
                             <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
                                 (change)="calculateOrder()" [(ngModel)]="orderItem.quantityOrdered"
                                 placeholder="Quantity" matInput>
                         </mat-form-field>
-                    </div>
-                    <div class="col-md-3">
+                    </div> -->
+                    <div class="col-md-8">
                         <mat-form-field class="input-field" appearance="outline">
                             <mat-label>Total Price (BDT)</mat-label>
-                            <input type="number" pInputText [ngModelOptions]="{standalone:true}" [disabled]="true"
+                            <input type="number" pInputText [ngModelOptions]="{standalone:true}" readonly="true"
                                 [(ngModel)]="orderItem.totalOrderPrice" placeholder="Selling Price" matInput>
                         </mat-form-field>
                     </div>
@@ -170,8 +170,8 @@
                                     <th>SN</th>
                                     <th style="width:30% ;">Product Name</th>
                                     <th>Rate</th>
-                                    <th>Package Quantity</th>
-                                    <th>Loose Quantity</th>
+                                    <!-- <th>Package Quantity</th>
+                                    <th>Loose Quantity</th> -->
                                     <th>Total Quantity</th>
                                     <th>Price</th>
                                     <th>Action</th>
@@ -186,8 +186,8 @@
                                     <th scope="row">{{i+1}}</th>
                                     <th>{{order.productName}}</th>
                                     <th>{{order.pricePerUnit}}</th>
-                                    <th>{{order.packageQuantity}}</th>
-                                    <th>{{order.looseQuantity}}</th>
+                                    <!-- <th>{{order.packageQuantity}}</th>
+                                    <th>{{order.looseQuantity}}</th> -->
                                     <th>{{order.quantityOrdered}} {{order.unitType}}</th>
                                     <th>{{order.totalOrderPrice}} BDT</th>
                                     <th>
@@ -252,7 +252,7 @@
                             <th style="text-align:left;">Paid:</th>
                             <th style="text-align:right;">
                                 <mat-form-field class="input-field" appearance="fill">
-                                    <input type="number" pInputText formControlName="totalPaidAmount"
+                                    <input style="text-align:right;" type="number" pInputText formControlName="totalPaidAmount"
                                         placeholder="Amount" matInput>
                                 </mat-form-field>
                             </th>
@@ -295,12 +295,12 @@
 
                         <!-- experimental  -->
 
-                        <tr>
+                        <!-- <tr>
                             <th></th>
                             <th style="float: right;margin-right: 0;">
                                 <button (click)="printReport()" mat-raised-button color="warn">Print Report</button>
                             </th>
-                        </tr>
+                        </tr> -->
 
                         <!-- experimental  -->
                     </tfoot>
@@ -310,4 +310,4 @@
     </form>
 </mat-card>
 
-<app-printable-receipt #receiptComponent></app-printable-receipt>
+<app-printable-receipt [receiptModel]="receiptModel" #receiptComponent></app-printable-receipt>

@@ -5,7 +5,7 @@
 <form [formGroup]="productAddingForm">
     <div class="row">
         <div class="col-md-3">
-            <h2>Total Stock: <span>{{product?.quantity - product?.quantitySold}}</span></h2>
+            <h2>Total Stock: <span>{{product?.quantity}}</span></h2>
         </div>
         <div class="col-md-3">
             <h2>Total Sold: <span>{{product?.quantitySold || 0}}</span></h2>
