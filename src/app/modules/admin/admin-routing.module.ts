@@ -32,9 +32,10 @@ const routes: Routes = [{
         {path: 'add-loan-acc', component: AddLoanAccComponent},
         {path: 'add-employee', component: AddEmployeePanelComponent},
         {path: 'employee-list', component: EmployeeManagementComponent},
-        {path: 'task-list', component: TaskListComponent},
+        
         {path: 'product-stock', component: ProductManagementComponent},
         {path: 'product-detail/:id', component: ProductConfigComponent},
+        {path: 'task-list', component: TaskListComponent},
         {path: 'task-details/:id', component: ApprovalDetailsComponent},
         {path: 'tnx-task-details/:id', component: CashApprovalDetailsComponent},
         {path: 'loan-task-details/:id', component: LoanApprovalDetailsComponent},

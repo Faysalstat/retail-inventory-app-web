@@ -9,6 +9,10 @@ import { LoanDetailsComponent } from './loan-details/loan-details.component';
 import { LoanListComponent } from './loan-list/loan-list.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { AddLoanDetailsComponent } from '../comps/add-loan-details/add-loan-details.component';
+import { TaskListComponent } from '../admin/task-list/task-list.component';
+import { ApprovalDetailsComponent } from '../admin/approval-details/approval-details.component';
+import { CashApprovalDetailsComponent } from '../admin/cash-approval-details/cash-approval-details.component';
+import { LoanApprovalDetailsComponent } from '../admin/loan-approval-details/loan-approval-details.component';
 
 const routes: Routes = [{
     path: '', component: CashComponent,canActivate:[AppAuthGuard],canActivateChild:[CashAuthGuard],
@@ -20,6 +24,10 @@ const routes: Routes = [{
         {path: 'transaction-list', component: TransactionListComponent},
         {path: 'loan-list', component: LoanListComponent},
         {path: 'loan-details/:id', component: LoanDetailsComponent},
+        {path: 'task-list', component: TaskListComponent},
+        {path: 'task-details/:id', component: ApprovalDetailsComponent},
+        {path: 'tnx-task-details/:id', component: CashApprovalDetailsComponent},
+        {path: 'loan-task-details/:id', component: LoanApprovalDetailsComponent},
         ]}
       ]
 

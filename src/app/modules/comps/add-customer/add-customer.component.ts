@@ -110,10 +110,6 @@ export class AddCustomerComponent implements OnInit {
 
     this.clientService.addClient(params).subscribe({
       next: (res) => {
-        if (res.body) {
-          
-          this.isCustomerExist = true;
-        }
         this.errMsg ="";
         this.notificationService.showMessage(
           'SUCCESS!',
@@ -121,6 +117,13 @@ export class AddCustomerComponent implements OnInit {
           'OK',
           1000
         );
+        this.person= new Person();
+        this.customer= new Customer();
+        this.account = new Account();
+        this.isCustomerExist = false;
+        this.showLoader = false;
+        this.isEdit = false;
+        this.prepareForm();
       },
       error:(err)=>{
         this.notificationService.showErrorMessage(

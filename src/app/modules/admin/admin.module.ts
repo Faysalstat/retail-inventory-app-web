@@ -56,6 +56,12 @@ import { ProfitCalculationComponent } from './profit-calculation/profit-calculat
   ],
   providers: [
     AdminAuthGuard
+  ],
+  exports:[
+    TaskListComponent,
+    ApprovalDetailsComponent,
+    CashApprovalDetailsComponent,
+    LoanApprovalDetailsComponent
   ]
 })
 export class AdminModule { }
