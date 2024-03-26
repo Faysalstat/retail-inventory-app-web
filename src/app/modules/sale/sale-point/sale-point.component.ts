@@ -91,6 +91,7 @@ export class SalePointComponent implements OnInit {
     this.fetchProducts();
     this.getConfig(COFIGS.SALE_APPROVAL_NEEDED);
     this.userName = localStorage.getItem('personName') || "";
+    this.receiptModel.invoiceNo = "NA"
     this.receiptModel.orders = [];
     this.receiptModel.subTotal = 0;
     this.receiptModel.total = 0;
@@ -465,7 +466,6 @@ export class SalePointComponent implements OnInit {
       params.set('invoice', orderIssueModel);
       this.inventoryService.issueSalesOrder(params).subscribe({
         next: (res) => {
-          this.downloadInvoice();
           this.notificationService.showMessage(
             'SUCCESS!',
             'Invoice Created',
@@ -473,12 +473,10 @@ export class SalePointComponent implements OnInit {
             2000
           );
           this.receiptModel.invoiceNo = res.body.invoiceNo;
-          
-          
           this.printReport();
           this.showLoader = false;
           // this.route.navigate(['/sale/sale-invoice-list']);
-          // window.location.reload();
+          window.location.reload();
         },
         error: (err) => {
           this.notificationService.showMessage(
@@ -591,6 +589,6 @@ export class SalePointComponent implements OnInit {
     document.body.innerHTML = printContents;
     window.print();
     document.body.innerHTML = originalContents;
-    window.location.reload();
+    // window.location.reload();
   }
 }

@@ -318,7 +318,7 @@ nav.side-nav li.active>a{
   background-color: #04AA6D;
 }
 .print-section, .print-section * {
-  visibility: hidden;
+  visibility: visible;
 }
 
 /* styles.css */
