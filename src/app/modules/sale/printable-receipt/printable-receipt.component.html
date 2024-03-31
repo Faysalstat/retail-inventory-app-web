@@ -1,10 +1,10 @@
 <div class="receipt-body">
     <div class="receipt-container print-section">
         <h2>{{shopName}}</h2>
-        <p style="font-size:.7em;">{{shopAddress}}<br>Tel: {{shopContactNo}}</p>
+        <p style="font-size:.8em;text-align: center;">{{shopAddress}}<br>Tel: {{shopContactNo}}</p>
         <div class="receipt-info">
-            <p style="font-size: .8 em ;font-weight:400;">Invoice NO: {{receiptModel.invoiceNo}}</p>
-            <p style="font-size:1em ;">{{tnxDate}}</p>
+            <p>Invoice No: {{receiptModel.invoiceNo}}</p>
+            <p style="font-size:.8em;">{{formatCurrentDate(tnxDate)}}</p>
         </div>
         <div class="customer-info">
             <p>Name:  {{receiptModel.customerName}}</p>
@@ -13,35 +13,33 @@
         <div class="receipt-items">
             <table>
                 <tr class="tbl-h">
-                    <th class="tbl-th">Items</th>
-                    <th class="tbl-th">Rate</th>
-                    <!-- <th class="tbl-th">QTY</th> -->
-                    <th class="tbl-th">Total</th>
+                    <th style="text-align:left;">Items</th>
+                    <th style="text-align:left;">Rate X QTY</th>
+                    <th style="text-align:right;" class="tbl-th">Total</th>
                 </tr>
                 <tr *ngFor="let order of receiptModel.orders;index as i">
                     <td style="width: 40%;text-align: left;">{{order.item}}</td>
-                    <td>{{order.rate}} X {{order.qty}}</td>
-                    <!-- <td>{{order.qty}}</td> -->
-                    <td>{{order.total}}</td>
+                    <td style="text-align:left;">{{order.rate}} X {{order.qty}}</td>
+                    <td style="text-align:right;">{{order.total}}</td>
                 </tr>
                 <tr>
                     <td colspan="4" style="border-bottom: 1px solid black;"></td>
                 </tr>
                 <tr>
-                    <td colspan="2">Subtotal</td>
-                    <td colspan="2">{{receiptModel.subTotal}}</td>
+                    <td style="text-align:left;" colspan="2">Subtotal</td>
+                    <td style="text-align:right;" colspan="2">{{receiptModel.subTotal}}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Tax</td>
-                    <td colspan="2">{{receiptModel.tax}}</td>
+                    <td style="text-align:left;" colspan="2">Tax</td>
+                    <td style="text-align:right;" colspan="2">{{receiptModel.tax}}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Discount</td>
-                    <td colspan="2">{{receiptModel.discount}}</td>
+                    <td style="text-align:left;" colspan="2">Discount</td>
+                    <td style="text-align:right;" colspan="2">{{receiptModel.discount}}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Total</td>
-                    <td colspan="2">{{receiptModel.total}}</td>
+                    <td style="text-align:left;" colspan="2">Total</td>
+                    <td style="text-align:right;" colspan="2">{{receiptModel.total}}</td>
                 </tr>
             </table>
         </div>

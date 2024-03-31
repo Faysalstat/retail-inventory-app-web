@@ -22,6 +22,16 @@ export class PrintableReceiptComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.receiptModel);
   }
-  printReport() {
+  formatCurrentDate(date:Date): string {
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'short',
+      month: 'short',
+      day: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    };
+    return date.toLocaleString('en-US', options);
   }
 }

@@ -19,6 +19,7 @@ export class ProductConfigComponent implements OnInit {
   isEdit:boolean = false;
   product!:any;
   errMsg:string ='';
+  barcodeData:any;
   constructor(
     private activatedRoute:ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -53,10 +54,11 @@ export class ProductConfigComponent implements OnInit {
       next:(res)=>{
         console.log(res);
         if(res.body){
-          this.product = res.body;
-          this.notificationService.showMessage("SUCCESS","Product Found","OK",300);
+          this.product = res.body.product;
+          // this.notificationService.showMessage("SUCCESS","Product Found","OK",300);
           this.setFormValue();
           this.productAddingForm.get('productCode')?.disable();
+          this.barcodeData = `data:image/png;base64,${res.body.barcode}`;
         }
       },
       error:(err)=>{
@@ -227,6 +229,25 @@ export class ProductConfigComponent implements OnInit {
         }
       }
     })
+  }
+  
+  printReport() {
+    const printContents = document.getElementById('printable');
+    if (printContents) {
+      const win = window.open('', '', 'height=500, width=500');
+      win?.document.write('<html><head><title>Print</title>');
+      // Add some styles here if necessary
+      win?.document.write('</head><body>');
+      win?.document.write(printContents.innerHTML); // Use the innerHTML of the "printable" element
+      win?.document.write('</body></html>');
+      win?.document.close();
+      win?.focus();
+
+      setTimeout(() => { // Timeout for ensuring content load
+        win?.print();
+        win?.close();
+      }, 1000);
+    }
   }
 }
 

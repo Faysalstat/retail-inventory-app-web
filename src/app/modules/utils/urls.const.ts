@@ -1,5 +1,5 @@
-// const BASE_URL = "http://localhost:3000/api";
-const BASE_URL = "https://app.blackmartlifestyle.com/api";
+const BASE_URL = "http://localhost:3000/api";
+// const BASE_URL = "https://app.blackmartlifestyle.com/api";
 
 export const ProductUrls = {
   ADD_PRODUCT: BASE_URL + '/product/addproduct',
