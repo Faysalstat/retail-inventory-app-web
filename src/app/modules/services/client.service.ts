@@ -14,7 +14,7 @@ export class ClientService {
   }
   public getClientByContactNo(contactNo: string): Observable<any> {
     let params = new HttpParams();
-    params = params.append('contactNo', contactNo);
+    params = params.append('contactNo', contactNo.trim());
     return this.http.get(ClientUrls.FETCH_CLIENT_BY_CONTACT_NO, { params: params });
   }
   public getAllClient(queryParams: Map<string, any>): Observable<any> {

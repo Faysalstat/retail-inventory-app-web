@@ -14,7 +14,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminComponent } from './admin.component';
 import { ProductConfigComponent } from './product-config/product-config.component';
 import { AddUserComponent } from './add-user/add-user.component';
-import { AdminAuthGuard } from './admin-auth.guard';
 import { CashApprovalDetailsComponent } from './cash-approval-details/cash-approval-details.component';
 import { EmployeeManagementComponent } from './employee-management/employee-management.component';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
@@ -22,6 +21,8 @@ import { AddEmployeePanelComponent } from './add-employee-panel/add-employee-pan
 import { AssetsManagementComponent } from './assets-management/assets-management.component';
 import { LoanApprovalDetailsComponent } from './loan-approval-details/loan-approval-details.component';
 import { ProfitCalculationComponent } from './profit-calculation/profit-calculation.component';
+import { AdminAuthGuard } from '../services/admin-auth.guard';
+import { ManagerAuthGuard } from '../services/manager-auth.guard';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { ProfitCalculationComponent } from './profit-calculation/profit-calculat
     ReactiveFormsModule,
   ],
   providers: [
-    AdminAuthGuard
+    AdminAuthGuard,
+    ManagerAuthGuard
   ],
   exports:[
     TaskListComponent,

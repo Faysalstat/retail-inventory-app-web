@@ -24,10 +24,6 @@ const routes: Routes = [{
         {path: 'transaction-list', component: TransactionListComponent},
         {path: 'loan-list', component: LoanListComponent},
         {path: 'loan-details/:id', component: LoanDetailsComponent},
-        {path: 'task-list', component: TaskListComponent},
-        {path: 'task-details/:id', component: ApprovalDetailsComponent},
-        {path: 'tnx-task-details/:id', component: CashApprovalDetailsComponent},
-        {path: 'loan-task-details/:id', component: LoanApprovalDetailsComponent},
         ]}
       ]
 

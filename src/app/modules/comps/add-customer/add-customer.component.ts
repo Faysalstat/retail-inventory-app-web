@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Account, Customer, Person } from '../../model/models';
 import { ClientService } from '../../services/client.service';
 import { NotificationService } from '../../services/notification-service.service';
@@ -35,7 +35,7 @@ export class AddCustomerComponent implements OnInit {
       id: [''],
       name: [''],
       shopName:[''],
-      contactNo: [''],
+      contactNo: ['',[Validators.required, Validators.pattern('[0-9]*')]],
       address: [''],
       balance:[0],
     });
@@ -100,7 +100,7 @@ export class AddCustomerComponent implements OnInit {
       personId: this.person.id,
       clientType: 'CUSTOMER',
       personName: this.person.personName,
-      contactNo: this.person.contactNo,
+      contactNo: (this.person.contactNo.trim() || ""),
       personAddress: this.person.personAddress,
       shopName: this.customer.shopName,
       shopAddress: this.customer.shopAddress,

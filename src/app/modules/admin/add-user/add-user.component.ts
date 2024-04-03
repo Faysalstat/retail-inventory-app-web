@@ -51,7 +51,7 @@ export class AddUserComponent implements OnInit {
       id: [formData.id ? formData.id : null],
       personId: [formData.id ? formData.id : null],
       personName: [formData.personName, [Validators.required]],
-      email: [formData.email, [Validators.required]],
+      email: [formData.email],
       contactNo: [formData.contactNo, [Validators.required],],
       personAddress: [formData.personAddress],
       loginUserName:[formData.loginUserName,[Validators.required]],
@@ -110,12 +110,13 @@ export class AddUserComponent implements OnInit {
     })
   }
   submit() {
-    this.showLoader = true;
+    
     const params:Map<string,any> = new Map();
-    console.log(this.userForm.value);
     if(this.userForm.invalid){
+      this.notificationService.showMessage("Invalid Form!","Input all mendator field","OK",2000);
       return;
     }
+    this.showLoader = true;
     const user = this.userForm.value;
     params.set("user",user);
     this.authService.addUser(params).subscribe({
