@@ -54,10 +54,10 @@ export class AdminAuthGuard implements CanActivateChild{
       console.log('Welcome to admin panel');
     } else if (authenticated.body.userRole == 'MANAGER' || authenticated.body.userRole == 'SALER') {
       console.log('Welcome to manager panel');
-      this.notificationService.showErrorMessage("WARNING!!","You are Not an Admin. Please log in as an ADMIN.","OK",1000);
+      this.notificationService.showErrorMessage("WARNING!!","You are Not an Admin. Please log in as an ADMIN.","OK",2000);
       this.router.navigate(['admin']);
     } else {
-      this.notificationService.showErrorMessage("WARNING!!","You Are Not Logged In","OK",1000);
+      this.notificationService.showErrorMessage("WARNING!!","You Are Not Logged In","OK",2000);
       console.log('You are not permited to admin panel');
       this.router.navigate(['admin']);
     }
