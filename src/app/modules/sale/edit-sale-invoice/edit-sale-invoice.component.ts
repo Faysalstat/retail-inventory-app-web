@@ -1,17 +1,19 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Customer, OrderItem, ScehduleDelivery } from '../../model/models';
+import { Customer, IOrderBody, OrderItem, ReceiptBody, ScehduleDelivery } from '../../model/models';
 import { InventoryService } from '../../services/inventory.service';
 import { NotificationService } from '../../services/notification-service.service';
 import { PdfMakeService } from '../../services/pdf-make.service';
 import { ToWords } from 'to-words';
+import { ElementRef } from '@angular/core';
 @Component({
   selector: 'app-edit-sale-invoice',
   templateUrl: './edit-sale-invoice.component.html',
   styleUrls: ['./edit-sale-invoice.component.css'],
 })
 export class EditSaleInvoiceComponent implements OnInit {
+  PrintableReceiptComponent!: ElementRef;
   id!: any;
   customer!: Customer;
   saleOrders: any[] = [];
@@ -34,6 +36,8 @@ export class EditSaleInvoiceComponent implements OnInit {
   toWords = new ToWords();
   isShowReturnPanel: boolean = false;
   saleOrdersForReduce!: any[];
+  orderItems:IOrderBody[] = [];
+  receiptModel:ReceiptBody;
   constructor(
     private route: Router,
     private activatedRoute: ActivatedRoute,
@@ -41,6 +45,7 @@ export class EditSaleInvoiceComponent implements OnInit {
     private notificationService: NotificationService,
     private pdfMakeService: PdfMakeService
   ) {
+    this.receiptModel = new ReceiptBody();
     this.payment = {
       invoiceId: 0,
       newPayment: 0,
@@ -74,13 +79,28 @@ export class EditSaleInvoiceComponent implements OnInit {
         }
         this.saleOrdersForSchedule = [];
         this.saleOrdersForReduce = [];
+        this.saleOrders.map((item)=>{
+          this.orderItems.push({
+            item: item.product.productName,
+            rate: item.pricePerUnit,
+            qty: item.quantityOrdered,
+            total: item.totalPrice,
+          })
+        })
         for (let i = 0; i < this.saleOrders.length; i++) {
           if (this.saleOrders[i].deliveryStatus == 'PENDING') {
             this.isPending = true;
             break;
           }
         }
-
+        this.receiptModel.invoiceNo = this.saleInvoice.invoiceNo;
+        this.receiptModel.orders = this.orderItems;
+        this.receiptModel.subTotal = this.saleInvoice?.totalPrice;
+        this.receiptModel.total = this.saleInvoice?.totalPayableAmount;
+        this.receiptModel.discount = this.saleInvoice?.rebate;
+        this.receiptModel.issuedBy = localStorage.getItem('personName') || '';
+        this.receiptModel.customerName = this.customer?.person?.personName;
+        this.receiptModel.cutomerContact = this.customer?.person?.contactNo;
         this.saleOrders.map((elem) => {
           if (elem.deliveryStatus != 'DELIVERED') {
             this.saleOrdersForSchedule.push(elem);
@@ -307,6 +327,15 @@ export class EditSaleInvoiceComponent implements OnInit {
   showReturnPanel(ev: boolean) {
     this.isShowReturnPanel = ev;
     this.route.navigate(["/layout/sale/retun-sale-order",this.saleInvoice.id]);
+  }
+
+  printReport() {
+    const printContents = this.PrintableReceiptComponent.nativeElement.innerHTML;
+    const originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    // window.location.reload();
   }
 
 }

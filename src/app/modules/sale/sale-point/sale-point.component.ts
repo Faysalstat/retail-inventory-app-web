@@ -531,7 +531,7 @@ export class SalePointComponent implements OnInit {
                   // Timeout for ensuring content load
                   this.printReport();
                   window.location.reload();
-                }, 1000);
+                }, 2000);
           // this.printReport();
           this.showLoader = false;
           // this.route.navigate(['/sale/sale-invoice-list']);

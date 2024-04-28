@@ -5,7 +5,7 @@
                 <h1>Invoice Details:</h1>
             </div>
             <div class="col-md-6">
-                <button style="float:right;" (click)="downloadInvoice()" mat-raised-button color="accent">Download
+                <button style="float:right;" (click)="printReport()" mat-raised-button color="accent">Download
                     Invoice</button>
             </div>
             <div class="col-md-12">
@@ -206,4 +206,5 @@
             <p style="color:red;font-weight: bold;">{{errMsg}}</p>
         </div>
     </mat-card>
+    <app-printable-receipt [receiptModel]="receiptModel" #receiptComponent></app-printable-receipt>
 </div>
