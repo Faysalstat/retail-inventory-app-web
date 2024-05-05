@@ -81,9 +81,100 @@
                 <div class="col-md-4">
                     <mat-form-field class="input-field" appearance="outline">
                         <mat-label>Selling Price</mat-label>
-                        <input type="number" type="number" formControlName="sellingPricePerUnit" placeholder="Selling Price"
+                        <input type="number" formControlName="sellingPricePerUnit" placeholder="Selling Price"
                             matInput>
                     </mat-form-field>
+                </div>
+        </div>
+        <div class="row">
+            <hr >
+                <div class="col-md-6">
+                    <h2>Add Size Varient</h2>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field class="input-field" appearance="outline">
+                                <mat-label>Size Name</mat-label>
+                                <input  type="text" [ngModelOptions]="{standalone:true}"
+                                [(ngModel)]="productSizeModel.sizeName" placeholder="Size"
+                                matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="input-field" appearance="outline">
+                                <mat-label>Details</mat-label>
+                                <input  type="text" [ngModelOptions]="{standalone:true}"
+                                [(ngModel)]="productSizeModel.details" placeholder="Size"
+                                matInput>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4">
+                            <button mat-mini-fab color="warn" (click)="addSizeVarient()"  aria-label="Add Size Varient">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let size of sizeVarientList;index as i">
+                                        <td>{{size.sizeName}}</td>
+                                        <td>{{size.details}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>Add Color Varient</h2>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field class="input-field" appearance="outline">
+                                <mat-label>Color Name</mat-label>
+                                <input  type="text" [ngModelOptions]="{standalone:true}"
+                                [(ngModel)]="productColorModel.colorName" placeholder="Color"
+                                matInput>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field class="input-field" appearance="outline">
+                                <mat-label>Details</mat-label>
+                                <input  type="text" [ngModelOptions]="{standalone:true}"
+                                [(ngModel)]="productColorModel.details" placeholder="Color"
+                                matInput>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4">
+                            <button mat-mini-fab color="warn" (click)="addColorVarient()" aria-label="Add Color Varient">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </div>
+                        <div class="col-md-12">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let size of colorVarientList;index as i">
+                                        <td>{{size.colorName}}</td>
+                                        <td>{{size.details}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <p style="color: red;font-weight: bold;">{{errMsg}}</p>

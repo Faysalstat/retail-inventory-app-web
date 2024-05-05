@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductUrls } from '../utils/urls.const';
+import { IproductColor, IproductSize } from '../model/models';
 
 @Injectable({
   providedIn: 'root'
@@ -121,5 +122,18 @@ export class ProductService {
       clientId:clientId
     }
     return this.http.post(ProductUrls.DELETE_PACKAGING_CATEGORY, payload);
+  }
+
+  // product Size 
+  public addSizeVarient(model:IproductSize): Observable<any> {
+    let clientId = localStorage.getItem('clientId') || "";
+    model.clientId = clientId;
+    return this.http.post(ProductUrls.ADD_SIZE_VARIENT, model);
+  }
+
+  public addColorVarient(model:IproductColor): Observable<any> {
+    let clientId = localStorage.getItem('clientId') || "";
+    model.clientId = clientId;
+    return this.http.post(ProductUrls.ADD_COLOR_VARIENT, model);
   }
 }

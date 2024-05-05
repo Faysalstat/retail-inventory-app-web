@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationService } from '../../services/notification-service.service';
 import { ProductService } from '../../services/product-service.service';
+import { IproductColor, IproductSize } from '../../model/models';
 
 @Component({
   selector: 'app-product-config',
@@ -20,6 +21,10 @@ export class ProductConfigComponent implements OnInit {
   product!:any;
   errMsg:string ='';
   barcodeData:any;
+  productColorModel:IproductColor = new IproductColor();
+  colorVarientList:IproductColor[] = [];
+  productSizeModel:IproductSize = new IproductSize();
+  sizeVarientList:IproductSize[] = []
   constructor(
     private activatedRoute:ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -55,6 +60,8 @@ export class ProductConfigComponent implements OnInit {
         console.log(res);
         if(res.body){
           this.product = res.body.product;
+          this.colorVarientList = res.body.product.productColors;
+          this.sizeVarientList = res.body.product.productSizes;
           // this.notificationService.showMessage("SUCCESS","Product Found","OK",300);
           this.setFormValue();
           this.productAddingForm.get('productCode')?.disable();
@@ -76,7 +83,7 @@ export class ProductConfigComponent implements OnInit {
       brandName:['',[Validators.required]],
       costPricePerUnit: [0],
       sellingPricePerUnit: [0],
-      packagingCategory:['',[Validators.required]],
+      packagingCategory:[''],
       unitPerPackage:[0]
     });
   }
@@ -106,6 +113,8 @@ export class ProductConfigComponent implements OnInit {
     this.showLoader = true;
     let productModel = this.productAddingForm.value;
     productModel.isEdit = this.isEdit;
+    productModel.sizeVarientList = this.sizeVarientList;
+    productModel.colorVarientList = this.colorVarientList;
     const params:Map<string,any> = new Map();
     params.set("product",productModel);
     console.log(productModel);
@@ -114,16 +123,20 @@ export class ProductConfigComponent implements OnInit {
         if(res.isUpdated){
           // this.productAddingForm.reset();
           this.notificationService.showMessage("SUCCESS!","Product Added Successfuly","OK",1000);
+          this.showLoader = false;
+          
         }else{
           this.productAddingForm.reset();
           this.notificationService.showMessage("SUCCESS!","Product Updated Successfuly","OK",1000);
-          console.log(res.body);
           this.product = res.body;
+          this.sizeVarientList = [];
+          this.colorVarientList= [];
           this.showLoader = false;
         }
         // this.route.navigate(["/admin/product-list"]);
       },
       error:(err)=>{
+        this.showLoader = false;
         this.notificationService.showMessage("FAILED!","Product Add Failed","OK",1000);
       },
       complete:()=>{
@@ -247,6 +260,42 @@ export class ProductConfigComponent implements OnInit {
         win?.print();
         win?.close();
       }, 1000);
+    }
+  }
+
+  addSizeVarient(){
+    if(this.isEdit){
+      this.productService.addSizeVarient(this.productSizeModel).subscribe({
+        next:(res)=>{
+          console.log(res);
+          this.sizeVarientList.push({...this.productSizeModel});
+          this.productSizeModel = new IproductSize();
+        },
+        error:(err)=>{
+          this.notificationService.showErrorMessage("Size Varient Adding Failed",err.message, "Close",2000);
+        }
+      })
+    }else{
+      this.sizeVarientList.push({...this.productSizeModel});
+      this.productSizeModel = new IproductSize();
+    }
+  }
+
+  addColorVarient(){
+    if(this.isEdit){
+      this.productService.addColorVarient(this.productColorModel).subscribe({
+        next:(res)=>{
+          console.log(res);
+          this.colorVarientList.push({...this.productColorModel});
+          this.productColorModel = new IproductColor();
+        },
+        error:(err)=>{
+          this.notificationService.showErrorMessage("Color Varient Adding Failed",err.message, "Close",2000);
+        }
+      })
+    }else{
+      this.colorVarientList.push({...this.productColorModel});
+      this.productColorModel = new IproductColor();
     }
   }
 }

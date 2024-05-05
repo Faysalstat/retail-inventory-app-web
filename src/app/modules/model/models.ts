@@ -217,3 +217,20 @@ export interface IOrderBody{
   total:number;
 
 }
+
+
+export class IproductSize{
+  id!:number;
+  sizeName!:string;
+  details!:string;
+  productId!:number;
+  clientId!:string;
+}
+
+export class IproductColor{
+  id!:number;
+  colorName!:string;
+  details!:string;
+  productId!:number;
+  clientId!:string;
+}
