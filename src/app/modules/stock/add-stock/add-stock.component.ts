@@ -315,7 +315,7 @@ export class AddStockComponent implements OnInit {
     
   }
   calculateQuantity() {
-    this.orderItem.quantityOrdered = (this.orderItem.packageQuantity * this.orderItem.unitPerPackage) + this.orderItem.looseQuantity;
+    this.orderItem.quantityOrdered = this.orderItem.looseQuantity;
     this.calculateOrder();
   }
 

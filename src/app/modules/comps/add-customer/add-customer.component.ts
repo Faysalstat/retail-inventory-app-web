@@ -123,6 +123,7 @@ export class AddCustomerComponent implements OnInit {
         );
         this.person = new Person();
         this.customer = new Customer();
+        this.showLoader = false;
       },
       error:(err)=>{
         this.notificationService.showErrorMessage(
@@ -131,6 +132,7 @@ export class AddCustomerComponent implements OnInit {
           'OK',
           1000
         );
+        this.showLoader = false;
       },
       complete:()=>{
         this.showLoader = false;

@@ -122,12 +122,12 @@ export class ProductConfigComponent implements OnInit {
       next:(res)=>{
         if(res.isUpdated){
           // this.productAddingForm.reset();
-          this.notificationService.showMessage("SUCCESS!","Product Added Successfuly","OK",1000);
+          this.notificationService.showMessage("SUCCESS!","Product Updated Successfuly","OK",1000);
           this.showLoader = false;
           
         }else{
           this.productAddingForm.reset();
-          this.notificationService.showMessage("SUCCESS!","Product Updated Successfuly","OK",1000);
+          this.notificationService.showMessage("SUCCESS!","Product Added Successfuly","OK",1000);
           this.product = res.body;
           this.sizeVarientList = [];
           this.colorVarientList= [];

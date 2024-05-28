@@ -97,18 +97,16 @@ addSupplyer(){
   supplyerModel.email=this.person.email;
   const params:Map<string,any> = new Map();
   params.set("client",supplyerModel);
-  console.log(supplyerModel);
   this.clientService.addClient(params).subscribe({
-
-      // this.supplyerModel.type="",
-
     next:(res)=>{
       this.supplyerAddingForm.reset();
       this.person  = new Person();
       this.notificationService.showMessage("SUCCESS!","Supplyer Add Successful","OK",1000);
+      this.showLoader = false;
     },
     error:(err)=>{
       this.notificationService.showMessage("FAILED!","Supplyer Add Failed "+err.message,"OK",1000);
+      this.showLoader = false;
     },
     complete:()=>{
       this.showLoader = false;
