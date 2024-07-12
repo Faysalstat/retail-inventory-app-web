@@ -47,7 +47,7 @@ export class SaleInvoiceListComponent implements OnInit {
       next:(res)=>{
         let users = res.body;
         users.map((elem:any)=>{
-          this.userList.push({label:elem.userName,value:elem.userName})
+          this.userList.push({label:elem.person.personName,value:elem.person.personName})
         })
       },
       error:(err)=>{
