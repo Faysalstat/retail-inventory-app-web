@@ -1,9 +1,11 @@
-import { Component, ComponentFactoryResolver, ElementRef, OnInit, ViewChild } from '@angular/core';
 import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+  Component,
+  ComponentFactoryResolver,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToWords } from 'to-words';
 import {
   Account,
@@ -76,13 +78,14 @@ export class SalePointComponent implements OnInit {
   toWords = new ToWords();
   isLengthError: boolean = false;
   customerBalanceStatus: string = 'Due';
-  isWalkingCustomer: boolean = false;
+  isWalkingCustomer: boolean = true;
   stockMsg = '';
   receiptModel: ReceiptBody = new ReceiptBody();
   shopName: string;
   shopAddress!: string;
   shopContactNo!: string;
   tnxDate: Date = new Date();
+  customerType: string = 'Walk-IN Customer';
   constructor(
     private formBuilder: FormBuilder,
     private clientService: ClientService,
@@ -109,7 +112,6 @@ export class SalePointComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchProducts();
-
     this.getConfig(COFIGS.SALE_APPROVAL_NEEDED);
     this.userName = localStorage.getItem('personName') || '';
     this.receiptModel.invoiceNo = 'NA';
@@ -157,7 +159,7 @@ export class SalePointComponent implements OnInit {
       id: [formData.id],
       doNo: [formData.doNo],
       invoiceNo: [formData.invoiceNo],
-      customerId: [formData.customerId, [Validators.required]],
+      customerId: [formData.customerId,],
       // accountId:[formData.accountId,[Validators.required]],
       orders: [formData.orders, [Validators.required]],
       productName: [formData.productName],
@@ -478,6 +480,7 @@ export class SalePointComponent implements OnInit {
     orderIssueModel.totalPayableAmount = this.totalPayableAmount;
     orderIssueModel.previousBalance = this.account.balance;
     orderIssueModel.issuedBy = this.userName;
+    orderIssueModel.isWalkingCustomer = this.isWalkingCustomer;
     const params: Map<string, any> = new Map();
     if (this.isApprovalNeeded) {
       let approvalModel = {
@@ -528,10 +531,10 @@ export class SalePointComponent implements OnInit {
           // openModal();
           this.receiptModel.invoiceNo = res.body.invoiceNo;
           setTimeout(() => {
-                  // Timeout for ensuring content load
-                  this.printReport();
-                  window.location.reload();
-                }, 2000);
+            // Timeout for ensuring content load
+            this.printReport();
+            window.location.reload();
+          }, 2000);
           // this.printReport();
           this.showLoader = false;
           // this.route.navigate(['/sale/sale-invoice-list']);
@@ -734,7 +737,8 @@ export class SalePointComponent implements OnInit {
   //   }
   // }
   printReport() {
-    const printContents = this.PrintableReceiptComponent.nativeElement.innerHTML;
+    const printContents =
+      this.PrintableReceiptComponent.nativeElement.innerHTML;
     const originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;
     window.print();
@@ -745,9 +749,28 @@ export class SalePointComponent implements OnInit {
     closeModal();
     window.location.reload();
   }
-  addQuantity(){
-    this.orderItem.looseQuantity+=1;
+  addQuantity() {
+    this.orderItem.looseQuantity = +(this.orderItem.looseQuantity) + 1;
     this.calculateQuantity();
   }
-
+  customerTypeChnaged(event: any) {
+    this.isCustomerExist = event.checked;
+    if (event.checked) {
+      this.customerType = 'Walk-IN Customer';
+      this.person.personName = 'Walk-IN Customer';
+      // Clear all validators
+      this.saleInvoiceIssueForm.get('customerId')?.clearValidators();
+      // Reset the value
+      this.saleInvoiceIssueForm.reset();
+    } else {
+      this.customerType = 'Member';
+      this.saleInvoiceIssueForm
+        .get('customerId')
+        ?.setValidators([Validators.required]);
+      // Reset the value
+      this.saleInvoiceIssueForm.reset();
+    }
+    // Update the form control's validation and value state
+    this.saleInvoiceIssueForm.updateValueAndValidity();
+  }
 }

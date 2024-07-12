@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer, IOrderBody, OrderItem, ReceiptBody, ScehduleDelivery } from '../../model/models';
 import { InventoryService } from '../../services/inventory.service';
@@ -13,6 +13,7 @@ import { ElementRef } from '@angular/core';
   styleUrls: ['./edit-sale-invoice.component.css'],
 })
 export class EditSaleInvoiceComponent implements OnInit {
+  @ViewChild('receiptComponent', { static: false, read: ElementRef })
   PrintableReceiptComponent!: ElementRef;
   id!: any;
   customer!: Customer;

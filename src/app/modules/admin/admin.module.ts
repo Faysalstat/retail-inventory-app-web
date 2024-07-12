@@ -34,7 +34,6 @@ import { ProfitCalculationComponent } from './profit-calculation/profit-calculat
     AdminComponent,
     ProductConfigComponent,
     AddUserComponent,
-    DashboardComponent,
     CashApprovalDetailsComponent,
     EmployeeManagementComponent,
     EmployeeDetailsComponent,
@@ -45,7 +44,6 @@ import { ProfitCalculationComponent } from './profit-calculation/profit-calculat
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule,
     PanelMenuModule,
     AdminRoutingModule,
     CompsModule,
