@@ -749,8 +749,13 @@ export class SalePointComponent implements OnInit {
     closeModal();
     window.location.reload();
   }
-  addQuantity() {
-    this.orderItem.looseQuantity = +(this.orderItem.looseQuantity) + 1;
+  addQuantity(type:string) {
+    if(type=="add"){
+      this.orderItem.looseQuantity = +(this.orderItem.looseQuantity) + 1;
+    }else{
+      this.orderItem.looseQuantity = +(this.orderItem.looseQuantity) - 1;
+    }
+    
     this.calculateQuantity();
   }
   customerTypeChnaged(event: any) {

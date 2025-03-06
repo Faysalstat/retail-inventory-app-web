@@ -68,7 +68,7 @@ export class ProductConfigComponent implements OnInit {
   }
   prepareForm() {
     this.productAddingForm = this.formBuilder.group({
-      productCode: ['',[Validators.required]],
+      productCode: ['',[Validators.required,Validators.pattern('^[0-9]*$')]],
       productName: ['',[Validators.required]],
       productCategory: ['',[Validators.required]],
       unitType: ['',[Validators.required]],
@@ -113,17 +113,18 @@ export class ProductConfigComponent implements OnInit {
       next:(res)=>{
         if(res.isUpdated){
           // this.productAddingForm.reset();
-          this.notificationService.showMessage("SUCCESS!","Product Added Successfuly","OK",1000);
+          this.notificationService.showMessage("SUCCESS!","Product Added Successfuly","OK",500);
         }else{
           this.productAddingForm.reset();
-          this.notificationService.showMessage("SUCCESS!","Product Updated Successfuly","OK",1000);
-          console.log(res.body);
+          this.notificationService.showMessage("SUCCESS!","Product Updated Successfuly","OK",500);
           this.product = res.body;
-          this.showLoader = false;
+          this.prepareForm();
         }
-        // this.route.navigate(["/admin/product-list"]);
+        this.showLoader = false;
+        
       },
       error:(err)=>{
+        this.showLoader = false;
         this.notificationService.showMessage("FAILED!","Product Add Failed","OK",1000);
       },
       complete:()=>{

@@ -155,8 +155,11 @@
                             <input type="text" min="0" pInputText [ngModelOptions]="{standalone:true}"
                                 [disabled]="isEdit" (change)="calculateQuantity()" [(ngModel)]="orderItem.looseQuantity"
                                 placeholder="Quantity" matInput>
-                            <button matSuffix color="warn" mat-icon-button aria-label="add" (click)="addQuantity()">
+                            <button matSuffix color="primary" mat-icon-button aria-label="add" (click)="addQuantity('add')">
                                 <mat-icon>add</mat-icon>
+                            </button>
+                            <button matSuffix color="warn" mat-icon-button aria-label="remove" (click)="addQuantity('remove')">
+                                <mat-icon>remove</mat-icon>
                             </button>
                         </mat-form-field>
                     </div>
